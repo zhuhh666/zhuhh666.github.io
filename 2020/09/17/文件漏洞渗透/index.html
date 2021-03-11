@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">431</span>
+            <span class="post-count">417</span>
         </span>
     </span>
 
@@ -98,16 +98,17 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h2 id="靶机安装"><a href="#靶机安装" class="headerlink" title="靶机安装"></a>靶机安装</h2><p>使用docker快速启动</p>
-<ul>
-<li><p>```text<br>docker pull area39/webug</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ &#96;&#96;&#96;text</span><br><span class="line">  docker run -d -P area39&#x2F;webug</span><br></pre></td></tr></table></figure></li>
-<li><p><a href="https://link.zhihu.com/?target=http://127.0.0.1:32768/">http://127.0.0.1:32768/</a></p>
-<img src="https://i.loli.net/2020/09/16/sWUDXABMPhinFYo.png" alt="image-20200916153639264" style="zoom: 67%;" /></li>
-</ul>
-<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>文件上传漏洞是大部分web应用具备的功能，例如各种上传，如果开发人员不进行严格的校验，导致PHP，ASP等执行文件绕过应用并顺利执行，则相当于直接拿到了webshell，一旦拿到webshell，就可以拿到web数据，删除web文件，本地提权，进一步拿下整个服务器甚至内网。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull area39&#x2F;webug</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P area39&#x2F;webug</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://link.zhihu.com/?target=http://127.0.0.1:32768/">http://127.0.0.1:32768/</a></p>
+  <img src="https://i.loli.net/2020/09/16/sWUDXABMPhinFYo.png" alt="image-20200916153639264" style="zoom: 67%;" />
+
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>文件上传是大部分web应用具备的功能，如果开发人员不进行严格的校验，导致PHP，ASP等执行文件绕过应用并顺利执行，则相当于直接拿到了webshell，一旦拿到webshell，就可以拿到web数据，删除web文件，本地提权，进一步拿下整个服务器甚至内网。</p>
 <p>sql注入攻击的对象是数据库服务，文件上传漏洞攻击的是web服务，实际渗透中两种相结合，达到对目标的深度渗透。</p>
 <h2 id="木马文件"><a href="#木马文件" class="headerlink" title="木马文件"></a>木马文件</h2><p>如果开发人员设置了mime类型校验，导致可执行文件无法上传，就需要使用第三方工具<strong>BRUPSUITE代理</strong>。默认的拦截功能是开启的。</p>
-<p>默认的代理是在本机上，可以在option设置所有代理。然后你会神奇的发现，我们的一句话木马已经上传成功了。0.0，然后拿出中国菜刀，，</p>
+<p>默认的代理是在本机上，可以在option设置所有代理。然后你会神奇的发现，我们的一句话木马已经上传成功了。然后拿出中国菜刀。</p>
 <img src="https://i.loli.net/2020/09/16/9INUifFnMO5VQcH.png" alt="image-20200916160850568" style="zoom:67%;" />
 
 <p>更高级的限制是<strong>限制文件的拓展名</strong>。</p>
@@ -215,7 +216,7 @@
     
       <a href="/2020/08/12/Dcoker-Componse/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">CICD前奏(dockefile + docker compose)</div>
+        <div class="article-nav-title">dockefile + docker compose</div>
       </a>
     
   </nav>

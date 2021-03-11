@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">347</span>
+            <span class="post-count">330</span>
         </span>
     </span>
 
@@ -96,11 +96,10 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//查案历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
 
 <p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
 <p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
-<p>当然我这个思考比较哲学，因为懒得查证。。。。。。。</p>
  
       <!-- reward -->
       
