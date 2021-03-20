@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.6k</span>
+            <span class="post-count">4.6k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">12 min</span>
+            <span class="post-count">16 min</span>
         </span>
     </span>
 </div>
@@ -261,7 +261,45 @@
 <td align="center">服务器处理请求出错</td>
 </tr>
 </tbody></table>
-<h2 id="各种协议与HTTP协议的关系"><a href="#各种协议与HTTP协议的关系" class="headerlink" title="各种协议与HTTP协议的关系"></a>各种协议与HTTP协议的关系</h2> 
+<h2 id="各种协议与HTTP协议的关系"><a href="#各种协议与HTTP协议的关系" class="headerlink" title="各种协议与HTTP协议的关系"></a>各种协议与HTTP协议的关系</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210320222328026.png" alt="image-20210320222328026"></p>
+<h2 id="HTTP长连接、短连接"><a href="#HTTP长连接、短连接" class="headerlink" title="HTTP长连接、短连接"></a>HTTP长连接、短连接</h2><p>HTTP/1.0默认短连接，客户端每次访问某个html或者其他类型的web中包含其他的web资源（JS文件，图像，CSS），每次遇到这样一个web资源，浏览器就会重新建立一个HTTP会话。</p>
+<p>从HTTP/1.1默认使用长连接，会在响应头加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connection：keep-alive</span><br></pre></td></tr></table></figure>
+
+<p>长连接，每次一个网页打开，客户端和服务器之间用于传输HTTP数据的TCP连接不关闭。不会持久把持，有保持时间，可以在不同的服务器软件设定。实现长连接的客户端和服务器都需要支持长连接。</p>
+<p>HTTP协议的长连接和短连接，实质上是TCP协议的长连接短连接。</p>
+<h2 id="HTTP如何保存用户状态"><a href="#HTTP如何保存用户状态" class="headerlink" title="HTTP如何保存用户状态"></a>HTTP如何保存用户状态</h2><p>HTTP是无状态协议，自身不对请求体和响应体之间的通信状态进行保存。Session机制，通过服务端记录用户状态。典型的场景是购物车，当你添加商品到购物车时，系统不知道是哪个用户，服务器给特定的用户创建特定的Session来标识这个用户并跟踪。（过期销毁）。</p>
+<p>在服务端保存session方法：内存和数据库（redis），通过在cookie中添加一个session ID 的方式来实现追踪。</p>
+<p><strong>cookie被禁用怎么办？</strong></p>
+<p>URL重写，直接把Session ID附加在URL路径的后面。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie和Session都用来跟踪浏览器用户身份的会话方式，但是场景不太一样。</p>
+<p>Cookie一般保存用户信息：</p>
+<ul>
+<li>在cookie中保存已经登录过的用户信息，下次访问网站可以自动填写基本信息。</li>
+<li>保持登录，在cookie中存放了token。</li>
+<li>登录一次网站后访问网站其他页面不需要登陆。</li>
+</ul>
+<p>Cookie数据保存在客户端，Session保存在服务器端。</p>
+<p>Session安全箱更高。</p>
+<h2 id="HTTP-1-0和HTTP-1-1"><a href="#HTTP-1-0和HTTP-1-1" class="headerlink" title="HTTP/1.0和HTTP/1.1"></a>HTTP/1.0和HTTP/1.1</h2><ul>
+<li>1.0默认长连接。1.1的持续连接有流水线和非流水线方式。流水线是客户端收到HTTP的响应报文之前能接着发送新的请求报文。非流水线是客户端在手打前一个响应后才能发送下一个请求。</li>
+<li>错误状态响应码：新增了24个状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</li>
+<li>缓存处理：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</li>
+<li>带宽优化以及网络连接的使用：1.0存在浪费带宽，例如客户端要对象的一部分，但是服务端把整个对象都穿过来，不支持断点续传。1.1在请求头引入range头域，允许只请求资源的某个部分，返回206。</li>
+</ul>
+<h2 id="URL和URI"><a href="#URL和URI" class="headerlink" title="URL和URI"></a>URL和URI</h2><p>URI：统一资源标志符，唯一表示一个资源</p>
+<p>URL：统一资源定位符，可以提供资源的路径。是具体的URI。</p>
+<p>URI像身份证，URL像家庭住址。不仅标识资源，还提供定位资源的信息。</p>
+<h2 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h2><ul>
+<li>端口：HTTP默认80，HTTPS默认443</li>
+<li>安全性和资源消耗：HTTP基于TCP，传输明文，客户端和服务器都无法验证对方身份。HTTPS运行在SSL/TLS上面的HTTP协议，运行在TCP之上，对称加密，安全性高但是消耗更多服务器资源，<ul>
+<li>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有DES、AES等；</li>
+<li>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有RSA、DSA等。</li>
+</ul>
+</li>
+</ul>
+<p>…待补充</p>
+ 
       <!-- reward -->
       
     </div>
