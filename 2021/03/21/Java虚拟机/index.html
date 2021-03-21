@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    文件上传主动防御 |  Victor&#39;s Blog
+    Java虚拟机 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -43,7 +43,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-文件上传主动防御"
+  id="post-Java虚拟机"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -54,18 +54,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  文件上传主动防御
+  Java虚拟机
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/03/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%BB%E5%8A%A8%E9%98%B2%E5%BE%A1/" class="article-date">
-  <time datetime="2021-03-11T06:15:17.000Z" itemprop="datePublished">2021-03-11</time>
+      <a href="/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="article-date">
+  <time datetime="2021-03-21T07:25:37.000Z" itemprop="datePublished">2021-03-21</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/">网络攻防</a>
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
   </div>
   
 <div class="word_count">
@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">19</span>
+            <span class="post-count">3k</span>
         </span>
     </span>
 
@@ -82,21 +82,178 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">10 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>传统的web架构中，调用文件上传接口上传文件</p>
- 
+  <h1 id="JVM架构"><a href="#JVM架构" class="headerlink" title="JVM架构"></a>JVM架构</h1><p>java源码通过javac编译为java字节码，java字节码是java虚拟机执行的一套代码格式，抽象了计算机的基本操作。大多数指令只有一个字节，有些操作符需要参数，导致多使用了一些字节。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA.png" alt="java虚拟机"></p>
+<p>JVM的基础架构如上图所示：主要包含三大块：</p>
+<ul>
+<li>类加载器：负责动态加载JAVA类到JAVA虚拟机的内存空间。</li>
+<li>运行时数据区：存储JVM运行时的所有数据。</li>
+<li>执行引擎：提供JVM在不同平台的运行能力。</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>在JVM中运行着很多线程，一部分是程序创建来执行代码逻辑的<strong>应用线程</strong>，剩下的是JVM创建来执行后台任务的<strong>系统线程</strong>。</p>
+<p>主要的系统线程：</p>
+<ul>
+<li>Compile：运行时将字节码编译为本地代码使用的线程。</li>
+<li>GC：包含所有和GC有关的操作。</li>
+<li>Period Task：JVM周期性任务调度的线程，主要包含JVM内部的采样分析。</li>
+<li>Singal Dispatcher：处理OS发来的信号。</li>
+<li>VM：某些操作需要等待 JVM 到达 <strong>安全点（Safe Point）</strong>，即堆区没有变化。比如：GC 操作、线程 Dump、线程挂起 这些操作都在 VM Thread 中进行。</li>
+</ul>
+<p>类型来分，JVM内部有两种线程：</p>
+<ul>
+<li>守护线程：JVM自己使用，程序也可以把自己的线程标记为守护线程<code>（public final void setDaemon(boolean on)</code>，必须在start()方法之前调用。</li>
+<li>非守护线程：main方法执行的线程，也称为用户线程。</li>
+</ul>
+<p>只要有非守护进程运行，java程序就会继续运行，非守护都终止时，虚拟机也会自动退出。</p>
+<p>守护进程不适合进行IO，计算等操作，因为守护进程在非守护进程结束自动释放，不能判断该守护进程是否完成了操作。</p>
+<h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><p>负责动态加载类到虚拟机的内存空间。通常是按需加载，类第一次使用才加载。有了类加载器，java在运行时系统不需要知道文件与文件系统。每个java类都要由类加载器装入到内存。</p>
+<p>除了定位和导入二进制文件，还验证类的正确性，为变量分配初始化内存，帮助解析符号引用。按照以下顺序完成：</p>
+<ul>
+<li><strong>装载：</strong>查找并装载二进制数据。</li>
+<li><strong>链接：</strong>执行验证、准备、解析。<ul>
+<li>验证：确保被导入类型的正确性。</li>
+<li>准备：为类变量分配内存，并将其初始化为默认值。</li>
+<li>解析：把类型中的符号引用转化为直接引用。</li>
+</ul>
+</li>
+<li><strong>初始化：</strong>把类变量初始化为正确的初始值。</li>
+</ul>
+<h2 id="装载"><a href="#装载" class="headerlink" title="装载"></a>装载</h2><p>多个类装载器，应用程序可以使用两种类装载器：</p>
+<ul>
+<li><strong>Bootstrap ClassLoader</strong>：原生C编写，不继承自java.lang.ClassLoder。加载核心类库，启动类加载器通常使用某种默认的方式从本地磁盘中加载，包括java API。</li>
+<li><strong>Extention Classloader</strong>：用来在<code>&lt;JAVA_HOME&gt;/jre/lib/ext</code> ,或 <code>java.ext.dirs</code> 中指明的目录中加载 Java 的扩展库。 Java 虚拟机的实现会提供一个扩展库目录。</li>
+<li><strong>Application Classloader</strong>：根据应用程序的类路径java.class.path或者CLASSPATH加载类。一般来说，java应用的类它加载。可以通过<code>ClassLoader.getSystemClassLoader()</code> 来获取它。</li>
+<li><strong>自定义类加载器</strong>：继承java.lang.ClassLoder来实现自己的类加载器。</li>
+</ul>
+<p><strong>全盘负责双亲委托机制：</strong></p>
+<p>一个JVM系统至少3中类加载器，如何平配合工作？通过全盘负责双亲委托机制来协调类加载器。</p>
+<ul>
+<li>全盘负责：当一个ClassLoder装载一个类时，除非显示的使用另一个，该类及其所依赖的类都有这个装载。</li>
+<li>双亲委托机制：指先委托父装载器寻找目标类，只有在找不到的情况下才从自己的类路径中查找并装载目标类。</li>
+</ul>
+<p>全盘负责双亲委托是java推荐的机制，不是强制。实现自己的类加载器，保持机制，重写findClass(name)方法；破坏此机制，重写loadClass(name)方法。</p>
+<p><strong>装载入口：</strong></p>
+<p>所有java虚拟机实现必须在每个类或者接口首次主动使用时初始化。以下情况符合主动使用的要求：</p>
+<ul>
+<li>创建某个类的新实例（new、反射、克隆、序列化）</li>
+<li>调用某个类的静态方法</li>
+<li>使用类或者接口的静态字段，或对该字段赋值。final</li>
+<li>调用java API 的某些反射方法时。</li>
+<li>初始化某个类的子类时、</li>
+<li>当虚拟机启动时被表明为自动类的类。</li>
+</ul>
+<p>除了以上全是被动，不会导致java类型的初始化。</p>
+<p>对于接口来说，只有在此接口声明的非常量字段被使用，才会初始化，不会因为事先这个接口的子接口或者类要初始化而被初始化。</p>
+<p>父类需要在子类之前初始化。当实现了接口的类被初始化时，不需要初始化父接口。然而，当实现了父接口的子类（或者拓展了父接口的子接口）被装载时，父接口也要被装载（装载但不实例化）。</p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>确保装载后的类型符合java语言的语义，并且不会危害整个虚拟机的完整性。</p>
+<ul>
+<li>装载时验证：检查二进制数据保证是预期格式。确保除object外的每个类都有父类，确保该类的父类已经被装载。</li>
+<li>正式验证阶段：检查final类不能有子类，确保 final 方法不被覆盖、确保在类型和超类型之间没有不兼容的方法声明(比如拥有两个名字相同的方法，参数在数量、顺序、类型上都相同，但返回类型不同)。</li>
+<li>符号引用的验证：当虚拟机搜寻一个被符号引用的元素(类型、字段或方法)时，必须首先确认该元素存在。如果虚拟机发现元素存在，则必须进一步检查引用类型有访问该元素的权限。</li>
+</ul>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>虚拟机为类变量分配内存，设置默认初始值。初始化阶段之前，类变量都没有被初始化为真正的初始值。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">0L</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">(short)0</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">‘\u0000’</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">(byte)0</td>
+</tr>
+<tr>
+<td align="center">blooean</td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">0.0f</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">0.0d</td>
+</tr>
+<tr>
+<td align="center">reference</td>
+<td align="center">null</td>
+</tr>
+</tbody></table>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>在类型的常量池中寻找类、接口、字段和方法的符号占用，把这些符号引用替换成直接引用的过程。</p>
+<ul>
+<li>类、接口的解析：判断所要转化成的直接引用是数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li>
+<li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li>
+</ul>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>所有类变量（静态量）初始化语句和类型的静态初始化器都被java编译器收集在一起，放到一个特殊的方法。对于类来说，方法叫初始化方法；对于接口来说，称为接口初始化方法。在类和接口的class文件中，称为<clinit></p>
+<ol>
+<li>存在直接父类且父类没被初始化，先初始化直接父类。</li>
+<li>类存在一个类初始化方法， 执行此方法。</li>
+</ol>
+<p>递归执行，所以第一个初始化的类一定是object。</p>
+<p>虚拟机须确保初始化过程正确同步。如果多个县城需要初始化一个类，仅仅允许一个，其余的等待。</p>
+<h3 id="Clinit方法"><a href="#Clinit方法" class="headerlink" title="Clinit方法"></a>Clinit方法</h3><ul>
+<li>对于静态变量和静态初始化语句来说：执行的顺序和它们在类或接口中出现的顺序有关。</li>
+<li><strong>并非所有的类都需要在它们的<code>class</code>文件中拥有<code>&lt;clinit&gt;()</code>方法，</strong> 如果类没有声明任何类变量，也没有静态初始化语句，那么它就不会有<code>&lt;clinit&gt;()</code>方法。如果类声明了类变量，但没有明确的使用类变量初始化语句或者静态代码块来初始化它们，也不会有<code>&lt;clinit&gt;()</code>方法。如果类仅包含静态<code>final</code>常量的类变量初始化语句，而且这些类变量初始化语句采用编译时常量表达式，类也不会有<code>&lt;clinit&gt;()</code>方法。**只有那些需要执行Java代码来赋值的类才会有<code>&lt;clinit&gt;()</code>**’</li>
+<li><code>final</code>常量：Java虚拟机在使用它们的任何类的常量池或字节码中直接存放的是它们表示的常量值。</li>
+</ul>
+<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>运行时数据区保存JVM在运行过程中产生的数据。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%202%20%E9%A1%B5.png" alt="java虚拟机-第 2 页"></p>
+<h2 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h2><p>各线程共享的内存区域，是虚拟机管理内存区域最大的一块。几乎所有的对象实例和数组实例都是在堆上分配，但是对着JIT编译器以及逃逸分析技术的发展，也可能被优化为在栈上分配。</p>
+<p>还包含字符串字面量常量池。包含一个新生代，一个老年代。</p>
+<p>新生代三个区，大部分对象在Eden去生成，survivor总有一个是空的。</p>
+<p>老年代保存一些生命周期比较长的对象，当一个对象经过对此GC还没被回收，将移动到老年代。</p>
+<h2 id="Method-Area"><a href="#Method-Area" class="headerlink" title="Method Area"></a>Method Area</h2><p>方法区的数据所有线程共享，为安全使用方法区的数据，需要注意线程安全问题。</p>
+<p>主要保存类级别的数据，包括：</p>
+<ul>
+<li>ClassLoader Reference</li>
+<li>Runtime Constant Pool<ul>
+<li>数字常量</li>
+<li>类属性引用</li>
+<li>方法引用</li>
+</ul>
+</li>
+</ul>
+<p>在JVM1.8之前，方法区的实现为永久代。经常内存溢出。在JVM1.8方法区的实现改为<strong>元空间</strong>，元空间是在Native的一块内存空间。</p>
+<h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><p>JVM线程启动时，分配独立的运行时栈，来保存方法调用。每个方法调用，都会入栈一个栈帧。</p>
+<p>栈帧保存三个引用：本地变量表，操作数帧和当前方法所属类的运行时常量池。由于本地变量表和操作数栈的大小都在编译时确定，所以栈帧的大小是固定的。</p>
+<p>被调用的方法返回或抛出异常，栈帧弹出。在抛出异常时 <code>printStackTrace()</code> 打印的每一行就是一个栈帧。同时得益于栈帧的特点，栈帧内的数据是线程安全的。</p>
+<p>栈大小可以动态拓展，但是如果一个线程需要栈的大小超出允许的大小，抛出<code>StackOverflowError</code>。</p>
+<h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
+<h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地房发展执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
+<h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
+<h1 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h1><h1 id="Java分配机制"><a href="#Java分配机制" class="headerlink" title="Java分配机制"></a>Java分配机制</h1><h1 id="String常量池"><a href="#String常量池" class="headerlink" title="String常量池"></a>String常量池</h1><h1 id="对象生命周期"><a href="#对象生命周期" class="headerlink" title="对象生命周期"></a>对象生命周期</h1> 
       <!-- reward -->
       
     </div>
@@ -160,12 +317,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/03/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%BB%E5%8A%A8%E9%98%B2%E5%BE%A1/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%B8%97%E9%80%8F/" rel="tag">文件上传渗透</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li></ul>
 
     </footer>
   </div>
@@ -173,19 +330,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2021/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            算法与数据结构
-          
-        </div>
-      </a>
     
-    
-      <a href="/2021/03/11/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8/" class="article-nav-link">
+      <a href="/2021/03/21/OAuth2-0%E6%8E%88%E6%9D%83/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">从尾到头打印链表</div>
+        <div class="article-nav-title">OAuth2.0授权</div>
       </a>
     
   </nav>
