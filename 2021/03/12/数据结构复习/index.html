@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.9k</span>
+            <span class="post-count">3.8k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">11 min</span>
+            <span class="post-count">15 min</span>
         </span>
     </span>
 </div>
@@ -97,7 +97,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h3><ul>
+  <h1 id="一、树"><a href="#一、树" class="headerlink" title="一、树"></a>一、树</h1><h2 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h2><ul>
 <li><code>性质1</code>：在二叉树第i层的节点数最多为$2^{i-1}(i&gt;=1)$</li>
 <li><code>性质2</code>：高度为k的二叉树节点总数为$2^k-1(k&gt;=1)$</li>
 <li><code>性质3</code>：对于任意的非空二叉树，如果叶子节点的个数为$n_0$，而其度为2的节点数为$n_2$，则：$n_0=n_2+1$</li>
@@ -173,7 +173,7 @@
 <h2 id="B-树"><a href="#B-树" class="headerlink" title="B-树"></a>B-树</h2><h2 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+树"></a>B+树</h2><h2 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h2><p>又称为前缀树，字典树，是一种有序树，用于保存关联数组，其中的键通常是字符串。与查找树不同，键不是直接保存在节点中，而是由节点在树中的位置决定的，一个节点的所有子孙都有相同的前缀，也就是这个节点对应的字符串，一般般情况下，不是所有的节点都有对应的值，只有叶子结点和部分内容节点所对应的键才会有对应的值。</p>
 <p>查询和插入的时间复杂度都是O(n)，是一种空间换时间的方法。当节点树较多的时候，占用的内存比较大。</p>
 <p>常用于搜索提示。当输入一个网址，可以自动搜索出可能出现的选择，当没有完全匹配的搜索结果，返回前缀最相似的可能。</p>
-<h1 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h1><p>也叫作散列表，映射关系，主要解决两个问题，哈希冲突和冲突解决。</p>
+<h1 id="二、Hash"><a href="#二、Hash" class="headerlink" title="二、Hash"></a>二、Hash</h1><p>也叫作散列表，映射关系，主要解决两个问题，哈希冲突和冲突解决。</p>
 <p><strong>哈希函数：</strong></p>
 <p>也称为散列函数，对不同的输入值得到一个固定长度的消息摘要，理想的哈希函数应该是对不同的输入值产生不同的结构，同时散列结果应该具有同一性（输出值尽量均匀）和雪崩效应（微小的输入值发生巨大的输出变化）。</p>
 <p><strong>冲突解决：</strong></p>
@@ -185,7 +185,7 @@
 </li>
 <li>拉链法：把所有的同义词用单链表连接起来，在这种情况下，哈希表的每个单元存放的不再是元素本身，而是相应同义词单链表的头指针。HashMap就是用这种方法解决冲突的。</li>
 </ul>
-<h1 id="最小生成树算法-图论"><a href="#最小生成树算法-图论" class="headerlink" title="最小生成树算法(图论)"></a>最小生成树算法(图论)</h1><ul>
+<h1 id="三、最小生成树算法-图论"><a href="#三、最小生成树算法-图论" class="headerlink" title="三、最小生成树算法(图论)"></a>三、最小生成树算法(图论)</h1><ul>
 <li>连通图：无向图G中，顶点i到顶点J有路径，成为i和J是连通的。若G中任意两个顶点都连通，在称G为连通图。</li>
 <li>生成树：一个连通图的生成树是该连通图的一个极小连通子图，含有全部顶点，但只有构成一个树第二（n-1）条边。</li>
 <li>最小生成树：对于一个带权连通无向图G中的不同生成树，各树的边上的权重之和最小。构造最小生成树的准则有三条：<ul>
@@ -197,9 +197,47 @@
 </ul>
 <h2 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h2><p>G带有n个顶点的带权无向连通图，T是最小生成树，则方法是：</p>
 <ul>
-<li></li>
+<li>初始化U={v}，以V到其他顶点的所有边作为候选边</li>
+<li>重复一下（n-1）次，直到所有的边加入到U中。<ul>
+<li>从候选边挑出权值最小的边加入。</li>
+<li>考察当亲V-U中所有的候选顶点J，修改候选边，若边（k,j）的权值小于原来和顶点J关联的后选编，则用（K,J）取代后者作为候选边。</li>
 </ul>
-<h2 id="克鲁斯卡尔算法"><a href="#克鲁斯卡尔算法" class="headerlink" title="克鲁斯卡尔算法"></a>克鲁斯卡尔算法</h2><h1 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h1><h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h1 id="查找算法"><a href="#查找算法" class="headerlink" title="查找算法"></a>查找算法</h1><h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><h1 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h1> 
+</li>
+</ul>
+<h2 id="克鲁斯卡尔算法"><a href="#克鲁斯卡尔算法" class="headerlink" title="克鲁斯卡尔算法"></a>克鲁斯卡尔算法</h2><p>假设G=(V,E)是一个具有N和顶点的带权连通无向图，T(U,TE)是G的最小生成树，其中U是T的顶点集，TE是T的边，则由G构造从起始顶点v出发的最小生成树T的步骤为：</p>
+<ul>
+<li>置U的初始值等于V(即包含G中的全部顶点)，TE的初始值为空</li>
+<li>将图G中的边按权值从小到大的顺序依次选取，若选取的边未使生成树T形成回路，则加入TE，否则放弃，知道TE中包含(n-1)条边为止。</li>
+</ul>
+<h1 id="四、最短路径算法"><a href="#四、最短路径算法" class="headerlink" title="四、最短路径算法"></a>四、最短路径算法</h1><h1 id="五、KMP算法"><a href="#五、KMP算法" class="headerlink" title="五、KMP算法"></a>五、KMP算法</h1><h1 id="六、查找算法"><a href="#六、查找算法" class="headerlink" title="六、查找算法"></a>六、查找算法</h1><h2 id="1、ASL"><a href="#1、ASL" class="headerlink" title="1、ASL"></a>1、ASL</h2><p>平均查找长度，$\mathrm{ASL}=\sum(\mathrm{n}, \mathrm{i}=1) \mathrm{Pi} * \mathrm{Ci}$，其中n为元素个数，Pi是查找第I个元素的概率，一般为$P_i=1/n$，Ci是找到第I个元素所需要的比较次数。</p>
+<h2 id="2、顺序查找"><a href="#2、顺序查找" class="headerlink" title="2、顺序查找"></a>2、顺序查找</h2><p>让关键字与队列中的数从最后一个开始逐个比较，直到找出与给定关键字相同的数为止，它的缺点是效率低下。**时间复杂度o(n)**。</p>
+<h2 id="3、折半查找"><a href="#3、折半查找" class="headerlink" title="3、折半查找"></a>3、折半查找</h2><p>折半查找要求线性表示有序表。搜索过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜索过程结束；如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。如果在某一步骤数组为空，则代表找不到。这种搜索算法每一次比较都使搜索范围缩小一半。<strong>折半搜索每次把搜索区域减少一半，时间复杂度为O(log n)。</strong></p>
+<ul>
+<li><strong>可以借助二叉判定树求得折半查找的平均查找长度</strong>：<code>log2(n+1)-1</code>。</li>
+<li>折半查找在失败时所需比较的关键字个数不超过判定树的深度，n个元素的判定树的深度和n个元素的完全二叉树的深度相同<code>log2(n)+1</code>。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public int binarySearchStandard(int[] num, int target)&#123;</span><br><span class="line">    int start &#x3D; 0;</span><br><span class="line">    int end &#x3D; num.length - 1;</span><br><span class="line">    while(start &lt;&#x3D; end)&#123; &#x2F;&#x2F;注意1</span><br><span class="line">        int mid &#x3D; start + ((end - start) &gt;&gt; 1);</span><br><span class="line">        if(num[mid] &#x3D;&#x3D; target)</span><br><span class="line">            return mid;</span><br><span class="line">        else if(num[mid] &gt; target)&#123;</span><br><span class="line">            end &#x3D; mid - 1; &#x2F;&#x2F;注意2</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            start &#x3D; mid + 1; &#x2F;&#x2F;注意3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、分块查找"><a href="#4、分块查找" class="headerlink" title="4、分块查找"></a>4、分块查找</h2><p>分块查找又称索引顺序查找，它是一种性能介于顺序查找和折半查找之间的查找方法。<strong>分块查找由于只要求索引表是有序的，对块内节点没有排序要求，因此特别适合于节点动态变化的情况</strong>。</p>
+<h1 id="七、排序算法"><a href="#七、排序算法" class="headerlink" title="七、排序算法"></a>七、排序算法</h1><h2 id="1、常见排序算法"><a href="#1、常见排序算法" class="headerlink" title="1、常见排序算法"></a>1、常见排序算法</h2><ul>
+<li>稳定排序<ul>
+<li>冒泡：$O(n^2)$</li>
+<li>插入：$O(n^2)$</li>
+<li>桶排序：O(n); 需要 O(k) 额外空间</li>
+<li>归并排序：O(nlogn); 需要 O(n) 额外空间</li>
+<li>二叉排序树排序：O(n log n) 期望时间; O(n²)最坏时间; 需要 O(n) 额外空间</li>
+<li>基数排序：O(n·k); 需要 O(n) 额外空间</li>
+</ul>
+</li>
+<li>不稳定排序<ul>
+<li>选择排序：$O(n^2)$</li>
+<li>希尔排序：$O(nlogn)$</li>
+<li>堆排序：$O(nlogn)$</li>
+<li>快速排序：$O(nlogn)$期望时间, O(n²) 最坏情况; 对于大的、乱数串行一般相信是最快的已知排序。</li>
+</ul>
+</li>
+</ul>
+<h2 id="交换排序"><a href="#交换排序" class="headerlink" title="交换排序"></a>交换排序</h2><h3 id="冒泡"><a href="#冒泡" class="headerlink" title="冒泡"></a>冒泡</h3><h3 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h3><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><h3 id="直插"><a href="#直插" class="headerlink" title="直插"></a>直插</h3><h3 id="希尔"><a href="#希尔" class="headerlink" title="希尔"></a>希尔</h3><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h3><h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><h1 id="八、跳跃表"><a href="#八、跳跃表" class="headerlink" title="八、跳跃表"></a>八、跳跃表</h1> 
       <!-- reward -->
       
     </div>
