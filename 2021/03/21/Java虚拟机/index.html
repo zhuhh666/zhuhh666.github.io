@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3k</span>
+            <span class="post-count">4.8k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">10 min</span>
+            <span class="post-count">16 min</span>
         </span>
     </span>
 </div>
@@ -253,7 +253,73 @@
 <h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
 <h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地房发展执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
 <h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
-<h1 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h1><h1 id="Java分配机制"><a href="#Java分配机制" class="headerlink" title="Java分配机制"></a>Java分配机制</h1><h1 id="String常量池"><a href="#String常量池" class="headerlink" title="String常量池"></a>String常量池</h1><h1 id="对象生命周期"><a href="#对象生命周期" class="headerlink" title="对象生命周期"></a>对象生命周期</h1> 
+<h1 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
+<ul>
+<li><p>引用计数算法</p>
+<p>对象添加引用计数器，引用时+1,引用失效-1。致命缺陷就是两个对象相互引用导致两个都无法回收。</p>
+</li>
+<li><p>根搜索算法</p>
+<p>实际上是追踪从根节点开始的引用图。</p>
+<p>在根搜索算法追踪的过程，起点是GC Root，根据JVM的实现不同而不同，但是总会包含以下几个方面（堆外引用）：</p>
+<ul>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中的类静态属性引用的变量</li>
+<li>方法区中的常量引用的变量</li>
+<li>本地方法JNI的引用对象</li>
+</ul>
+<p>从GC Root开始的引用图，有向图，节点时对象，边是引用类型。JVM分为四种引用类型：<strong>强引用，软引用，弱引用，虚引用。</strong></p>
+<p>一个对象的引用类型有多个，如何确定回收策略：</p>
+<ul>
+<li>单条引用链以链上最弱的一个引用类型来决定；</li>
+<li>多条引用链以多个单条引用链中最强的一个引用类型来决定；</li>
+</ul>
+<p>在引用图，如果一个节点没有任何路径可达，确定回收。</p>
+<p><strong>强引用：</strong></p>
+<p>在java中普遍存在，类似于<code>Object o = new Object;</code>和其他引用的区别是：强引用禁止引用目标被GC收集，其他引用不禁止。</p>
+<p><strong>软引用：</strong></p>
+<p>对象可以从根节点通过一个或多个软引用对象触及，GC在要发生内存溢出之前将这些对象列入回收范围进行回收，如果该软引用和引用队列关联，他会吧改软引用对象加入队列。<strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p><strong>弱引用：</strong></p>
+<p>垃圾收集器在GC的时候会回收所有的所引用，如果该弱引用和引用队列相关联，他会吧改弱引用加入到队列。</p>
+<p><strong>虚引用：</strong></p>
+<p>GC不会清楚虚引用，程序明确清除。同时也不能通过虚引用来取得一个实例。</p>
+</li>
+</ul>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="1、复制回收"><a href="#1、复制回收" class="headerlink" title="1、复制回收"></a>1、复制回收</h3><p>可用内存等分两份，同一时刻值使用其中一份。用完后将还存活的对象赋值到另一份，然后将这一份清空。能够有效避免内存碎片，但是减低了内存使用率。</p>
+<h3 id="2、标记清除算法"><a href="#2、标记清除算法" class="headerlink" title="2、标记清除算法"></a>2、标记清除算法</h3><p>先暂停整个程序的全部运行线程，让回收线程以单线程进行扫描标记，并进行直接清除回收，然后回收完成后恢复运行线程。标记清除后会产生大量不连续的内存碎片，造成空间浪费。</p>
+<h3 id="3、标记整理算法"><a href="#3、标记整理算法" class="headerlink" title="3、标记整理算法"></a>3、标记整理算法</h3><p>和标记清除相似，不同的是，回收期间同时会将保留的存储对象搬运汇集到连续的内存空间，从而集成空闲时间。</p>
+<h3 id="4、增量回收"><a href="#4、增量回收" class="headerlink" title="4、增量回收"></a>4、增量回收</h3><p>将程序拥有的内存空间分成若干区。程序的存储对象会分布在分区中，每次只对其中一个分区进行回收，从而避免程序全部运行线程暂停来进行回收，允许部分线程在不影响回收行为的情况下保持运行，降低回收时间，增加线程响应速度。</p>
+<h3 id="5、分代回收"><a href="#5、分代回收" class="headerlink" title="5、分代回收"></a>5、分代回收</h3><p>对象拥有不同的生命周期，不同生命周期的对象采用不同的回收算法，以提高效率。</p>
+<p><strong>记忆集：</strong></p>
+<p>对象C在新生代，只被一个在老年代的D引用。如果运行新生代GC，要确定C是否被堆外引用，需要便利老年代，代价比较大。JVM在对象引用的时候，会有个记忆集，记录从老年代到新生代的引用关系，并把记忆集中的老年代作为GC ROOT构建索引图，遮掩在新生代GC的时候就不需要遍历老年代。</p>
+<p>但是记忆集有缺点：C &amp; D 其实都可以进行回收，但是由于记忆集的存在，不会将 C 回收。这里其实有一点 <strong>空间换时间</strong> 的意思。不过无论如何，它依然确保了垃圾回收所遵循的原则：<strong>垃圾回收确保回收的对象必然是不可达对象，但是不确保所有的不可达对象都会被回收</strong>。</p>
+<h2 id="垃圾回收触发条件"><a href="#垃圾回收触发条件" class="headerlink" title="垃圾回收触发条件"></a>垃圾回收触发条件</h2><h3 id="1、堆内内存"><a href="#1、堆内内存" class="headerlink" title="1、堆内内存"></a>1、堆内内存</h3><p>对于HotSpot VM实现，GC只有两大种：</p>
+<ol>
+<li>Partial GC：并不收集整个GC堆<ul>
+<li>Young GC：只收集新生代的GC</li>
+<li>Old GC：只收集老年代的GC。只有 CMS的 Concurrent Collection 是这个模式</li>
+<li>Mixed GC：收集整个 Young Gen 以及部分 Old Gen 的 GC。只有 G1 有这个模式</li>
+</ul>
+</li>
+<li>Full GC：收集整个堆，包括 Young Gen、Old Gen、Perm Gen（如果存在的话）等所有部分的 GC 模式。</li>
+</ol>
+<p>最简单的分代式GC策略，按照HotSpot的serial GC的实现看，出发条件是：</p>
+<ul>
+<li>Young GC：新生代的eden区分配满的时候触发，把eden区存货的对象复制到一个Survivor区，当这个Survivor区满时，存活的对象被复制到另一个survivor区。</li>
+<li>Full GC<ul>
+<li>当准备要触发一次 Young GC 时，如果发现之前 Young GC 的平均晋升大小比目前 Old Gen剩余的空间大，则不会触发 Young GC 而是转为触发 Full GC</li>
+<li>如果有 Perm Gen 的话，要在 Perm Gen分配空间但已经没有足够空间时</li>
+<li><code>System.gc()</code></li>
+<li>Heap dump</li>
+</ul>
+</li>
+</ul>
+<p>并发 GC 的触发条件就不太一样。以 CMS GC 为例，它主要是定时去检查 Old Gen 的使用量，当使用量超过了触发比例就会启动一次 GC，对 Old Gen做并发收集。</p>
+<h3 id="2、堆外内存"><a href="#2、堆外内存" class="headerlink" title="2、堆外内存"></a>2、堆外内存</h3><p>DirectByteBuffer的引用时直接分配在堆的old区，回收时机是在FULLGC，因此需要避免频繁的分配directByteBuffer，这样就很容易导致Native Memory溢出。</p>
+<p>DirectByteBuffer申请的直接内存，不在G范围内，无法自动回收。JDK提供一种机制，可以为堆内存对象注册一个钩子函数(其实就是实现 <code>Runnable</code> 接口的子类)，当堆内存对象被GC回收的时候，会回调run方法，我们可以在这个方法中执行释放 <code>DirectByteBuffer</code> 引用的直接内存，即在run方法中调用 <code>Unsafe</code> 的 <code>freeMemory</code> 方法。注册是通过<code>sun.misc.Cleaner</code> 类来实现的。</p>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>内存回收的具体实现，以下为7钟不同分代的收集器，有连线表示可以搭配使用。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%203%20%E9%A1%B5.png" alt="java虚拟机-第 3 页"></p>
+<h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器</p>
+<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><h3 id="5、CMS-收集器"><a href="#5、CMS-收集器" class="headerlink" title="5、CMS 收集器"></a>5、CMS 收集器</h3><h3 id="6、G1收集器"><a href="#6、G1收集器" class="headerlink" title="6、G1收集器"></a>6、G1收集器</h3><h1 id="Java分配机制"><a href="#Java分配机制" class="headerlink" title="Java分配机制"></a>Java分配机制</h1><h1 id="String常量池"><a href="#String常量池" class="headerlink" title="String常量池"></a>String常量池</h1><h1 id="对象生命周期"><a href="#对象生命周期" class="headerlink" title="对象生命周期"></a>对象生命周期</h1> 
       <!-- reward -->
       
     </div>
