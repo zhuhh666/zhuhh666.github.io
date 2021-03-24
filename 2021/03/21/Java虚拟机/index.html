@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.8k</span>
+            <span class="post-count">8.4k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">16 min</span>
+            <span class="post-count">30 min</span>
         </span>
     </span>
 </div>
@@ -97,7 +97,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="JVM架构"><a href="#JVM架构" class="headerlink" title="JVM架构"></a>JVM架构</h1><p>java源码通过javac编译为java字节码，java字节码是java虚拟机执行的一套代码格式，抽象了计算机的基本操作。大多数指令只有一个字节，有些操作符需要参数，导致多使用了一些字节。</p>
+  <h1 id="1、JVM架构"><a href="#1、JVM架构" class="headerlink" title="1、JVM架构"></a>1、JVM架构</h1><p>java源码通过javac编译为java字节码，java字节码是java虚拟机执行的一套代码格式，抽象了计算机的基本操作。大多数指令只有一个字节，有些操作符需要参数，导致多使用了一些字节。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA.png" alt="java虚拟机"></p>
 <p>JVM的基础架构如上图所示：主要包含三大块：</p>
 <ul>
@@ -121,7 +121,7 @@
 </ul>
 <p>只要有非守护进程运行，java程序就会继续运行，非守护都终止时，虚拟机也会自动退出。</p>
 <p>守护进程不适合进行IO，计算等操作，因为守护进程在非守护进程结束自动释放，不能判断该守护进程是否完成了操作。</p>
-<h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><p>负责动态加载类到虚拟机的内存空间。通常是按需加载，类第一次使用才加载。有了类加载器，java在运行时系统不需要知道文件与文件系统。每个java类都要由类加载器装入到内存。</p>
+<h1 id="2、类加载器"><a href="#2、类加载器" class="headerlink" title="2、类加载器"></a>2、类加载器</h1><p>负责动态加载类到虚拟机的内存空间。通常是按需加载，类第一次使用才加载。有了类加载器，java在运行时系统不需要知道文件与文件系统。每个java类都要由类加载器装入到内存。</p>
 <p>除了定位和导入二进制文件，还验证类的正确性，为变量分配初始化内存，帮助解析符号引用。按照以下顺序完成：</p>
 <ul>
 <li><strong>装载：</strong>查找并装载二进制数据。</li>
@@ -228,7 +228,7 @@
 <li><strong>并非所有的类都需要在它们的<code>class</code>文件中拥有<code>&lt;clinit&gt;()</code>方法，</strong> 如果类没有声明任何类变量，也没有静态初始化语句，那么它就不会有<code>&lt;clinit&gt;()</code>方法。如果类声明了类变量，但没有明确的使用类变量初始化语句或者静态代码块来初始化它们，也不会有<code>&lt;clinit&gt;()</code>方法。如果类仅包含静态<code>final</code>常量的类变量初始化语句，而且这些类变量初始化语句采用编译时常量表达式，类也不会有<code>&lt;clinit&gt;()</code>方法。**只有那些需要执行Java代码来赋值的类才会有<code>&lt;clinit&gt;()</code>**’</li>
 <li><code>final</code>常量：Java虚拟机在使用它们的任何类的常量池或字节码中直接存放的是它们表示的常量值。</li>
 </ul>
-<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>运行时数据区保存JVM在运行过程中产生的数据。</p>
+<h1 id="3、内存模型"><a href="#3、内存模型" class="headerlink" title="3、内存模型"></a>3、内存模型</h1><p>运行时数据区保存JVM在运行过程中产生的数据。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%202%20%E9%A1%B5.png" alt="java虚拟机-第 2 页"></p>
 <h2 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h2><p>各线程共享的内存区域，是虚拟机管理内存区域最大的一块。几乎所有的对象实例和数组实例都是在堆上分配，但是对着JIT编译器以及逃逸分析技术的发展，也可能被优化为在栈上分配。</p>
 <p>还包含字符串字面量常量池。包含一个新生代，一个老年代。</p>
@@ -253,7 +253,7 @@
 <h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
 <h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地房发展执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
 <h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
-<h1 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
+<h1 id="4、垃圾收集"><a href="#4、垃圾收集" class="headerlink" title="4、垃圾收集"></a>4、垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
 <ul>
 <li><p>引用计数算法</p>
 <p>对象添加引用计数器，引用时+1,引用失效-1。致命缺陷就是两个对象相互引用导致两个都无法回收。</p>
@@ -318,8 +318,200 @@
 <p>DirectByteBuffer申请的直接内存，不在G范围内，无法自动回收。JDK提供一种机制，可以为堆内存对象注册一个钩子函数(其实就是实现 <code>Runnable</code> 接口的子类)，当堆内存对象被GC回收的时候，会回调run方法，我们可以在这个方法中执行释放 <code>DirectByteBuffer</code> 引用的直接内存，即在run方法中调用 <code>Unsafe</code> 的 <code>freeMemory</code> 方法。注册是通过<code>sun.misc.Cleaner</code> 类来实现的。</p>
 <h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>内存回收的具体实现，以下为7钟不同分代的收集器，有连线表示可以搭配使用。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%203%20%E9%A1%B5.png" alt="java虚拟机-第 3 页"></p>
-<h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器</p>
-<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><h3 id="5、CMS-收集器"><a href="#5、CMS-收集器" class="headerlink" title="5、CMS 收集器"></a>5、CMS 收集器</h3><h3 id="6、G1收集器"><a href="#6、G1收集器" class="headerlink" title="6、G1收集器"></a>6、G1收集器</h3><h1 id="Java分配机制"><a href="#Java分配机制" class="headerlink" title="Java分配机制"></a>Java分配机制</h1><h1 id="String常量池"><a href="#String常量池" class="headerlink" title="String常量池"></a>String常量池</h1><h1 id="对象生命周期"><a href="#对象生命周期" class="headerlink" title="对象生命周期"></a>对象生命周期</h1> 
+<h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器。优点是：简单高效。此收集器没有线程交互的开销，效率高。在用户桌面的场景下，分配给JVM的内存不会太多，停顿时间在几十到一百多毫秒之间，只要不频繁收集，完全可以接受。</p>
+<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><p>Serial的多线程版本，是许多运行在Server模式下的默认新生代GC，主要与CMS收集器配合工作。</p>
+<h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><p>新生代GC，多线程收集器。更关注可控制的吞吐量，吞吐量等于运行用户代码的时间/（运行用户代码的时间+垃圾收集时间）。</p>
+<h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><p>Serial的老年代版本，单线程，采用“标记-整理算法”进行垃圾回收。</p>
+<h3 id="5、Parallel-Old"><a href="#5、Parallel-Old" class="headerlink" title="5、Parallel Old"></a>5、Parallel Old</h3><p>是Parallel Scavenge的老年代版本，多线程，通常与Parallel Scavenge配合使用。</p>
+<h3 id="6、CMS-收集器"><a href="#6、CMS-收集器" class="headerlink" title="6、CMS 收集器"></a>6、CMS 收集器</h3><p>目标是获取最短停顿时间，采用“标记-清除”算法，运行在老年代，包含以下步骤：</p>
+<ul>
+<li>初始标记</li>
+<li>并发标记</li>
+<li>重新标记</li>
+<li>并发清除。</li>
+</ul>
+<p>其中初始标记和重新标记仍然需要stop the world。初始标记仅仅标记GC ROOT能直接关联的对象，并发标记是为了记性GC ROOT Tracing过程，重新标记是为了修正并发标记期间，因为用户程序继续运行而导致标记变动的那部分对象的标记记录。</p>
+<p>最耗时的是并发表标记和并发清除，收集线程和用户线程一起工作，总体来说，CMS GC回收和用户程序并行。优点是并发收集、低停顿，但是有三个缺点：</p>
+<ul>
+<li>对CPU资源很敏感：并发阶段不停用用户进程，但是占用线程导致程序变慢。</li>
+<li>不能处理浮动垃圾：浮动垃圾就是在并发标记阶段，用户程序运行产生新的垃圾，这部分垃圾在标记后，CMS无法在当次集中处理，只能在下一次GC处理，这部分垃圾就称为浮动垃圾。</li>
+</ul>
+<p>正是由于在垃圾收集阶段程序还需要运行，即还需要预留足够的内存空间供用户使用，因此 CMS 收集器不能像其他收集器那样等到老年代几乎填满才进行收集，需要预留一部分空间提供并发收集时程序运作使用。要是 CMS 预留的内存空间不能满足程序的要求，这是 JVM 就会启动预备方案：<strong>临时启动 Serial Old 收集器来收集老年代</strong>，这样停顿的时间就会很长。</p>
+<h3 id="6、G1收集器"><a href="#6、G1收集器" class="headerlink" title="6、G1收集器"></a>6、G1收集器</h3><p>比GMS有很大改进：</p>
+<ul>
+<li>标记整理算法：采用标记整理算法实现</li>
+<li>增量回收模式：将Heap分割成多个Region，并在后台维护一个优先列表，每次根据允许的时间，优先回收垃圾最多的区域。</li>
+</ul>
+<p>因此G1收集器可以实现在基本不牺牲吞吐量的情况下完成低停顿的内存回收，这是正式由于他极力的避免全区域回收。</p>
+<p><strong>总结</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">垃圾收集器</th>
+<th align="center">特性</th>
+<th align="center">算法</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Serial</td>
+<td align="center">串行</td>
+<td align="center">复制</td>
+<td align="center">高效：无线程切换</td>
+<td align="center">无法利用多核CPU</td>
+</tr>
+<tr>
+<td align="center">ParNew</td>
+<td align="center">并行</td>
+<td align="center">复制</td>
+<td align="center">可利用多核CPU、唯一能与CMS配合的并行收集器</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Parallel Scavenge</td>
+<td align="center">并行</td>
+<td align="center">复制</td>
+<td align="center">高吞吐量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Serial Old</td>
+<td align="center">串行</td>
+<td align="center">标记整理</td>
+<td align="center">高效</td>
+<td align="center">无法利用多核CPU</td>
+</tr>
+<tr>
+<td align="center">Parallel Old</td>
+<td align="center">并行</td>
+<td align="center">标记整理</td>
+<td align="center">高吞吐量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">CMS</td>
+<td align="center">并行</td>
+<td align="center">标记清除</td>
+<td align="center">低停顿</td>
+<td align="center">CPU敏感，浮动垃圾，内存碎片</td>
+</tr>
+<tr>
+<td align="center">G1</td>
+<td align="center">并行</td>
+<td align="center">增量回收</td>
+<td align="center">低停顿。高吞吐量</td>
+<td align="center">内存使用效率低：分区导致内存不能充分使用</td>
+</tr>
+</tbody></table>
+<h1 id="5、Java分配机制"><a href="#5、Java分配机制" class="headerlink" title="5、Java分配机制"></a>5、Java分配机制</h1><p>java中符合“编译时可知，运行时不可变”要求的主要是静态方法和私有方法。因此适合在类加载时进行解析。</p>
+<p>java虚拟机中有四种方法调用指令：</p>
+<ul>
+<li>invokestatic：调用静态方法。</li>
+<li>invokespecial：调用实例构造方法，私有方法和super</li>
+<li>invokeinterface：调用接口方法</li>
+<li>invokevirtual：调用以上指令不能调用的方法（虚方法）。</li>
+</ul>
+<p>只要能被static和special指令调用的方法，都可以在解析阶段唯一确定调用版本，符合条件的有：静态方法，私有方法，实例构造器，父类方法，他们在类加载的时候就会把符号引用解析为该方法的直接引用。这些方法称为非虚方法， 反之称为虚方法，（final除外）。</p>
+<blockquote>
+<p>虽然final方法是使用virtual指令来调用，但是无法被覆盖，多态的选择是唯一的，所以是一种虚方法。</p>
+</blockquote>
+<h2 id="静态分派"><a href="#静态分派" class="headerlink" title="静态分派"></a>静态分派</h2><blockquote>
+<p>对于类字段的访问也采用静态分派</p>
+</blockquote>
+<p><code>People man =  new Man()</code></p>
+<p>静态分派主要针对重载，方法调用时如何选择。在上面的代码，Peopel被称为变量的引用类型，Man称为变量的实际类型。静态类型在编译时可知，动态类型在运行时可知。</p>
+<p>编译器在重载时候通过参数的静态类型而不是实际类型作为判断依据。并且静态类型咋编译时可知，所以编译器根据重载的参数的静态类型进行方法选择。</p>
+<blockquote>
+<p>在某些情况下有多个重载，那编译器如何选择呢？ 编译器会选择”最合适”的函数版本，那么怎么判断”最合适“呢？越接近传入参数的类型，越容易被调用。</p>
+</blockquote>
+<h2 id="动态分派"><a href="#动态分派" class="headerlink" title="动态分派"></a>动态分派</h2><p>主要针对重写，使用virtual指令调用，virtual指令多态查找过程：</p>
+<ul>
+<li>找到操作数栈顶的第一个元素所指向的对象的实际类型，记为C</li>
+<li>如果在类型C中找到与常量中的描述符合简单名称都相符的方法，则进行访问权限校验，如果通过则返回这个方法的直接引用，查找过程结束；如果权限校验不通过，返回java.lang.IllegalAccessError异常。</li>
+<li>否则，按照继承关系从下往上一次对C的各个父类进行第2步的搜索和验证过程。</li>
+<li>如果始终没有找到合适的方法，则抛出 java.lang.AbstractMethodError异常。</li>
+</ul>
+<h2 id="虚拟机动态分派的实现"><a href="#虚拟机动态分派的实现" class="headerlink" title="虚拟机动态分派的实现"></a>虚拟机动态分派的实现</h2><p>动态分配很繁琐，而且动态分派的方法版本的选择需要考虑运行时咋类的方法数据中搜索合适的目标方法，因为在虚拟机的实现中基于性能的考虑，咋方法区中建立一个虚方法表来提高性能。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324125440920.png" alt="image-20210324125440920"></p>
+<p>虚方法表中存放各个方法的实际入口地址。如果某个方法在子类中没有重写，那么子类的虚方法表里的入口和父类入口一致，如果子类重写了这个方法，那么子类方法表中的地址会被替换成子类实现版本的入口地址。</p>
+<h1 id="6、String常量池"><a href="#6、String常量池" class="headerlink" title="6、String常量池"></a>6、String常量池</h1><p>常量池类似于一个JAVA系统级别提供的缓存。</p>
+<p>String类型的常量池比较特殊，使用方法：</p>
+<ul>
+<li>直接使用双引号声明的String对象会直接存储在常量池。</li>
+<li>不是使用双引号，可以使用String提供的inter方法，该方法会从字符串常量池中查询当前字符串是否存在，不存在则放入常量池。</li>
+</ul>
+<h2 id="Intern"><a href="#Intern" class="headerlink" title="Intern"></a>Intern</h2><p>java使用Jni调用C++实现的StringTable的Intern方法，StringTable跟java中的HashMap实现差不多，但是不能扩容。默认大小是<code>1009</code></p>
+<p>要注意的是， <code>String</code> 的 <code>String Pool</code> 是一个固定大小的 <code>Hashtable</code> ，默认值大小长度是 <code>1009</code> ，如果放进 <code>String Pool</code> 的 <code>String</code> 非常多，就会造成 Hash 冲突严重，从而导致链表会很长，而链表长了后直接会造成的影响就是当调用 <code>String.intern</code> 时性能会大幅下降。</p>
+<p>JDK6中StringTable固定，但是JDK7可以通过参数指定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX：StringTableSize&#x3D;99991</span><br></pre></td></tr></table></figure>
+
+<p>在6和以前的版本，字符串的常量池存放在Perm区，7的版本中，转移到正常的Heap区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    s.intern();</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    s3.intern();</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<ul>
+<li>JDK6：false false</li>
+<li>JDK7：fale true</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    s.intern();</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    s3.intern();</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<ul>
+<li>6：false false</li>
+<li>7：false false</li>
+</ul>
+<p>由于7将字符串常量池放到Heap中，导致差异。</p>
+<h3 id="JDK-6"><a href="#JDK-6" class="headerlink" title="JDK 6"></a>JDK 6</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/1.png" alt="1"></p>
+<p>黑色线表示String对象的内容指向，红色代表地址指向。</p>
+<p>在jdk6中所有打印都是false，因为常量池在Perm中，Perm和正常的Heap是分开的，引号声明的字符串直接在常量池生成，而new出来的String存放在Heap，地址肯定不同，及时调用String.intern()方法也是没有很合关系。</p>
+<h3 id="JDK-7"><a href="#JDK-7" class="headerlink" title="JDK 7"></a>JDK 7</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%205%20%E9%A1%B5.png" alt="java虚拟机-第 5 页"></p>
+<ul>
+<li>第一段代码，<code>String s3 = new String(&quot;1&quot;)+new String(&quot;1&quot;);</code>，代码生成两个最终对象，是常量池中的“1”和Heap中S3引用指向的对象。此时S3引用的对象是“11”，但是常量池没有“11”对象。</li>
+<li>接下来S3.intern()是讲S3中的“11”放入常量池。但是7中的常量池不在Perm区域了，常量池中不需要再存储一份对象，可以直接存储占中的引用。这份引用指向S3的对象。引用地址是相同的。</li>
+<li>最后 <code>String s4 = &quot;11&quot;;</code> 这句代码中 <code>”11”</code> 是显示声明的，因此会直接去常量池中创建，创建的时候发现已经有这个对象了，此时也就是指向 <code>s3</code> 引用对象的一个引用。所以 <code>s4</code> 引用就指向和 <code>s3</code> 一样了。因此最后的比较 <code>s3 == s4</code> 是 <code>true</code> 。</li>
+<li>再看 <code>s</code> 和 <code>s2</code> 对象。 <code>String s = new String(&quot;1&quot;);</code> 第一句代码，生成了2个对象。常量池中的 <code>“1”</code> 和 <code>JAVA Heap</code> 中的字符串对象。<code>s.intern();</code> 这一句是 <code>s</code> 对象去常量池中寻找后发现 <code>“1”</code> 已经在常量池里了。</li>
+<li>接下来 <code>String s2 = &quot;1&quot;;</code> 这句代码是生成一个 <code>s2</code> 的引用指向常量池中的 <code>“1”</code> 对象。 结果就是 <code>s</code> 和 <code>s2</code> 的引用地址明显不同。</li>
+</ul>
+<p>接下来是第二段代码：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%206%20%E9%A1%B5.png" alt="java虚拟机-第 6 页"></p>
+<ul>
+<li>第一段代码和第二段代码的改变就是 <code>s3.intern();</code> 的顺序是放在 <code>String s4 = &quot;11&quot;;</code> 后了。这样，首先执行 <code>String s4 = &quot;11&quot;;</code> 声明 <code>s4</code> 的时候常量池中是不存在 <code>“11”</code> 对象的，执行完毕后， <code>“11“</code> 对象是 <code>s4</code> 声明产生的新对象。然后再执行 <code>s3.intern();</code> 时，常量池中 <code>“11”</code> 对象已经存在了，因此 <code>s3</code> 和 <code>s4</code> 的引用是不同的。</li>
+<li>二段代码中的 <code>s</code> 和 <code>s2</code> 代码中，<code>s.intern();</code>，这一句往后放也不会有什么影响了，因为对象池中在执行第一句代码<code>String s = new String(&quot;1&quot;);</code> 的时候已经生成 <code>“1”</code> 对象了。下边的 <code>s2</code> 声明都是直接从常量池中取地址引用的。 <code>s</code> 和 <code>s2</code> 的引用地址是不会相等的。</li>
+</ul>
+<h3 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h3><p>对intern和常量池都做了一定的修改，主要包括：</p>
+<ul>
+<li>将String常量池从Perm区移动到了Heap区</li>
+<li>String.intern方法时，如果heap中存在对象，将会直接保存对象的引用，而不是重新创建对象。</li>
+</ul>
+<h3 id="使用范例"><a href="#使用范例" class="headerlink" title="使用范例"></a>使用范例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">static final int MAX &#x3D; 1000 * 10000;</span><br><span class="line">static final String[] arr &#x3D; new String[MAX];</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">    Integer[] DB_DATA &#x3D; new Integer[10];</span><br><span class="line">    Random random &#x3D; new Random(10 * 10000);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; DB_DATA.length; i++) &#123;</span><br><span class="line">        DB_DATA[i] &#x3D; random.nextInt();</span><br><span class="line">    &#125;</span><br><span class="line">	long t &#x3D; System.currentTimeMillis();</span><br><span class="line">    for (int i &#x3D; 0; i &lt; MAX; i++) &#123;</span><br><span class="line">        &#x2F;&#x2F;arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length]));</span><br><span class="line">         arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length])).intern();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	System.out.println((System.currentTimeMillis() - t) + &quot;ms&quot;);</span><br><span class="line">    System.gc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一条是使用 intern，一条是未使用 intern。</p>
+<p>通过上述结果，我们发现不使用 <code>intern</code> 的代码生成了 <code>1000w</code> 个字符串，占用了大约 <code>640m</code> 空间。 使用了 <code>intern</code> 的代码生成了 <code>1345</code> 个字符串，占用总空间 <code>133k</code> 左右。其实通过观察程序中只是用到了 <code>10</code> 个字符串，所以准确计算后应该是正好相差 <code>100w</code> 倍。虽然例子有些极端，但确实能准确反应出 intern 使用后产生的巨大空间节省。</p>
+<p> <code>intern</code> 方法后时间上有了一些增长。这是因为程序中每次都是用了 <code>new String</code> 后，然后又进行 <code>intern</code> 操作的耗时时间，这一点如果在内存空间充足的情况下确实是无法避免的，但我们平时使用时，内存空间肯定不是无限大的，不使用 <code>intern</code> 占用空间导致 <code>jvm</code> 垃圾回收的时间是要远远大于这点时间的。</p>
+<h1 id="7、对象生命周期"><a href="#7、对象生命周期" class="headerlink" title="7、对象生命周期"></a>7、对象生命周期</h1><h2 id="类实例化"><a href="#类实例化" class="headerlink" title="类实例化"></a>类实例化</h2><p>实例化类的四个途径：</p>
+<ul>
+<li>new</li>
+<li>调用class或者java.lang.reflect.Constructor对象的NewInstance</li>
+<li>调用任何现有对象的clone</li>
+<li>通过<code>java.io.ObjectInputStream.getObject()</code>反序列化。</li>
+</ul>
+<p>隐含的实例化：</p>
+<ul>
+<li>保存命令行参数的String对象</li>
+<li>虚拟机装载的每个类，都会暗中实例化一个class对象来代表这个类型。</li>
+<li>当Java虚拟机装载了在常量池中包含<code>CONSTANT_String_info</code>入口的类的时候，它会创建新的<code>String</code>对象来表示这些常量字符串。</li>
+<li>执行包含字符串连接操作符的表达式会产生新的对象。</li>
+</ul>
+<h2 id="垃圾收集和对象的终结"><a href="#垃圾收集和对象的终结" class="headerlink" title="垃圾收集和对象的终结"></a>垃圾收集和对象的终结</h2><p>程序可以分配内存但不能释放内存，一个对象不再为程序引用，虚拟机必须回收那部分内存。</p>
+<h2 id="卸载类"><a href="#卸载类" class="headerlink" title="卸载类"></a>卸载类</h2><p>虚拟机中类的生命周期和对象的生命周期相似。当程序不再使用某个类的时候，可以选择卸载他们。</p>
+<p>虚拟机通过判断类是否在被引用来实现垃圾收集。判断动态装载类的Class实例在正常的垃圾收集过程中是否可触及有两种方式：</p>
+<ul>
+<li>如果实例非Class实例的明确引用。</li>
+<li>如果在堆中还存在一个可触及对象，在方法区中它的类型数据指向一个Class实例。</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324173320715.png" alt="image-20210324173320715"></p>
+ 
       <!-- reward -->
       
     </div>
@@ -395,6 +587,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2021/03/24/Untitled/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            (no title)
+          
+        </div>
+      </a>
     
     
       <a href="/2021/03/21/OAuth2-0%E6%8E%88%E6%9D%83/" class="article-nav-link">
