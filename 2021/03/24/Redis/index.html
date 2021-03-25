@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.2k</span>
+            <span class="post-count">6.2k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">14 min</span>
+            <span class="post-count">25 min</span>
         </span>
     </span>
 </div>
@@ -103,7 +103,7 @@
 
 <h2 id="3-配置详解"><a href="#3-配置详解" class="headerlink" title="3.配置详解"></a>3.配置详解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">daemonize ： 默认为no，修改为yes启用守护线程</span><br><span class="line">port ：设定端口号，默认为6379</span><br><span class="line">bind ：绑定IP地址</span><br><span class="line">databases ：数据库数量，默认16</span><br><span class="line">save &lt;second&gt; &lt;changes&gt; ：指定多少时间、有多少次更新操作，就将数据同步到数据文件</span><br><span class="line">#redis默认配置有三个条件，满足一个即进行持久化</span><br><span class="line">save 900 1 #900s有1个更改</span><br><span class="line">save 300 10 #300s有10个更改</span><br><span class="line">save 60 10000 #60s有10000更改</span><br><span class="line">dbfilename ：指定本地数据库的文件名，默认为dump.rdb</span><br><span class="line">dir ：指定本地数据库的存放目录，默认为.&#x2F;当前文件夹</span><br><span class="line">requirepass ：设置密码，默认关闭</span><br><span class="line">redis -cli -h host -p port -a password</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-redis常用命令"><a href="#4-redis常用命令" class="headerlink" title="4.redis常用命令"></a>4.redis常用命令</h2><p>redis五种数据类型：string、hash、list、set、zset</p>
+<h2 id="4-redis常用命令"><a href="#4-redis常用命令" class="headerlink" title="4.redis常用命令"></a>4.redis常用命令</h2><p>redis五种数据类型：<strong>string、hash、list、set、zset</strong></p>
 <ul>
 <li>DEL key</li>
 <li>Dump key：序列化给定key，返回被序列化的值</li>
@@ -268,7 +268,166 @@
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/hash&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hashTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    HashOperations&lt;String,String,String&gt; hashOperations = redisTemplate.opsForHash();</span><br><span class="line">    hashOperations.put(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;hashKey&quot;</span>,<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">    System.out.println(hashOperations.get(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;hashKey&quot;</span>));</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h1 id="三、Redis常见问题"><a href="#三、Redis常见问题" class="headerlink" title="三、Redis常见问题"></a>三、Redis常见问题</h1> 
+<h1 id="三、Redis常见问题"><a href="#三、Redis常见问题" class="headerlink" title="三、Redis常见问题"></a>三、Redis常见问题</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>使用C语言开发的k-v数据库，数据存储在内存，读写速度很快，一般用于缓存方向，也可以用来做分布式锁，消息队列。提供了五中数据类型String,hash,list,set,zset。支持事务，持久化，lua脚本，多重集群方案。</p>
+<h2 id="分布式缓存常见的技术选型"><a href="#分布式缓存常见的技术选型" class="headerlink" title="分布式缓存常见的技术选型"></a>分布式缓存常见的技术选型</h2><p>Memcached和Redis。</p>
+<p>前者是分布式缓存刚兴起，后来随着Redis发展，都是用redis了。分布式缓存主要解决的问题是，单击缓存的容量收到服务器限制且无法保存通用的消息。因为本地缓存只在当前服务有效。</p>
+<h2 id="redis和Memcached的区别和共同点"><a href="#redis和Memcached的区别和共同点" class="headerlink" title="redis和Memcached的区别和共同点"></a>redis和Memcached的区别和共同点</h2><p><strong>共同点：</strong></p>
+<ul>
+<li>基于内存</li>
+<li>过期策略</li>
+<li>高性能</li>
+</ul>
+<p><strong>区别：</strong></p>
+<ul>
+<li>redis数据类型更丰富-五种，后者只是简单的k-v</li>
+<li>redis数据持久化，重启的时候可以再次加载使用。后者单纯放在内存。</li>
+<li>redis灾难恢复机制。因为可以持久化</li>
+<li>redis在内存用完之后，可以将数据放磁盘，后者直接报异常。</li>
+<li>M没有原生的集群模式。redis原生支持cluster模式</li>
+<li>M多线程非阻塞IO复用的网络模型；R单线程多路IO复用模型（R6.0之后引入多线程）</li>
+<li>R支持发布订阅模型，Lua脚本，事务。M不支持。</li>
+<li>M过期数据只用了惰性删除，R使用了惰性删除和定期删除。</li>
+</ul>
+<h2 id="缓存数据的处理流程"><a href="#缓存数据的处理流程" class="headerlink" title="缓存数据的处理流程"></a>缓存数据的处理流程</h2><ul>
+<li>数据在缓存直接返回</li>
+<li>不在缓存查数据库</li>
+<li>数据库存在更新缓存</li>
+<li>数据库不在返回空</li>
+</ul>
+<h2 id="为什么用R缓存"><a href="#为什么用R缓存" class="headerlink" title="为什么用R缓存"></a>为什么用R缓存</h2><p><strong>高性能：</strong></p>
+<p>直接访问数据库会比较慢，因为要从次硬盘读取。对于某些不常改变的高频数据，可以放在缓存中，访问时直接存缓存读取，这样比较快。需要保证数据一致性，当数据库的数据改变时，缓存的数据也要同步更新。</p>
+<p><strong>高并发：</strong></p>
+<p>MYSQL的QPS在1W左右（4core 8G），使用R之后可以达到10W-30W+。</p>
+<blockquote>
+<p>QPS：服务器每秒可以执行的查询次数。</p>
+</blockquote>
+<h2 id="R单线程模型"><a href="#R单线程模型" class="headerlink" title="R单线程模型"></a>R单线程模型</h2><blockquote>
+<p>Redis 基于 Reactor 模式开发了自己的网络事件处理器：这个处理器被称为文件事件处理器（file event handler）。文件事件处理器使用 I/O 多路复用（multiplexing）程序来同时监听多个套接字，并根据 套接字目前执行的任务来为套接字关联不同的事件处理器。</p>
+<p>当被监听的套接字准备好执行连接应答（accept）、读取（read）、写入（write）、关 闭（close）等操作时，与操作相对应的文件事件就会产生，这时文件事件处理器就会调用套接字之前关联好的事件处理器来处理这些事件。</p>
+<p><strong>虽然文件事件处理器以单线程方式运行，但通过使用 I/O 多路复用程序来监听多个套接字</strong>，文件事件处理器既实现了高性能的网络通信模型，又可以很好地与 Redis 服务器中其他同样以单线程方式运行的模块进行对接，这保持了 Redis 内部单线程设计的简单性。</p>
+</blockquote>
+<p>可以看出，文本事件处理器主要是4个部分：</p>
+<ul>
+<li>多个socket（客户端连接）</li>
+<li>IO多路复用（支持多个客户端连接的关键）</li>
+<li>文本事件分派器（将socket关联到相应的时间处理器）</li>
+<li>事件处理器（连接应答处理器、命令请求处理器、命令回复处理器）</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325164739624.png" alt="image-20210325164739624"></p>
+<h2 id="R为什么不使用多线程"><a href="#R为什么不使用多线程" class="headerlink" title="R为什么不使用多线程"></a>R为什么不使用多线程</h2><p>单线程模型，但是在4.0之后就加入了对多线程的支持。但是多线程主要是针对一些大键值对的删除操作的命令。</p>
+<p>大体来说R还是单线程处理，为何不使用多线程？</p>
+<ul>
+<li>单线程编程容易且易维护</li>
+<li>性能瓶颈不在CPU，在于内存和网络</li>
+<li>多线程存在死锁，线程上下文切换问题，甚至影响性能。</li>
+</ul>
+<h2 id="为什么6-0引入多线程。"><a href="#为什么6-0引入多线程。" class="headerlink" title="为什么6.0引入多线程。"></a>为什么6.0引入多线程。</h2><p>主要是为了提高网络IO性能瓶颈。</p>
+<p>虽然6.0引入多线程，但是只在网路数据的读写这类耗时操作使用，执行命令仍然是单线程。默认是禁用的。</p>
+<p>开多线程之后，还需要设置线程数，否则不生效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io-threads 4 #官网建议4核的机器建议设置为2或3个线程，8核的建议设置为6个线程</span><br></pre></td></tr></table></figure>
+
+<h2 id="缓存数据设置过期时间有啥用"><a href="#缓存数据设置过期时间有啥用" class="headerlink" title="缓存数据设置过期时间有啥用"></a>缓存数据设置过期时间有啥用</h2><p>内存有限。</p>
+<p>业务场景需要。(token，短信验证码)</p>
+<h2 id="R如何判断数据是否过期呢？"><a href="#R如何判断数据是否过期呢？" class="headerlink" title="R如何判断数据是否过期呢？"></a>R如何判断数据是否过期呢？</h2><p>过期字典来保存过期时间。过期字典的k指向数据库的某个key，保存了数据库键的过期时间（毫秒精度的unix时间戳)</p>
+<h2 id="过期数据的删除策略"><a href="#过期数据的删除策略" class="headerlink" title="过期数据的删除策略"></a>过期数据的删除策略</h2><ul>
+<li>惰性删除：取出key的时候过期检查。CPU友好，但是可能太多过期K没删除</li>
+<li>定期删除：每隔一段时间抽取K删除过期K。并且，Redis 底层会通过限制删除操作执行的时长和频率来减少删除操作对CPU时间的影响。</li>
+</ul>
+<p>一种是内存友好，一种CPU友好，所以R是定期+惰性。</p>
+<p>仅仅通过K的过期时间有问题，因为可能存在定期删除和惰性漏掉的问题，这样导致大量过期K堆积在内存。–内存淘汰机制。</p>
+<h2 id="内存淘汰机制"><a href="#内存淘汰机制" class="headerlink" title="内存淘汰机制"></a>内存淘汰机制</h2><ul>
+<li>volatile-lru：从已设置过期时间的数据集挑选最少使用的数据淘汰</li>
+<li>V-ttl：从已设置过期时间的数据集挑选将要过期的数据淘汰。</li>
+<li>V-random：字面意思</li>
+<li>allkeys-lru：当内存不足以容纳写入新数据时，在键空间中，移除最近最少使用的 key（这个是最常用的）</li>
+<li>a-random：从数据集（server.db[i].dict）中任意选择数据淘汰</li>
+<li>no-evition：禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。这个应该没人使用吧！</li>
+</ul>
+<p>4.0版本以后增加了两种：</p>
+<ul>
+<li>v-lfu：从已设置过期时间的数据集(server.db[i].expires)中挑选最不经常使用的数据淘汰</li>
+<li>a-lfu：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的 key</li>
+</ul>
+<h2 id="持久化机制"><a href="#持久化机制" class="headerlink" title="持久化机制"></a>持久化机制</h2><p><strong>快照和只追加文件</strong></p>
+<ul>
+<li><p>快照持久化</p>
+<p>通过创建快照的方式获得存储在内存里面的数据的某个时间节点的副本。创建快照后可以进行备份，或者复制到其他服务器从而常创建具有相同数据的服务器副本（主从结构）。</p>
+<p>快照是默认的持久化方式</p>
+</li>
+<li><p>AOF持久化</p>
+<p>实时性更好，成为主流的方案，默认不开启，通过appendonly yes开启。</p>
+<p>开启后，每次执行一条更改Redis的命令，redis就会将命写入AOF文件。默认的文件时appendonly.aof。</p>
+<p>在redis存在三种不同的AOF持久化方式，分别是：</p>
+<ul>
+<li>appendsync always # 每次更细都写AOF</li>
+<li>appendsync everysec # 每秒钟同步一次</li>
+<li>appendsync no # OS决定什么时候同步</li>
+</ul>
+<p>兼顾数据和写入性能，选择everysec。对性能几乎没影响。</p>
+</li>
+</ul>
+<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><p>  通过<code>MULTI</code>,<code>EXEC</code>,<code>DISCARD</code>,<code>WATCH</code>命令实现事务。使用 <a target="_blank" rel="noopener" href="https://redis.io/commands/multi">MULTI</a>命令后可以输入多个命令。Redis不会立即执行这些命令，而是将它们放到队列，当调用了<a target="_blank" rel="noopener" href="https://redis.io/commands/exec">EXEC</a>命令将执行所有命令。</p>
+<p>R的事务和数据库的事务不太一样，事务四大特性：</p>
+<ul>
+<li>原子性：动作要么全部完成，要么不起作用。</li>
+<li>一致性：事务提交后，数据保持一致，多个事务对同一个数据库读取的结果是相同的。</li>
+<li>隔离性：并发访问数据库，一个用户的事务不被打扰，并发事务之间数据库是独立的。</li>
+<li>持久性：一个事物提交后，对数据的改变是持久的，及时数据库发生故障也不能有任何影响。</li>
+</ul>
+<p>Redis不支持回滚，不满足原子性。而且不满足持久性。为啥呢？因为他们认为没必要回滚，这样更简单且性能更好。Redis开发者觉得即使命令执行错误也应该在开发过程中就被发现而不是生产过程中。</p>
+<p>R的事务可以理解为：提供了一种将多个命令请求打包的功能，然后再按照顺序执行所有命令，并且不会被中途打断。</p>
+<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><ul>
+<li><p>是啥？</p>
+<p>大量请求的Key不在缓存，直接到数据库。黑客故意制造缓存中不存在的Key请求，导致大量请求落到数据库。</p>
+</li>
+<li><p>如何解决？</p>
+<p>最基本的是做好参数校验，不合法的参数直接返回客户端，例如ID不小于0，邮箱格式等。</p>
+<ul>
+<li><p>缓存无效key</p>
+<p>缓存和数据库都查不到，就缓存这个无效key，适用于key变化不频繁的情况。会导致缓存大量无效key，可以尽量将key的过期时间设置短一点，例如1min。</p>
+</li>
+<li><p>布隆过滤器</p>
+<p>通过它可以方便的判断一个给定数据是否存在于海量数据中。具体的做法是：把所有可能的请求的值放在过滤器，请求过来，先判断请求的值是否在过滤器，不存在的话，返回参数信息错误。存在的话，再去走缓存的流程。</p>
+<p>过滤器时候存在，小概率<strong>误判</strong>；说不存在，一定不存在。</p>
+<ul>
+<li><p>元素加入过滤器</p>
+<p>1.使用过滤器中的哈希函数对元素值计算，得到哈希值。(几个哈希函数得到几个哈希值)</p>
+<p>2.根据得到的哈希值，数组中对应的下标标记为1</p>
+</li>
+<li><p>判断是否存钻</p>
+<p>1.对给定元素计算哈希值。</p>
+<p>2.得到值之后判断数组中的每个元素位置是否都为1，是，说明在过滤器，存在一个值不是1，说明不在。</p>
+</li>
+</ul>
+<p>有一种情况：不同字符串可能哈希出来的位置相同。(哈希冲突,最原始的问题)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>缓存在同一时间大面积失效,后面的请求落在数据库，造成短时间内数据库承受大量请求。（缓存模块宕机）</p>
+<p>还有一种是有一些被大量访问的数据在某一时刻失效，导致请求落在数据库。</p>
+<p><strong>解决办法：</strong></p>
+<ul>
+<li>缓存服务宕机<ul>
+<li>redis集群</li>
+<li>限流，避免同时处理大量请求。</li>
+</ul>
+</li>
+<li>热点缓存失效：<ul>
+<li>设置不同的失效时间比如随机设置缓存的失效时间。</li>
+<li>缓存永不失效。</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何保证缓存和数据库的一致性"><a href="#如何保证缓存和数据库的一致性" class="headerlink" title="如何保证缓存和数据库的一致性"></a>如何保证缓存和数据库的一致性</h2><p><strong>旁路缓存模式</strong></p>
+<p>遇到写请求是这样的，更新DB，直接删除缓存。</p>
+<p>数据库更新成功缓存删除失败。两个方案：</p>
+<ul>
+<li>缓存失效时间变短（不推荐）：我们让缓存数据的过期时间变短，这样的话缓存就会从数据库中加载数据。另外，这种解决办法对于先操作缓存后操作数据库的场景不适用。</li>
+<li>增加cache更新重试机制（常用）：如果 cache 服务当前不可用导致缓存删除失败的话，我们就隔一段时间进行重试，重试次数可以自己定。如果多次重试还是失败的话，我们可以把当前更新失败的 key 存入队列中，等缓存服务可用之后，再将 缓存中对应的 key 删除即可。</li>
+</ul>
+<p>​    </p>
+ 
       <!-- reward -->
       
     </div>

@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">264</span>
         </span>
     </span>
 
@@ -89,13 +89,53 @@
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <h1 id="1、存储引擎"><a href="#1、存储引擎" class="headerlink" title="1、存储引擎"></a>1、存储引擎</h1><p>Mysql默认的存储引擎是InnoDB，在5.7版本只有InnoDB是支持事务的。</p>
+<ul>
+<li>查看默认的存储引擎：mysql&gt; show variables like ‘%storage_engine%’;</li>
+<li>查看表的存储引擎：show table status like “table_name” ;</li>
+</ul>
+<h2 id="MyISAM和InnoDB区别？"><a href="#MyISAM和InnoDB区别？" class="headerlink" title="MyISAM和InnoDB区别？"></a>MyISAM和InnoDB区别？</h2><p>在5.5之前，默认引擎是MyISAM 。优点有：全文索引，压缩，空间函数，但是不支持事务和行级锁，最大的缺陷是崩溃之后无法安全之后，在5.5之后，引入InnoDB并成为默认引擎。</p>
+<p><strong>两者的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">MyISAM</th>
+<th align="center">InnoDB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">行级锁</td>
+<td align="center">表级锁</td>
+<td align="center">表级锁和行<strong>级锁</strong>(默认)</td>
+</tr>
+<tr>
+<td align="center">事务和崩溃后安全回复</td>
+<td align="center">不支持</td>
+<td align="center">支持，同时具有回滚，崩溃修复能力</td>
+</tr>
+<tr>
+<td align="center">外键</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">MVCC</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+</tbody></table>
+<p>MVCC多版本控制，比单纯的锁更加高效，只在<code>Read Committed</code>和<code>Repetable read</code>两个隔离级别工作，可以使用乐观锁和悲观锁来实现。</p>
+<p>MyISAM更注重性能。但不是首选。</p>
+<h1 id="2、字符集与校对规则"><a href="#2、字符集与校对规则" class="headerlink" title="2、字符集与校对规则"></a>2、字符集与校对规则</h1><h1 id="3、索引"><a href="#3、索引" class="headerlink" title="3、索引"></a>3、索引</h1><h1 id="4、查询缓存的使用"><a href="#4、查询缓存的使用" class="headerlink" title="4、查询缓存的使用"></a>4、查询缓存的使用</h1><h1 id="5、事务"><a href="#5、事务" class="headerlink" title="5、事务"></a>5、事务</h1> 
       <!-- reward -->
       
     </div>
