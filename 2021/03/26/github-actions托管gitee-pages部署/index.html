@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    github actions托管gitee pages部署 |  Victor&#39;s Blog
+    github actions托管gitee pages |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -54,7 +54,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  github actions托管gitee pages部署
+  github actions托管gitee pages
 </h1>
  
 
@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">554</span>
+            <span class="post-count">556</span>
         </span>
     </span>
 
@@ -98,7 +98,7 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
-<h1 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h1><p>使用github actions可以参考这篇<a target="_blank" rel="noopener" href="https://gitee.com/yanglbme/gitee-pages-action">文章</a></p>
+<h1 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h1><p>使用github actions可以参考这个<a target="_blank" rel="noopener" href="https://gitee.com/yanglbme/gitee-pages-action">开源项目</a></p>
 <p>现在问题换到hexo身上，在我们对post文件进行修改之后，一般需要执行<code>hexo c</code>清理缓存(不是必须)，<code>hexo g</code>和<code>hexo d</code>。在使用github actions的时候，需要在根目录添加文件<code>.github/workflows/test.yml</code>来定制actions的流程，但是在执行<code>hexo d</code>的时候，会将这个文件删掉，导致actions失效。我们的问题就是怎么保证.github文件夹一定存在于根目录。而根目录是hexo 托管的，我的解决办法是这样的：</p>
 <ul>
 <li><p>把.github文件夹复制到hexo根目录的.deploy_git</p>
