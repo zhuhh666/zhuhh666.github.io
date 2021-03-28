@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">600</span>
+            <span class="post-count">2.8k</span>
         </span>
     </span>
 
@@ -82,7 +82,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">2 min</span>
+            <span class="post-count">9 min</span>
         </span>
     </span>
 </div>
@@ -102,7 +102,7 @@
 <li>查看默认的存储引擎：mysql&gt; show variables like ‘%storage_engine%’;</li>
 <li>查看表的存储引擎：show table status like “table_name” ;</li>
 </ul>
-<h2 id="MyISAM和InnoDB区别？"><a href="#MyISAM和InnoDB区别？" class="headerlink" title="MyISAM和InnoDB区别？"></a>MyISAM和InnoDB区别？</h2><p>在5.5之前，默认引擎是MyISAM 。优点有：全文索引，压缩，空间函数，但是不支持事务和行级锁，最大的缺陷是崩溃之后无法安全之后，在5.5之后，引入InnoDB并成为默认引擎。</p>
+<h2 id="MyISAM和InnoDB区别？"><a href="#MyISAM和InnoDB区别？" class="headerlink" title="MyISAM和InnoDB区别？"></a>MyISAM和InnoDB区别？</h2><p>在5.5之前，默认引擎是MyISAM 。优点有：全文索引，压缩，空间函数，但是不支持事务和行级锁，最大的缺陷是崩溃之后无法安全恢复，在5.5之后，引入InnoDB并成为默认引擎。</p>
 <p><strong>两者的对比</strong></p>
 <table>
 <thead>
@@ -118,7 +118,7 @@
 <td align="center">表级锁和行<strong>级锁</strong>(默认)</td>
 </tr>
 <tr>
-<td align="center">事务和崩溃后安全回复</td>
+<td align="center">事务和崩溃后安全恢复</td>
 <td align="center">不支持</td>
 <td align="center">支持，同时具有回滚，崩溃修复能力</td>
 </tr>
@@ -135,7 +135,7 @@
 </tbody></table>
 <p>MVCC多版本控制，比单纯的锁更加高效，只在<code>Read Committed</code>和<code>Repetable read</code>两个隔离级别工作，可以使用乐观锁和悲观锁来实现。</p>
 <p>MyISAM更注重性能。但不是首选。</p>
-<h1 id="2、字符集与校对规则"><a href="#2、字符集与校对规则" class="headerlink" title="2、字符集与校对规则"></a>2、字符集与校对规则</h1><p>字符集指的是一种从而二进制编码到某类字符符号的映射。校对规则是指某种字符集下的排序规则。MySql中每一种字符集都会对应一系列的校对规则。、</p>
+<h1 id="2、字符集与校对规则"><a href="#2、字符集与校对规则" class="headerlink" title="2、字符集与校对规则"></a>2、字符集与校对规则</h1><p>字符集指的是一种从而二进制编码到某类字符符号的映射。校对规则是指某种字符集下的排序规则。MySql中每一种字符集都会对应一系列的校对规则。</p>
 <p>M采用的是类似继承的方式制定字符集的默认值，每个数据库和每张数据表都有自己的默认值，他们逐层继承。比如：某个库中所有表的默认字符集将是该数据库所指定的字符集(这些表在没有指定字符集的情况下，才会采用摩恩字符集)。</p>
 <p>详细参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/geaozhang/p/6724393.html#MySQLyuzifuji">字符集与校对规则</a></p>
 <h1 id="3、索引"><a href="#3、索引" class="headerlink" title="3、索引"></a>3、索引</h1><p>索引的数据结构主要有：B树和哈希索引。哈希索引的底层就是哈希表，因为在绝大多数需求为单挑记录查询的时候，可以选择哈希索引，其他情况下选择B树索引。</p>
@@ -145,9 +145,103 @@
 <p>叶节点的data区域存放是是数据记录的地址。在索引检索的时候，按照B树算法索引，指定的Key存在，则去除data域的值，然后以data域的值为地址读取对应的数据记录。哲别称为“非聚簇索引”。</p>
 </li>
 <li><p>InnoDB</p>
+<p>数据文件本身就是索引文件。树的叶节点data域保存了完整的数据记录，因此InnoDB表数据文件本身就是主索引，这称为“聚簇索引”。其余的索引作为辅助索引，辅助索引的data记录的是相应记录主键的值而不是地址。</p>
+<p>在根据主索引搜索时，直接找到Key所在的节点；在根据辅助索引查找时，先取出主键的值，再走一遍主索引。因此在设计表的时候，不建议使用过长的字段作为主键，也不建议使用非单调的字段作为主键，会造成主索引频繁分裂。</p>
 </li>
 </ul>
-<h1 id="4、查询缓存的使用"><a href="#4、查询缓存的使用" class="headerlink" title="4、查询缓存的使用"></a>4、查询缓存的使用</h1><h1 id="5、事务"><a href="#5、事务" class="headerlink" title="5、事务"></a>5、事务</h1> 
+<h1 id="4、查询缓存"><a href="#4、查询缓存" class="headerlink" title="4、查询缓存"></a>4、查询缓存</h1><p>8.0版本移除，不实用。</p>
+<p><strong>缓存虽然能够提升数据库的查询性能，但是缓存同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。</strong> 因此，开启查询缓存要谨慎，尤其对于写密集的应用来说更是如此。如果开启，要注意合理控制缓存空间大小，一般来说其大小设置为几十MB比较合适。</p>
+<h1 id="5、事务"><a href="#5、事务" class="headerlink" title="5、事务"></a>5、事务</h1><h2 id="事务的四大特性"><a href="#事务的四大特性" class="headerlink" title="事务的四大特性"></a>事务的四大特性</h2><ul>
+<li>原子性：事务是自小的执行单位。原子性确保动作要么全部完成，要么全部不执行。</li>
+<li>一致性：数据库从一个正确状态变化到另一个一致性状态。</li>
+<li>隔离性：并发访问数据库，两个用户的事务不干扰。并发事务之间的数据库是独立的。</li>
+<li>持久性：对数据库的改变是持久的，即使数据库发生故障也应该有影响。</li>
+</ul>
+<h2 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h2><ul>
+<li><p><strong>脏读</strong></p>
+<p>一个事务修改数据库，还没提交。另一个事务读数据，因为这个数据还没提交，所以读出的是脏数据。对脏数据的操作可能不正确。</p>
+</li>
+<li><p>丢失修改</p>
+<p>两个事务读一个数据，第一个事务修改之后第二个事务也修改，这样第一个事务修改的结果就丢失了。保留第二次修改的结果。</p>
+</li>
+<li><p>不可重复读</p>
+<p>一个事务内多次读用一个数据，在两次读数据之间，由于第二个事务修改数据，导致两次读的数据不同，称为不可重复读。</p>
+</li>
+<li><p>幻读</p>
+<p>它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
+</li>
+</ul>
+<p>不可重复读的重点是多次读取发现某些列被修改。</p>
+<p>幻读重点是多次读取发现记录增多后者减少。</p>
+<h2 id="数据库的隔离级别："><a href="#数据库的隔离级别：" class="headerlink" title="数据库的隔离级别："></a>数据库的隔离级别：</h2><ul>
+<li><p>读未提交</p>
+<p>允许读取尚未提交的数据变更，可能导致脏读幻读或者不可重复读。</p>
+</li>
+<li><p>读已提交</p>
+<p>允许读取并发事务已经提交的数据。避免脏读，但是幻读和不可重复读可能发生。</p>
+</li>
+<li><p>可重复读</p>
+<p>对同一字段的多次读取结果都是一致的，除非被本身事务自己修改。</p>
+</li>
+<li><p>可串行化</p>
+<p>最该的更隔离级别。服务ACID，所以的事务逐个执行，这样事务之间不产生干扰</p>
+</li>
+</ul>
+<p>InnoDB默认是可重复读。使用的是next-key lock算法，避免幻读，已经达到了可串行化的隔离级别。隔离级别越低，锁越少，所以大部分数据库的隔离级别都是读已提交，但是InnoDB使用可重复读，并且不会有性能损失。InnoDB在分布式事务的情况下使用可串行化的隔离级别。</p>
+<h2 id="锁机制与InnoDB锁算法"><a href="#锁机制与InnoDB锁算法" class="headerlink" title="锁机制与InnoDB锁算法"></a>锁机制与InnoDB锁算法</h2><ul>
+<li>表级锁：粒度最大的锁，整张表加锁。实现简单，资源消耗少，加锁快，不会出现死锁。出发锁冲突的概率高，并发度最低。</li>
+<li>行级锁：粒度最小，当前操作行加锁。大大减少数据库操作的冲突，并发度高。开销大，加锁慢，会出现死锁。</li>
+</ul>
+<p>InnoDB存储引擎的算法有三种：</p>
+<ul>
+<li>Reacord lock：但行记录锁</li>
+<li>Gap lock：间隙锁，锁定一个范围，不包括记录本身。</li>
+<li>Next-key lock：record+gap，包含记录本身。</li>
+</ul>
+<p>补充：</p>
+<ol>
+<li>innodb对于行的查询使用next-key lock</li>
+<li>Next-locking keying为了解决Phantom Problem幻读问题</li>
+<li>当查询的索引含有唯一属性时，将next-key lock降级为record key</li>
+<li>Gap锁设计的目的是为了阻止多个事务将记录插入到同一范围内，而这会导致幻读问题的产生</li>
+<li>有两种方式显式关闭gap锁：（除了外键约束和唯一性检查外，其余情况仅使用record lock） A. 将事务隔离级别设置为RC B. 将参数innodb_locks_unsafe_for_binlog设置为1</li>
+</ol>
+<h1 id="6、大表优化"><a href="#6、大表优化" class="headerlink" title="6、大表优化"></a>6、大表优化</h1><p>MYSQL表单过大，数据库的CRUD性能下降，措施如下：</p>
+<ul>
+<li><p>限定数据范围</p>
+<p>禁止不带任何限制数据范围条件范围的查询语句。</p>
+</li>
+<li><p>读写分离</p>
+<p>主库写，从库读。</p>
+</li>
+<li><p>垂直分区</p>
+<p>数据表的相关性进行拆分。把一张列比较多的表拆分成多张表。</p>
+<ul>
+<li>优点：列数据变小，在查询时减少读取的block数，减少IO次数。简化表结构，易于维护。</li>
+<li>缺点：主键冗余，需要管理冗余列，引起join操作，事务变得复杂。</li>
+</ul>
+</li>
+<li><p>水平分区</p>
+<p>保持数据表结构不变，通过策略存储数据分片，这样每一片数据分散到不同的表或者库中，达到分布式的目的。</p>
+<p>水平拆分支持大的数据量。但是分表仅仅解决了单一表数据量大的问题，但是表数据还在同一台机器上，其实对于并发能力没有太多提升。所以水平拆分最好分库。</p>
+<p>分片支持大的数据量存储，但是分片事务难以解决，逻辑复杂，尽量不分片，非要分片，尽量选择客户端分片，可以减少一次和中间件的网络IO</p>
+<p>数据库分片的两种常见方案：</p>
+<ul>
+<li>客户端代理：<strong>分片逻辑在应用端，封装在jar包中，通过修改或者封装JDBC层来实现。</strong> 当当网的 <strong>Sharding-JDBC</strong> （推荐） 、阿里的TDDL是两种比较常用的实现。</li>
+<li>中间件代理：<strong>在应用和数据中间加了一个代理层。分片逻辑统一维护在中间件服务中。</strong> 我们现在谈的 <strong>Mycat</strong> 、360的Atlas、网易的DDB等等都是这种架构的实现。</li>
+</ul>
+</li>
+</ul>
+<p><strong>分库分表之后，ID主键如何处理：</strong></p>
+<ul>
+<li>UUID：太长无序不可读，查询效率低，比较适合用于生成名字唯一的标识比如文件的名字。</li>
+<li>自增ID：两台数据库分别设置不同步长，生成不重复ID的策略来实现高可用。这种方式生成的 id 有序，但是需要独立部署数据库实例，成本高，还会有性能瓶颈。</li>
+<li>redis：性能好，灵活方便，不依赖数据库。</li>
+<li>雪花算法</li>
+</ul>
+<h1 id="7、池化"><a href="#7、池化" class="headerlink" title="7、池化"></a>7、池化</h1><p>这种设计会初始预设资源，解决的问题就是抵消每次获取资源的消耗，如创建线程的开销，获取远程连接的开销等。除了初始化资源，池化设计还包括如下这些特征：池子的初始值、池子的活跃值、池子的最大值等，这些特征可以直接映射到java线程池和数据库连接池的成员属性中。这篇文章对<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485679&idx=1&sn=57dbca8c9ad49e1f3968ecff04a4f735&chksm=cea24724f9d5ce3212292fac291234a760c99c0960b5430d714269efe33554730b5f71208582&token=1141994790&lang=zh_CN#rd">池化设计思想</a>介绍的还不错。</p>
+<p>数据库连接本质就是一个 socket 的连接。数据库服务端还要维护一些缓存和用户权限信息之类的 所以占用了一些内存。我们可以把数据库连接池是看做是维护的数据库连接的缓存，以便将来需要对数据库的请求时可以重用这些连接。为每个用户打开和维护数据库连接，尤其是对动态数据库驱动的网站应用程序的请求，既昂贵又浪费资源。<strong>在连接池中，创建连接后，将其放置在池中，并再次使用它，因此不必建立新的连接。如果使用了所有连接，则会建立一个新连接并将其添加到池中</strong>。 连接池还减少了用户必须等待建立与数据库的连接的时间。</p>
+<h1 id="8、常见问题："><a href="#8、常见问题：" class="headerlink" title="8、常见问题："></a>8、常见问题：</h1><h2 id="一条SQL语句在MySql中是如何执行的"><a href="#一条SQL语句在MySql中是如何执行的" class="headerlink" title="一条SQL语句在MySql中是如何执行的"></a>一条SQL语句在MySql中是如何执行的</h2><h2 id="MySQL高性能规范"><a href="#MySQL高性能规范" class="headerlink" title="MySQL高性能规范"></a>MySQL高性能规范</h2><h2 id="SQL执行的很慢的原因"><a href="#SQL执行的很慢的原因" class="headerlink" title="SQL执行的很慢的原因"></a>SQL执行的很慢的原因</h2> 
       <!-- reward -->
       
     </div>
