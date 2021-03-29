@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">3.6k</span>
         </span>
     </span>
 
@@ -83,20 +83,166 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">12 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <h1 id="一、线程和进程"><a href="#一、线程和进程" class="headerlink" title="一、线程和进程"></a>一、线程和进程</h1><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a><strong>进程</strong></h2><p>程序的一次执行过程，是系统运行运行程序的基本单位。系统运行一个程序从一个进程创建，运行到消亡的过程。在java中，启动main函数就启动了一个JVM进程，main函数所在的线程是进程中的一个线程，也称为主线程。</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a><strong>线程</strong></h2><p>与进程相似，但是比进程更小。一个进程多个线程。多个线程共享进程的堆和方法区资源，每个线程有自己的程序计数器，虚拟机栈与本地方法栈。线程之间切换负担比较小，因此线程被称为轻量级进程。</p>
+<p>一个Java程序的运行是main线程和多个其他线程同时运行。</p>
+<h2 id="线程和进程的关系"><a href="#线程和进程的关系" class="headerlink" title="线程和进程的关系"></a><strong>线程和进程的关系</strong></h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%202%20%E9%A1%B5.png" alt="java虚拟机-第 2 页"></p>
+<p>再把JVM的这张图拿出来， 一个进程中有多个线程，线程之间共享进程的堆和方法区，但是对于每个线程，都有自己的虚拟机栈，程序计数器，本地方法栈。</p>
+<ul>
+<li><p>程序计数器为什么私有？</p>
+<p>程序计数器的作用：</p>
+<ul>
+<li>字节码解释器通过改变程序计数器来以此读取指令，从而实现代码的流程控制。</li>
+<li>多线程时，程序计数器记录当前线程的执行位置，从而当线程被切换回来的时候知道县城上次运行到哪里了。</li>
+</ul>
+<p>如果执行的是native方法， 程序计数器记录的是undefined地址，执行java代码时程序计数器记录的才是下一条指令的地址。</p>
+<p>所以程序计数器是私有是为了<strong>线程切换后能恢复到正确的执行位置</strong>。</p>
+</li>
+<li><p>虚拟机栈和本地方法栈为什么私有？</p>
+<ul>
+<li>stack：JVM启动时，分配独立的运行时栈，保存方法调用，每次调用入栈。栈保存了三个引用：本地变量表，操作数帧和当前方法所属类的运行时常量池。</li>
+<li>native method stack：本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地房发展执行的是native方法。本地方法栈使用传统的栈来支持native方法。</li>
+</ul>
+<p>所以为了保存内存中的局部变量不被别的线程访问到，虚拟机栈和本地方法栈是线程私有的。</p>
+</li>
+</ul>
+<p>堆和方法区是所有线程共享的资源，其中堆是进程中最大的一块内存，主要用于存放新创建的对象 (所有对象都在这里分配内存)，方法区主要用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</p>
+<blockquote>
+<p>并发和并行？</p>
+<ul>
+<li>并发：同一时段内，多个任务都在执行。</li>
+<li>并行：单位时间内，多个任务同时执行。</li>
+</ul>
+</blockquote>
+<h2 id="为什么使用多线程"><a href="#为什么使用多线程" class="headerlink" title="为什么使用多线程"></a>为什么使用多线程</h2><ul>
+<li>计算机底层：轻量级的进程，切换的调度的成本远远低于进程。另外多核CPU时代意味着多个线程可以同时运行，减少了线程上下文切换的开销。</li>
+<li>趋势：百万级别的并发量，高并发系统的基础。</li>
+</ul>
+<p><strong>多线程可能带来的问题：</strong></p>
+<p>但是并发编程并不总是能提高程序运行速度的，而且并发编程可能会遇到很多问题，比如：<strong>内存泄漏</strong>、<strong>上下文切换</strong>、<strong>死锁</strong> 。</p>
+<h2 id="线程的生命周期和状态"><a href="#线程的生命周期和状态" class="headerlink" title="线程的生命周期和状态"></a>线程的生命周期和状态</h2><p>6种状态：</p>
+<ul>
+<li>NEW：初始状态，线程被构建，但是还没有调用start方法</li>
+<li>RUNNABLE：运行状态，java线程将被OS的就绪和运行两种状态笼统的称为“运行中”。</li>
+<li>BLOCKED：阻塞状态</li>
+<li>WAITING：等待状态，当前线程需要等待其他线程做出一些动作，如通知或者中断。</li>
+<li>TIME_WAITING：超时等待状态，不同于上一个，可以在指定时间自行返回。</li>
+<li>TERMINATED：终止状态，线程执行完毕。</li>
+</ul>
+<p>OS隐藏JVM中的RUNNABLE和RUNING状态，只看到RUNNABLE状态，将两个状态统称为RUNNABLE运行中。</p>
+<p>当线程执行 <code>wait()</code>方法之后，线程进入 <strong>WAITING（等待）</strong> 状态。进入等待状态的线程需要依靠其他线程的通知才能够返回到运行状态，而 <strong>TIME_WAITING(超时等待)</strong> 状态相当于在等待状态的基础上增加了超时限制，比如通过 <code>sleep（long millis）</code>方法或 <code>wait（long millis）</code>方法可以将 Java 线程置于 TIMED WAITING 状态。当超时时间到达后 Java 线程将会返回到 RUNNABLE 状态。当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到 <strong>BLOCKED（阻塞）</strong> 状态。线程在执行 Runnable 的<code>run()</code>方法之后将会进入到 <strong>TERMINATED（终止）</strong> 状态。</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>当前任务在执行完CPU时间片切换到另一个任务之前先保存自己的状态。任务从保存到加载的过程就是一次上下文切换。</p>
+<p>上下文切换通常是计算密集型的。需要可观的处理器时间，在每秒上百次的切换中，每次都需要纳秒级别的时间。消耗大量的CPU时间，可能是OS时间消耗最大的操作。</p>
+<h2 id="线程死锁"><a href="#线程死锁" class="headerlink" title="线程死锁"></a>线程死锁</h2><p>A有资源1，B有资源2。同时想申请对方的资源，相互等待进入死锁状态。</p>
+<p><strong>死锁产生的四个条件：</strong></p>
+<ul>
+<li>1互斥条件：资源任意时刻只能由一个线程占用。</li>
+<li>2请求与保持条件：一个进程因请求资源阻塞时，对已获得的资源保持不放。</li>
+<li>3不剥夺条件：线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。</li>
+<li>4循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+</ul>
+<p><strong>如何避免线程死锁？</strong></p>
+<p>破坏四个条件中的一个条件即可。</p>
+<ul>
+<li>破坏1：没办法，锁本来就是让他们互斥。</li>
+<li>破坏2：一次申请所有资源</li>
+<li>3：占用资源的线程进一步申请资源时，申请不到可以主动释放自己的资源。</li>
+<li>4：靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。</li>
+</ul>
+<h2 id="Sleep和wait区别"><a href="#Sleep和wait区别" class="headerlink" title="Sleep和wait区别"></a>Sleep和wait区别</h2><ul>
+<li>sleep方法没有释放锁，wait方法释放了锁</li>
+<li>都可以暂停线程的执行</li>
+<li>wait通常被用于线程间交互，sleep用于暂停执行。</li>
+<li>wait不会自动苏醒，需要被其他激活。sleep会自动苏醒，wait(long timeout)超时后线程会自动苏醒。</li>
+</ul>
+<p><strong>start会执行run方法，为什么不直接调用run？</strong></p>
+<p>new一个thread，调用start方法， 会启动一个线程并使线程进入就绪状态，分配到时间片就可以开始运行。start会执行线程的响应准备工作，然后自动执行run方法的内容，这是真正的多线程工作。直接执行run，会当成一个main线程下的普通方法执行，并不会在某个线程中执行，所以并不是多线程工作。</p>
+<h2 id="锁的升级"><a href="#锁的升级" class="headerlink" title="锁的升级"></a>锁的升级</h2><p>目前锁有四种状态：无锁，偏向锁，轻量级锁和重量级锁。锁装填只能升级不能降级。</p>
+<ul>
+<li><p>偏向锁</p>
+<p>大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁是为了在只有一个线程执行同步块式提高性能。</p>
+<p><img src="https://hadyang.github.io/interview/docs/java/concurrent/synchronized/assists/biased_lock.svg"></p>
+</li>
+<li><p>轻量级锁</p>
+<p><img src="https://hadyang.github.io/interview/docs/java/concurrent/synchronized/assists/light_lock.svg"></p>
+<p>几个重要步骤：</p>
+<ul>
+<li>复制 Mark Word 到锁记录：拷贝对象头中的 Mark Word 到锁记录中。</li>
+<li>更新 Mark Word 指针：拷贝成功后，虚拟机将使用 CAS 操作尝试将对象的 Mark Word 更新为指向 Lock Record 指针，并将 Lock Record 里的 owner 指针指向对象的 Mark Word。</li>
+</ul>
+</li>
+<li><p>重量级锁</p>
+<p>在重量级锁的状态下， JVM 基于进入和退出 <code>Monitor</code> 对象来实现方法同步和代码块同步，<code>Monitor</code> 的引用存储在对象头中。</p>
+<p><code>Monitor</code> 本身是依赖与操作系统的互斥锁（mutex lock）实现的。由于 JVM 线程是映射到操作系统的原生线程之上的，如果要阻塞或唤醒一条线程，都需要操作系统来帮忙完成，这就需要从用户态转换到核心态中，因此这种转换需要耗费很多的 CPU 时间。</p>
+<p><img src="https://hadyang.github.io/interview/docs/java/concurrent/synchronized/assists/monitor_lock.svg"></p>
+</li>
+</ul>
+<h1 id="二、Synchronized"><a href="#二、Synchronized" class="headerlink" title="二、Synchronized"></a>二、Synchronized</h1><p>该关键字解决的是多个线程之间访问资源的同步性，可以保证被他修饰的方法或者代码块在任意时刻只有一个线程执行。在java的早期版本，属于重量级锁，效率低下。为啥呢？</p>
+<p>因为监视器锁是依赖底层的OS的Mutex Lock实现，java的线程是映射到OS的原生线程之上的。挂起或者唤醒一个线程需要OS帮忙，OS实现线程之间的切换时需要从用户态转化为内核态，转换时间长，时间成本高。在之后对S关键字进行优化，比如自旋锁，适应性锁等等。效率已经很不错了。</p>
+<h2 id="如何使用该关键字"><a href="#如何使用该关键字" class="headerlink" title="如何使用该关键字"></a>如何使用该关键字</h2><ul>
+<li><p>修饰实例方法：作用于当前对象实例加锁，进入同步代码钱要获得当前对象实例的锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized void static methos()&#123;</span><br><span class="line">&#x2F;&#x2F;业务代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修饰静态类方法：给当前类加锁，会作用于类的所有对象实例，进入同步代码前要获得当前class的锁。静态成员不属于任何一个实例，是类成员，所以如果一个线程A调用一个实例对象的非静态S方法，线程B需要调用这个实例对象所属类的静态S方法是不允许的，不会发生互斥现象。<strong>因为访问静态 <code>synchronized</code> 方法占用的锁是当前类的锁，而访问非静态 <code>synchronized</code> 方法占用的锁是当前实例对象锁</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized void static method()&#123;</span><br><span class="line">&#x2F;&#x2F;业务代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修饰代码块：</p>
+<p>指定加锁对象，对给定对象/类加锁。<code>synchronized(this|object)</code> 表示进入同步代码库前要获得<strong>给定对象的锁</strong>。<code>synchronized(类.class)</code> 表示进入同步代码前要获得 <strong>当前 class 的锁</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(this) &#123;</span><br><span class="line">  &#x2F;&#x2F;业务代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>总结如下：</p>
+<ul>
+<li>S关键字加到static静态方法和S代码块上都是给class类上锁。</li>
+<li>S关键字加到实例方法上是给独对象实例上锁。</li>
+<li>尽量不使用S(String a)，因为在JVM中，字符串常量池具有缓存功能。</li>
+</ul>
+<p><strong>双重校验锁实现对象单例（线程安全）</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: Victor</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/3/29 18:27</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//判断对象有没有实例化，没有实例化才进入加锁代码</span></span><br><span class="line">        <span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//类对象加锁</span></span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>uniqueInstance采用volatile关键字修饰也很必要。uniqueInstance = new Singleton();是分三步执行的：</p>
+<ul>
+<li>为u分配内存空间</li>
+<li>初始化u</li>
+<li>将u指向分配的内存地址。</li>
+</ul>
+<p>但是由于JVM具有指令重排的特性，执行顺序可能是1-&gt;3-&gt;2。在单线程不会有问题，但是多线程会导致一个线程获得还没初始化的实例。使用 <code>volatile</code> 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。</p>
+<h2 id="构造方法可以使用S关键字修饰吗"><a href="#构造方法可以使用S关键字修饰吗" class="headerlink" title="构造方法可以使用S关键字修饰吗"></a>构造方法可以使用S关键字修饰吗</h2><p>不可。构造方法本身就线程安全，不存在同步的构造方法一说。</p>
+<h2 id="S关键字的底层原理"><a href="#S关键字的底层原理" class="headerlink" title="S关键字的底层原理"></a>S关键字的底层原理</h2><p>JVM层面。</p>
+<ul>
+<li><p>S同步语句块的情况</p>
+<p><strong><code>synchronized</code> 同步语句块的实现使用的是 <code>monitorenter</code> 和 <code>monitorexit</code> 指令，其中 <code>monitorenter</code> 指令指向同步代码块的开始位置，<code>monitorexit</code> 指令则指明同步代码块的结束位置。</strong></p>
+<p>执行monitorenter时，线程试图获取对象监视器monitor的持有权（锁）。如果锁的计数器是0表示可以被获取，获取后+1</p>
+<p>执行monitorexit之后，锁计数器清0，释放。如果获取对象锁失败，那当前线程就要阻塞等待，知道锁被另一个线程释放为止。</p>
+</li>
+<li><p>S修饰方法</p>
+<p>实现的是ACC_SYNCHRONIZED标识，该表示指明该方法是一个同步方法。JVM 通过该 <code>ACC_SYNCHRONIZED</code> 访问标志来辨别一个方法是否声明为同步方法，从而执行相应的同步调用。</p>
+</li>
+</ul>
+<h2 id="S和volatile的区别"><a href="#S和volatile的区别" class="headerlink" title="S和volatile的区别"></a>S和volatile的区别</h2><p>互补而不是对立。</p>
+<ul>
+<li>V是线程同步的轻量级实现，性能比S好。V用于变量，S修饰方法以及代码块。</li>
+<li>V保证数据的可见性，不保证数据的原子性。S都能保证。</li>
+<li>V主要用于解决变量在多个线程之间的可见性，S解决的是多个线程之间访问资源的同步性。</li>
+</ul>
+<h1 id="三、ThreadLocal"><a href="#三、ThreadLocal" class="headerlink" title="三、ThreadLocal"></a>三、ThreadLocal</h1><p>T为解决多线程程序的并发问题提供新思路。使用这个工具类可以简洁的编写出优美的多线程程序。使用T维护变量时，T为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立的改变自己的副本，而不会影响其他线程所对应的副本。</p>
+<p>每个线程中都保存一个<code>ThreadLocalMap</code>的成员变量，TM内部采用<code>WeakReference</code>数组保存，数组的key是T的哈希值。</p>
+<p><strong>内存泄露：</strong></p>
+<p><code>ThreadLocalMap</code> 使用 <code>ThreadLocal</code> 的弱引用作为 key ，如果一个 <code>ThreadLocal</code> 没有外部强引用来引用它，那么系统 GC 的时候，这个 <code>ThreadLocal</code> 势必会被回收，这样一来，<code>ThreadLocalMap</code> 中就会出现 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> ，就没有办法访问这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code>，如果当前线程再迟迟不结束的话，这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code> 就会一直存在一条强引用链：<code>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value</code> 永远无法回收，造成内存泄漏。</p>
+<p>其实，<code>ThreadLocalMap</code> 的设计中已经考虑到这种情况，也加上了一些防护措施：在 <code>ThreadLocal</code> 的 <code>get(),set(),remove()</code>的时候都会清除线程 <code>ThreadLocalMap</code> 里所有 <code>key</code> 为 <code>null</code> 的 <code>value</code></p>
+<h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1> 
       <!-- reward -->
       
     </div>

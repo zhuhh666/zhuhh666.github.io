@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-03-26T10:45:38.543Z</updated>
+  <updated>2021-03-29T05:13:40.420Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Netty</title>
+    <link href="http://victor-huihui.gitee.io/2021/03/29/Netty/"/>
+    <id>http://victor-huihui.gitee.io/2021/03/29/Netty/</id>
+    <published>2021-03-29T05:08:06.000Z</published>
+    <updated>2021-03-29T05:13:40.420Z</updated>
+    
+    
+    
+    
+    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="框架" scheme="http://victor-huihui.gitee.io/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>github actions托管gitee pages</title>
@@ -146,8 +163,16 @@
     <link href="http://victor-huihui.gitee.io/2021/03/24/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     <id>http://victor-huihui.gitee.io/2021/03/24/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</id>
     <published>2021-03-24T09:57:53.000Z</published>
-    <updated>2021-03-24T09:58:09.771Z</updated>
+    <updated>2021-03-29T11:50:03.253Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一、线程和进程&quot;&gt;&lt;a href=&quot;#一、线程和进程&quot; class=&quot;headerlink&quot; title=&quot;一、线程和进程&quot;&gt;&lt;/a&gt;一、线程和进程&lt;/h1&gt;&lt;h2 id=&quot;进程&quot;&gt;&lt;a href=&quot;#进程&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
@@ -474,29 +499,6 @@
     
     
     <category term="OSS" scheme="http://victor-huihui.gitee.io/tags/OSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于matlab实现PCA图像压缩</title>
-    <link href="http://victor-huihui.gitee.io/2020/06/24/%E5%9F%BA%E4%BA%8Ematlab%E5%AE%9E%E7%8E%B0PCA%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/"/>
-    <id>http://victor-huihui.gitee.io/2020/06/24/%E5%9F%BA%E4%BA%8Ematlab%E5%AE%9E%E7%8E%B0PCA%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/</id>
-    <published>2020-06-24T08:29:32.000Z</published>
-    <updated>2020-06-24T08:53:04.063Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;数据在大数据时代成为一笔宝贵的财富，随之而来的是海量的数据的传输和存储问题。大量数据的重复和冗余让我们不得不对数据进行压缩处理。对于图像压缩的问题，目标是最小化压缩数据和最大化保留原样本数据，方法可以分为有损压缩和无损压缩。本文就是基于PCA实现的一种图像的有损压缩方法，项</summary>
-        
-      
-    
-    
-    
-    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
     
   </entry>
   
