@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.6k</span>
+            <span class="post-count">3.7k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">12 min</span>
+            <span class="post-count">13 min</span>
         </span>
     </span>
 </div>
@@ -242,7 +242,16 @@
 <p><strong>内存泄露：</strong></p>
 <p><code>ThreadLocalMap</code> 使用 <code>ThreadLocal</code> 的弱引用作为 key ，如果一个 <code>ThreadLocal</code> 没有外部强引用来引用它，那么系统 GC 的时候，这个 <code>ThreadLocal</code> 势必会被回收，这样一来，<code>ThreadLocalMap</code> 中就会出现 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> ，就没有办法访问这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code>，如果当前线程再迟迟不结束的话，这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code> 就会一直存在一条强引用链：<code>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value</code> 永远无法回收，造成内存泄漏。</p>
 <p>其实，<code>ThreadLocalMap</code> 的设计中已经考虑到这种情况，也加上了一些防护措施：在 <code>ThreadLocal</code> 的 <code>get(),set(),remove()</code>的时候都会清除线程 <code>ThreadLocalMap</code> 里所有 <code>key</code> 为 <code>null</code> 的 <code>value</code></p>
-<h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1> 
+<h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1><blockquote>
+<p>线程池，数据库连接池，http连接池的思想都是为了减少每次获取资源的消耗，提高资源的利用率。</p>
+</blockquote>
+<p>使用线程池的好处：</p>
+<ul>
+<li>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
+<li>提高响应速度。任务到大时</li>
+<li>提高线程的可管理性：</li>
+</ul>
+ 
       <!-- reward -->
       
     </div>
