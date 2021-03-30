@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    OAuth2.0授权 |  Victor&#39;s Blog
+    OAuth2.0 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -55,7 +55,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  OAuth2.0授权
+  OAuth2.0
 </h1>
  
 
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4</span>
+            <span class="post-count">498</span>
         </span>
     </span>
 
@@ -98,7 +98,39 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2> 
+  <h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
+<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
+<li>Third-party application：第三方应用程序，又称为客户端。</li>
+<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
+<li>Resource Owner：资源所有者，也称为用户。</li>
+<li>User Agent：用户代理，浏览器。</li>
+<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
+<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
+</ul>
+<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
+<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
+<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
+<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
+<li>用户同意给客户端授权。</li>
+<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
+<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
+<li>客户端使用令牌，想资源服务器请求资源。</li>
+<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
+</ol>
+<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
+<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
+<li><p><strong>授权码模式</strong></p>
+<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
+<p>+ </p>
+</li>
+<li><p><strong>简化模式</strong></p>
+</li>
+<li><p><strong>密码模式</strong></p>
+</li>
+<li><p><strong>客户端模式</strong></p>
+</li>
+</ul>
+<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1> 
       <!-- reward -->
       
     </div>

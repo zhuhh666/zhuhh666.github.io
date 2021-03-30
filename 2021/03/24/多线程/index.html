@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.7k</span>
+            <span class="post-count">4.7k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">13 min</span>
+            <span class="post-count">16 min</span>
         </span>
     </span>
 </div>
@@ -242,16 +242,43 @@
 <p><strong>内存泄露：</strong></p>
 <p><code>ThreadLocalMap</code> 使用 <code>ThreadLocal</code> 的弱引用作为 key ，如果一个 <code>ThreadLocal</code> 没有外部强引用来引用它，那么系统 GC 的时候，这个 <code>ThreadLocal</code> 势必会被回收，这样一来，<code>ThreadLocalMap</code> 中就会出现 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> ，就没有办法访问这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code>，如果当前线程再迟迟不结束的话，这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code> 就会一直存在一条强引用链：<code>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value</code> 永远无法回收，造成内存泄漏。</p>
 <p>其实，<code>ThreadLocalMap</code> 的设计中已经考虑到这种情况，也加上了一些防护措施：在 <code>ThreadLocal</code> 的 <code>get(),set(),remove()</code>的时候都会清除线程 <code>ThreadLocalMap</code> 里所有 <code>key</code> 为 <code>null</code> 的 <code>value</code></p>
-<h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1><blockquote>
+<h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/%E5%9B%BE%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.png"></p>
+<blockquote>
 <p>线程池，数据库连接池，http连接池的思想都是为了减少每次获取资源的消耗，提高资源的利用率。</p>
 </blockquote>
 <p>使用线程池的好处：</p>
 <ul>
 <li>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
-<li>提高响应速度。任务到大时</li>
-<li>提高线程的可管理性：</li>
+<li>提高响应速度。任务到达时，任务可以不需要等待线程创建就能立即执行。</li>
+<li>提高线程的可管理性：对线程进行统一的分配，调优和监控。</li>
 </ul>
- 
+<p><strong>如何创建线程池</strong></p>
+<p>线程池不允许使用Executors创建，通过ThreadPoolExecutor的方式。因为E有以下弊端：</p>
+<ul>
+<li><strong>FixedThreadPool 和 SingleThreadExecutor</strong> ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。</li>
+<li><strong>CachedThreadPool 和 ScheduledThreadPool</strong> ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。</li>
+</ul>
+<p>通过构造方法实现框架的工具类Executor来实现我们可以创建三种类型的ThreadPoolExecutor。</p>
+<ul>
+<li><strong>FixedThreadPool</strong> ： 该方法返回一个固定线程数量的线程池。该线程池中的线程数量始终不变。当有一个新的任务提交时，线程池中若有空闲线程，则立即执行。若没有，则新的任务会被暂存在一个任务队列中，待有线程空闲时，便处理在任务队列中的任务。</li>
+<li><strong>SingleThreadExecutor：</strong> 方法返回一个只有一个线程的线程池。若多余一个任务被提交到该线程池，任务会被保存在一个任务队列中，待线程空闲，按先入先出的顺序执行队列中的任务。</li>
+<li><strong>CachedThreadPool：</strong> 该方法返回一个可根据实际情况调整线程数量的线程池。线程池的线程数量不确定，但若有空闲线程可以复用，则会优先使用可复用的线程。若所有线程均在工作，又有新的任务提交，则会创建新的线程处理任务。所有线程在当前任务执行完毕后，将返回线程池进行复用。</li>
+</ul>
+<h2 id="实现Runnable接口和Callable接口的区别。"><a href="#实现Runnable接口和Callable接口的区别。" class="headerlink" title="实现Runnable接口和Callable接口的区别。"></a>实现Runnable接口和Callable接口的区别。</h2><p>R从1.0一直存在，callback在1.5引入，来处理R不支持的用例。R接口不会返回异常，C可以。所以如果任务不需要返回结果或者抛出异常推荐使用R接口，代码简洁。工具类<code>Executors</code>可以实现R和C对象之间的相互转换。</p>
+<h2 id="执行execute和submit方法的区别是什么？"><a href="#执行execute和submit方法的区别是什么？" class="headerlink" title="执行execute和submit方法的区别是什么？"></a>执行execute和submit方法的区别是什么？</h2><ul>
+<li>E提交不需要返回值的任务，所以无法判断任务是否被线程池执行成功与否。</li>
+<li>S用于提交需要返回值的任务。线程池返回一个Feature类型类型，可以通过对象判断线程执行成功与否。</li>
+</ul>
+<h1 id="五、Automic"><a href="#五、Automic" class="headerlink" title="五、Automic"></a>五、Automic</h1><p>基本类型，数组类型，引用类型，对象的属性修改类型。</p>
+<p>在这里指的是一个操作是不可中断的，即使是在多个线程一起执行的时候，一个操作一旦开始，就不会被其他线程干扰。所以，原子类就是指具有原子或者原子操作特征的类。并发包<code>java.util.concurrent</code>的原子类都存放在<code>java.util.concurrent.atomic</code>。</p>
+<p>AtomicInteger是java钟常见的原子类，每种基础类型对应。AI中最重要的就是原子更新操作。</p>
+<h1 id="六、AQS"><a href="#六、AQS" class="headerlink" title="六、AQS"></a>六、AQS</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>AQS的核心思想是，如果被请求的共享资源空闲，则将当前请求资源的线程设置成有效的工作线程，并将资源设置成锁定状态。如果资源占用，就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将暂时获取不到锁的线程加入到队列中。</p>
+<blockquote>
+<p>CLH队列是一个虚拟的双向队列。AQS将每条请求共享资源的线程封装成一个CLH锁队列的一个结点来实现锁的分配。</p>
+</blockquote>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/AQS%E5%8E%9F%E7%90%86%E5%9B%BE.png"></p>
+<p>使用int成员变量来实现同步状态，通过内置的FIFO队列来完成获取资源线程的排队工作。AQS使用CAS对该同步状态进行原子操作来实现值的修改。</p>
+<h2 id="AQS对资源的共享方式"><a href="#AQS对资源的共享方式" class="headerlink" title="AQS对资源的共享方式"></a>AQS对资源的共享方式</h2><h2 id="AQS底层使用了模板方法模板"><a href="#AQS底层使用了模板方法模板" class="headerlink" title="AQS底层使用了模板方法模板"></a>AQS底层使用了模板方法模板</h2><h2 id="AQS组件总结"><a href="#AQS组件总结" class="headerlink" title="AQS组件总结"></a>AQS组件总结</h2> 
       <!-- reward -->
       
     </div>
