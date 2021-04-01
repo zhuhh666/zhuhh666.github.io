@@ -286,40 +286,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java基础</title>
-    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java实现Word转html预览</title>
-    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
-    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
-<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
-<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
-<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Read a Paper</title>
     <url>/2020/04/20/How-to-Read-a-Paper/</url>
     <content><![CDATA[<blockquote>
@@ -388,6 +354,29 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java实现Word转html预览</title>
+    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
+<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
+<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -513,6 +502,17 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line">+ java读取远程文件实例</span><br><span class="line"></span><br><span class="line">  ```java</span><br><span class="line">  <span class="comment">//读取远程文件</span></span><br><span class="line">  	<span class="meta">@ApiOperation(&quot;通过URL读取远程文件&quot;)</span></span><br><span class="line">  	<span class="meta">@GetMapping(&quot;getFileByURL&quot;)</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFileByUrl</span><span class="params">(<span class="meta">@RequestParam(&quot;location&quot;)</span> String location)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  		<span class="keyword">int</span> b;</span><br><span class="line">  			String str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  			URL url = <span class="keyword">new</span> URL(location);</span><br><span class="line">  			InputStream is = url.openStream();</span><br><span class="line">  			BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(is);</span><br><span class="line">  </span><br><span class="line">  			<span class="keyword">while</span> ((b = is.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">  				str = str + (<span class="keyword">char</span>) b;</span><br><span class="line">  			&#125;</span><br><span class="line">  			is.close();</span><br><span class="line">  			bis.close();</span><br><span class="line">  			str = <span class="keyword">new</span> String(str.getBytes(<span class="string">&quot;ISO-8859-1&quot;</span>), <span class="string">&quot;GB2312&quot;</span>);</span><br><span class="line">  			<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper&lt;&gt;(str);</span><br><span class="line">  		&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java基础</title>
+    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>后端技术</category>
       </categories>
@@ -1075,70 +1075,6 @@
       </tags>
   </entry>
   <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
-<ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
-</ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
-
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
-<ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>OSS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OAuth2.0</title>
     <url>/2021/03/21/OAuth2-0%E6%8E%88%E6%9D%83/</url>
     <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
@@ -1247,6 +1183,70 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1848,19 +1848,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora+PicGo实现图片自动上传</title>
     <url>/2020/03/25/Typora-PicGo%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>我实在太喜欢Typora了。不仅仅因为它腿白貌。。，啊呸，页面清爽美观。而且还支持各种代码格式，写起笔记来视觉很好。但是令人痛心的是，当你想在Typora中插入图片时，OK，你可以插入，但是它本质上是一种弱引用，引用的只是图片的本地路径。所以如果你想分享你的md文件，还需要连带分享一个图片资源文件夹，十分臃肿。在使用PicGo之前，想用hexo渲染md文件，都是先打开图床工具—&gt;上传图片—&gt;复制图片URL—&gt;粘贴进Typora，属实麻烦。自从Typora支持通过PicGo自动上传之后，Typora真的完美了，用起来不要太爽。</p>
@@ -1904,6 +1891,19 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker容器的备份与迁移</title>
     <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
     <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
@@ -1923,24 +1923,6 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1984,6 +1966,24 @@
 ]]></content>
       <categories>
         <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -2123,45 +2123,6 @@
 <p><strong>切</strong>而知之谓之巧</p>
 </blockquote>
 <h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
       <categories>
         <category>中医理论基础</category>
       </categories>
@@ -2320,19 +2281,42 @@
       </tags>
   </entry>
   <entry>
-    <title>二维数组中的查找</title>
-    <url>/2021/03/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<blockquote>
-<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
 </blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
-        <category>剑指offer题解</category>
+        <category>中医理论基础</category>
       </categories>
       <tags>
-        <tag>剑指offer题解</tag>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
@@ -2347,6 +2331,22 @@
 <h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以先获取链表的长度，然后处理，这里为了熟悉栈的使用，使用压栈和出栈的方式解题。</p>
 <p>利用栈的FILO特性</p>
 <h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] reversePrint(ListNode head) &#123;</span><br><span class="line">        Stack&lt;ListNode&gt; stack = <span class="keyword">new</span> Stack&lt;ListNode&gt;();</span><br><span class="line">        ListNode temp = head;</span><br><span class="line">        <span class="keyword">while</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(temp);</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> size = stack.size();</span><br><span class="line">        <span class="keyword">int</span>[] print = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            print[i] = stack.pop().val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> print;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>剑指offer题解</category>
+      </categories>
+      <tags>
+        <tag>剑指offer题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二维数组中的查找</title>
+    <url>/2021/03/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<blockquote>
+<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
+</blockquote>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>剑指offer题解</category>
       </categories>
@@ -2397,6 +2397,23 @@
       </tags>
   </entry>
   <entry>
+    <title>CNN手写文字识别</title>
+    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
+<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>别直接修改hexo生成的文件名</title>
     <url>/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/</url>
     <content><![CDATA[<p>没啥说的，目录里有几个题目的开头英文没大写，看着很别扭，想修改成大写，于是寻思，hexo的文章title都是些文章名然后自动生成的，于是直接改了md文件的文件名，报了404，正确的做法是点进去md文档修改title。</p>
@@ -2413,23 +2430,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CNN手写文字识别</title>
-    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
-<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
-
-<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -2564,185 +2564,12 @@
       </tags>
   </entry>
   <entry>
-    <title>操作系统</title>
-    <url>/2021/03/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="一、OS基础"><a href="#一、OS基础" class="headerlink" title="一、OS基础"></a>一、OS基础</h2><h3 id="1-什么是操作系统？"><a href="#1-什么是操作系统？" class="headerlink" title="1.什么是操作系统？"></a>1.什么是操作系统？</h3><ul>
-<li>OS是管理计算机硬件与软件资源的程序，是计算机的基石。</li>
-<li>本质是一个运行在计算机上的软件程序，用来管理计算机硬件和软件资源。</li>
-<li>OS屏蔽了硬件层的复杂性。</li>
-<li>内核是核心部分，负责系统的内存管理，硬件设备的管理以及应用程序的管理。内核是连接应用程序和硬件的桥梁，决定着系统的性能和稳定性。</li>
-</ul>
-<h3 id="2-系统调用"><a href="#2-系统调用" class="headerlink" title="2.系统调用"></a>2.系统调用</h3><p>根据进程访问资源的特点，可以把进程在系统上的运行分为两个级别：</p>
-<ol>
-<li>用户态：用户态运行的程序可以直接读取用户程序的数据。</li>
-<li>系统态：系统态运行的进程或者程序几乎可以访问计算机的任何资源，不受限制。</li>
-</ol>
-<p>那什么是系统调用？</p>
-<p>我们运行的程序运行在用户态，调用操作系统提供的系统态级别的子功能需要用到系统调用。这些系统调用可以分为：</p>
-<ul>
-<li>设备管理：完成设备的请求或者释放，以及设备启动等功能。</li>
-<li>文件管理：完成文件的读、写、创建和删除。</li>
-<li>进程控制：完成进程的创建，撤销，阻塞和唤醒等功能。</li>
-<li>进程通信：完成进程间的消息传递或信号传递等功能。</li>
-<li>内存管理：完成内存的分配，回收以及获取作业占用牛才能大小及地址等等。</li>
-</ul>
-<h2 id="二、进程和线程"><a href="#二、进程和线程" class="headerlink" title="二、进程和线程"></a>二、进程和线程</h2><h3 id="1-进程和线程的区别"><a href="#1-进程和线程的区别" class="headerlink" title="1.进程和线程的区别"></a>1.进程和线程的区别</h3><p>一个进程中有多个线程，多个线程共享进程的堆和方法区资源，但是每个线程有自己的程序计数器、虚拟机栈和本地方法栈。</p>
-<blockquote>
-<p>线程是进程划分成更小的运行单位，一个进程在其执行的过程可以产生多个线程。最大的不同在于各进程基本上是独立的，而线程不一定，因为同一进程的线程可能互相影响。线程执行开销更小，单不利于资源的管理和保护，进程刚好相反。</p>
-</blockquote>
-<h3 id="2-进程有哪几种状态"><a href="#2-进程有哪几种状态" class="headerlink" title="2.进程有哪几种状态"></a>2.进程有哪几种状态</h3><ul>
-<li>创建状态：被创建中，未就绪。</li>
-<li>就绪状态：准备运行，获得除处理器之外的一切所需资源，once得到处理器资源就开始运行。</li>
-<li>运行状态：进程在处理器上运行</li>
-<li>阻塞状态：等待状态，进程正在等待某一事件而暂停运行如等待某资源为可用或等待 IO 操作完成。即使处理器空闲，该进程也不能运行。</li>
-<li>结束状态：进程郑从系统中消失。可能是进程正常结束或者意外退出。</li>
-</ul>
-<h3 id="3-进程间的通信方式"><a href="#3-进程间的通信方式" class="headerlink" title="3.进程间的通信方式"></a>3.进程间的通信方式</h3><ul>
-<li>管道/匿名管道：具有亲缘关系的父子进程或者兄弟进程之间通信。</li>
-<li>有名管道：遵循“FIFO”。以磁盘文件的方式存在，可以实现本机任意两个进程通信。</li>
-<li>信号：复杂，用于通知接收进程某个事件已经发生。</li>
-<li>消息队列：消息的链表，存放在内存中由消息队列标识符标识。管道和消息队列都是先进先出。与管道不同，MQ存在于内核中，只有重启内核（操作系统重启）或者显示删除一个消息队列，才会真正的被删除。MQ可以实现消息的随机查询，不一定要FIFO的次序取出。MQ克服了信号承载量少，管道只能承载无格式字节流以及缓冲区大小受限等缺陷。</li>
-<li>信号量：计数器，用于多进程共享数据的访问，目的是进程间同步。这种通信方式主要用于解决与同步相关的问题并避免竞争条件。</li>
-<li>共享内存：多进程访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存数据的更新。依靠同步操作，如互斥锁和信号量等。是最有效的进程间的通信方式。</li>
-<li>套接字：客户端和服务器之间通过网络进行通信。套接字是支持TCP/IP的网络通信的基本操作单元。可以看做是不同主机之间的进程间进行双向通信的端点。通信的双方的一种约定，用套接字的相关函数来完成通信。</li>
-</ul>
-<h3 id="4-线程间的同步方式"><a href="#4-线程间的同步方式" class="headerlink" title="4.线程间的同步方式"></a>4.线程间的同步方式</h3><ul>
-<li><strong>互斥量：</strong>互斥对象机制，拥有互斥对象的线程才能访问公共资源。因为互斥对象只有一个，保证资源不会被多个线程同时访问。比如java中的synchronized和各种lock就是这种机制。</li>
-<li><strong>信号量：</strong>允许同一时刻多个线程访问同一个资源，但是需要控制同一时刻访问此资源的最大线程数量。</li>
-<li><strong>事件：</strong>通过通知操作的方式来保护多线程同步，还可以方便的实现多线程优先级比较操作。</li>
-</ul>
-<h3 id="5-进程的调度算法"><a href="#5-进程的调度算法" class="headerlink" title="5.进程的调度算法"></a>5.进程的调度算法</h3><ul>
-<li><strong>先来先服务（FCFS）：</strong>从就绪队列选择一个最先进入到该队列的进程分配资源，一直执行到完成或者发生事件阻塞放弃占用CPU时在重新调度。</li>
-<li><strong>短作业优先（SJF）：</strong>选择一个估计运行时间最短的进程分配资源。</li>
-<li><strong>时间片轮转：</strong>最古老最简单的算法，又称为RR算法。每个进程分配一个时间片，即该进程允许运行的时间。</li>
-<li><strong>多级反馈队列调度算法：</strong>前面介绍的几种进程调度的算法都有一定的局限性。如<strong>短进程优先的调度算法，仅照顾了短进程而忽略了长进程</strong> 。多级反馈队列调度算法既能使高优先级的作业得到响应又能使短作业（进程）迅速完成。，因而它是目前<strong>被公认的一种较好的进程调度算法</strong>，UNIX 操作系统采取的便是这种调度算法。</li>
-<li><strong>优先级调度：</strong>为每个流程分配优先级。相同优先级的按照FCFS。</li>
-</ul>
-<h2 id="三、内存管理"><a href="#三、内存管理" class="headerlink" title="三、内存管理"></a>三、内存管理</h2><p><strong>1、操作系统的内存管理主要做什么？</strong></p>
-<p>负责内存的分配与回收（malloc:申请内存，free：释放内存），另外地址转换也就是将逻辑地址转化为相应的物理地址。</p>
-<p><strong>2、常见的内存管理机制？</strong></p>
-<p>连续分配管理方式和非连续分配管理方式。连续指的是为一个用户分配一个连续的内存空间。如<strong>块式管理</strong>。非连续方式允许一个程序使用的内存在离散或者不相邻的内存中，常见的比如<strong>页式管理</strong>和<strong>段式管理</strong>。</p>
-<ul>
-<li>块式管理：内存分成固定大小的块，一个块运行一个进程，如果进程需要的内存很小，则剩下的浪费。未利用的块成为碎片。</li>
-<li>页式管理：主存分为大小相等且固定的页，页较小，比块的划分力度大，提高内存占用率，减少碎片。通过页表对应逻辑地址和物理地址。</li>
-<li>段式管理：页提高利用率，但是页没意义。段式管理把主存分为一段一段的，比页小的多。段有意义，定义了一组逻辑信息。例如：主程序段 MAIN、子程序段 X、数据段 D 及栈段 S 等。 段式管理通过段表对应逻辑地址和物理地址。</li>
-<li>段页式管理：段页式管理机制结合了段式管理和页式管理的优点。简单来说段页式管理机制就是把主存先分成若干段，每个段又分成若干页，也就是说 <strong>段页式管理机制</strong> 中段与段之间以及段的内部的都是离散的。</li>
-</ul>
-<p><strong>3、快表和多级页表</strong></p>
-<p>在内存管理中，很重要的浪点是：虚拟地址到物理地址的转换和解决虚拟地址空间大，页表也会很大的为题。</p>
-<ul>
-<li><p>快表：特殊的高速缓冲器，内容是页表的一部分或者全部。作用和页表相似，但是提高了访问速度。由于采用页表做地址转换，读写内存数据CPU要访问主频两次，有了块表，有时候只访问一次告诉缓冲存储器，一次主存，可以加快寻找并提高指令执行速度。使用快表之后的转换流程是这样的：</p>
-<ul>
-<li>根据虚拟地址中的页好查找地址</li>
-<li>在快表，读取相应的物理地址</li>
-<li>不在，访问内存中的页表，同时添加到快表</li>
-<li>块表填满，按照一定的策略淘汰一个页。</li>
-</ul>
-</li>
-<li><p>多级页表：避免把全部页表一直放在内UC那种占用过多空间，特别是那些根本就不需要的页表保存在内存中。属于时间换空间的典型场景。</p>
-<p>为了提高内存的空间性能，提出了多级页表的概念；但是提到空间性能是以浪费时间性能为基础的，因此为了补充损失的时间性能，提出了快表（即 TLB）的概念。 不论是快表还是多级页表实际上都利用到了程序的局部性原理，局部性原理在后面的虚拟内存这部分会介绍到。</p>
-</li>
-</ul>
-<p><strong>4、分页机制和分段机制的共同点和区别</strong></p>
-<p>共同点：</p>
-<ul>
-<li>都是为了提高内存利用率，减少内存碎片化</li>
-<li>离散存储，两者都是离散分配内存的方式，但是，每个页和段中的内存是连续的。</li>
-</ul>
-<p>区别：</p>
-<ul>
-<li>页大小固定，由OS决定，段大小不固定，取决于当前运行的程序。</li>
-<li>分页仅仅是为了满足操作系统内存管理的需求，而段是逻辑信息的单位，在程序中可以体现为代码段，数据段，能够更好满足用户的需要。</li>
-</ul>
-<p><strong>5、逻辑地址和物理地址</strong></p>
-<p>我们编程一般只有可能和逻辑地址打交道，比如在 C 语言中，指针里面存储的数值就可以理解成为内存里的一个地址，这个地址也就是我们说的逻辑地址，逻辑地址由操作系统决定。物理地址指的是真实物理内存中地址，更具体一点来说就是内存地址寄存器中的地址。物理地址是内存单元真正的地址。</p>
-<p><strong>6、CPU寻址，为什么需要虚拟地址空间？</strong></p>
-<p>现代处理器使用虚拟寻址的方式，需要内存管理单元来完成。</p>
-<ul>
-<li><p>为什么要虚拟地址空间呢？</p>
-<p>如果没有，程序直接访问操作物理内存，可能有的后果：</p>
-<ul>
-<li>程序访问任意内存，容易有意或无意破坏OS，造成崩溃。</li>
-<li>同时运行多个程序比较困难，比如，维系能运行给内存地址1xxx赋值后，QQ也同样给1XXX赋值，那就覆盖了，然后微信程序崩溃。</li>
-</ul>
-<p>通过虚拟地址访问内存有以下优势：</p>
-<ul>
-<li>程序可以使用一系列相邻的虚拟地址来访问内存中不相邻的大内存缓冲区。</li>
-<li>程序可以使用一系列虚拟地址来访问大于可用物理内存的内存缓冲区。当物理内存的供应量变小时，内存管理器会将物理内存页（通常大小为 4 KB）保存到磁盘文件。数据或代码页会根据需要在物理内存与磁盘之间移动。</li>
-<li>不同进程使用的虚拟地址彼此隔离。一个进程中的代码无法更改正在由另一进程或操作系统使用的物理内存。</li>
-</ul>
-</li>
-</ul>
-<h2 id="四、虚拟内存"><a href="#四、虚拟内存" class="headerlink" title="四、虚拟内存"></a>四、虚拟内存</h2><p>虚拟内存是计算机系统内存管理的一种技术，我们可以手动设置电脑的虚拟内存。虚拟内存的重要意义是他定义了一个连续的寻你地址空间，并且把内存拓展到硬盘空间。</p>
-<blockquote>
-<p><strong>虚拟内存</strong> 使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。与没有使用虚拟内存技术的系统相比，使用这种技术的系统使得大型程序的编写变得更容易，对真正的物理内存（例如 RAM）的使用也更有效率。目前，大多数操作系统都使用了虚拟内存，如 Windows 家族的“虚拟内存”；Linux 的“交换空间”等。From:<a href="https://zh.wikipedia.org/wiki/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98">https://zh.wikipedia.org/wiki/虚拟内存</a></p>
-</blockquote>
-<h3 id="1-局部性原理"><a href="#1-局部性原理" class="headerlink" title="1.局部性原理"></a>1.局部性原理</h3><p>是虚拟内存的基础，正式因为局部性原理，才可以只装入部分程序到内存就可以开始运行。</p>
-<p>局部性原理表现在以下方面：</p>
-<ul>
-<li>时间局限性：程序中的某条指令一旦执行，不就以后可能再次执行；如果数据在某个较短的时间被访问过，可能再次访问，原因是程序中存在大量的循环操作。</li>
-<li>空间局限性：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，即程序在一段时间内所访问的地址，可能集中在一定的范围之内，这是因为指令通常是顺序存放、顺序执行的，数据也一般是以向量、数组、表等形式簇聚存储的。</li>
-</ul>
-<p>时间局部性是通过将近来使用的指令和数据保存到高速缓存存储器中，并使用高速缓存的层次结构实现。空间局部性通常是使用较大的高速缓存，并将预取机制集成到高速缓存控制逻辑中实现。虚拟内存技术实际上就是建立了 “内存一外存”的两级存储器的结构，利用局部性原理实现髙速缓存。</p>
-<h3 id="2-虚拟内存"><a href="#2-虚拟内存" class="headerlink" title="2.虚拟内存"></a>2.虚拟内存</h3><p>基于局部性原理，程序装入时，先将一部分装入内存，其他部分柳在外存。外存比内存大，所以我们运行的软件的内存大小实际上是可以比计算机系统实际的内存大小大的。在程序执行过程中，当所访问的信息不在内存时，由操作系统将所需要的部分调入内存，然后继续执行程序。另一方面，操作系统将内存中暂时不使用的内容换到外存上，从而腾出空间存放将要调入内存的信息。这样，计算机好像为用户提供了一个比实际内存大的多的存储器——<strong>虚拟存储器</strong>。</p>
-<p>是一种时间换空间的策略，利用cup计算时间，页的调入调出时间来换更大的空间支持程序运行。程序的世界，不是时间换空间就是空间换时间。</p>
-<h3 id="3-虚拟内存的技术实现"><a href="#3-虚拟内存的技术实现" class="headerlink" title="3.虚拟内存的技术实现"></a>3.虚拟内存的技术实现</h3><p>虚拟内存的实现需要建立在离散分配的内存管理方式的基础上。</p>
-<ul>
-<li><strong>请求分页存储管理</strong>：建立在分页管理之上，为了支持虚拟存储器功能而增加了请求调页功能和页面置换功能。请求分页是目前最常用的一种实现虚拟存储器的方法。请求分页存储管理系统中，在作业开始运行之前，仅装入当前要执行的部分段即可运行。假如在作业运行的过程中发现要访问的页面不在内存，则由处理器通知操作系统按照对应的页面置换算法将相应的页面调入到主存，同时操作系统也可以将暂时不用的页面置换到外存中。</li>
-<li><strong>请求分段存储管理</strong>：建立在分段存储管理之上，增加了请求调段功能、分段置换功能。请求分段储存管理方式就如同请求分页储存管理方式一样，在作业开始运行之前，仅装入当前要执行的部分段即可运行；在执行过程中，可使用请求调入中断动态装入要访问但又不在内存的程序段；当内存空间已满，而又需要装入新的段时，根据置换功能适当调出某个段，以便腾出空间而装入新的段。</li>
-<li><strong>请求段页式存储管理</strong></li>
-</ul>
-<p>请求分页存储管理建立在分页管理之上。他们的根本区别是是否将程序全部所需的全部地址空间都装入主存，这也是请求分页存储管理可以提供虚拟内存的原因，我们在上面已经分析过了。</p>
-<p>它们之间的根本区别在于是否将一作业的全部地址空间同时装入主存。请求分页存储管理不要求将作业全部地址空间同时装入主存。基于这一点，请求分页存储管理可以提供虚存，而分页存储管理却不能提供虚存。</p>
-<p>不管哪种实现方式，都需要：</p>
-<ul>
-<li>一定容量的内存和外存。</li>
-<li>缺页中断：如果<strong>需执行的指令或访问的数据尚未在内存</strong>（称为缺页或缺段），则由处理器通知操作系统将相应的页面或段<strong>调入到内存</strong>，然后继续执行程序；</li>
-<li>虚拟地址空间：逻辑地址到物理地址的转换。</li>
-</ul>
-<h3 id="4-页面置换算法"><a href="#4-页面置换算法" class="headerlink" title="4.页面置换算法"></a>4.页面置换算法</h3><p>地址映射的过程中，若在页面中发现需要访问的页面不在内存中，则发生缺页中断。</p>
-<blockquote>
-<p><strong>缺页中断</strong> 就是要访问的<strong>页</strong>不在主存，需要操作系统将其调入主存后再进行访问。 在这个时候，被内存映射的文件实际上成了一个分页交换文件。</p>
-</blockquote>
-<p>缺页中断时，若当前没存没有空闲的页面，淘汰一页，称为页面置换算法。</p>
-<ul>
-<li><strong>OPT页面置换算法（最佳页面置换算法）：</strong>所选择的被淘汰页面将是以后永不使用的，或者是在最长时间内不再被访问的页面,这样可以保证获得最低的缺页率。</li>
-<li><strong>FIFO：</strong>淘汰最先进入内存的页面。</li>
-<li><strong>LRU（最近最久未使用）：</strong>访问字段记录页面上次被访问以来的时间T，淘汰T值最大的。</li>
-<li><strong>LFU（最少使用页面）：</strong>之前时期使用最少的页面淘汰。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机基础知识</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数组中的重复数字</title>
     <url>/2021/03/11/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E6%95%B0%E5%AD%97/</url>
     <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="number">2</span>或<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>一开始的思路是先用快排对数组进行排序，然后遍历数组，但是排序超时。<br>这时候可以选择用java中的set解题，在往set中添加元素的时候，添加成功返回true，说明不重复，反之说明重复。</p>
 <h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//排序超时</span></span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.add(nums[i]) == <span class="keyword">false</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>剑指offer题解</category>
-      </categories>
-      <tags>
-        <tag>剑指offer题解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>替换空格</title>
-    <url>/2021/03/11/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
-<blockquote>
-<p>示例1：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpace</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        String newStr = s.replaceAll(<span class="string">&quot; &quot;</span>,<span class="string">&quot;%20&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>剑指offer题解</category>
       </categories>
@@ -2789,6 +2616,23 @@
       </categories>
       <tags>
         <tag>文件上传渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>替换空格</title>
+    <url>/2021/03/11/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
+<blockquote>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpace</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        String newStr = s.replaceAll(<span class="string">&quot; &quot;</span>,<span class="string">&quot;%20&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>剑指offer题解</category>
+      </categories>
+      <tags>
+        <tag>剑指offer题解</tag>
       </tags>
   </entry>
   <entry>
@@ -5304,6 +5148,184 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2021/03/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="一、OS基础"><a href="#一、OS基础" class="headerlink" title="一、OS基础"></a>一、OS基础</h2><h3 id="1-什么是操作系统？"><a href="#1-什么是操作系统？" class="headerlink" title="1.什么是操作系统？"></a>1.什么是操作系统？</h3><ul>
+<li>OS是管理计算机硬件与软件资源的程序，是计算机的基石。</li>
+<li>本质是一个运行在计算机上的软件程序，用来管理计算机硬件和软件资源。</li>
+<li>OS屏蔽了硬件层的复杂性。</li>
+<li>内核是核心部分，负责系统的内存管理，硬件设备的管理以及应用程序的管理。内核是连接应用程序和硬件的桥梁，决定着系统的性能和稳定性。</li>
+</ul>
+<h3 id="2-系统调用"><a href="#2-系统调用" class="headerlink" title="2.系统调用"></a>2.系统调用</h3><p>根据进程访问资源的特点，可以把进程在系统上的运行分为两个级别：</p>
+<ol>
+<li>用户态：用户态运行的程序可以直接读取用户程序的数据。</li>
+<li>系统态：系统态运行的进程或者程序几乎可以访问计算机的任何资源，不受限制。</li>
+</ol>
+<p>那什么是系统调用？</p>
+<p>我们运行的程序运行在用户态，调用操作系统提供的系统态级别的子功能需要用到系统调用。这些系统调用可以分为：</p>
+<ul>
+<li>设备管理：完成设备的请求或者释放，以及设备启动等功能。</li>
+<li>文件管理：完成文件的读、写、创建和删除。</li>
+<li>进程控制：完成进程的创建，撤销，阻塞和唤醒等功能。</li>
+<li>进程通信：完成进程间的消息传递或信号传递等功能。</li>
+<li>内存管理：完成内存的分配，回收以及获取作业占用牛才能大小及地址等等。</li>
+</ul>
+<h2 id="二、进程和线程"><a href="#二、进程和线程" class="headerlink" title="二、进程和线程"></a>二、进程和线程</h2><h3 id="1-进程和线程的区别"><a href="#1-进程和线程的区别" class="headerlink" title="1.进程和线程的区别"></a>1.进程和线程的区别</h3><p>一个进程中有多个线程，多个线程共享进程的堆和方法区资源，但是每个线程有自己的程序计数器、虚拟机栈和本地方法栈。</p>
+<blockquote>
+<p>线程是进程划分成更小的运行单位，一个进程在其执行的过程可以产生多个线程。最大的不同在于各进程基本上是独立的，而线程不一定，因为同一进程的线程可能互相影响。线程执行开销更小，单不利于资源的管理和保护，进程刚好相反。</p>
+</blockquote>
+<h3 id="2-进程有哪几种状态"><a href="#2-进程有哪几种状态" class="headerlink" title="2.进程有哪几种状态"></a>2.进程有哪几种状态</h3><ul>
+<li>创建状态：被创建中，未就绪。</li>
+<li>就绪状态：准备运行，获得除处理器之外的一切所需资源，once得到处理器资源就开始运行。</li>
+<li>运行状态：进程在处理器上运行</li>
+<li>阻塞状态：等待状态，进程正在等待某一事件而暂停运行如等待某资源为可用或等待 IO 操作完成。即使处理器空闲，该进程也不能运行。</li>
+<li>结束状态：进程郑从系统中消失。可能是进程正常结束或者意外退出。</li>
+</ul>
+<h3 id="3-进程间的通信方式"><a href="#3-进程间的通信方式" class="headerlink" title="3.进程间的通信方式"></a>3.进程间的通信方式</h3><ul>
+<li>管道/匿名管道：具有亲缘关系的父子进程或者兄弟进程之间通信。</li>
+<li>有名管道：遵循“FIFO”。以磁盘文件的方式存在，可以实现本机任意两个进程通信。</li>
+<li>信号：复杂，用于通知接收进程某个事件已经发生。</li>
+<li>消息队列：消息的链表，存放在内存中由消息队列标识符标识。管道和消息队列都是先进先出。与管道不同，MQ存在于内核中，只有重启内核（操作系统重启）或者显示删除一个消息队列，才会真正的被删除。MQ可以实现消息的随机查询，不一定要FIFO的次序取出。MQ克服了信号承载量少，管道只能承载无格式字节流以及缓冲区大小受限等缺陷。</li>
+<li>信号量：计数器，用于多进程共享数据的访问，目的是进程间同步。这种通信方式主要用于解决与同步相关的问题并避免竞争条件。</li>
+<li>共享内存：多进程访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存数据的更新。依靠同步操作，如互斥锁和信号量等。是最有效的进程间的通信方式。</li>
+<li>套接字：客户端和服务器之间通过网络进行通信。套接字是支持TCP/IP的网络通信的基本操作单元。可以看做是不同主机之间的进程间进行双向通信的端点。通信的双方的一种约定，用套接字的相关函数来完成通信。</li>
+</ul>
+<h3 id="4-线程间的同步方式"><a href="#4-线程间的同步方式" class="headerlink" title="4.线程间的同步方式"></a>4.线程间的同步方式</h3><ul>
+<li><strong>互斥量：</strong>互斥对象机制，拥有互斥对象的线程才能访问公共资源。因为互斥对象只有一个，保证资源不会被多个线程同时访问。比如java中的synchronized和各种lock就是这种机制。</li>
+<li><strong>信号量：</strong>允许同一时刻多个线程访问同一个资源，但是需要控制同一时刻访问此资源的最大线程数量。</li>
+<li><strong>事件：</strong>通过通知操作的方式来保护多线程同步，还可以方便的实现多线程优先级比较操作。</li>
+</ul>
+<h3 id="5-进程的调度算法"><a href="#5-进程的调度算法" class="headerlink" title="5.进程的调度算法"></a>5.进程的调度算法</h3><ul>
+<li><strong>先来先服务（FCFS）：</strong>从就绪队列选择一个最先进入到该队列的进程分配资源，一直执行到完成或者发生事件阻塞放弃占用CPU时在重新调度。</li>
+<li><strong>短作业优先（SJF）：</strong>选择一个估计运行时间最短的进程分配资源。</li>
+<li><strong>时间片轮转：</strong>最古老最简单的算法，又称为RR算法。每个进程分配一个时间片，即该进程允许运行的时间。</li>
+<li><strong>多级反馈队列调度算法：</strong>前面介绍的几种进程调度的算法都有一定的局限性。如<strong>短进程优先的调度算法，仅照顾了短进程而忽略了长进程</strong> 。多级反馈队列调度算法既能使高优先级的作业得到响应又能使短作业（进程）迅速完成。，因而它是目前<strong>被公认的一种较好的进程调度算法</strong>，UNIX 操作系统采取的便是这种调度算法。</li>
+<li><strong>优先级调度：</strong>为每个流程分配优先级。相同优先级的按照FCFS。</li>
+</ul>
+<h2 id="三、内存管理"><a href="#三、内存管理" class="headerlink" title="三、内存管理"></a>三、内存管理</h2><p><strong>1、操作系统的内存管理主要做什么？</strong></p>
+<p>负责内存的分配与回收（malloc:申请内存，free：释放内存），另外地址转换也就是将逻辑地址转化为相应的物理地址。</p>
+<p><strong>2、常见的内存管理机制？</strong></p>
+<p>连续分配管理方式和非连续分配管理方式。连续指的是为一个用户分配一个连续的内存空间。如<strong>块式管理</strong>。非连续方式允许一个程序使用的内存在离散或者不相邻的内存中，常见的比如<strong>页式管理</strong>和<strong>段式管理</strong>。</p>
+<ul>
+<li>块式管理：内存分成固定大小的块，一个块运行一个进程，如果进程需要的内存很小，则剩下的浪费。未利用的块成为碎片。</li>
+<li>页式管理：主存分为大小相等且固定的页，页较小，比块的划分力度大，提高内存占用率，减少碎片。通过页表对应逻辑地址和物理地址。</li>
+<li>段式管理：页提高利用率，但是页没意义。段式管理把主存分为一段一段的，比页小的多。段有意义，定义了一组逻辑信息。例如：主程序段 MAIN、子程序段 X、数据段 D 及栈段 S 等。 段式管理通过段表对应逻辑地址和物理地址。</li>
+<li>段页式管理：段页式管理机制结合了段式管理和页式管理的优点。简单来说段页式管理机制就是把主存先分成若干段，每个段又分成若干页，也就是说 <strong>段页式管理机制</strong> 中段与段之间以及段的内部的都是离散的。</li>
+</ul>
+<p><strong>3、快表和多级页表</strong></p>
+<p>在内存管理中，很重要的浪点是：虚拟地址到物理地址的转换和解决虚拟地址空间大，页表也会很大的为题。</p>
+<ul>
+<li><p>快表：特殊的高速缓冲器，内容是页表的一部分或者全部。作用和页表相似，但是提高了访问速度。由于采用页表做地址转换，读写内存数据CPU要访问主频两次，有了块表，有时候只访问一次告诉缓冲存储器，一次主存，可以加快寻找并提高指令执行速度。使用快表之后的转换流程是这样的：</p>
+<ul>
+<li>根据虚拟地址中的页好查找地址</li>
+<li>在快表，读取相应的物理地址</li>
+<li>不在，访问内存中的页表，同时添加到快表</li>
+<li>块表填满，按照一定的策略淘汰一个页。</li>
+</ul>
+</li>
+<li><p>多级页表：避免把全部页表一直放在内UC那种占用过多空间，特别是那些根本就不需要的页表保存在内存中。属于时间换空间的典型场景。</p>
+<p>为了提高内存的空间性能，提出了多级页表的概念；但是提到空间性能是以浪费时间性能为基础的，因此为了补充损失的时间性能，提出了快表（即 TLB）的概念。 不论是快表还是多级页表实际上都利用到了程序的局部性原理，局部性原理在后面的虚拟内存这部分会介绍到。</p>
+</li>
+</ul>
+<p><strong>4、分页机制和分段机制的共同点和区别</strong></p>
+<p>共同点：</p>
+<ul>
+<li>都是为了提高内存利用率，减少内存碎片化</li>
+<li>离散存储，两者都是离散分配内存的方式，但是，每个页和段中的内存是连续的。</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>页大小固定，由OS决定，段大小不固定，取决于当前运行的程序。</li>
+<li>分页仅仅是为了满足操作系统内存管理的需求，而段是逻辑信息的单位，在程序中可以体现为代码段，数据段，能够更好满足用户的需要。</li>
+</ul>
+<p><strong>5、逻辑地址和物理地址</strong></p>
+<p>我们编程一般只有可能和逻辑地址打交道，比如在 C 语言中，指针里面存储的数值就可以理解成为内存里的一个地址，这个地址也就是我们说的逻辑地址，逻辑地址由操作系统决定。物理地址指的是真实物理内存中地址，更具体一点来说就是内存地址寄存器中的地址。物理地址是内存单元真正的地址。</p>
+<p><strong>6、CPU寻址，为什么需要虚拟地址空间？</strong></p>
+<p>现代处理器使用虚拟寻址的方式，需要内存管理单元来完成。</p>
+<ul>
+<li><p>为什么要虚拟地址空间呢？</p>
+<p>如果没有，程序直接访问操作物理内存，可能有的后果：</p>
+<ul>
+<li>程序访问任意内存，容易有意或无意破坏OS，造成崩溃。</li>
+<li>同时运行多个程序比较困难，比如，维系能运行给内存地址1xxx赋值后，QQ也同样给1XXX赋值，那就覆盖了，然后微信程序崩溃。</li>
+</ul>
+<p>通过虚拟地址访问内存有以下优势：</p>
+<ul>
+<li>程序可以使用一系列相邻的虚拟地址来访问内存中不相邻的大内存缓冲区。</li>
+<li>程序可以使用一系列虚拟地址来访问大于可用物理内存的内存缓冲区。当物理内存的供应量变小时，内存管理器会将物理内存页（通常大小为 4 KB）保存到磁盘文件。数据或代码页会根据需要在物理内存与磁盘之间移动。</li>
+<li>不同进程使用的虚拟地址彼此隔离。一个进程中的代码无法更改正在由另一进程或操作系统使用的物理内存。</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、虚拟内存"><a href="#四、虚拟内存" class="headerlink" title="四、虚拟内存"></a>四、虚拟内存</h2><p>虚拟内存是计算机系统内存管理的一种技术，我们可以手动设置电脑的虚拟内存。虚拟内存的重要意义是他定义了一个连续的寻你地址空间，并且把内存拓展到硬盘空间。</p>
+<blockquote>
+<p><strong>虚拟内存</strong> 使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。与没有使用虚拟内存技术的系统相比，使用这种技术的系统使得大型程序的编写变得更容易，对真正的物理内存（例如 RAM）的使用也更有效率。目前，大多数操作系统都使用了虚拟内存，如 Windows 家族的“虚拟内存”；Linux 的“交换空间”等。From:<a href="https://zh.wikipedia.org/wiki/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98">https://zh.wikipedia.org/wiki/虚拟内存</a></p>
+</blockquote>
+<h3 id="1-局部性原理"><a href="#1-局部性原理" class="headerlink" title="1.局部性原理"></a>1.局部性原理</h3><p>是虚拟内存的基础，正式因为局部性原理，才可以只装入部分程序到内存就可以开始运行。</p>
+<p>局部性原理表现在以下方面：</p>
+<ul>
+<li>时间局限性：程序中的某条指令一旦执行，不就以后可能再次执行；如果数据在某个较短的时间被访问过，可能再次访问，原因是程序中存在大量的循环操作。</li>
+<li>空间局限性：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，即程序在一段时间内所访问的地址，可能集中在一定的范围之内，这是因为指令通常是顺序存放、顺序执行的，数据也一般是以向量、数组、表等形式簇聚存储的。</li>
+</ul>
+<p>时间局部性是通过将近来使用的指令和数据保存到高速缓存存储器中，并使用高速缓存的层次结构实现。空间局部性通常是使用较大的高速缓存，并将预取机制集成到高速缓存控制逻辑中实现。虚拟内存技术实际上就是建立了 “内存一外存”的两级存储器的结构，利用局部性原理实现髙速缓存。</p>
+<h3 id="2-虚拟内存"><a href="#2-虚拟内存" class="headerlink" title="2.虚拟内存"></a>2.虚拟内存</h3><p>基于局部性原理，程序装入时，先将一部分装入内存，其他部分柳在外存。外存比内存大，所以我们运行的软件的内存大小实际上是可以比计算机系统实际的内存大小大的。在程序执行过程中，当所访问的信息不在内存时，由操作系统将所需要的部分调入内存，然后继续执行程序。另一方面，操作系统将内存中暂时不使用的内容换到外存上，从而腾出空间存放将要调入内存的信息。这样，计算机好像为用户提供了一个比实际内存大的多的存储器——<strong>虚拟存储器</strong>。</p>
+<p>是一种时间换空间的策略，利用cup计算时间，页的调入调出时间来换更大的空间支持程序运行。程序的世界，不是时间换空间就是空间换时间。</p>
+<h3 id="3-虚拟内存的技术实现"><a href="#3-虚拟内存的技术实现" class="headerlink" title="3.虚拟内存的技术实现"></a>3.虚拟内存的技术实现</h3><p>虚拟内存的实现需要建立在离散分配的内存管理方式的基础上。</p>
+<ul>
+<li><strong>请求分页存储管理</strong>：建立在分页管理之上，为了支持虚拟存储器功能而增加了请求调页功能和页面置换功能。请求分页是目前最常用的一种实现虚拟存储器的方法。请求分页存储管理系统中，在作业开始运行之前，仅装入当前要执行的部分段即可运行。假如在作业运行的过程中发现要访问的页面不在内存，则由处理器通知操作系统按照对应的页面置换算法将相应的页面调入到主存，同时操作系统也可以将暂时不用的页面置换到外存中。</li>
+<li><strong>请求分段存储管理</strong>：建立在分段存储管理之上，增加了请求调段功能、分段置换功能。请求分段储存管理方式就如同请求分页储存管理方式一样，在作业开始运行之前，仅装入当前要执行的部分段即可运行；在执行过程中，可使用请求调入中断动态装入要访问但又不在内存的程序段；当内存空间已满，而又需要装入新的段时，根据置换功能适当调出某个段，以便腾出空间而装入新的段。</li>
+<li><strong>请求段页式存储管理</strong></li>
+</ul>
+<p>请求分页存储管理建立在分页管理之上。他们的根本区别是是否将程序全部所需的全部地址空间都装入主存，这也是请求分页存储管理可以提供虚拟内存的原因，我们在上面已经分析过了。</p>
+<p>它们之间的根本区别在于是否将一作业的全部地址空间同时装入主存。请求分页存储管理不要求将作业全部地址空间同时装入主存。基于这一点，请求分页存储管理可以提供虚存，而分页存储管理却不能提供虚存。</p>
+<p>不管哪种实现方式，都需要：</p>
+<ul>
+<li>一定容量的内存和外存。</li>
+<li>缺页中断：如果<strong>需执行的指令或访问的数据尚未在内存</strong>（称为缺页或缺段），则由处理器通知操作系统将相应的页面或段<strong>调入到内存</strong>，然后继续执行程序；</li>
+<li>虚拟地址空间：逻辑地址到物理地址的转换。</li>
+</ul>
+<h3 id="4-页面置换算法"><a href="#4-页面置换算法" class="headerlink" title="4.页面置换算法"></a>4.页面置换算法</h3><p>地址映射的过程中，若在页面中发现需要访问的页面不在内存中，则发生缺页中断。</p>
+<blockquote>
+<p><strong>缺页中断</strong> 就是要访问的<strong>页</strong>不在主存，需要操作系统将其调入主存后再进行访问。 在这个时候，被内存映射的文件实际上成了一个分页交换文件。</p>
+</blockquote>
+<p>缺页中断时，若当前没存没有空闲的页面，淘汰一页，称为页面置换算法。</p>
+<ul>
+<li><strong>OPT页面置换算法（最佳页面置换算法）：</strong>所选择的被淘汰页面将是以后永不使用的，或者是在最长时间内不再被访问的页面,这样可以保证获得最低的缺页率。</li>
+<li><strong>FIFO：</strong>淘汰最先进入内存的页面。</li>
+<li><strong>LRU（最近最久未使用）：</strong>访问字段记录页面上次被访问以来的时间T，淘汰T值最大的。</li>
+<li><strong>LFU（最少使用页面）：</strong>之前时期使用最少的页面淘汰。</li>
+</ul>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h3 id="PE文件"><a href="#PE文件" class="headerlink" title="PE文件"></a>PE文件</h3><p>全称是Portable Exexutable，可移植的可执行文件，常见的如EXE，DLL，OCX，SYS，是windows操作系统上的程序文件。</p>
+<h2 id="活锁和死锁"><a href="#活锁和死锁" class="headerlink" title="活锁和死锁"></a>活锁和死锁</h2><p>活：任务或执行者没有被阻塞，但由于某些条件没有满足，导致一直重复尝试，失败。区别在于处于活锁的实体是在不断的改变状态，处于死锁的实体表现为等待；活锁可以自行解开，死锁不可。</p>
+<p>活锁是一系列进程在轮训的等待某个不可能为真的条件为真。进程不会blocked，这会导致CPU资源耗尽。</p>
+<p>解决活锁可以引进一些随机性，检测到冲突就暂停一定时间进行重试。大大减少碰撞的可能性。</p>
+<h2 id="直接寻址和间接寻址"><a href="#直接寻址和间接寻址" class="headerlink" title="直接寻址和间接寻址"></a>直接寻址和间接寻址</h2><p>寻址就是处理器根据指令中给出的地址信息来寻找物理地址的方式，是确定本条指令的数据地址以及下一条要执行的指令地址的方法。</p>
+<ul>
+<li>指令寻址:在内存中查找指令<ul>
+<li>顺序：采用PC计数器来计数指令的顺序。</li>
+<li>跳跃：下条程序的地址码不是程序计数器给出，而是本条指令给出。</li>
+</ul>
+</li>
+<li>操作数寻址：形成操作数的有效地址<ul>
+<li>立即寻址：操作数作为指令的一部分直接写在指令中。</li>
+<li>直接寻址：基本的寻址方法，<strong>在指令格式的地址的字段中直接指出操作数在内存的地址。由于操作数的地址直接给出而不需要经过某种变换</strong>，所以称这种寻址方式为直接寻址方式。</li>
+<li>间接寻址：间接寻址是相对直接寻址而言的，在间接寻址的情况下，<strong>指令地址字段中的形式地址不是操作数的真正地址，而是操作数地址的指示器，或者说此形式地址单元的内容才是操作数的有效地址</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="实时操作系统和分时操作系统"><a href="#实时操作系统和分时操作系统" class="headerlink" title="实时操作系统和分时操作系统"></a>实时操作系统和分时操作系统</h2><ul>
+<li>分时：<strong>多个联机用户同时适用一个计算机系统在各自终端上进行交互式会话，程序、数据和命令均在会话过程中提供，以问答方式控制程序运行</strong>。系统把处理器的时间划分为时间片轮流分配给各个连接终端。</li>
+<li>实时：当外部时间或数据产生时，能够对其予以接受并以足够快的速度进行处理，所得结果能够在规定时间内控制生产过程或对控制对象作出快速响应，并控制所有实时任务协调的操作系统。因而，<strong>提供及时响应和高可靠性是其主要特点</strong>。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机基础知识</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>

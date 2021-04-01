@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.8k</span>
+            <span class="post-count">5.5k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">16 min</span>
+            <span class="post-count">18 min</span>
         </span>
     </span>
 </div>
@@ -242,6 +242,28 @@
 <li><strong>FIFO：</strong>淘汰最先进入内存的页面。</li>
 <li><strong>LRU（最近最久未使用）：</strong>访问字段记录页面上次被访问以来的时间T，淘汰T值最大的。</li>
 <li><strong>LFU（最少使用页面）：</strong>之前时期使用最少的页面淘汰。</li>
+</ul>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h3 id="PE文件"><a href="#PE文件" class="headerlink" title="PE文件"></a>PE文件</h3><p>全称是Portable Exexutable，可移植的可执行文件，常见的如EXE，DLL，OCX，SYS，是windows操作系统上的程序文件。</p>
+<h2 id="活锁和死锁"><a href="#活锁和死锁" class="headerlink" title="活锁和死锁"></a>活锁和死锁</h2><p>活：任务或执行者没有被阻塞，但由于某些条件没有满足，导致一直重复尝试，失败。区别在于处于活锁的实体是在不断的改变状态，处于死锁的实体表现为等待；活锁可以自行解开，死锁不可。</p>
+<p>活锁是一系列进程在轮训的等待某个不可能为真的条件为真。进程不会blocked，这会导致CPU资源耗尽。</p>
+<p>解决活锁可以引进一些随机性，检测到冲突就暂停一定时间进行重试。大大减少碰撞的可能性。</p>
+<h2 id="直接寻址和间接寻址"><a href="#直接寻址和间接寻址" class="headerlink" title="直接寻址和间接寻址"></a>直接寻址和间接寻址</h2><p>寻址就是处理器根据指令中给出的地址信息来寻找物理地址的方式，是确定本条指令的数据地址以及下一条要执行的指令地址的方法。</p>
+<ul>
+<li>指令寻址:在内存中查找指令<ul>
+<li>顺序：采用PC计数器来计数指令的顺序。</li>
+<li>跳跃：下条程序的地址码不是程序计数器给出，而是本条指令给出。</li>
+</ul>
+</li>
+<li>操作数寻址：形成操作数的有效地址<ul>
+<li>立即寻址：操作数作为指令的一部分直接写在指令中。</li>
+<li>直接寻址：基本的寻址方法，<strong>在指令格式的地址的字段中直接指出操作数在内存的地址。由于操作数的地址直接给出而不需要经过某种变换</strong>，所以称这种寻址方式为直接寻址方式。</li>
+<li>间接寻址：间接寻址是相对直接寻址而言的，在间接寻址的情况下，<strong>指令地址字段中的形式地址不是操作数的真正地址，而是操作数地址的指示器，或者说此形式地址单元的内容才是操作数的有效地址</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="实时操作系统和分时操作系统"><a href="#实时操作系统和分时操作系统" class="headerlink" title="实时操作系统和分时操作系统"></a>实时操作系统和分时操作系统</h2><ul>
+<li>分时：<strong>多个联机用户同时适用一个计算机系统在各自终端上进行交互式会话，程序、数据和命令均在会话过程中提供，以问答方式控制程序运行</strong>。系统把处理器的时间划分为时间片轮流分配给各个连接终端。</li>
+<li>实时：当外部时间或数据产生时，能够对其予以接受并以足够快的速度进行处理，所得结果能够在规定时间内控制生产过程或对控制对象作出快速响应，并控制所有实时任务协调的操作系统。因而，<strong>提供及时响应和高可靠性是其主要特点</strong>。</li>
 </ul>
  
       <!-- reward -->
