@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.7k</span>
+            <span class="post-count">4.9k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">16 min</span>
+            <span class="post-count">17 min</span>
         </span>
     </span>
 </div>
@@ -278,7 +278,20 @@
 </blockquote>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/AQS%E5%8E%9F%E7%90%86%E5%9B%BE.png"></p>
 <p>使用int成员变量来实现同步状态，通过内置的FIFO队列来完成获取资源线程的排队工作。AQS使用CAS对该同步状态进行原子操作来实现值的修改。</p>
-<h2 id="AQS对资源的共享方式"><a href="#AQS对资源的共享方式" class="headerlink" title="AQS对资源的共享方式"></a>AQS对资源的共享方式</h2><h2 id="AQS底层使用了模板方法模板"><a href="#AQS底层使用了模板方法模板" class="headerlink" title="AQS底层使用了模板方法模板"></a>AQS底层使用了模板方法模板</h2><h2 id="AQS组件总结"><a href="#AQS组件总结" class="headerlink" title="AQS组件总结"></a>AQS组件总结</h2> 
+<h2 id="AQS对资源的共享方式"><a href="#AQS对资源的共享方式" class="headerlink" title="AQS对资源的共享方式"></a>AQS对资源的共享方式</h2><ul>
+<li>独占：<ul>
+<li>公平锁：排队顺序</li>
+<li>非公平锁：抢锁，谁抢到谁用。</li>
+</ul>
+</li>
+<li>共享：多个线程同时执行。</li>
+</ul>
+<h2 id="AQS组件总结"><a href="#AQS组件总结" class="headerlink" title="AQS组件总结"></a>AQS组件总结</h2><ul>
+<li>Semaphore：信号量，允许多个线程同时访问，<code>synchronized</code> 和 <code>ReentrantLock</code> 都是一次只允许一个线程访问某个资源，<code>Semaphore</code>(信号量)可以指定多个线程同时访问某个资源。</li>
+<li>CountDownLatch：倒计时器，同步工具类，用来控制线程等待。他可以让某个线程等待直到倒计时结束，再开始执行。</li>
+<li>CyclicBarrier：循环栅栏。让一组线程到达一个同步点时被阻塞，直到最后一个线程到达屏障，屏障才会开门，所有被屏障拦截的线程才会继续工作。</li>
+</ul>
+ 
       <!-- reward -->
       
     </div>
