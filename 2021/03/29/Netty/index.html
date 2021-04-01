@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">1.6k</span>
         </span>
     </span>
 
@@ -83,20 +83,89 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">5 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
+<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
+<blockquote>
+<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
+</blockquote>
+<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
+<ul>
+<li>作为NIO服务端，接收客户端的TCP连接</li>
+<li>作为NIO客户端，像服务端发起TCP连接。</li>
+<li>读取通信对端的请求或应答信息。</li>
+<li>想通信对端发送消息请求或应答消息。</li>
+</ul>
+<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
+<p>但是对于高负载、高并发的场景不合适。</p>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
+<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
+<ul>
+<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
+<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
+<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
+<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
+<p>工作流程总结如下：</p>
+<ul>
+<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
+<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
+<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
+<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
+<li>事件机制</li>
+<li>功能强大，预置了多种解码功能，支持主流协议。</li>
+<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
+</ul>
+<p><strong>为什么性能好？</strong></p>
+<ul>
+<li>纯异步，Reactor线程模型</li>
+<li>IO多路复用</li>
+<li>GC优化</li>
+<li>内存泄露检测</li>
+<li>zero copy</li>
+</ul>
+<p><strong>Zero copy</strong></p>
+<ul>
+<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
+<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
+<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
+<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
+</ul>
+<p><strong>垃圾回收</strong></p>
+<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
+<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
+<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
+<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
+<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
+<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
+<ul>
+<li>NIOChannel：水平触发</li>
+<li>EpollChannel：边缘触发</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
+ 
       <!-- reward -->
       
     </div>

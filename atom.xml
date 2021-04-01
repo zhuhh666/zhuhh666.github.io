@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-03-29T05:13:40.420Z</updated>
+  <updated>2021-04-01T12:21:15.442Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -21,8 +21,17 @@
     <link href="http://victor-huihui.gitee.io/2021/03/29/Netty/"/>
     <id>http://victor-huihui.gitee.io/2021/03/29/Netty/</id>
     <published>2021-03-29T05:08:06.000Z</published>
-    <updated>2021-03-29T05:13:40.420Z</updated>
+    <updated>2021-04-01T12:21:15.442Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。&lt;/p&gt;
+&lt;h1 id=&quot;Reactor&quot;&gt;&lt;a href=&quot;#Reactor&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
