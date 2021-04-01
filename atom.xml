@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-04-01T12:21:15.442Z</updated>
+  <updated>2021-04-01T12:54:55.939Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对水杉在线的思考</title>
+    <link href="http://victor-huihui.gitee.io/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>http://victor-huihui.gitee.io/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</id>
+    <published>2021-04-01T12:36:01.000Z</published>
+    <updated>2021-04-01T12:54:55.939Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;水杉在线现在变得异常庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。&lt;/p&gt;
+&lt;p&gt;其实系统本身不是关键点，重要的数据，我</summary>
+        
+      
+    
+    
+    
+    <category term="云原生" scheme="http://victor-huihui.gitee.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"/>
+    
+    
+    <category term="Java" scheme="http://victor-huihui.gitee.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Netty</title>
@@ -483,32 +509,6 @@
     
     
     <category term="Docker" scheme="http://victor-huihui.gitee.io/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对象存储及使用痛点</title>
-    <link href="http://victor-huihui.gitee.io/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/"/>
-    <id>http://victor-huihui.gitee.io/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</id>
-    <published>2020-08-03T06:46:10.000Z</published>
-    <updated>2020-08-03T07:54:43.715Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。&lt;/p&gt;
-&lt;h2 id=&quot;1、从对象存储说起&quot;&gt;&lt;a href=&quot;#1、从对象存储说起&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="OSS" scheme="http://victor-huihui.gitee.io/tags/OSS/"/>
     
   </entry>
   

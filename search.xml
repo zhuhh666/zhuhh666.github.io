@@ -297,6 +297,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Java实现Word转html预览</title>
+    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
+<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
+<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>How to Read a Paper</title>
     <url>/2020/04/20/How-to-Read-a-Paper/</url>
     <content><![CDATA[<blockquote>
@@ -365,29 +388,6 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java实现Word转html预览</title>
-    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
-    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
-<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
-<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
-<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1075,6 +1075,70 @@
       </tags>
   </entry>
   <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OAuth2.0</title>
     <url>/2021/03/21/OAuth2-0%E6%8E%88%E6%9D%83/</url>
     <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
@@ -1183,70 +1247,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
-<ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
-</ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
-
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
-<ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>OSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1904,6 +1904,46 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker容器的备份与迁移</title>
+    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
+<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
+
+<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
+
+<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github actions托管gitee pages</title>
     <url>/2021/03/26/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
@@ -1950,24 +1990,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OSS文件管理</title>
     <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
     <content><![CDATA[<blockquote>
@@ -1996,26 +2018,25 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker容器的备份与迁移</title>
-    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
-<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
 
-<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
-
-<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
-
-<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
 ]]></content>
       <categories>
-        <category>云原生</category>
+        <category>后端技术</category>
       </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -2108,27 +2129,6 @@
       <tags>
         <tag>中医</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
   </entry>
   <entry>
     <title>中医学哲学基础-五行学说</title>
@@ -2336,24 +2336,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>从尾到头打印链表</title>
     <url>/2021/03/11/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
@@ -2370,6 +2352,24 @@
       </categories>
       <tags>
         <tag>剑指offer题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2397,23 +2397,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CNN手写文字识别</title>
-    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
-<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
-
-<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>别直接修改hexo生成的文件名</title>
     <url>/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/</url>
     <content><![CDATA[<p>没啥说的，目录里有几个题目的开头英文没大写，看着很别扭，想修改成大写，于是寻思，hexo的文章title都是些文章名然后自动生成的，于是直接改了md文件的文件名，报了404，正确的做法是点进去md文档修改title。</p>
@@ -2430,6 +2413,23 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CNN手写文字识别</title>
+    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
+<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -2546,6 +2546,21 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对水杉在线的思考</title>
+    <url>/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<p>水杉在线现在变得异常庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。</p>
+<p>其实系统本身不是关键点，重要的数据，我们在数据和人工智能方面也做出了各种探索，包括使用xapi收集多平台的用户数据，从而构建庞大的数据中台，而中台又支撑着关于教育的各种探索。又比如构建智能题库，训练模型对题目进行自动的多标签识别。还有利用数据构建展示大屏。这些都让我们得到开发之外的别的乐趣。</p>
+<p>我将从一个开发者的角度，记录我关于水杉在线的思考。</p>
+<h1 id="关于登陆的思考"><a href="#关于登陆的思考" class="headerlink" title="关于登陆的思考"></a>关于登陆的思考</h1><p>我一直都认为，登陆是比较难做的一部分。</p>
+<h1 id="关于分布式的思考"><a href="#关于分布式的思考" class="headerlink" title="关于分布式的思考"></a>关于分布式的思考</h1><h1 id="关于高并发的思考"><a href="#关于高并发的思考" class="headerlink" title="关于高并发的思考"></a>关于高并发的思考</h1><h1 id="关于云原生的思考"><a href="#关于云原生的思考" class="headerlink" title="关于云原生的思考"></a>关于云原生的思考</h1>]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -2719,6 +2734,23 @@
       </tags>
   </entry>
   <entry>
+    <title>替换空格</title>
+    <url>/2021/03/11/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
+<blockquote>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpace</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        String newStr = s.replaceAll(<span class="string">&quot; &quot;</span>,<span class="string">&quot;%20&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>剑指offer题解</category>
+      </categories>
+      <tags>
+        <tag>剑指offer题解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>文件漏洞渗透</title>
     <url>/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/</url>
     <content><![CDATA[<h2 id="靶机安装"><a href="#靶机安装" class="headerlink" title="靶机安装"></a>靶机安装</h2><p>使用docker快速启动</p>
@@ -2757,23 +2789,6 @@
       </categories>
       <tags>
         <tag>文件上传渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>替换空格</title>
-    <url>/2021/03/11/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
-<blockquote>
-<p>示例1：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpace</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        String newStr = s.replaceAll(<span class="string">&quot; &quot;</span>,<span class="string">&quot;%20&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>剑指offer题解</category>
-      </categories>
-      <tags>
-        <tag>剑指offer题解</tag>
       </tags>
   </entry>
   <entry>
