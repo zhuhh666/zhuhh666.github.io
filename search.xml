@@ -160,7 +160,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>云原生</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>DevOps</tag>
@@ -256,36 +256,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git版本回退</title>
-    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
-    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
-
-<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
-<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Read a Paper</title>
     <url>/2020/04/20/How-to-Read-a-Paper/</url>
     <content><![CDATA[<blockquote>
@@ -357,14 +327,19 @@
       </tags>
   </entry>
   <entry>
-    <title>Java基础</title>
-    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[]]></content>
+    <title>Git版本回退</title>
+    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
+    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
+<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
+]]></content>
       <categories>
         <category>后端技术</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -385,6 +360,17 @@
 ]]></content>
       <categories>
         <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java基础</title>
+    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -518,6 +504,20 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -661,59 +661,10 @@
 <p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MongoDB</title>
-    <url>/2020/04/10/MongoDB/</url>
-    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
-
-<p>show dbs：显示所有数据库</p>
-<p>use test：创建test数据库(内存中)</p>
-<p>db：当前数据库</p>
-<p>db.dropDatabase()：删除数据库</p>
-<p><strong>三个保留库：</strong></p>
-<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
-<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
-<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
-<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
-<p>show collections：显示当前的collection</p>
-<p>db.my.drop( )：删除集合</p>
-<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
-<li><p>单个文档插入：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
-
-<p>db.comment.find()：查询所有数据库数据</p>
-<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
-<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
-<p><strong>投影查询</strong>：</p>
-<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
-<p>加try catch:</p>
-<p>try{</p>
-<p>insert:one or many</p>
-<p>}catch(e){</p>
-<p>print(e);</p>
-<p>}</p>
-<p><strong>文档更新：</strong></p>
-<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
-<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
-<p>批量修改：</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -990,10 +941,59 @@
 <p>数据库连接本质就是一个 socket 的连接。数据库服务端还要维护一些缓存和用户权限信息之类的 所以占用了一些内存。我们可以把数据库连接池是看做是维护的数据库连接的缓存，以便将来需要对数据库的请求时可以重用这些连接。为每个用户打开和维护数据库连接，尤其是对动态数据库驱动的网站应用程序的请求，既昂贵又浪费资源。<strong>在连接池中，创建连接后，将其放置在池中，并再次使用它，因此不必建立新的连接。如果使用了所有连接，则会建立一个新连接并将其添加到池中</strong>。 连接池还减少了用户必须等待建立与数据库的连接的时间。</p>
 <h1 id="8、常见问题："><a href="#8、常见问题：" class="headerlink" title="8、常见问题："></a>8、常见问题：</h1><h2 id="一条SQL语句在MySql中是如何执行的"><a href="#一条SQL语句在MySql中是如何执行的" class="headerlink" title="一条SQL语句在MySql中是如何执行的"></a>一条SQL语句在MySql中是如何执行的</h2><h2 id="MySQL高性能规范"><a href="#MySQL高性能规范" class="headerlink" title="MySQL高性能规范"></a>MySQL高性能规范</h2><h2 id="SQL执行的很慢的原因"><a href="#SQL执行的很慢的原因" class="headerlink" title="SQL执行的很慢的原因"></a>SQL执行的很慢的原因</h2>]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MongoDB</title>
+    <url>/2020/04/10/MongoDB/</url>
+    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
+
+<p>show dbs：显示所有数据库</p>
+<p>use test：创建test数据库(内存中)</p>
+<p>db：当前数据库</p>
+<p>db.dropDatabase()：删除数据库</p>
+<p><strong>三个保留库：</strong></p>
+<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
+<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
+<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
+<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
+<p>show collections：显示当前的collection</p>
+<p>db.my.drop( )：删除集合</p>
+<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
+<li><p>单个文档插入：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p>db.comment.find()：查询所有数据库数据</p>
+<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
+<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
+<p><strong>投影查询</strong>：</p>
+<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
+<p>加try catch:</p>
+<p>try{</p>
+<p>insert:one or many</p>
+<p>}catch(e){</p>
+<p>print(e);</p>
+<p>}</p>
+<p><strong>文档更新：</strong></p>
+<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
+<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
+<p>批量修改：</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -1068,7 +1068,7 @@
 <h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>框架</tag>
@@ -1179,7 +1179,7 @@
 <h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p>这里使用redis做上下文，</p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -1848,19 +1848,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora+PicGo实现图片自动上传</title>
     <url>/2020/03/25/Typora-PicGo%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>我实在太喜欢Typora了。不仅仅因为它腿白貌。。，啊呸，页面清爽美观。而且还支持各种代码格式，写起笔记来视觉很好。但是令人痛心的是，当你想在Typora中插入图片时，OK，你可以插入，但是它本质上是一种弱引用，引用的只是图片的本地路径。所以如果你想分享你的md文件，还需要连带分享一个图片资源文件夹，十分臃肿。在使用PicGo之前，想用hexo渲染md文件，都是先打开图床工具—&gt;上传图片—&gt;复制图片URL—&gt;粘贴进Typora，属实麻烦。自从Typora支持通过PicGo自动上传之后，Typora真的完美了，用起来不要太爽。</p>
@@ -2131,6 +2118,74 @@
       </tags>
   </entry>
   <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二维数组中的查找</title>
+    <url>/2021/03/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<blockquote>
+<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
+</blockquote>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>剑指offer题解</category>
+      </categories>
+      <tags>
+        <tag>剑指offer题解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中医学哲学基础-阴阳学说</title>
     <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E9%98%B4%E9%98%B3%E5%AD%A6%E8%AF%B4/</url>
     <content><![CDATA[<blockquote>
@@ -2281,61 +2336,6 @@
       </tags>
   </entry>
   <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二维数组中的查找</title>
-    <url>/2021/03/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<blockquote>
-<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
-</blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>剑指offer题解</category>
-      </categories>
-      <tags>
-        <tag>剑指offer题解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>从尾到头打印链表</title>
     <url>/2021/03/11/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
@@ -2352,24 +2352,6 @@
       </categories>
       <tags>
         <tag>剑指offer题解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2394,6 +2376,24 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2506,6 +2506,21 @@
       </categories>
   </entry>
   <entry>
+    <title>对水杉在线的思考</title>
+    <url>/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<p>水杉在线现在变得越来越庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。</p>
+<p>其实系统本身不是关键点，重要的是数据。我们在数据和人工智能方面也做了各种探索，包括使用xapi收集多平台的用户数据，从而构建庞大的数据中台，而中台又支撑着关于教育的各种探索。又比如构建智能题库，训练模型对题目进行自动的多标签识别。比如我们自己训练更适用于水杉平台的AI助教。还有利用数据构建展示大屏等等，这些都让我们得到开发之外的别的乐趣。</p>
+<p>我将从一个开发者的角度，记录我关于水杉在线的思考。</p>
+<h1 id="关于系统设计的思考"><a href="#关于系统设计的思考" class="headerlink" title="关于系统设计的思考"></a>关于系统设计的思考</h1><h1 id="关于登陆的思考"><a href="#关于登陆的思考" class="headerlink" title="关于登陆的思考"></a>关于登陆的思考</h1><p>我一直都认为，登陆是比较难做的一部分。</p>
+<h1 id="关于分布式的思考"><a href="#关于分布式的思考" class="headerlink" title="关于分布式的思考"></a>关于分布式的思考</h1><h1 id="关于高并发的思考"><a href="#关于高并发的思考" class="headerlink" title="关于高并发的思考"></a>关于高并发的思考</h1><h1 id="关于云原生的思考"><a href="#关于云原生的思考" class="headerlink" title="关于云原生的思考"></a>关于云原生的思考</h1>]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>审视</title>
     <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
     <content><![CDATA[<blockquote>
@@ -2546,21 +2561,6 @@
       </categories>
       <tags>
         <tag>故事</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对水杉在线的思考</title>
-    <url>/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[<p>水杉在线现在变得异常庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。</p>
-<p>其实系统本身不是关键点，重要的数据，我们在数据和人工智能方面也做出了各种探索，包括使用xapi收集多平台的用户数据，从而构建庞大的数据中台，而中台又支撑着关于教育的各种探索。又比如构建智能题库，训练模型对题目进行自动的多标签识别。还有利用数据构建展示大屏。这些都让我们得到开发之外的别的乐趣。</p>
-<p>我将从一个开发者的角度，记录我关于水杉在线的思考。</p>
-<h1 id="关于登陆的思考"><a href="#关于登陆的思考" class="headerlink" title="关于登陆的思考"></a>关于登陆的思考</h1><p>我一直都认为，登陆是比较难做的一部分。</p>
-<h1 id="关于分布式的思考"><a href="#关于分布式的思考" class="headerlink" title="关于分布式的思考"></a>关于分布式的思考</h1><h1 id="关于高并发的思考"><a href="#关于高并发的思考" class="headerlink" title="关于高并发的思考"></a>关于高并发的思考</h1><h1 id="关于云原生的思考"><a href="#关于云原生的思考" class="headerlink" title="关于云原生的思考"></a>关于云原生的思考</h1>]]></content>
-      <categories>
-        <category>云原生</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3042,25 +3042,6 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机网络科普</title>
-    <url>/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%A7%91%E6%99%AE/</url>
-    <content><![CDATA[<h3 id="HUB"><a href="#HUB" class="headerlink" title="HUB"></a>HUB</h3><p>故事开始，两台计算机想要发送消息，通过网线相连。现在电脑多了发现计算机两两相连线太多，所以呢，想到转发的方式，就是中央有一个转发器，每个计算机都连到转发器上。这个转发器就称为<strong>HUB集线器</strong>，HUB转发的方式是广播式的，它会把消息转发给连到HUB上面的计算机，现在问题来了，假设电脑A和B同时发送了消息即电信号，对于HUB来说，无法识别电信号是谁发出来的，所以别的计算机收到的可能是A和B信息的杂糅，导致A和B发出的数据包全都没法用。针对上述HUB的情况，就有了一种<strong>CSMA/CD</strong>协议，就是每次在要发送信息的时候进行载波监听，如果线路上没有机器发送，则发送消息，防止冲突。缺点是：</p>
-<ul>
-<li>广播式发消息，带宽利用率低</li>
-<li>同时只能有一个发数据，链路利用率低</li>
-</ul>
-<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>于是乎，又提出第二种方式<strong>交换机(sw)<strong>，交换机也是可以进行消息的转发，但是它会记录地址，也称为</strong>mac地址(48bit)<strong>，mac地址是电脑出厂的时候写死的。那么交换机如何记录地址的？在交换机中维护了一张</strong>mac-端口</strong>表，比如mac1对应1号口，mac2对用2号口，1想发消息给2，查询得到2的端口是2，于是乎通过端口2讲消息发送给mac2，这样就避免了广播式的发送消息。那这张mac-端口表是如何建立起来的？我们买来一个交换机，上面有几个孔，拿到家可以接设备，现在A想给B发消息，比如A连的1号端口，但是不知道B连的几号端口，于是交换机给每个端口都发送消息，看看那个端口做出回应，就将B和做出回应的端口记录下来。于是乎就这样维护起来了表关系。交换机之间可以桥接，现在交换机1和2(1中的4号口和2中的1号口桥接)，1中有AB设备，2中有CD设备，1想给A给C发消息，逐个试，通过桥接试到了2上，于是2交换机在1中的A发送消息过来的时候，记录下来A的端口是1。1中的B发消息，2也会记录下来B的端口是1，这里记录1不是交换机的序号，而是桥接的端口号。一般家庭的交换机可以维护的表数据是几千条，弊端：</p>
-<ul>
-<li>表的存储量小，比如A给B发消息，2上找不到，然后广播给3，一直找不到一直广播，引起<strong>消息洪泛</strong></li>
-<li>交换机完美代替集线器，在局域网内高效工作，规模大就力不从心了。</li>
-</ul>
-<h3 id="路由器-网关"><a href="#路由器-网关" class="headerlink" title="路由器(网关)"></a>路由器(网关)</h3><p>两个网络想进行通信，可以在网络1和2之间增加一个路由器用于消息转发。但是网络其实是一个宽泛的概念，没有划定说上海的普陀区和松江区是两个网络。这时候提出<strong>IP地址</strong>用来标识网络和标识设备。192.168.0.0/24用来表示网络2,192.168.0.103(我的)用来表示当前设备。路由表的建立就比较麻烦了，用到很多仍在迭代的算法。IP地址是抽象地址，但是mac地址是真实地址，所以路由器想发消息给A的时候，先根据IP（254）地址查mac地址(ARP)，就是去广播询问，谁的IP地址是254。然后就可以通过mac地址传送信息。</p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>身份证信息识别</title>
     <url>/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/</url>
     <content><![CDATA[<blockquote>
@@ -3093,6 +3074,17 @@
       <tags>
         <tag>Java</tag>
         <tag>阿里云SDK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式</title>
+    <url>/2021/04/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3880,7 +3872,7 @@
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324173320715.png" alt="image-20210324173320715"></p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>JVM</tag>
@@ -4221,7 +4213,146 @@
 <p>​    </p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot整合rabbitMQ</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88rabbitMQ/</url>
+    <content><![CDATA[<h1 id="1-消息队列概述"><a href="#1-消息队列概述" class="headerlink" title="1.消息队列概述"></a>1.消息队列概述</h1><h2 id="1-1-消息队列和MQ"><a href="#1-1-消息队列和MQ" class="headerlink" title="1.1.消息队列和MQ"></a>1.1.消息队列和MQ</h2><p>MQ全称Message Queue，消息队列是应用程序之间的通信方法。</p>
+<ul>
+<li><p>为什么使用MQ？</p>
+<p>在项目中，可将一些无需及时返回且耗时的操作提取出来，进行<strong>异步处理</strong>，这种处理方式大大节省了服务器的响应时间，从而<strong>提高系统的吞吐量</strong>。</p>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li><p>任务异步处理</p>
+</li>
+<li><p>应用程序解耦</p>
+<p>相当于中介，生产方通过MQ与消费者交互。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-AMQP和JMS"><a href="#1-2-AMQP和JMS" class="headerlink" title="1.2.AMQP和JMS"></a>1.2.AMQP和JMS</h2><p>MQ的两种实现方式—&gt;AMQP，JMS。</p>
+<h3 id="1-2-1-AMQP"><a href="#1-2-1-AMQP" class="headerlink" title="1.2.1 AMQP"></a>1.2.1 AMQP</h3><p>是一种协议（链接协议），和JMS的本质区别是不从API层进行限定，直接定义网络交换的数据格式。</p>
+<h3 id="1-2-2-JMS"><a href="#1-2-2-JMS" class="headerlink" title="1.2.2 JMS"></a>1.2.2 JMS</h3><p>java消息服务，是一个<strong>java平台</strong>中关于面向消息中间件的<strong>API</strong>，应用于两个程序之间，或分布式系统中发送消息，进行异步通信。</p>
+<h3 id="1-2-3-AMQP和IMS区别"><a href="#1-2-3-AMQP和IMS区别" class="headerlink" title="1.2.3 AMQP和IMS区别"></a>1.2.3 AMQP和IMS区别</h3><ul>
+<li>JMS定义统一的接口，对消息进行统一操作；A是通过协议来统一数据交换的格式。</li>
+<li>J必须是Java语言，A是协议，跨语言</li>
+<li>J规定两种消息模式；A更丰富。</li>
+</ul>
+<h2 id="1-3-消息队列产品"><a href="#1-3-消息队列产品" class="headerlink" title="1.3.消息队列产品"></a>1.3.消息队列产品</h2><ul>
+<li>ActiveMQ：基于JMS</li>
+<li>ZeroMQ：基于C开发</li>
+<li>RabbitMQ：AMQP协议，erlang语言，性能好</li>
+<li>RocketMQ：基于JMS，alibaba</li>
+<li>kafka：类似于MQ的产品，分布式消息系统，高吞吐量</li>
+</ul>
+<h2 id="1-4-RabbitMQ"><a href="#1-4-RabbitMQ" class="headerlink" title="1.4.RabbitMQ"></a>1.4.RabbitMQ</h2><p>提供6种模式：简单模式，work模式，publish/subscribe发布与订阅模式，Routing路由模式，Topics主题模式，RPC远程调用。</p>
+<h1 id="2-安装及配置MQ"><a href="#2-安装及配置MQ" class="headerlink" title="2.安装及配置MQ"></a>2.安装及配置MQ</h1><ul>
+<li><p>安装erlang</p>
+</li>
+<li><p>安装MQ</p>
+</li>
+<li><p>安装MQ的图形管理插件</p>
+</li>
+<li><p>创建管理用户</p>
+</li>
+<li><p>创建虚拟主机Virtual Hosts</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">1[安装erlang]--&gt;2[安装RabbitMQ]</span><br><span class="line">2--&gt;3[安装管理插件]</span><br><span class="line">3--&gt;4[创建用户]</span><br><span class="line">4--&gt;5[创建虚拟主机]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>安装过程中以管理员身份运行</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="3-RabbitMQ入门"><a href="#3-RabbitMQ入门" class="headerlink" title="3.RabbitMQ入门"></a>3.RabbitMQ入门</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.rabbitmq<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>amqp-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.7.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-1-生产者"><a href="#3-1-生产者" class="headerlink" title="3.1 生产者"></a>3.1 生产者</h2><p>生产者发送消息到RabbitMQ的队列（simple_queue）；消费者可以从队列中获取信息，可以使用简单模式（simple）。</p>
+<ul>
+<li><p>创建连接工厂(设置MQ的连接参数)</p>
+</li>
+<li><p>创建连接</p>
+</li>
+<li><p>创建频道</p>
+</li>
+<li><p>声明队列</p>
+</li>
+<li><p>发送消息</p>
+</li>
+<li><p>关闭资源</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.rabbitmq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *简单模式：发送消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;simple_queue&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        <span class="comment">//1创建连接工厂,ctrl+ait+v快速生成对象</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        <span class="comment">//主机默认localhost</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">        <span class="comment">//端口：默认5672</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">//虚拟主机：默认/</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/hhzhu&quot;</span>);</span><br><span class="line">        <span class="comment">//用户名，默认guest</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;shei&quot;</span>);</span><br><span class="line">        <span class="comment">//2创建连接</span></span><br><span class="line">        Connection connection = connectionFactory.newConnection();</span><br><span class="line">        <span class="comment">//3创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5发送消息</span></span><br><span class="line">        String message = <span class="string">&quot;你好，小兔纸。&quot;</span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">         * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">         * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">         * 参数4：消息内容</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicPublish(<span class="string">&quot;&quot;</span>,QUEUE_NAME,<span class="keyword">null</span>,message.getBytes());</span><br><span class="line">        System.out.println(<span class="string">&quot;已发送消息：&quot;</span>+message);</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在设置连接工场的时候，不设置会有默认；</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="3-2-消费者"><a href="#3-2-消费者" class="headerlink" title="3.2 消费者"></a>3.2 消费者</h2><p>从RabbitMQ中队列(与生产者发送消息的队列一致)接收消息。</p>
+<ul>
+<li><p>创建连接工厂的连接参数</p>
+</li>
+<li><p>创建连接(抽取一个获取连接的工具类)</p>
+</li>
+<li><p>创建频道</p>
+</li>
+<li><p>声明队列</p>
+</li>
+<li><p>创建消费者(接收消息并处理接收到的消息)</p>
+</li>
+<li><p>监听队列</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.simple;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>消费者持续监听队列消息，不需要关闭资源</p>
+<p>如果消费者在听一个队列中有多个，消息如何分配？</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="4-RabbitMQ工作模式"><a href="#4-RabbitMQ工作模式" class="headerlink" title="4.RabbitMQ工作模式"></a>4.RabbitMQ工作模式</h1><h2 id="4-1-Work-queue工作模式"><a href="#4-1-Work-queue工作模式" class="headerlink" title="4.1 Work queue工作模式"></a>4.1 Work queue工作模式</h2><p>与simple相比，多了一个或多个消费者，多个消费者共同消费同一个队列中的消息。(消费者之间对消息的接收是竞争关系)。一个消息只能被一个消费者接收。</p>
+<p><strong>应用场景：</strong>可以在消费者端处理任务比较耗时的时候，添加对同一个队列的消费者来提高任务处理能力。</p>
+<p>生产者：发送30个消息</p>
+<p>消费者：创建2个消费者监听同一个队列，查看两个消费者接收消息是否存在重复。</p>
+<ul>
+<li><p>抽取连接工具类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *创建连接工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectionUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        <span class="comment">//1创建连接工厂,ctrl+ait+v快速生成对象</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        <span class="comment">//主机默认localhost</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">        <span class="comment">//端口：默认5672</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">//虚拟主机：默认/</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/hhzhu&quot;</span>);</span><br><span class="line">        <span class="comment">//用户名，默认guest</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;shei&quot;</span>);</span><br><span class="line">        <span class="comment">//2创建连接</span></span><br><span class="line">        <span class="keyword">return</span> connectionFactory.newConnection();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>生产者</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *work工作队列模式：发送消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;work_queue&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//3创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;<span class="number">30</span>; i++) &#123;</span><br><span class="line">            <span class="comment">//5发送消息</span></span><br><span class="line">            String message = <span class="string">&quot;你好，小兔纸。work模式&quot;</span>+i ;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">             * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">             * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">             * 参数4：消息内容</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            channel.basicPublish(<span class="string">&quot;&quot;</span>, QUEUE_NAME, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">            System.out.println(<span class="string">&quot;已发送消息：&quot;</span> + message);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>消费者1</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//每次可以获取多少个信息</span></span><br><span class="line">        channel.basicQos(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//路由key</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                    <span class="comment">//交换机</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                    <span class="comment">//消息ID</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                    <span class="comment">//接收到的消息</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消费者1---接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    <span class="comment">//确认消息</span></span><br><span class="line">                    <span class="comment">/**</span></span><br><span class="line"><span class="comment">                     * 参数1：消息ID</span></span><br><span class="line"><span class="comment">                     * 参数2：是否确认，false表示只有当前这个消息被处理。</span></span><br><span class="line"><span class="comment">                     */</span></span><br><span class="line">                    channel.basicAck(envelope.getDeliveryTag(),<span class="keyword">false</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>消费者2</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//每次可以获取多少个信息</span></span><br><span class="line">        channel.basicQos(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//路由key</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                    <span class="comment">//交换机</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                    <span class="comment">//消息ID</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                    <span class="comment">//接收到的消息</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消费者2---接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    <span class="comment">//确认消息</span></span><br><span class="line">                    <span class="comment">/**</span></span><br><span class="line"><span class="comment">                     * 参数1：消息ID</span></span><br><span class="line"><span class="comment">                     * 参数2：是否确认，false表示只有当前这个消息被处理。</span></span><br><span class="line"><span class="comment">                     */</span></span><br><span class="line">                    channel.basicAck(envelope.getDeliveryTag(),<span class="keyword">false</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="4-2-订阅模式"><a href="#4-2-订阅模式" class="headerlink" title="4.2 订阅模式"></a>4.2 订阅模式</h2><p>说出订阅模式中的Exchange交换机的作用和交换机的三种类型</p>
+<p>前面两个案例，只有3个角色：生产者，消费者，消息队列</p>
+<p>在订阅者模型，多了一个Exchange角色，过程略有变化：</p>
+<ul>
+<li>P：生产者，发送给exchange</li>
+<li>C：消费者，一直等待消息的到来</li>
+<li>Queue：接收消息，缓存消息</li>
+<li>Exchange：交换机，接收P消息，知道如何处理消息，三种<ul>
+<li>Fanout：广播，将消息交给所有的交换机队列(竞争)</li>
+<li>Direct：定向，符合指定routing key 的队列</li>
+<li>Topic：通配符，把消息交给routing patern的队列</li>
+</ul>
+</li>
+</ul>
+<p><strong>Exchange只负责转发消息，不具备存储能力</strong>，如果没有任何队列与exchange绑定，那么消息会丢失。</p>
+<ul>
+<li><p><strong>生产者</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.BuiltinExchangeType;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *发布与订阅，生产者</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="comment">//交换机名称</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_EXCHANGE = <span class="string">&quot;fanout_exchange&quot;</span>;</span><br><span class="line">    <span class="comment">//队列名称</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_QUEUE_1 = <span class="string">&quot;fanout_queue1&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_QUEUE_2 = <span class="string">&quot;fanout_queue2&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明交换机</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：名称</span></span><br><span class="line"><span class="comment">         * 参数2：交换机类型(fanout,direct,topic)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.exchangeDeclare(FANOUT_EXCHANGE, BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(FANOUT_QUEUE_1,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        channel.queueDeclare(FANOUT_QUEUE_2,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：交换机名称</span></span><br><span class="line"><span class="comment">         * 参数3：路由key，这里没用到</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueBind(FANOUT_QUEUE_1,FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        channel.queueBind(FANOUT_QUEUE_2,FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//5发送消息</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">            String message = <span class="string">&quot;你好，小兔纸。发布与订阅---&quot;</span>+i;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">             * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">             * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">             * 参数4：消息内容</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            channel.basicPublish(FANOUT_EXCHANGE, <span class="string">&quot;&quot;</span>, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">            System.out.println(<span class="string">&quot;已发送消息：&quot;</span> + message);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>消费者</strong>1</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用发布与订阅模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//3声明交换机</span></span><br><span class="line">        channel.exchangeDeclare(Producer.FANOUT_EXCHANGE,BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.FANOUT_QUEUE_1,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机上</span></span><br><span class="line">        channel.queueBind(Producer.FANOUT_QUEUE_1,Producer.FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//6创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消费者1接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.FANOUT_QUEUE_1,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>消费者2：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用发布与订阅模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//3声明交换机</span></span><br><span class="line">        channel.exchangeDeclare(Producer.FANOUT_EXCHANGE,BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.FANOUT_QUEUE_2,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机上</span></span><br><span class="line">        channel.queueBind(Producer.FANOUT_QUEUE_2,Producer.FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//6创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消费者2接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.FANOUT_QUEUE_2,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -4642,149 +4773,10 @@
 </ul>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot整合rabbitMQ</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88rabbitMQ/</url>
-    <content><![CDATA[<h1 id="1-消息队列概述"><a href="#1-消息队列概述" class="headerlink" title="1.消息队列概述"></a>1.消息队列概述</h1><h2 id="1-1-消息队列和MQ"><a href="#1-1-消息队列和MQ" class="headerlink" title="1.1.消息队列和MQ"></a>1.1.消息队列和MQ</h2><p>MQ全称Message Queue，消息队列是应用程序之间的通信方法。</p>
-<ul>
-<li><p>为什么使用MQ？</p>
-<p>在项目中，可将一些无需及时返回且耗时的操作提取出来，进行<strong>异步处理</strong>，这种处理方式大大节省了服务器的响应时间，从而<strong>提高系统的吞吐量</strong>。</p>
-</li>
-<li><p>应用场景</p>
-<ul>
-<li><p>任务异步处理</p>
-</li>
-<li><p>应用程序解耦</p>
-<p>相当于中介，生产方通过MQ与消费者交互。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-2-AMQP和JMS"><a href="#1-2-AMQP和JMS" class="headerlink" title="1.2.AMQP和JMS"></a>1.2.AMQP和JMS</h2><p>MQ的两种实现方式—&gt;AMQP，JMS。</p>
-<h3 id="1-2-1-AMQP"><a href="#1-2-1-AMQP" class="headerlink" title="1.2.1 AMQP"></a>1.2.1 AMQP</h3><p>是一种协议（链接协议），和JMS的本质区别是不从API层进行限定，直接定义网络交换的数据格式。</p>
-<h3 id="1-2-2-JMS"><a href="#1-2-2-JMS" class="headerlink" title="1.2.2 JMS"></a>1.2.2 JMS</h3><p>java消息服务，是一个<strong>java平台</strong>中关于面向消息中间件的<strong>API</strong>，应用于两个程序之间，或分布式系统中发送消息，进行异步通信。</p>
-<h3 id="1-2-3-AMQP和IMS区别"><a href="#1-2-3-AMQP和IMS区别" class="headerlink" title="1.2.3 AMQP和IMS区别"></a>1.2.3 AMQP和IMS区别</h3><ul>
-<li>JMS定义统一的接口，对消息进行统一操作；A是通过协议来统一数据交换的格式。</li>
-<li>J必须是Java语言，A是协议，跨语言</li>
-<li>J规定两种消息模式；A更丰富。</li>
-</ul>
-<h2 id="1-3-消息队列产品"><a href="#1-3-消息队列产品" class="headerlink" title="1.3.消息队列产品"></a>1.3.消息队列产品</h2><ul>
-<li>ActiveMQ：基于JMS</li>
-<li>ZeroMQ：基于C开发</li>
-<li>RabbitMQ：AMQP协议，erlang语言，性能好</li>
-<li>RocketMQ：基于JMS，alibaba</li>
-<li>kafka：类似于MQ的产品，分布式消息系统，高吞吐量</li>
-</ul>
-<h2 id="1-4-RabbitMQ"><a href="#1-4-RabbitMQ" class="headerlink" title="1.4.RabbitMQ"></a>1.4.RabbitMQ</h2><p>提供6种模式：简单模式，work模式，publish/subscribe发布与订阅模式，Routing路由模式，Topics主题模式，RPC远程调用。</p>
-<h1 id="2-安装及配置MQ"><a href="#2-安装及配置MQ" class="headerlink" title="2.安装及配置MQ"></a>2.安装及配置MQ</h1><ul>
-<li><p>安装erlang</p>
-</li>
-<li><p>安装MQ</p>
-</li>
-<li><p>安装MQ的图形管理插件</p>
-</li>
-<li><p>创建管理用户</p>
-</li>
-<li><p>创建虚拟主机Virtual Hosts</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">1[安装erlang]--&gt;2[安装RabbitMQ]</span><br><span class="line">2--&gt;3[安装管理插件]</span><br><span class="line">3--&gt;4[创建用户]</span><br><span class="line">4--&gt;5[创建虚拟主机]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>安装过程中以管理员身份运行</p>
-</blockquote>
-</li>
-</ul>
-<h1 id="3-RabbitMQ入门"><a href="#3-RabbitMQ入门" class="headerlink" title="3.RabbitMQ入门"></a>3.RabbitMQ入门</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.rabbitmq<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>amqp-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.7.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-1-生产者"><a href="#3-1-生产者" class="headerlink" title="3.1 生产者"></a>3.1 生产者</h2><p>生产者发送消息到RabbitMQ的队列（simple_queue）；消费者可以从队列中获取信息，可以使用简单模式（simple）。</p>
-<ul>
-<li><p>创建连接工厂(设置MQ的连接参数)</p>
-</li>
-<li><p>创建连接</p>
-</li>
-<li><p>创建频道</p>
-</li>
-<li><p>声明队列</p>
-</li>
-<li><p>发送消息</p>
-</li>
-<li><p>关闭资源</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.rabbitmq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *简单模式：发送消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;simple_queue&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        <span class="comment">//1创建连接工厂,ctrl+ait+v快速生成对象</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        <span class="comment">//主机默认localhost</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">        <span class="comment">//端口：默认5672</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">//虚拟主机：默认/</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/hhzhu&quot;</span>);</span><br><span class="line">        <span class="comment">//用户名，默认guest</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;shei&quot;</span>);</span><br><span class="line">        <span class="comment">//2创建连接</span></span><br><span class="line">        Connection connection = connectionFactory.newConnection();</span><br><span class="line">        <span class="comment">//3创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5发送消息</span></span><br><span class="line">        String message = <span class="string">&quot;你好，小兔纸。&quot;</span>;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">         * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">         * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">         * 参数4：消息内容</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicPublish(<span class="string">&quot;&quot;</span>,QUEUE_NAME,<span class="keyword">null</span>,message.getBytes());</span><br><span class="line">        System.out.println(<span class="string">&quot;已发送消息：&quot;</span>+message);</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>在设置连接工场的时候，不设置会有默认；</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="3-2-消费者"><a href="#3-2-消费者" class="headerlink" title="3.2 消费者"></a>3.2 消费者</h2><p>从RabbitMQ中队列(与生产者发送消息的队列一致)接收消息。</p>
-<ul>
-<li><p>创建连接工厂的连接参数</p>
-</li>
-<li><p>创建连接(抽取一个获取连接的工具类)</p>
-</li>
-<li><p>创建频道</p>
-</li>
-<li><p>声明队列</p>
-</li>
-<li><p>创建消费者(接收消息并处理接收到的消息)</p>
-</li>
-<li><p>监听队列</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.simple;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>消费者持续监听队列消息，不需要关闭资源</p>
-<p>如果消费者在听一个队列中有多个，消息如何分配？</p>
-</blockquote>
-</li>
-</ul>
-<h1 id="4-RabbitMQ工作模式"><a href="#4-RabbitMQ工作模式" class="headerlink" title="4.RabbitMQ工作模式"></a>4.RabbitMQ工作模式</h1><h2 id="4-1-Work-queue工作模式"><a href="#4-1-Work-queue工作模式" class="headerlink" title="4.1 Work queue工作模式"></a>4.1 Work queue工作模式</h2><p>与simple相比，多了一个或多个消费者，多个消费者共同消费同一个队列中的消息。(消费者之间对消息的接收是竞争关系)。一个消息只能被一个消费者接收。</p>
-<p><strong>应用场景：</strong>可以在消费者端处理任务比较耗时的时候，添加对同一个队列的消费者来提高任务处理能力。</p>
-<p>生产者：发送30个消息</p>
-<p>消费者：创建2个消费者监听同一个队列，查看两个消费者接收消息是否存在重复。</p>
-<ul>
-<li><p>抽取连接工具类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *创建连接工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectionUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        <span class="comment">//1创建连接工厂,ctrl+ait+v快速生成对象</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        <span class="comment">//主机默认localhost</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">        <span class="comment">//端口：默认5672</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">//虚拟主机：默认/</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/hhzhu&quot;</span>);</span><br><span class="line">        <span class="comment">//用户名，默认guest</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;shei&quot;</span>);</span><br><span class="line">        <span class="comment">//2创建连接</span></span><br><span class="line">        <span class="keyword">return</span> connectionFactory.newConnection();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>生产者</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *work工作队列模式：发送消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;work_queue&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//3创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;<span class="number">30</span>; i++) &#123;</span><br><span class="line">            <span class="comment">//5发送消息</span></span><br><span class="line">            String message = <span class="string">&quot;你好，小兔纸。work模式&quot;</span>+i ;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">             * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">             * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">             * 参数4：消息内容</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            channel.basicPublish(<span class="string">&quot;&quot;</span>, QUEUE_NAME, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">            System.out.println(<span class="string">&quot;已发送消息：&quot;</span> + message);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>消费者1</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//每次可以获取多少个信息</span></span><br><span class="line">        channel.basicQos(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//路由key</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                    <span class="comment">//交换机</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                    <span class="comment">//消息ID</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                    <span class="comment">//接收到的消息</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消费者1---接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    <span class="comment">//确认消息</span></span><br><span class="line">                    <span class="comment">/**</span></span><br><span class="line"><span class="comment">                     * 参数1：消息ID</span></span><br><span class="line"><span class="comment">                     * 参数2：是否确认，false表示只有当前这个消息被处理。</span></span><br><span class="line"><span class="comment">                     */</span></span><br><span class="line">                    channel.basicAck(envelope.getDeliveryTag(),<span class="keyword">false</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>消费者2</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.work;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用简单模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.QUEUE_NAME,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//每次可以获取多少个信息</span></span><br><span class="line">        channel.basicQos(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//路由key</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                    <span class="comment">//交换机</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                    <span class="comment">//消息ID</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                    <span class="comment">//接收到的消息</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;消费者2---接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    <span class="comment">//确认消息</span></span><br><span class="line">                    <span class="comment">/**</span></span><br><span class="line"><span class="comment">                     * 参数1：消息ID</span></span><br><span class="line"><span class="comment">                     * 参数2：是否确认，false表示只有当前这个消息被处理。</span></span><br><span class="line"><span class="comment">                     */</span></span><br><span class="line">                    channel.basicAck(envelope.getDeliveryTag(),<span class="keyword">false</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.QUEUE_NAME,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="4-2-订阅模式"><a href="#4-2-订阅模式" class="headerlink" title="4.2 订阅模式"></a>4.2 订阅模式</h2><p>说出订阅模式中的Exchange交换机的作用和交换机的三种类型</p>
-<p>前面两个案例，只有3个角色：生产者，消费者，消息队列</p>
-<p>在订阅者模型，多了一个Exchange角色，过程略有变化：</p>
-<ul>
-<li>P：生产者，发送给exchange</li>
-<li>C：消费者，一直等待消息的到来</li>
-<li>Queue：接收消息，缓存消息</li>
-<li>Exchange：交换机，接收P消息，知道如何处理消息，三种<ul>
-<li>Fanout：广播，将消息交给所有的交换机队列(竞争)</li>
-<li>Direct：定向，符合指定routing key 的队列</li>
-<li>Topic：通配符，把消息交给routing patern的队列</li>
-</ul>
-</li>
-</ul>
-<p><strong>Exchange只负责转发消息，不具备存储能力</strong>，如果没有任何队列与exchange绑定，那么消息会丢失。</p>
-<ul>
-<li><p><strong>生产者</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.BuiltinExchangeType;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *发布与订阅，生产者</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="comment">//交换机名称</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_EXCHANGE = <span class="string">&quot;fanout_exchange&quot;</span>;</span><br><span class="line">    <span class="comment">//队列名称</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_QUEUE_1 = <span class="string">&quot;fanout_queue1&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String FANOUT_QUEUE_2 = <span class="string">&quot;fanout_queue2&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//声明交换机</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：名称</span></span><br><span class="line"><span class="comment">         * 参数2：交换机类型(fanout,direct,topic)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.exchangeDeclare(FANOUT_EXCHANGE, BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：是否定义持久化</span></span><br><span class="line"><span class="comment">         * 参数3：是否独占本连接</span></span><br><span class="line"><span class="comment">         * 参数4：是否不用时自动删除</span></span><br><span class="line"><span class="comment">         * 参数5：其他参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(FANOUT_QUEUE_1,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        channel.queueDeclare(FANOUT_QUEUE_2,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名称</span></span><br><span class="line"><span class="comment">         * 参数2：交换机名称</span></span><br><span class="line"><span class="comment">         * 参数3：路由key，这里没用到</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueBind(FANOUT_QUEUE_1,FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        channel.queueBind(FANOUT_QUEUE_2,FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//5发送消息</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">            String message = <span class="string">&quot;你好，小兔纸。发布与订阅---&quot;</span>+i;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 参数1：交换机名称，空串使用迷人交换机</span></span><br><span class="line"><span class="comment">             * 参数2：路由key，简单模式中，可以使用队列名称</span></span><br><span class="line"><span class="comment">             * 参数3：消息其他属性</span></span><br><span class="line"><span class="comment">             * 参数4：消息内容</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            channel.basicPublish(FANOUT_EXCHANGE, <span class="string">&quot;&quot;</span>, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">            System.out.println(<span class="string">&quot;已发送消息：&quot;</span> + message);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6关闭资源</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>消费者</strong>1</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用发布与订阅模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//3声明交换机</span></span><br><span class="line">        channel.exchangeDeclare(Producer.FANOUT_EXCHANGE,BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.FANOUT_QUEUE_1,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机上</span></span><br><span class="line">        channel.queueBind(Producer.FANOUT_QUEUE_1,Producer.FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//6创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消费者1接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.FANOUT_QUEUE_1,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>消费者2：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.ps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hhzhu.util.ConnectionUtil;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> *使用发布与订阅模式，消费者接收消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ZhuHh</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@data</span> Create on 2020/3/16</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException </span>&#123;</span><br><span class="line">        Connection connection = ConnectionUtil.getConnection();</span><br><span class="line">        <span class="comment">//2创建频道</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        <span class="comment">//3声明交换机</span></span><br><span class="line">        channel.exchangeDeclare(Producer.FANOUT_EXCHANGE,BuiltinExchangeType.FANOUT);</span><br><span class="line">        <span class="comment">//4声明队列</span></span><br><span class="line">        channel.queueDeclare(Producer.FANOUT_QUEUE_2,<span class="keyword">true</span>,<span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">//5队列绑定到交换机上</span></span><br><span class="line">        channel.queueBind(Producer.FANOUT_QUEUE_2,Producer.FANOUT_EXCHANGE,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//6创建消费者</span></span><br><span class="line">        DefaultConsumer defaultConsumer = <span class="keyword">new</span> DefaultConsumer(channel)&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="comment">//路由key</span></span><br><span class="line">                System.out.println(<span class="string">&quot;路由key为：&quot;</span>+envelope.getRoutingKey());</span><br><span class="line">                <span class="comment">//交换机</span></span><br><span class="line">                System.out.println(<span class="string">&quot;交换机为：&quot;</span>+envelope.getExchange());</span><br><span class="line">                <span class="comment">//消息ID</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消息ID为：&quot;</span>+envelope.getDeliveryTag());</span><br><span class="line">                <span class="comment">//接收到的消息</span></span><br><span class="line">                System.out.println(<span class="string">&quot;消费者2接收到的消息为：&quot;</span>+<span class="keyword">new</span> String(body,<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//监听队列</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数1：队列名</span></span><br><span class="line"><span class="comment">         * 参数2：是否自动确认，设置true表示消息接收到自动向MQ回复接收到了，MQ将消息从队列删除，false则需要手动确认</span></span><br><span class="line"><span class="comment">         * 参数3：消息的消费者</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicConsume(Producer.FANOUT_QUEUE_2,<span class="keyword">true</span>,defaultConsumer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -5144,7 +5136,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -5319,7 +5311,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>计算机基础知识</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
@@ -5461,7 +5453,7 @@
 </ul>
 <h1 id="八、跳跃表"><a href="#八、跳跃表" class="headerlink" title="八、跳跃表"></a>八、跳跃表</h1>]]></content>
       <categories>
-        <category>计算机基础知识</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>算法</tag>
@@ -5702,7 +5694,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>计算机基础知识</category>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>计算机网络</tag>
