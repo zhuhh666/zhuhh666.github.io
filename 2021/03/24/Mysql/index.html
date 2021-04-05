@@ -139,11 +139,12 @@
 <h1 id="2、字符集与校对规则"><a href="#2、字符集与校对规则" class="headerlink" title="2、字符集与校对规则"></a>2、字符集与校对规则</h1><p>字符集指的是一种从而二进制编码到某类字符符号的映射。校对规则是指某种字符集下的排序规则。MySql中每一种字符集都会对应一系列的校对规则。</p>
 <p>M采用的是类似继承的方式制定字符集的默认值，每个数据库和每张数据表都有自己的默认值，他们逐层继承。比如：某个库中所有表的默认字符集将是该数据库所指定的字符集(这些表在没有指定字符集的情况下，才会采用摩恩字符集)。</p>
 <p>详细参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/geaozhang/p/6724393.html#MySQLyuzifuji">字符集与校对规则</a></p>
-<h1 id="3、索引"><a href="#3、索引" class="headerlink" title="3、索引"></a>3、索引</h1><p>索引的数据结构主要有：B树和哈希索引。哈希索引的底层就是哈希表，因为在绝大多数需求为单挑记录查询的时候，可以选择哈希索引，其他情况下选择B树索引。</p>
+<h1 id="3、索引"><a href="#3、索引" class="headerlink" title="3、索引"></a>3、索引</h1><p><a target="_blank" rel="noopener" href="https://krains.gitee.io/blogs/MySQL/MySQL%E7%B4%A2%E5%BC%95.html#b-tree">参考</a></p>
+<p>索引的数据结构主要有：B树和哈希索引。哈希索引的底层就是哈希表，因为在绝大多数需求为单挑记录查询的时候，可以选择哈希索引，其他情况下选择B树索引。</p>
 <p>B树使用的是B+树。两种存储引擎的实现方式不同：</p>
 <ul>
 <li><p>MyIASM</p>
-<p>叶节点的data区域存放是是数据记录的地址。在索引检索的时候，按照B树算法索引，指定的Key存在，则去除data域的值，然后以data域的值为地址读取对应的数据记录。哲别称为“非聚簇索引”。</p>
+<p>叶节点的data区域存放是是数据记录的地址。在索引检索的时候，按照B树算法索引，指定的Key存在，则取出data域的值，然后以data域的值为地址读取对应的数据记录。哲别称为“非聚簇索引”。</p>
 </li>
 <li><p>InnoDB</p>
 <p>数据文件本身就是索引文件。树的叶节点data域保存了完整的数据记录，因此InnoDB表数据文件本身就是主索引，这称为“聚簇索引”。其余的索引作为辅助索引，辅助索引的data记录的是相应记录主键的值而不是地址。</p>
@@ -242,7 +243,9 @@
 </ul>
 <h1 id="7、池化"><a href="#7、池化" class="headerlink" title="7、池化"></a>7、池化</h1><p>这种设计会初始预设资源，解决的问题就是抵消每次获取资源的消耗，如创建线程的开销，获取远程连接的开销等。除了初始化资源，池化设计还包括如下这些特征：池子的初始值、池子的活跃值、池子的最大值等，这些特征可以直接映射到java线程池和数据库连接池的成员属性中。这篇文章对<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485679&idx=1&sn=57dbca8c9ad49e1f3968ecff04a4f735&chksm=cea24724f9d5ce3212292fac291234a760c99c0960b5430d714269efe33554730b5f71208582&token=1141994790&lang=zh_CN#rd">池化设计思想</a>介绍的还不错。</p>
 <p>数据库连接本质就是一个 socket 的连接。数据库服务端还要维护一些缓存和用户权限信息之类的 所以占用了一些内存。我们可以把数据库连接池是看做是维护的数据库连接的缓存，以便将来需要对数据库的请求时可以重用这些连接。为每个用户打开和维护数据库连接，尤其是对动态数据库驱动的网站应用程序的请求，既昂贵又浪费资源。<strong>在连接池中，创建连接后，将其放置在池中，并再次使用它，因此不必建立新的连接。如果使用了所有连接，则会建立一个新连接并将其添加到池中</strong>。 连接池还减少了用户必须等待建立与数据库的连接的时间。</p>
-<h1 id="8、常见问题："><a href="#8、常见问题：" class="headerlink" title="8、常见问题："></a>8、常见问题：</h1><h2 id="一条SQL语句在MySql中是如何执行的"><a href="#一条SQL语句在MySql中是如何执行的" class="headerlink" title="一条SQL语句在MySql中是如何执行的"></a>一条SQL语句在MySql中是如何执行的</h2><h2 id="MySQL高性能规范"><a href="#MySQL高性能规范" class="headerlink" title="MySQL高性能规范"></a>MySQL高性能规范</h2><h2 id="SQL执行的很慢的原因"><a href="#SQL执行的很慢的原因" class="headerlink" title="SQL执行的很慢的原因"></a>SQL执行的很慢的原因</h2> 
+<h1 id="8、常见问题："><a href="#8、常见问题：" class="headerlink" title="8、常见问题："></a>8、常见问题：</h1><h2 id="MySQL高性能规范"><a href="#MySQL高性能规范" class="headerlink" title="MySQL高性能规范"></a>MySQL高性能规范</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485097&idx=1&sn=84c89da477b1338bdf3e9fcd65514ac1&chksm=cea24962f9d5c074d8d3ff1ab04ee8f0d6486e3d015cfd783503685986485c11738ccb542ba7&token=79317275&lang=zh_CN#rd">参考阅读</a></p>
+<h2 id="SQL执行的很慢的原因"><a href="#SQL执行的很慢的原因" class="headerlink" title="SQL执行的很慢的原因"></a>SQL执行的很慢的原因</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485185&idx=1&sn=66ef08b4ab6af5757792223a83fc0d45&chksm=cea248caf9d5c1dc72ec8a281ec16aa3ec3e8066dbb252e27362438a26c33fbe842b0e0adf47&token=79317275&lang=zh_CN#rd">参考阅读</a></p>
+ 
       <!-- reward -->
       
     </div>

@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.7k</span>
+            <span class="post-count">4.3k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">15 min</span>
+            <span class="post-count">17 min</span>
         </span>
     </span>
 </div>
@@ -98,7 +98,8 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、树"><a href="#一、树" class="headerlink" title="一、树"></a>一、树</h1><h2 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h2><ul>
+  <h1 id="一、树"><a href="#一、树" class="headerlink" title="一、树"></a>一、树</h1><p><a target="_blank" rel="noopener" href="https://krains.gitee.io/blogs/Algorithm&Data%20Structure/Data%20Structure/%E4%BA%8C%E5%8F%89%E6%A0%91.html#%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89">二叉树的遍历</a></p>
+<h2 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h2><ul>
 <li><code>性质1</code>：在二叉树第i层的节点数最多为$2^{i-1}(i&gt;=1)$</li>
 <li><code>性质2</code>：高度为k的二叉树节点总数为$2^k-1(k&gt;=1)$</li>
 <li><code>性质3</code>：对于任意的非空二叉树，如果叶子节点的个数为$n_0$，而其度为2的节点数为$n_2$，则：$n_0=n_2+1$</li>
@@ -129,7 +130,7 @@
 <li>根据给定的n个权值<code>(W1,W2...Wn)</code>，使对应节点构成n个二叉树的森林<code>T=(T1,T2...Tn)</code>，其中每个二叉树<code>Ti(1 &lt;= i &lt;= n)</code>中都有一个带权值为Wi的根节点，其左、右子树均为空。</li>
 <li>在森林T中选取两个节点权值最小的子树，分别作为左、右子树构造一个新的二叉树，且置新的二叉树的根节点的权值为其左右子树上根节点权值之和。</li>
 <li>在森林T中，用新得到的二叉树替代选取的两个二叉树。</li>
-<li>重复2和3，直到T只包含一个树为止。这个数就是霍夫曼树。</li>
+<li>重复2和3，直到T只包含一个树为止。这个树就是霍夫曼树。</li>
 </ul>
 <p><strong>霍夫曼编码：</strong></p>
 <p>对于哈夫曼树，左链取0，右链取1，从树根到叶子的所有编码，常被用作一种压缩算法。</p>
@@ -210,7 +211,7 @@
 <li>置U的初始值等于V(即包含G中的全部顶点)，TE的初始值为空</li>
 <li>将图G中的边按权值从小到大的顺序依次选取，若选取的边未使生成树T形成回路，则加入TE，否则放弃，知道TE中包含(n-1)条边为止。</li>
 </ul>
-<h1 id="四、最短路径算法"><a href="#四、最短路径算法" class="headerlink" title="四、最短路径算法"></a>四、最短路径算法</h1><h1 id="五、KMP算法"><a href="#五、KMP算法" class="headerlink" title="五、KMP算法"></a>五、KMP算法</h1><h1 id="六、查找算法"><a href="#六、查找算法" class="headerlink" title="六、查找算法"></a>六、查找算法</h1><h2 id="1、ASL"><a href="#1、ASL" class="headerlink" title="1、ASL"></a>1、ASL</h2><p>平均查找长度，$\mathrm{ASL}=\sum(\mathrm{n}, \mathrm{i}=1) \mathrm{Pi} * \mathrm{Ci}$，其中n为元素个数，Pi是查找第I个元素的概率，一般为$P_i=1/n$，Ci是找到第I个元素所需要的比较次数。</p>
+<h1 id="四、最短路径算法"><a href="#四、最短路径算法" class="headerlink" title="四、最短路径算法"></a>四、最短路径算法</h1><h1 id="五、查找算法"><a href="#五、查找算法" class="headerlink" title="五、查找算法"></a>五、查找算法</h1><h2 id="1、ASL"><a href="#1、ASL" class="headerlink" title="1、ASL"></a>1、ASL</h2><p>平均查找长度，$\mathrm{ASL}=\sum(\mathrm{n}, \mathrm{i}=1) \mathrm{Pi} * \mathrm{Ci}$，其中n为元素个数，Pi是查找第I个元素的概率，一般为$P_i=1/n$，Ci是找到第I个元素所需要的比较次数。</p>
 <h2 id="2、顺序查找"><a href="#2、顺序查找" class="headerlink" title="2、顺序查找"></a>2、顺序查找</h2><p>让关键字与队列中的数从最后一个开始逐个比较，直到找出与给定关键字相同的数为止，它的缺点是效率低下。**时间复杂度o(n)**。</p>
 <h2 id="3、折半查找"><a href="#3、折半查找" class="headerlink" title="3、折半查找"></a>3、折半查找</h2><p>折半查找要求线性表示有序表。搜索过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜索过程结束；如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。如果在某一步骤数组为空，则代表找不到。这种搜索算法每一次比较都使搜索范围缩小一半。<strong>折半搜索每次把搜索区域减少一半，时间复杂度为O(log n)。</strong></p>
 <ul>
@@ -220,16 +221,33 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public int binarySearchStandard(int[] num, int target)&#123;</span><br><span class="line">    int start &#x3D; 0;</span><br><span class="line">    int end &#x3D; num.length - 1;</span><br><span class="line">    while(start &lt;&#x3D; end)&#123; &#x2F;&#x2F;注意1</span><br><span class="line">        int mid &#x3D; start + ((end - start) &gt;&gt; 1);</span><br><span class="line">        if(num[mid] &#x3D;&#x3D; target)</span><br><span class="line">            return mid;</span><br><span class="line">        else if(num[mid] &gt; target)&#123;</span><br><span class="line">            end &#x3D; mid - 1; &#x2F;&#x2F;注意2</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            start &#x3D; mid + 1; &#x2F;&#x2F;注意3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="4、分块查找"><a href="#4、分块查找" class="headerlink" title="4、分块查找"></a>4、分块查找</h2><p>分块查找又称索引顺序查找，它是一种性能介于顺序查找和折半查找之间的查找方法。<strong>分块查找由于只要求索引表是有序的，对块内节点没有排序要求，因此特别适合于节点动态变化的情况</strong>。</p>
-<h1 id="七、排序算法"><a href="#七、排序算法" class="headerlink" title="七、排序算法"></a>七、排序算法</h1><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<h1 id="六、排序算法"><a href="#六、排序算法" class="headerlink" title="六、排序算法"></a>六、排序算法</h1><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li>插入类：直接插入，折半插入，希尔排序</li>
 <li>选择类：简单选择，堆排序，</li>
 <li>交换类：冒泡，快排</li>
 <li>归并排序，基数排序，外部排序</li>
-<li>$o(nlog_2n)$：快些归队，快排在有序的情况下最坏是$o(n^2)$</li>
-<li>不稳定：快些选一堆</li>
-<li></li>
+<li>$o(nlog_2n)$：快些归队(堆)，快排在有序的情况下最坏是$o(n^2)$</li>
+<li>不稳定：快些(希)选一堆</li>
 </ul>
-<h1 id="八、跳跃表"><a href="#八、跳跃表" class="headerlink" title="八、跳跃表"></a>八、跳跃表</h1> 
+<p><strong>从小到大</strong></p>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>每次两两比较，把剩余最大或者最小的移动到一端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bubble</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt; n-<span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;n-i;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[j-<span class="number">1</span>]&gt;nums[j])&#123;</span><br><span class="line">                <span class="keyword">int</span> temp = nums[j];</span><br><span class="line">                nums[j] = nums[j-<span class="number">1</span>];</span><br><span class="line">                nums[j-<span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E5%86%92%E6%B3%A1.gif" alt="冒泡"></p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">        <span class="keyword">while</span> (nums[j]&lt;nums[j-<span class="number">1</span>] &amp;&amp; j&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            nums[j] = nums[j-<span class="number">1</span>];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        nums[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/Krains/FigureBed/raw/master/img/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.gif" alt="插入排序"></p>
+<h2 id="简单选择"><a href="#简单选择" class="headerlink" title="简单选择"></a>简单选择</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="comment">//每次找到最小的元素和前面进行交换</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> index = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>;j&lt;nums.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[j]&lt;nums[index])index = j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">        nums[i] = nums[index];</span><br><span class="line">        nums[index] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.gif" alt="选择排序"></p>
+<h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = low;</span><br><span class="line">    <span class="keyword">int</span> j = high;</span><br><span class="line">    <span class="keyword">if</span>(low&lt;high)&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = nums[high];</span><br><span class="line">        <span class="keyword">while</span> (i&lt;j)&#123;</span><br><span class="line">            <span class="keyword">while</span> (i&lt;j &amp;&amp; nums[j]&lt;=temp) j--;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">                nums[i] = nums[j];</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (i&lt;j &amp;&amp; nums[i]&gt;temp) i++;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">                nums[j] = nums[i];</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        nums[i] = temp;</span><br><span class="line">        quick_sort(nums,low,i-<span class="number">1</span>);</span><br><span class="line">        quick_sort(nums,i+<span class="number">1</span>,high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2F20200201113100677.gif&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620200001&t=51df3d47a2f3df6571a94afef3468d67" alt="img"></p>
+<h1 id="七、跳跃表"><a href="#七、跳跃表" class="headerlink" title="七、跳跃表"></a>七、跳跃表</h1><p>一种数据结构，用于快速查询一个有序连续元素的数据链表。平均查找和插入的时间复杂度是$O(log_n)$。</p>
+<p>维护了一个多层次的链表，每一层链表的元素是上一层链表元素的子集。开始算法在最稀疏的层次搜索，直到需要查找的元素在该层两个元素之间，算法跳跃到下一个层次，重复刚刚的搜索，直到找到需要查找的元素。跳过的元素的方法可以是 <strong>随机性选择</strong> 或 <strong>确定性选择</strong>，其中前者更为常见。</p>
+<p>在查找目标元素时，从顶层列表、头元素起步。算法沿着每层链表搜索，直至找到一个大于或等于目标的元素，或者到达当前层列表末尾。如果该元素等于目标元素，则表明该元素已被找到；如果该元素大于目标元素或已到达链表末尾，则退回到当前层的上一个元素，然后转入下一层进行搜索。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/1.gif" alt="1"></p>
+ 
       <!-- reward -->
       
     </div>
