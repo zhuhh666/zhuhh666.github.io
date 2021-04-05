@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">5.3k</span>
+            <span class="post-count">6.5k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">18 min</span>
+            <span class="post-count">23 min</span>
         </span>
     </span>
 </div>
@@ -98,8 +98,9 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="一、OSI和TCP-IP"><a href="#一、OSI和TCP-IP" class="headerlink" title="一、OSI和TCP/IP"></a>一、OSI和TCP/IP</h2><p>一般折中OSI和TCP/IP，采用五层协议。（自上而下）</p>
+  <h1 id="一、五层协议"><a href="#一、五层协议" class="headerlink" title="一、五层协议"></a>一、五层协议</h1><p>一般折中OSI和TCP/IP，采用五层协议。（自上而下）</p>
 <p><strong>5 应用层：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://krains.gitee.io/blogs/Computer%20Network/%E5%BA%94%E7%94%A8%E5%B1%82.html#%E6%A6%82%E8%BF%B0">参考</a></p>
 <p>应用层的任务是通过使用进程间的交互来完成特定网络应用。应用层定义的是应用进程（进程：主机中正在运行的程序）间的交互规则，对于不同的网络应用需要不同的应用协议。应用层协议很多，如DNS，HTTP协议，电子邮件SMTP协议，把应用层交互的数据称为<strong>报文</strong>。</p>
 <ul>
 <li><p>DNS</p>
@@ -112,8 +113,11 @@
 <p>超文本传输协议。所有的www文件都遵守这个标准。设计Http最初的目的是为了提供一种发布和接收HTML页面的方法。</p>
 </blockquote>
 </li>
+<li><p>websocket</p>
+</li>
 </ul>
 <p><strong>4 运输层：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://krains.gitee.io/blogs/Computer%20Network/%E4%BC%A0%E8%BE%93%E5%B1%82.html#%E6%A6%82%E8%BF%B0">参考</a></p>
 <p>负责向两台主机进程之间的通信提供通用的数据传输服务。应用进程利用该服务传送应用报文。由于一台主机可以同时运行多个线程，因此传输层具有复用和分用的功能。复用就是指多个应用进程可以同时用下面传输层的服务，分用则是把运输层把收到的消息交付到上面应用层中的相应进程。</p>
 <p>运输层主要负责以下两种协议：</p>
 <ul>
@@ -121,6 +125,7 @@
 <li>用户数据协议UDP：无连接的，尽最大努力的数据传输服务（不保证数据传输的可靠性）。</li>
 </ul>
 <p><strong>3 网络层：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://krains.gitee.io/blogs/Computer%20Network/%E7%BD%91%E7%BB%9C%E5%B1%82.html#%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE-ip">参考</a></p>
 <p>在计算机网络中进行通信的两个计算机可能会讲过很多个数据链路，也可能还要经过很多通信子网。网络层的作用就是选择合适的网间路由和交换节点，确保数据及时传送。在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在TCP/IP体系结构中，由于网络层使用IP协议，因此分组也叫IP数据报，简称<strong>数据报</strong>。</p>
 <blockquote>
 <p>运输层的数据报UDP和网络层的IP数据报不一样，另外，无论是哪一层的数据单元，都可以笼统的用“分组”来表示。</p>
@@ -132,7 +137,29 @@
 <p><strong>1 物理层：</strong></p>
 <p>在物理层上传送的数据是比特。物理层的作用是实现相邻计算机节点之间比特流的透明传输，尽可能屏蔽掉具体传输介质和物理设备的差异。使得其上面的链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0.png" alt="计算机网络复习"></p>
-<h2 id="二、TCP三次握手和四次挥手"><a href="#二、TCP三次握手和四次挥手" class="headerlink" title="二、TCP三次握手和四次挥手"></a>二、TCP三次握手和四次挥手</h2><p>为了准确的把数据传送到目标，TCP协议采用了三次握手策略。</p>
+<h1 id="二、TCP"><a href="#二、TCP" class="headerlink" title="二、TCP"></a>二、TCP</h1><h2 id="TCP报文结构"><a href="#TCP报文结构" class="headerlink" title="TCP报文结构"></a>TCP报文结构</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/tcp_head.png" alt="tcp_head"></p>
+<ul>
+<li>32位序列号：<ul>
+<li>含有同步标识SYN，则为最初的序列号；第一个数据比特的序列码为本序列号加一</li>
+<li>如果没有同步标识（SYN），则此为第一个数据比特的序列码</li>
+</ul>
+</li>
+<li>确认号：希望收到的下一个数据报的序列号，表明到序列号 <code>N-1</code> 为止的所有数据已经正确收到。</li>
+<li>TCP协议数据报头长：4位长。表明TCP头中包含多少个 4字节</li>
+<li>保留：置0</li>
+<li><strong>ACK</strong>：期望收到的数据的开始序列号。也即已经收到的数据的字节长度加1</li>
+<li>PSH：表示是带有PUSH标志的数据。接收方因此请求数据报一到便可送往应用程序而不必等到缓冲区装满时才传送。</li>
+<li><strong>RST</strong>：用于复位由于主机崩溃或其它原因而出现的错误的连接。还可以用于拒绝非法的数据报或拒绝连接请求。</li>
+<li><strong>SYN</strong>：用于建立连接。</li>
+<li><strong>FIN</strong>：用于释放连接。</li>
+<li><strong>窗口大小（WIN）</strong>：16位长。表示从确认号开始，本报文的发送方（数据发送端 or 数据接收端）可以接收的字节数，即接收窗口大小。用于流量控制。</li>
+<li><strong>校验和（Checksum）</strong>：16位长。是为了确保高可靠性而设置的。它校验头部、数据和伪TCP头部之和。</li>
+<li>紧急指针：<code>URG=1</code>时才有意义。</li>
+</ul>
+<blockquote>
+<p>TCP最小长度是20字节。</p>
+</blockquote>
+<h2 id="TCP三次握手和四次挥手"><a href="#TCP三次握手和四次挥手" class="headerlink" title="TCP三次握手和四次挥手"></a>TCP三次握手和四次挥手</h2><p>为了准确的把数据传送到目标，TCP协议采用了三次握手策略。</p>
 <ul>
 <li>客户端：发送带有SYN标志的数据报——一次握手（服务端）</li>
 <li>服务端：发送带有SYN/ACK标志的数据报——二次握手（客户端）</li>
@@ -152,7 +179,7 @@
 <p>SYN 是 TCP/IP 建立连接时使用的握手信号。在客户机和服务器之间建立正常的 TCP 网络连接时，客户机首先发出一个 SYN 消息，服务器使用 SYN-ACK 应答表示接收到了这个消息，最后客户机再以 ACK(Acknowledgement[汉译：确认字符 ,在数据通信传输中，接收站发给发送站的一种传输控制字符。它表示确认发来的数据已经接受无误。 ]）消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。</p>
 </blockquote>
 <p><strong>传SYN，为啥还要传ACK？</strong></p>
-<p>两者互相通信无误才行。穿了SYN，证明发送方到接收方的通道没问题，接收方到发送方的通道还需要ACK信号来验证。</p>
+<p>两者互相通信无误才行。传了SYN，证明发送方到接收方的通道没问题，接收方到发送方的通道还需要ACK信号来验证。</p>
 <p>断开一个TCP连接需要<strong>四次挥手：</strong></p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0-%E7%AC%AC%203%20%E9%A1%B5.png" alt="计算机网络复习-第 3 页"></p>
 <ul>
@@ -163,7 +190,7 @@
 </ul>
 <p><strong>为什么需要四次挥手？</strong></p>
 <p>任何一方都可以发送连接释放的通知，对方确认后进入办关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。更具体一点：AB两人通话，A：我说完了。B：我知道了（但我可能还有话说）。B：我也说完了。A：知道了（挂断）。</p>
-<h2 id="三、TCP，UDP协议的区别"><a href="#三、TCP，UDP协议的区别" class="headerlink" title="三、TCP，UDP协议的区别"></a>三、TCP，UDP协议的区别</h2><p>UDP在传送数据之前不需要建立连接，远程主机收到UDP报文后，不需要给出任何确认。虽然UDP不提供可交付，但是比较有效。比如：QQ语音，视屏，直播。</p>
+<h2 id="TCP，UDP协议的区别"><a href="#TCP，UDP协议的区别" class="headerlink" title="TCP，UDP协议的区别"></a>TCP，UDP协议的区别</h2><p>UDP在传送数据之前不需要建立连接，远程主机收到UDP报文后，不需要给出任何确认。虽然UDP不提供可交付，但是比较有效。比如：QQ语音，视屏，直播。</p>
 <p>TCP提供面向连接的服务。传送前建立连接，传送后断开连接。不提供广播或者多播服务。（可靠性体现在三次握手，在数据传输时，还有确认，窗口，重传等等，在数据传输之后，还会断开连接来释放资源）。增加很多开销，使得协议数据单元的首部增大很多。一般用于文件传输，发送和接受邮件，远程登陆。</p>
 <p><strong>TCP如何保证可靠传输？</strong></p>
 <ul>
@@ -171,21 +198,29 @@
 <li>给发送的每一个包进行编号，接收方对数据报进行排序，把有序数据传给应用层。</li>
 <li><strong>校验和：</strong>TCP将保持他首部和数据的校验和。这是一个端到端的检验和，目的是检验数据再传输的过程中的任何变化，有变化则丢弃并不确认收到此报文。</li>
 <li>TCP接收端会丢弃重复的数据。</li>
-<li><strong>流量控制：</strong>连接双方有缓冲空间，值允许发送缓冲区能接纳的数据，接收端来不及处理的时候提示发送方降低发送速率，防止丢包。缓冲区是可改变大小的滑动窗口协议。</li>
+<li><strong>流量控制：</strong>连接双方有缓冲空间，只允许发送缓冲区能接纳的数据，接收端来不及处理的时候提示发送方降低发送速率，防止丢包。缓冲区是可改变大小的滑动窗口协议。</li>
 <li><strong>拥塞控制：</strong>网络阻塞时，减少数据的发送</li>
 <li><strong>ARQ协议：</strong>每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。</li>
 <li><strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
 </ul>
-<h2 id="四、ARQ协议"><a href="#四、ARQ协议" class="headerlink" title="四、ARQ协议"></a>四、ARQ协议</h2><p><strong>自动重传请求</strong>是OSI模型汇总数据链路层和传输层的错误纠正协议之一。使用确认和超时连个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送一段时间没有收到确认帧，通常重新发送。ARQ通常包括：停止等待ARQ和连续ARQ协议。</p>
+<h2 id="滑动窗口和流量控制"><a href="#滑动窗口和流量控制" class="headerlink" title="滑动窗口和流量控制"></a>滑动窗口和流量控制</h2><p><strong>TCP 利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。</strong> 接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</p>
+<h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><p>为了进行控制，TCP维持一个<strong>拥塞窗口</strong>的状态变量。窗口的大小取决于网络的拥塞程度，动态变化，发送方让自己的发送窗口取为拥塞窗口和结束方的接收窗口中较小的一个。</p>
+<p>采用了四种算法：慢开始、拥塞避免、快重传、快恢复。</p>
+<ul>
+<li><strong>慢开始：</strong>因为不知道情况，小到大增加发送窗口，cwnd(拥塞窗口)初始1，每次加倍。</li>
+<li><strong>拥塞避免：</strong>让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT（网络时延）就把发送放的cwnd加1.</li>
+<li><strong>快重传与恢复：</strong>FRR（快速重传与恢复）能快速恢复丢失的数据包，没有FRR，丢失后，TCP使用定时器要求传输暂停。有了FRR，接收方收到一个不按照顺序的数据段，立即发送于一个重复确认。如果发送方接到三个重复确认，会假定指出的数据丢失，立即重传丢失的数据。有了 FRR，就不会因为重传时要求的暂停被耽误。当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。</li>
+</ul>
+<h2 id="ARQ协议"><a href="#ARQ协议" class="headerlink" title="ARQ协议"></a>ARQ协议</h2><p><strong>自动重传请求</strong>是OSI模型汇总数据链路层和传输层的错误纠正协议之一。使用确认和超时连个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送一段时间没有收到确认帧，通常重新发送。ARQ通常包括：停止等待ARQ和连续ARQ协议。</p>
 <p><strong>停止等待ARQ：</strong></p>
 <ul>
 <li>为了实现可靠传输，原理是：发送完停止，等待对方确认（回复ACK），超时没有收到ACK，则重新发送。</li>
 <li>若接收方收到重复分组，丢弃，但需要发送确认。</li>
 </ul>
 <p>优点：简单</p>
-<p>缺点：信道利用率低，瞪大时间长。</p>
+<p>缺点：信道利用率低，等待时间长。</p>
 <ol>
-<li><p>无差错：</p>
+<li><p>无差错情况：</p>
 <p>收到ACK，再次发送。</p>
 </li>
 <li><p>出现差错（超时重传）、</p>
@@ -194,23 +229,42 @@
 <li><p>确认丢失和确认迟到</p>
 <ul>
 <li>确认丢失：确认消息丢失，客户端再次发送，服务端收到消息采取以下搓手：丢弃消息，不向上层交付。再次发送确认消息。</li>
-<li>确认迟到：A发，B确认，但消息迟到。A再发，B第二次确认到达。传输别的。A收到第一次确认到大。处理方式：A收到重复确认直接丢弃，B收到重复的数据直接丢弃。</li>
+<li>确认迟到：A发，B确认，但消息迟到。A再发，B第二次确认到达。传输别的。A收到第一次确认到达。处理方式：A收到重复确认直接丢弃，B收到重复的数据直接丢弃。</li>
 </ul>
 </li>
 </ol>
 <p><strong>连续ARQ</strong></p>
-<p>可以提高信道利用率。发送方位置一个发送窗口，窗口内的分组连续发送，无需ACK，接收方累计确认，对顺序到大的最后一个分组发送ACK，表明到这个分组为止的所有分组都正确收到。</p>
+<p>可以提高信道利用率。发送方位置控制一个发送窗口，窗口内的分组连续发送，无需ACK，接收方累计确认，对顺序到达的最后一个分组发送ACK，表明到这个分组为止的所有分组都正确收到。</p>
 <p>有点：信道利用率高，容易实现，即使确认丢失，也不不必重传。</p>
 <p>缺点：不能向发送方反映出接收方已经正确收到的所有分组的信息。 比如：发送方发送了 5条 消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫 Go-Back-N（回退 N），表示需要退回来重传已经发送过的 N 个消息。</p>
-<h2 id="五、滑动窗口和流量控制"><a href="#五、滑动窗口和流量控制" class="headerlink" title="五、滑动窗口和流量控制"></a>五、滑动窗口和流量控制</h2><p><strong>TCP 利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。</strong> 接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</p>
-<h2 id="六、拥塞控制"><a href="#六、拥塞控制" class="headerlink" title="六、拥塞控制"></a>六、拥塞控制</h2><p>为了进行控制，TCP维持一个拥塞窗口的状态变量。窗口的大小取决于网络的拥塞程度，动态变化，发送方让自己的发送窗口取为拥塞窗口和结束访的接收窗口中较小的一个。</p>
-<p>采用了四种算法：慢开始、拥塞避免、快重传、快恢复。</p>
-<ul>
-<li><strong>慢开始：</strong>因为不知道情况，小到大增加发送窗口，cwnd初始1，每次加倍。</li>
-<li><strong>拥塞避免：</strong>让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送放的cwnd加1.</li>
-<li><strong>快重传与恢复：</strong>FRR能快速恢复丢失的数据包，没有FRR，丢失后，TCP使用定时器要求传输暂停。有了FRR，接收方收到一个不按照顺序的数据段，立即发送于一个重复确认。如果发送方街道三个重复确认，会假定指出的数据丢失，立即重传丢失的数据。有了 FRR，就不会因为重传时要求的暂停被耽误。 　当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。</li>
+<h1 id="三、HTTP"><a href="#三、HTTP" class="headerlink" title="三、HTTP"></a>三、HTTP</h1><h2 id="HTTP报文结构"><a href="#HTTP报文结构" class="headerlink" title="HTTP报文结构"></a>HTTP报文结构</h2><h3 id="请求报文头部"><a href="#请求报文头部" class="headerlink" title="请求报文头部"></a>请求报文头部</h3><ul>
+<li><code>User-Agent</code>：产生请求的浏览器类型。</li>
+<li><code>Accept</code>：客户端可识别的响应内容类型列表;</li>
+<li><code>Accept-Language</code>：客户端可接受的自然语言;</li>
+<li><code>Accept-Encoding</code>：客户端可接受的编码压缩格式;</li>
+<li><code>Accept-Charset</code>：可接受的应答的字符集;</li>
+<li><code>Host</code>：请求的主机名，允许多个域名同处一个IP 地址，即虚拟主机;（必选）</li>
+<li><code>Connection</code>：连接方式(close 或 <code>keep-alive</code>);</li>
+<li><code>Cookie</code>：存储于客户端扩展字段，向同一域名的服务端发送属于该域的cookie;</li>
+<li><code>请求包体</code>：在<code>POST</code>方法中使用。</li>
+<li><code>Referer</code>：包含一个URL，用户从该URL代表的页面出发访问当前请求的页面。</li>
+<li><code>If-Modified-Since</code>：文档的最后改动时间</li>
 </ul>
-<h2 id="七、输入URL地址，显示主页的过程"><a href="#七、输入URL地址，显示主页的过程" class="headerlink" title="七、输入URL地址，显示主页的过程"></a>七、输入URL地址，显示主页的过程</h2><p>主要会使用到哪些协议。</p>
+<h3 id="响应头部"><a href="#响应头部" class="headerlink" title="响应头部"></a>响应头部</h3><ul>
+<li><code>Allow</code> 服务器支持哪些请求方法（如GET、POST等）。</li>
+<li><code>Content-Encoding</code> 文档的编码（Encode）方法。</li>
+<li><code>Content-Length</code> 表示内容长度。只有当浏览器使用持久HTTP连接时才需要这个数据。</li>
+<li><code>Content-Type</code> 表示后面的文档属于什么MIME类型。</li>
+<li><code>Date</code> 当前的GMT时间。你可以用setDateHeader来设置这个头以避免转换时间格式的麻烦。</li>
+<li><code>Expires</code> 应该在什么时候认为文档已经过期，从而不再缓存它。</li>
+<li><code>Last-Modified</code> 文档的最后改动时间。</li>
+<li><code>Refresh</code> 表示浏览器应该在多少时间之后刷新文档，以秒计。</li>
+<li><code>Server</code> 服务器名字。</li>
+<li><code>Set-Cookie</code> 设置和页面关联的Cookie。</li>
+<li><code>ETag</code>：被请求变量的实体值。ETag是一个可以与Web资源关联的记号（MD5值）。</li>
+<li><code>Cache-Control</code>：这个字段用于指定所有缓存机制在整个请求/响应链中必须服从的指令。</li>
+</ul>
+<h2 id="Q：输入URL地址，显示主页的过程"><a href="#Q：输入URL地址，显示主页的过程" class="headerlink" title="Q：输入URL地址，显示主页的过程"></a>Q：输入URL地址，显示主页的过程</h2><p>主要会使用到哪些协议。</p>
 <p>过程：</p>
 <ul>
 <li>1、浏览器查找域名的IP地址（浏览器缓存，路由器缓存,DNS缓存）</li>
@@ -224,11 +278,11 @@
 <li>DNS</li>
 <li>TCP：与服务器建立TCP连接</li>
 <li>IP：建立TCP协议，需要发送数据，发送数据再网络层使用IP协议</li>
-<li>OPSF：IP数据包在路由器期间，路由选择使用此协议。，</li>
-<li>ARP：路由器与服务器通信，讲IP转化为mac地址</li>
+<li>OPSF：IP数据包在路由器期间，路由选择使用此协议。</li>
+<li>ARP：路由器与服务器通信，将IP转化为mac地址</li>
 <li>HTTP：TCP建立后，通过HTTP访问网页。</li>
 </ul>
-<h2 id="八、状态码"><a href="#八、状态码" class="headerlink" title="八、状态码"></a>八、状态码</h2><table>
+<h2 id="Q-状态码"><a href="#Q-状态码" class="headerlink" title="Q-状态码"></a>Q-状态码</h2><table>
 <thead>
 <tr>
 <th align="center"></th>
@@ -262,72 +316,39 @@
 <td align="center">服务器处理请求出错</td>
 </tr>
 </tbody></table>
-<h2 id="九、各种协议与HTTP协议的关系"><a href="#九、各种协议与HTTP协议的关系" class="headerlink" title="九、各种协议与HTTP协议的关系"></a>九、各种协议与HTTP协议的关系</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210320222328026.png" alt="image-20210320222328026"></p>
-<h2 id="十、HTTP长连接、短连接"><a href="#十、HTTP长连接、短连接" class="headerlink" title="十、HTTP长连接、短连接"></a>十、HTTP长连接、短连接</h2><p>HTTP/1.0默认短连接，客户端每次访问某个html或者其他类型的web中包含其他的web资源（JS文件，图像，CSS），每次遇到这样一个web资源，浏览器就会重新建立一个HTTP会话。</p>
-<p>从HTTP/1.1默认使用长连接，会在响应头加入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connection：keep-alive</span><br></pre></td></tr></table></figure>
-
-<p>长连接，每次一个网页打开，客户端和服务器之间用于传输HTTP数据的TCP连接不关闭。不会持久把持，有保持时间，可以在不同的服务器软件设定。实现长连接的客户端和服务器都需要支持长连接。</p>
-<p>HTTP协议的长连接和短连接，实质上是TCP协议的长连接短连接。</p>
-<h2 id="十一、HTTP如何保存用户状态"><a href="#十一、HTTP如何保存用户状态" class="headerlink" title="十一、HTTP如何保存用户状态"></a>十一、HTTP如何保存用户状态</h2><p>HTTP是无状态协议，自身不对请求体和响应体之间的通信状态进行保存。Session机制，通过服务端记录用户状态。典型的场景是购物车，当你添加商品到购物车时，系统不知道是哪个用户，服务器给特定的用户创建特定的Session来标识这个用户并跟踪。（过期销毁）。</p>
-<p>在服务端保存session方法：内存和数据库（redis），通过在cookie中添加一个session ID 的方式来实现追踪。</p>
-<p><strong>cookie被禁用怎么办？</strong></p>
-<p>URL重写，直接把Session ID附加在URL路径的后面。</p>
-<h2 id="十二、Cookie"><a href="#十二、Cookie" class="headerlink" title="十二、Cookie"></a>十二、Cookie</h2><p>Cookie和Session都用来跟踪浏览器用户身份的会话方式，但是场景不太一样。</p>
-<p>Cookie一般保存用户信息：</p>
 <ul>
-<li>在cookie中保存已经登录过的用户信息，下次访问网站可以自动填写基本信息。</li>
-<li>保持登录，在cookie中存放了token。</li>
-<li>登录一次网站后访问网站其他页面不需要登陆。</li>
-</ul>
-<p>Cookie数据保存在客户端，Session保存在服务器端。</p>
-<p>Session安全箱更高。</p>
-<h2 id="十三、HTTP-1-0和HTTP-1-1"><a href="#十三、HTTP-1-0和HTTP-1-1" class="headerlink" title="十三、HTTP/1.0和HTTP/1.1"></a>十三、HTTP/1.0和HTTP/1.1</h2><ul>
-<li>1.0默认长连接。1.1的持续连接有流水线和非流水线方式。流水线是客户端收到HTTP的响应报文之前能接着发送新的请求报文。非流水线是客户端在手打前一个响应后才能发送下一个请求。</li>
-<li>错误状态响应码：新增了24个状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</li>
-<li>缓存处理：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</li>
-<li>带宽优化以及网络连接的使用：1.0存在浪费带宽，例如客户端要对象的一部分，但是服务端把整个对象都穿过来，不支持断点续传。1.1在请求头引入range头域，允许只请求资源的某个部分，返回206。</li>
-</ul>
-<h2 id="十四、URL和URI"><a href="#十四、URL和URI" class="headerlink" title="十四、URL和URI"></a>十四、URL和URI</h2><p>URI：统一资源标志符，唯一表示一个资源</p>
-<p>URL：统一资源定位符，可以提供资源的路径。是具体的URI。</p>
-<p>URI像身份证，URL像家庭住址。不仅标识资源，还提供定位资源的信息。</p>
-<h2 id="十五、HTTP和HTTPS"><a href="#十五、HTTP和HTTPS" class="headerlink" title="十五、HTTP和HTTPS"></a>十五、HTTP和HTTPS</h2><ul>
-<li>端口：HTTP默认80，HTTPS默认443</li>
-<li>安全性和资源消耗：HTTP基于TCP，传输明文，客户端和服务器都无法验证对方身份。HTTPS运行在SSL/TLS上面的HTTP协议，运行在TCP之上，对称加密，安全性高但是消耗更多服务器资源，<ul>
-<li>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有DES、AES等；</li>
-<li>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有RSA、DSA等。</li>
+<li><p>```<br>3**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  重定向，需要进一步的操作以完成请求</span><br><span class="line"></span><br><span class="line">  - &#96;301 Moved Permanently&#96;。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替</span><br><span class="line">  - &#96;302 Moved Temporarily&#96;。与301类似。但资源只是临时被移动。客户端应继续使用原有URI</span><br><span class="line">  - &#96;304 Not Modified&#96;。所请求的资源未修改，服务器返回此状态码时，不会返回任何资源。**客户端通常会缓存访问过的资源，通过提供一个头信息指出客户端希望只返回在指定日期之后修改的资源**。</span><br><span class="line"></span><br><span class="line">- &#96;&#96;&#96;</span><br><span class="line">  4**</span><br></pre></td></tr></table></figure>
+
+<p>客户端错误，请求包含语法错误或无法完成请求</p>
+<ul>
+<li><code>400 Bad Request</code> 由于客户端请求有语法错误，不能被服务器所理解。</li>
+<li><code>401 Unauthorized</code> 请求未经授权。这个状态代码必须和WWW-Authenticate报头域一起使用</li>
+<li><code>403 Forbidden</code> 服务器收到请求，但是拒绝提供服务。服务器通常会在响应正文中给出不提供服务的原因</li>
+<li><code>404 Not Found</code> 请求的资源不存在，例如，输入了错误的URL</li>
 </ul>
 </li>
+<li><pre><code>5**
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  服务器错误，服务器在处理请求的过程中发生了错误</span><br><span class="line"></span><br><span class="line">  - &#96;500 Internal Server Error&#96; 服务器发生不可预期的错误，导致无法完成客户端的请求。</span><br><span class="line">  - &#96;503 Service Unavailable&#96; 服务器当前不能够处理客户端的请求，在一段时间之后，服务器可能会恢复正常。</span><br><span class="line"></span><br><span class="line">## Q-各种协议与HTTP协议的关系</span><br><span class="line"></span><br><span class="line">![image-20210320222328026](https:&#x2F;&#x2F;nextlab.oss-cn-shanghai.aliyuncs.com&#x2F;img&#x2F;image-20210320222328026.png)</span><br><span class="line"></span><br><span class="line">## Q-HTTP长连接、短连接</span><br><span class="line"></span><br><span class="line">**HTTP&#x2F;1.0默认短连接**，客户端每次访问某个html或者其他类型的web中包含其他的web资源（JS文件，图像，CSS），每次遇到这样一个web资源，浏览器就会重新建立一个HTTP会话。</span><br><span class="line"></span><br><span class="line">从HTTP&#x2F;1.1默认使用长连接，会在响应头加入</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+connection：keep-alive
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">长连接，每次一个网页打开，客户端和服务器之间用于传输HTTP数据的TCP连接不关闭。不会持久保持，有保持时间，可以在不同的服务器软件设定。实现长连接的客户端和服务器都需要支持长连接。</span><br><span class="line"></span><br><span class="line">HTTP协议的长连接和短连接，实质上是TCP协议的长连接短连接。</span><br><span class="line"></span><br><span class="line">## Q-HTTP如何保存用户状态</span><br><span class="line"></span><br><span class="line">HTTP是**无状态**协议，自身不对请求体和响应体之间的通信状态进行保存。Session机制，通过服务端记录用户状态。典型的场景是购物车，当你添加商品到购物车时，系统不知道是哪个用户，服务器给特定的用户创建特定的Session来标识这个用户并跟踪。（过期销毁）。</span><br><span class="line"></span><br><span class="line">在服务端保存session方法：内存和数据库（redis），既然session在服务端，那如何实现session跟踪呢？通过在cookie中添加一个session ID 的方式来实现追踪。</span><br><span class="line"></span><br><span class="line">**cookie被禁用了怎么办？**</span><br><span class="line"></span><br><span class="line">URL重写，直接把Session ID附加在URL路径的后面。</span><br><span class="line"></span><br><span class="line">## Q-Cookie</span><br><span class="line"></span><br><span class="line">Cookie和Session都用来跟踪浏览器用户身份的会话方式，但是场景不太一样。</span><br><span class="line"></span><br><span class="line">Cookie一般保存用户信息：</span><br><span class="line"></span><br><span class="line">+ 在cookie中保存已经登录过的用户信息，下次访问网站可以自动填写基本信息。</span><br><span class="line">+ 保持登录，在cookie中存放了token。</span><br><span class="line">+ 登录一次网站后访问网站其他页面不需要登陆。</span><br><span class="line"></span><br><span class="line">Cookie数据保存在客户端，Session保存在服务器端。</span><br><span class="line"></span><br><span class="line">Session安全性更高。</span><br><span class="line"></span><br><span class="line">## Q-HTTP&#x2F;1.0和HTTP&#x2F;1.1</span><br><span class="line"></span><br><span class="line">+ 1.0默认长连接。1.1的持续连接有流水线和非流水线方式。流水线是客户端收到HTTP的响应报文之前能接着发送新的请求报文。非流水线是客户端在收到前一个响应后才能发送下一个请求。</span><br><span class="line">+ 错误状态响应码：新增了24个状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</span><br><span class="line">+ 缓存处理：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</span><br><span class="line">+ 带宽优化以及网络连接的使用：1.0存在浪费带宽，例如客户端要对象的一部分，但是服务端把整个对象都穿过来，不支持断点续传。1.1在请求头引入range头域，允许只请求资源的某个部分，返回206。</span><br><span class="line"></span><br><span class="line">## Q-URL和URI</span><br><span class="line"></span><br><span class="line">URI：统一资源标志符，唯一表示一个资源</span><br><span class="line"></span><br><span class="line">URL：统一资源定位符，可以提供资源的路径。是具体的URI。</span><br><span class="line"></span><br><span class="line">URI像身份证，URL像家庭住址。不仅标识资源，还提供定位资源的信息。</span><br><span class="line"></span><br><span class="line">## Q-HTTP和HTTPS</span><br><span class="line"></span><br><span class="line">[HTTPS补充](https:&#x2F;&#x2F;hadyang.github.io&#x2F;interview&#x2F;docs&#x2F;basic&#x2F;net&#x2F;https&#x2F;)</span><br><span class="line"></span><br><span class="line">+ 端口：HTTP默认80，HTTPS默认443</span><br><span class="line">+ 安全性和资源消耗：HTTP基于TCP，传输明文，客户端和服务器都无法验证对方身份。HTTPS运行在SSL&#x2F;TLS上面的HTTP协议，运行在TCP之上，对称加密，安全性高但是消耗更多服务器资源。</span><br><span class="line">  + 对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有DES、AES等；</span><br><span class="line">  + 非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有RSA、DSA等。</span><br><span class="line"></span><br><span class="line"># 五、websocket</span><br><span class="line">一种与HTTP不同的协议。两者都位于OSI模型的应用层，依赖TCP协议。虽然不同，但是RFC规定：WebSocket设计为通过80和443端口工作，支持HTTP代理和中介，从而和HTTP兼容，为了实现兼容，W握手使用HTTP ，Upgrade头从HTTP协议更改为W协议。</span><br><span class="line"></span><br><span class="line">与H不同，W提供权全双工通信。此外，W还可以在TCP之上启用消息流。TCP单独处理字节流，没有固定的消息概念。</span><br><span class="line"></span><br><span class="line">WebSocket协议规范将 &#96;ws&#96;（WebSocket）和 &#96;wss&#96; （WebSocket Secure）定义为两个新的统一资源标识符（URI）方案，分别对应明文和加密连接。</span><br><span class="line"></span><br><span class="line">**优点：**</span><br><span class="line"></span><br><span class="line">+ **较小的控制开销：**</span><br><span class="line">+ **更强的实时性：**由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；</span><br><span class="line">+ **保持连接状态：**与 HTTP 不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。</span><br><span class="line">+ **更好的二进制支持：**Websocket 定义了二进制帧，相对HTTP，可以更轻松地处理二进制内容。</span><br><span class="line">+ **可以支持拓展：**Websocket 定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</span><br><span class="line">+ **更好的压缩效果：**相对于HTTP压缩，Websocket 在适当的扩展支持下，可以沿用之前内容的上下文，在传递类似的数据时，可以显著地提高压缩率</span><br><span class="line"></span><br><span class="line">**连接过程：**</span><br><span class="line"></span><br><span class="line">W是独立的、创建在TCP上的协议，W通过HTTP&#x2F;1.1协议的101状态码进行握手。为了创建W连接，需要通过浏览器发出请求，之后服务器进行回应，这个过程通常称为握手。</span><br><span class="line"></span><br><span class="line">+ 客户端请求</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+GET / HTTP/1.1
+Upgrade: websocket
+Connection: Upgrade
+Host: example.com
+Origin: http://example.com
+Sec-WebSocket-Key: sN9cRrP/n9NdMgdcy2VJFQ==
+Sec-WebSocket-Version: 13
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ 服务器回应</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: fFBooB7FAkLlXgRSz0BT3v4hq5s=
+Sec-WebSocket-Location: ws://example.com/
+</code></pre>
+</li>
 </ul>
-<h2 id="十六、Websocket"><a href="#十六、Websocket" class="headerlink" title="十六、Websocket"></a>十六、Websocket</h2><p>一种与HTTP不同的协议。两者都位于OSI模型的应用层，依赖TCP协议。虽然不同，但是RFC规定：WebSocket设计为通过80和443端口工作，支持HTTP代理和中介，从而和HTTP兼容，为了实现兼容，W握手使用HTTP ，Upgrade头从HTTP协议更改为W协议。</p>
-<p>与H不同，W提供权全双工通信。此外，W还可以在TCP之上启用消息流。TCP单独处理字节流，没有固定的消息概念。</p>
-<p>WebSocket协议规范将 <code>ws</code>（WebSocket）和 <code>wss</code> （WebSocket Secure）定义为两个新的统一资源标识符（URI）方案，分别对应明文和加密连接。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li><strong>较小的控制开销：</strong></li>
-<li><strong>更强的实时性：</strong>由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；</li>
-<li><strong>保持连接状态：</strong>与 HTTP 不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。</li>
-<li><strong>更好的二进制支持：</strong>Websocket 定义了二进制帧，相对HTTP，可以更轻松地处理二进制内容。</li>
-<li><strong>可以支持拓展：</strong>Websocket 定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</li>
-<li><strong>更好的压缩效果：</strong>相对于HTTP压缩，Websocket 在适当的扩展支持下，可以沿用之前内容的上下文，在传递类似的数据时，可以显著地提高压缩率</li>
-</ul>
-<p><strong>连接过程：</strong></p>
-<p>W是独立的、创建在TCP上的协议，W通过HTTP/1.1协议的101状态码进行握手。为了创建W连接，需要通过浏览器发出请求，之后服务器进行回应，这个过程通常称为握手。</p>
-<ul>
-<li><p>客户端请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.1</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Host: example.com</span><br><span class="line">Origin: http:&#x2F;&#x2F;example.com</span><br><span class="line">Sec-WebSocket-Key: sN9cRrP&#x2F;n9NdMgdcy2VJFQ&#x3D;&#x3D;</span><br><span class="line">Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure></li>
-<li><p>服务器回应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: fFBooB7FAkLlXgRSz0BT3v4hq5s&#x3D;</span><br><span class="line">Sec-WebSocket-Location: ws:&#x2F;&#x2F;example.com&#x2F;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="十七、底层网络协议"><a href="#十七、底层网络协议" class="headerlink" title="十七、底层网络协议"></a>十七、底层网络协议</h2><ul>
-<li>ARP（地址解析协议）</li>
-<li>ICMP（互联网控制消息协议）</li>
-<li>路由选择协议</li>
-<li>OSPF（开放式最短路径优先）</li>
-<li>BGP（边界网关协议）</li>
-<li>DHCP（动态主机设置协议）</li>
-<li>NAT（地址转换协议）</li>
-</ul>
+<h1 id="六、补充"><a href="#六、补充" class="headerlink" title="六、补充"></a>六、补充</h1><p><a target="_blank" rel="noopener" href="https://hadyang.github.io/interview/docs/basic/net/tcp/">参考资料</a></p>
  
       <!-- reward -->
       
