@@ -198,6 +198,20 @@
       </tags>
   </entry>
   <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Frp内网穿透</title>
     <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
@@ -256,20 +270,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git版本回退</title>
     <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
     <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
@@ -283,17 +283,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java基础</title>
-    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -365,6 +354,17 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java基础</title>
+    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -665,6 +665,131 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MPI分布式计算</title>
+    <url>/2020/05/16/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
+<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
+<li>人类基因解码、更精准的医疗成像等等</li>
+<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
+</ul>
+</li>
+<li>需要更加强大的计算能力</li>
+<li>并行计算是云计算的重要支撑技术之一</li>
+</ul>
+<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
+<li>单处理器的性能提升已经接近极限。</li>
+<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
+<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
+</ul>
+<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
+<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
+<li>自动将串行改为并行鲜有突破，需要手动编写</li>
+<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
+</ul>
+<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
+<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
+<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
+</ul>
+<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
+<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
+<li>协调包括：通信，负载平衡，同步</li>
+<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
+<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
+<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
+</ul>
+<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
+<ul>
+<li><p>单指令单数据流(SISD)系统</p>
+<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
+</li>
+<li><p>单指令多数据流(SIMD)系统</p>
+<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
+</li>
+<li><p>多指令多数据流(MIMD)系统</p>
+<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
+</li>
+</ul>
+<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
+<li><p>加速比</p>
+<ul>
+<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
+<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
+</ul>
+</li>
+<li><p>效率</p>
+<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
+</li>
+</ul>
+<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
+<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
+<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
+<li>MPI本身不是一个具体实现，是一种标准描述</li>
+</ul>
+<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
+<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
+</li>
+<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
+</li>
+<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
+</li>
+<li><p>MPI的主要特点有：</p>
+<ul>
+<li><p>程序编写灵活，功能强大</p>
+<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
+</li>
+<li><p>支持多种语言</p>
+</li>
+<li><p>对计算的支持强大，对文件的支持较弱。</p>
+</li>
+<li><p>MPI需要自己实现求解问题的并行化</p>
+</li>
+<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
+</li>
+<li><p>网络是MPI的瓶颈</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
+<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
+<li>OUT 输出：MPI返回给调用部分的结果参数</li>
+<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
+</ul>
+<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
+<ul>
+<li>独立于具体语言的说明</li>
+<li>C形式的原型声明</li>
+<li>FORTRAN形式的原型声明</li>
+</ul>
+<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
+<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
+<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
+<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
+<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
+
+<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
+<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MPI</tag>
       </tags>
   </entry>
   <entry>
@@ -1726,131 +1851,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MPI分布式计算</title>
-    <url>/2020/05/16/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
-<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
-<li>人类基因解码、更精准的医疗成像等等</li>
-<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
-</ul>
-</li>
-<li>需要更加强大的计算能力</li>
-<li>并行计算是云计算的重要支撑技术之一</li>
-</ul>
-<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
-<li>单处理器的性能提升已经接近极限。</li>
-<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
-<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
-</ul>
-<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
-<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
-<li>自动将串行改为并行鲜有突破，需要手动编写</li>
-<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
-</ul>
-<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
-<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
-<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
-</ul>
-<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
-<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
-<li>协调包括：通信，负载平衡，同步</li>
-<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
-<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
-<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
-</ul>
-<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
-<ul>
-<li><p>单指令单数据流(SISD)系统</p>
-<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
-</li>
-<li><p>单指令多数据流(SIMD)系统</p>
-<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
-</li>
-<li><p>多指令多数据流(MIMD)系统</p>
-<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
-</li>
-</ul>
-<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
-<li><p>加速比</p>
-<ul>
-<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
-<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
-</ul>
-</li>
-<li><p>效率</p>
-<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
-</li>
-</ul>
-<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
-<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
-<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
-<li>MPI本身不是一个具体实现，是一种标准描述</li>
-</ul>
-<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
-<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
-</li>
-<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
-</li>
-<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
-</li>
-<li><p>MPI的主要特点有：</p>
-<ul>
-<li><p>程序编写灵活，功能强大</p>
-<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
-</li>
-<li><p>支持多种语言</p>
-</li>
-<li><p>对计算的支持强大，对文件的支持较弱。</p>
-</li>
-<li><p>MPI需要自己实现求解问题的并行化</p>
-</li>
-<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
-</li>
-<li><p>网络是MPI的瓶颈</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
-<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
-<li>OUT 输出：MPI返回给调用部分的结果参数</li>
-<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
-</ul>
-<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
-<ul>
-<li>独立于具体语言的说明</li>
-<li>C形式的原型声明</li>
-<li>FORTRAN形式的原型声明</li>
-</ul>
-<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
-<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
-<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
-<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
-<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
-
-<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
-<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MPI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot整合redis</title>
     <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
     <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
@@ -2021,27 +2021,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-  </entry>
-  <entry>
     <title>中医基础理论-绪论</title>
     <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA-%E7%BB%AA%E8%AE%BA/</url>
     <content><![CDATA[<p>什么是中医学？中医学的学科属性？</p>
@@ -2132,6 +2111,27 @@
       <tags>
         <tag>中医</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
   </entry>
   <entry>
     <title>中医学哲学基础-五行学说</title>
@@ -2401,76 +2401,6 @@
       </tags>
   </entry>
   <entry>
-    <title>剑指offer</title>
-    <url>/2021/04/06/%E5%89%91%E6%8C%87offer/</url>
-    <content><![CDATA[<h1 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title="二维数组中的查找"></a>二维数组中的查找</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<blockquote>
-<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
-</blockquote>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="数组中的重复数字"><a href="#数组中的重复数字" class="headerlink" title="数组中的重复数字"></a>数组中的重复数字</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="number">2</span>或<span class="number">3</span></span><br></pre></td></tr></table></figure>
-<h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>一开始的思路是先用快排对数组进行排序，然后遍历数组，但是排序超时。<br>这时候可以选择用java中的set解题，在往set中添加元素的时候，添加成功返回true，说明不重复，反之说明重复。</p>
-<h2 id="code-1"><a href="#code-1" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//排序超时</span></span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.add(nums[i]) == <span class="keyword">false</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="从微到头打印链表"><a href="#从微到头打印链表" class="headerlink" title="从微到头打印链表"></a>从微到头打印链表</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
-<blockquote>
-<p>示例1：</p>
-<p>输入：head= [1,2,3]</p>
-<p>输出：[2,3,1]</p>
-</blockquote>
-<h2 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以先获取链表的长度，然后处理，这里为了熟悉栈的使用，使用压栈和出栈的方式解题。</p>
-<p>利用栈的FILO特性</p>
-<h2 id="code-2"><a href="#code-2" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] reversePrint(ListNode head) &#123;</span><br><span class="line">        Stack&lt;ListNode&gt; stack = <span class="keyword">new</span> Stack&lt;ListNode&gt;();</span><br><span class="line">        ListNode temp = head;</span><br><span class="line">        <span class="keyword">while</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(temp);</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> size = stack.size();</span><br><span class="line">        <span class="keyword">int</span>[] print = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            print[i] = stack.pop().val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> print;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="替换空格"><a href="#替换空格" class="headerlink" title="替换空格"></a>替换空格</h1><h2 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
-<blockquote>
-<p>示例1：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
-<h2 id="code-3"><a href="#code-3" class="headerlink" title="code"></a>code</h2><figure class="highlight plain"><figcaption><span>java</span></figcaption><table><tr><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">        public String replaceSpace(String s) &#123;</span><br><span class="line">        String newStr &#x3D; s.replaceAll(&quot; &quot;,&quot;%20&quot;);</span><br><span class="line">        return newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="两个栈实现队列"><a href="#两个栈实现队列" class="headerlink" title="两个栈实现队列"></a>两个栈实现队列</h1><h2 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h2><p>用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )</p>
-<h2 id="解题思路-4"><a href="#解题思路-4" class="headerlink" title="解题思路"></a>解题思路</h2><p>stack1作为push队列，pop时，如果stack2是空，将stack1复制到2，然后出栈顶，stack2不空时直接出栈。</p>
-<h2 id="code-4"><a href="#code-4" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CQueue</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1;</span><br><span class="line">    Stack&lt;Integer&gt; stack2;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">appendTail</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        stack1.push(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">deleteHead</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//2不空，直接出栈，空的时候复制再出栈</span></span><br><span class="line">        <span class="keyword">if</span>(stack2.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack1.isEmpty())&#123;</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//复制出栈</span></span><br><span class="line">                <span class="keyword">while</span> (!stack1.isEmpty())&#123;</span><br><span class="line">                    stack2.push(stack1.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> stack2.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> stack2.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><h2 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h2><p>求Fibonacci数列的第n项</p>
-<blockquote>
-<p>F(0)=0,F(1) =1</p>
-<p>F(N) = F(N-1)+F(N-2)</p>
-</blockquote>
-<p>答案取模1e9+7。</p>
-<h2 id="解题思路-5"><a href="#解题思路-5" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接递归超时，变成加法，存储前两个的状态。</p>
-<h2 id="code-5"><a href="#code-5" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">0</span>,b = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp = (a+b)%<span class="number">1000000007</span>;</span><br><span class="line">            a=b;</span><br><span class="line">            b=temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="青蛙跳台阶问题"><a href="#青蛙跳台阶问题" class="headerlink" title="青蛙跳台阶问题"></a>青蛙跳台阶问题</h1><h2 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h2><p>快乐的一只小青蛙，瓜瓜呱呱呱呱呱。一次可以跳一次台阶，也可以跳两层，问这个小青蛙跳n层台阶有多少种跳法。</p>
-<blockquote>
-<p>0&lt;=n&lt;=100</p>
-</blockquote>
-<p>对照上一题，是两种解决斐波那契的方法。</p>
-<h2 id="解题思路-6"><a href="#解题思路-6" class="headerlink" title="解题思路"></a>解题思路</h2><p>动态规划问题。假设n级台阶的跳法为f(n)，则：</p>
-<ul>
-<li>第一次跳1级，还有f(n-1)种跳法</li>
-<li>第一次跳2级，还有f(n-2)种跳法</li>
-</ul>
-<p>所以$f(n) = f(n-1)+f(n-2)$</p>
-<h2 id="code-6"><a href="#code-6" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numWays</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span> || i==<span class="number">1</span>)&#123;</span><br><span class="line">                dp[i]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i] = (dp[i-<span class="number">1</span>]+dp[i-<span class="number">2</span>])%<span class="number">1000000007</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="旋转数组中的最小数字"><a href="#旋转数组中的最小数字" class="headerlink" title="旋转数组中的最小数字"></a>旋转数组中的最小数字</h1><h2 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组开始的几个元素搬到末尾，称为数组旋转，给出一个递增的数组的旋转，输出旋转数组中的最小元素。</p>
-<h2 id="解题思路-7"><a href="#解题思路-7" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-7"><a href="#code-7" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>剑指offer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>通用图纸识别调研</title>
     <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
     <content><![CDATA[<blockquote>
@@ -2498,6 +2428,76 @@
       </categories>
       <tags>
         <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>剑指offer</title>
+    <url>/2021/04/06/%E5%89%91%E6%8C%87offer/</url>
+    <content><![CDATA[<h1 id="1-二维数组中的查找"><a href="#1-二维数组中的查找" class="headerlink" title="1.二维数组中的查找"></a>1.二维数组中的查找</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<blockquote>
+<p>示例：<br>矩阵：[<br>[1,   4,  7, 11, 15],<br>[2,   5,  8, 12, 19],<br>[3,   6,  9, 16, 22],<br>[10, 13, 14, 17, 24],<br>[18, 21, 23, 26, 30]<br>]<br>给定target = 5，返回true<br>给定20，返回false</p>
+</blockquote>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以从左下角或者从右上角开始游走，重要的是数组要判空，不然可能会出现数组越界的问题。</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">         <span class="comment">//二维数组判空</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span>||matrix.length==<span class="number">0</span>||(matrix.length==<span class="number">1</span>&amp;&amp;matrix[<span class="number">0</span>].length==<span class="number">0</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;<span class="comment">//行数</span></span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;<span class="comment">//列数</span></span><br><span class="line">        <span class="keyword">int</span> left = row-<span class="number">1</span>;<span class="comment">//行</span></span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;<span class="comment">//列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;row+col;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[left][right]&gt;target)&#123;</span><br><span class="line">                left--;</span><br><span class="line">                <span class="keyword">if</span>(left==-<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(matrix[left][right]&lt;target)&#123;</span><br><span class="line">                right++;</span><br><span class="line">                <span class="keyword">if</span>(right==col)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-数组中的重复数字"><a href="#2-数组中的重复数字" class="headerlink" title="2.数组中的重复数字"></a>2.数组中的重复数字</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="number">2</span>或<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>一开始的思路是先用快排对数组进行排序，然后遍历数组，但是排序超时。<br>这时候可以选择用java中的set解题，在往set中添加元素的时候，添加成功返回true，说明不重复，反之说明重复。</p>
+<h2 id="code-1"><a href="#code-1" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//排序超时</span></span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.add(nums[i]) == <span class="keyword">false</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-从微到头打印链表"><a href="#3-从微到头打印链表" class="headerlink" title="3.从微到头打印链表"></a>3.从微到头打印链表</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
+<blockquote>
+<p>示例1：</p>
+<p>输入：head= [1,2,3]</p>
+<p>输出：[2,3,1]</p>
+</blockquote>
+<h2 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题可以先获取链表的长度，然后处理，这里为了熟悉栈的使用，使用压栈和出栈的方式解题。</p>
+<p>利用栈的FILO特性</p>
+<h2 id="code-2"><a href="#code-2" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] reversePrint(ListNode head) &#123;</span><br><span class="line">        Stack&lt;ListNode&gt; stack = <span class="keyword">new</span> Stack&lt;ListNode&gt;();</span><br><span class="line">        ListNode temp = head;</span><br><span class="line">        <span class="keyword">while</span> (temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">            stack.push(temp);</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> size = stack.size();</span><br><span class="line">        <span class="keyword">int</span>[] print = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            print[i] = stack.pop().val;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> print;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-替换空格"><a href="#4-替换空格" class="headerlink" title="4.替换空格"></a>4.替换空格</h1><h2 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成”%20”。</p>
+<blockquote>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接调用s.replaceAlll()即可</p>
+<h2 id="code-3"><a href="#code-3" class="headerlink" title="code"></a>code</h2><figure class="highlight plain"><figcaption><span>java</span></figcaption><table><tr><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">        public String replaceSpace(String s) &#123;</span><br><span class="line">        String newStr &#x3D; s.replaceAll(&quot; &quot;,&quot;%20&quot;);</span><br><span class="line">        return newStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-两个栈实现队列"><a href="#5-两个栈实现队列" class="headerlink" title="5.两个栈实现队列"></a>5.两个栈实现队列</h1><h2 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h2><p>用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )</p>
+<h2 id="解题思路-4"><a href="#解题思路-4" class="headerlink" title="解题思路"></a>解题思路</h2><p>stack1作为push队列，pop时，如果stack2是空，将stack1复制到2，然后出栈顶，stack2不空时直接出栈。</p>
+<h2 id="code-4"><a href="#code-4" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CQueue</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1;</span><br><span class="line">    Stack&lt;Integer&gt; stack2;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">appendTail</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        stack1.push(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">deleteHead</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//2不空，直接出栈，空的时候复制再出栈</span></span><br><span class="line">        <span class="keyword">if</span>(stack2.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack1.isEmpty())&#123;</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//复制出栈</span></span><br><span class="line">                <span class="keyword">while</span> (!stack1.isEmpty())&#123;</span><br><span class="line">                    stack2.push(stack1.pop());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> stack2.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> stack2.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><h2 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h2><p>求Fibonacci数列的第n项</p>
+<blockquote>
+<p>F(0)=0,F(1) =1</p>
+<p>F(N) = F(N-1)+F(N-2)</p>
+</blockquote>
+<p>答案取模1e9+7。</p>
+<h2 id="解题思路-5"><a href="#解题思路-5" class="headerlink" title="解题思路"></a>解题思路</h2><p>直接递归超时，变成加法，存储前两个的状态。</p>
+<h2 id="code-5"><a href="#code-5" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">0</span>,b = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp = (a+b)%<span class="number">1000000007</span>;</span><br><span class="line">            a=b;</span><br><span class="line">            b=temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-青蛙跳台阶问题"><a href="#6-青蛙跳台阶问题" class="headerlink" title="6.青蛙跳台阶问题"></a>6.青蛙跳台阶问题</h1><h2 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h2><p>快乐的一只小青蛙，瓜瓜呱呱呱呱呱。一次可以跳一次台阶，也可以跳两层，问这个小青蛙跳n层台阶有多少种跳法。</p>
+<blockquote>
+<p>0&lt;=n&lt;=100</p>
+</blockquote>
+<p>对照上一题，是两种解决斐波那契的方法。</p>
+<h2 id="解题思路-6"><a href="#解题思路-6" class="headerlink" title="解题思路"></a>解题思路</h2><p>动态规划问题。假设n级台阶的跳法为f(n)，则：</p>
+<ul>
+<li>第一次跳1级，还有f(n-1)种跳法</li>
+<li>第一次跳2级，还有f(n-2)种跳法</li>
+</ul>
+<p>所以$f(n) = f(n-1)+f(n-2)$</p>
+<h2 id="code-6"><a href="#code-6" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numWays</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span> || i==<span class="number">1</span>)&#123;</span><br><span class="line">                dp[i]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i] = (dp[i-<span class="number">1</span>]+dp[i-<span class="number">2</span>])%<span class="number">1000000007</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-旋转数组中的最小数字"><a href="#7-旋转数组中的最小数字" class="headerlink" title="7.旋转数组中的最小数字"></a>7.旋转数组中的最小数字</h1><h2 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组开始的几个元素搬到末尾，称为数组旋转，给出一个递增的数组的旋转，输出旋转数组中的最小元素。</p>
+<h2 id="解题思路-7"><a href="#解题思路-7" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-7"><a href="#code-7" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>剑指offer</tag>
       </tags>
   </entry>
   <entry>
@@ -2544,21 +2544,6 @@
       </categories>
   </entry>
   <entry>
-    <title>对水杉在线的思考</title>
-    <url>/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[<p>水杉在线现在变得越来越庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。</p>
-<p>其实系统本身不是关键点，重要的是数据。我们在数据和人工智能方面也做了各种探索，包括使用xapi收集多平台的用户数据，从而构建庞大的数据中台，而中台又支撑着关于教育的各种探索。又比如构建智能题库，训练模型对题目进行自动的多标签识别。比如我们自己训练更适用于水杉平台的AI助教。还有利用数据构建展示大屏等等，这些都让我们得到开发之外的别的乐趣。</p>
-<p>我将从一个开发者的角度，记录我关于水杉在线的思考。</p>
-<h1 id="关于系统设计的思考"><a href="#关于系统设计的思考" class="headerlink" title="关于系统设计的思考"></a>关于系统设计的思考</h1><h1 id="关于登陆的思考"><a href="#关于登陆的思考" class="headerlink" title="关于登陆的思考"></a>关于登陆的思考</h1><p>我一直都认为，登陆是比较难做的一部分。</p>
-<h1 id="关于分布式的思考"><a href="#关于分布式的思考" class="headerlink" title="关于分布式的思考"></a>关于分布式的思考</h1><h1 id="关于高并发的思考"><a href="#关于高并发的思考" class="headerlink" title="关于高并发的思考"></a>关于高并发的思考</h1><h1 id="关于云原生的思考"><a href="#关于云原生的思考" class="headerlink" title="关于云原生的思考"></a>关于云原生的思考</h1>]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>审视</title>
     <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
     <content><![CDATA[<blockquote>
@@ -2599,6 +2584,62 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对水杉在线的思考</title>
+    <url>/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<p>水杉在线现在变得越来越庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。</p>
+<p>其实系统本身不是关键点，重要的是数据。我们在数据和人工智能方面也做了各种探索，包括使用xapi收集多平台的用户数据，从而构建庞大的数据中台，而中台又支撑着关于教育的各种探索。又比如构建智能题库，训练模型对题目进行自动的多标签识别。比如我们自己训练更适用于水杉平台的AI助教。还有利用数据构建展示大屏等等，这些都让我们得到开发之外的别的乐趣。</p>
+<p>我将从一个开发者的角度，记录我关于水杉在线的思考。</p>
+<h1 id="关于系统设计的思考"><a href="#关于系统设计的思考" class="headerlink" title="关于系统设计的思考"></a>关于系统设计的思考</h1><h1 id="关于登陆的思考"><a href="#关于登陆的思考" class="headerlink" title="关于登陆的思考"></a>关于登陆的思考</h1><p>我一直都认为，登陆是比较难做的一部分。</p>
+<h1 id="关于分布式的思考"><a href="#关于分布式的思考" class="headerlink" title="关于分布式的思考"></a>关于分布式的思考</h1><h1 id="关于高并发的思考"><a href="#关于高并发的思考" class="headerlink" title="关于高并发的思考"></a>关于高并发的思考</h1><h1 id="关于云原生的思考"><a href="#关于云原生的思考" class="headerlink" title="关于云原生的思考"></a>关于云原生的思考</h1>]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件漏洞渗透</title>
+    <url>/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/</url>
+    <content><![CDATA[<h2 id="靶机安装"><a href="#靶机安装" class="headerlink" title="靶机安装"></a>靶机安装</h2><p>使用docker快速启动</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull area39&#x2F;webug</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -P area39&#x2F;webug</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://link.zhihu.com/?target=http://127.0.0.1:32768/">http://127.0.0.1:32768/</a></p>
+  <img src="https://i.loli.net/2020/09/16/sWUDXABMPhinFYo.png" alt="image-20200916153639264" style="zoom: 67%;" />
+
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>文件上传是大部分web应用具备的功能，如果开发人员不进行严格的校验，导致PHP，ASP等执行文件绕过应用并顺利执行，则相当于直接拿到了webshell，一旦拿到webshell，就可以拿到web数据，删除web文件，本地提权，进一步拿下整个服务器甚至内网。</p>
+<p>sql注入攻击的对象是数据库服务，文件上传漏洞攻击的是web服务，实际渗透中两种相结合，达到对目标的深度渗透。</p>
+<h2 id="木马文件"><a href="#木马文件" class="headerlink" title="木马文件"></a>木马文件</h2><p>如果开发人员设置了mime类型校验，导致可执行文件无法上传，就需要使用第三方工具<strong>BRUPSUITE代理</strong>。默认的拦截功能是开启的。</p>
+<p>默认的代理是在本机上，可以在option设置所有代理。然后你会神奇的发现，我们的一句话木马已经上传成功了。然后拿出中国菜刀。</p>
+<img src="https://i.loli.net/2020/09/16/9INUifFnMO5VQcH.png" alt="image-20200916160850568" style="zoom:67%;" />
+
+<p>更高级的限制是<strong>限制文件的拓展名</strong>。</p>
+<ul>
+<li><p><strong>Webshell</strong></p>
+<ul>
+<li><p>小马：一句话木马也称为小马，整个shell只有一行，一般是系统执行函数</p>
+</li>
+<li><p>大马：代码量和功能比小马多，一般会进行二次编码加密，防止被防火墙/入侵系统检测到</p>
+<p><img src="https://i.loli.net/2020/09/16/WTKg1mJuOIztHvb.png" alt="image-20200916163940089"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>中国菜刀</strong>：在被防火墙删了几次文件后，我决定用图片了。。</p>
+<p>REQUEST是在网页输入变量访问，POST则是使用像中国菜刀之类的工具连接，是C/s架构</p>
+<p><img src="https://i.loli.net/2020/09/16/U8CNLMAEngPkzbI.png" alt="image-20200916164124831"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络攻防</category>
+      </categories>
+      <tags>
+        <tag>文件上传渗透</tag>
       </tags>
   </entry>
   <entry>
@@ -2779,47 +2820,6 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文件漏洞渗透</title>
-    <url>/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/</url>
-    <content><![CDATA[<h2 id="靶机安装"><a href="#靶机安装" class="headerlink" title="靶机安装"></a>靶机安装</h2><p>使用docker快速启动</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull area39&#x2F;webug</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -P area39&#x2F;webug</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://link.zhihu.com/?target=http://127.0.0.1:32768/">http://127.0.0.1:32768/</a></p>
-  <img src="https://i.loli.net/2020/09/16/sWUDXABMPhinFYo.png" alt="image-20200916153639264" style="zoom: 67%;" />
-
-<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>文件上传是大部分web应用具备的功能，如果开发人员不进行严格的校验，导致PHP，ASP等执行文件绕过应用并顺利执行，则相当于直接拿到了webshell，一旦拿到webshell，就可以拿到web数据，删除web文件，本地提权，进一步拿下整个服务器甚至内网。</p>
-<p>sql注入攻击的对象是数据库服务，文件上传漏洞攻击的是web服务，实际渗透中两种相结合，达到对目标的深度渗透。</p>
-<h2 id="木马文件"><a href="#木马文件" class="headerlink" title="木马文件"></a>木马文件</h2><p>如果开发人员设置了mime类型校验，导致可执行文件无法上传，就需要使用第三方工具<strong>BRUPSUITE代理</strong>。默认的拦截功能是开启的。</p>
-<p>默认的代理是在本机上，可以在option设置所有代理。然后你会神奇的发现，我们的一句话木马已经上传成功了。然后拿出中国菜刀。</p>
-<img src="https://i.loli.net/2020/09/16/9INUifFnMO5VQcH.png" alt="image-20200916160850568" style="zoom:67%;" />
-
-<p>更高级的限制是<strong>限制文件的拓展名</strong>。</p>
-<ul>
-<li><p><strong>Webshell</strong></p>
-<ul>
-<li><p>小马：一句话木马也称为小马，整个shell只有一行，一般是系统执行函数</p>
-</li>
-<li><p>大马：代码量和功能比小马多，一般会进行二次编码加密，防止被防火墙/入侵系统检测到</p>
-<p><img src="https://i.loli.net/2020/09/16/WTKg1mJuOIztHvb.png" alt="image-20200916163940089"></p>
-</li>
-</ul>
-</li>
-<li><p><strong>中国菜刀</strong>：在被防火墙删了几次文件后，我决定用图片了。。</p>
-<p>REQUEST是在网页输入变量访问，POST则是使用像中国菜刀之类的工具连接，是C/s架构</p>
-<p><img src="https://i.loli.net/2020/09/16/U8CNLMAEngPkzbI.png" alt="image-20200916164124831"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络攻防</category>
-      </categories>
-      <tags>
-        <tag>文件上传渗透</tag>
       </tags>
   </entry>
   <entry>
