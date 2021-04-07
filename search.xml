@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CORS如何解决</title>
+    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
+<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
+<p>先写一个服务：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>index.html</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里接口不一致出现首图所示跨域问题</p>
+<ul>
+<li><p>修改相应头</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
+<li><p>jsonp</p>
+<p>服务：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
+
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>、、、、、、</p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Frp内网穿透</title>
+    <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
+    <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
+<p>内网穿透说白了就是，我们实验室分配了一台服务器资源，但是是内网环境，外网访问不到。我们想在本地环境访问内网服务器，就要做内网穿透才可以。当然连vpn也可以访问，但是每次连vpn不仅麻烦，而且挂着vpn会影响看片的速度。那么内网穿透实现的原理是怎样的？看图：<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407214912.png" alt="image-20200407214903850"></p>
+<p>就是借助具有公网IP的服务器当做跳板来访问内网服务器。所以了，前提是你要有一台具有公网IP的服务器，或者你的宽带有公网IP，这就得咨询运营商了(一般不可能主动提供的)。</p>
+<h2 id="Frp"><a href="#Frp" class="headerlink" title="Frp"></a>Frp</h2><p><a href="https://github.com/fatedier/frp/releases">官网点这</a></p>
+<p>frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。首先要下载frp到你的内网服务器和公网代理机上，进去选择相应的版本。我这里是amd架构。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407215351.png" alt="image-20200407215349375"></p>
+<p>解压后进入文件夹，可以看到这些文件，这里注意一下，我们在<strong>内网服务器用的都是frpc，在公网代理机用的是frps。</strong>或者你直接记住，frps就是代理机，frpc就是内网服务器。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407215602.png" alt="image-20200407215600600"></p>
+<h3 id="Frps"><a href="#Frps" class="headerlink" title="Frps"></a>Frps</h3><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407220003.png" alt="image-20200407220002335"></p>
+<p>可以看到代理机的配置非常少，只要配置一个端口就行，我这里是8881端口，如果你的8881端口有服务，换成别的端口就行。</p>
+<h3 id="Frpc"><a href="#Frpc" class="headerlink" title="Frpc"></a>Frpc</h3><p>现在打开内网服务器，进入frp的目录，看一下frpc的配置有哪些：</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407220235.png" alt="image-20200407220234019"></p>
+<ul>
+<li>server_addr：这个就是跳转机的公网IP</li>
+<li>server_port：服务端口</li>
+<li>ssh的配置不用管，但是这个6000端口是我们要用的。</li>
+</ul>
+<h2 id="启动frp，访问测试"><a href="#启动frp，访问测试" class="headerlink" title="启动frp，访问测试"></a>启动frp，访问测试</h2><p><strong>启动跳转机frp(在frp目录下)</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;frps -c .&#x2F;frps.ini</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221648.png" alt="image-20200407221646951"></p>
+<p><strong>启动内网服务器frp</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;frpc -c .&#x2F;frpc.ini</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221754.png" alt="image-20200407221752608"></p>
+<p>再回头看注册机也已经发生了变化，代理成功：</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221855.png" alt="image-20200407221854764"></p>
+<p><strong>测试访问</strong></p>
+<p>直接通过xshell新建一个连接，主机写公网IP，端口写6000，发现已经通过公网IP连接上来了。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407222400.png" alt="image-20200407222359320"></p>
+<h2 id="配置访问gitlab"><a href="#配置访问gitlab" class="headerlink" title="配置访问gitlab"></a>配置访问gitlab</h2><p>再接下来的配置都是一个思路了，我们上边是配置了一个ssh。配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh]</span><br><span class="line">local_ip &#x3D; 127.0.0.1</span><br><span class="line">local_port &#x3D; 22</span><br><span class="line">remote_port &#x3D; 6000</span><br></pre></td></tr></table></figure>
+
+<p>因为ssh的默认端口是22端口，这个配置就是把22端口代理到远程的6000端口。</p>
+<p>现在查看gitlab的端口是8072，我们代理到1235端口，在froc,ini添加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[gitlab]</span><br><span class="line">local_ip&#x3D;127.0.0.1</span><br><span class="line">local_port&#x3D;8072</span><br><span class="line">remote_port&#x3D;1235</span><br></pre></td></tr></table></figure>
+
+<p>然后重启frp，访问公网IP：1235发现gitlab已经打开了。</p>
+<p>别的端口代理也是一个道理，直接去frpc.ini添加相应配置就行了</p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><ul>
+<li><p><strong>connection time-out</strong></p>
+<p>看看端口有没有放行，阿里云要去控制台放行才会生效。</p>
+<p>关闭防火墙。</p>
+</li>
+<li><p>我们这种方式启动占据了命令窗口，可以后台驻留启动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">服务端： nohup ./frps -c frps.ini &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">客户端： nohup ./frpc -c frpc.ini &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">说明：&gt;/dev/null 2&gt;&amp;1 &amp;，表示丢弃。</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>内网穿透</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DevOps实践</title>
     <url>/2021/03/24/CICD/</url>
     <content><![CDATA[<h1 id="1、DevOps"><a href="#1、DevOps" class="headerlink" title="1、DevOps"></a>1、DevOps</h1><p>朴素的说，<code>DevOps = Dev(开发人员)+Ops(运维人员)</code>。实际上涵盖的角色范围会更广泛：除了开发，测试，运维，还涉及项目经理，产品经理等等跨职能部门相互合作，完成某一项目或者任务。</p>
@@ -167,92 +256,17 @@
       </tags>
   </entry>
   <entry>
-    <title>CORS如何解决</title>
-    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
-<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
-<p>先写一个服务：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>index.html</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里接口不一致出现首图所示跨域问题</p>
-<ul>
-<li><p>修改相应头</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
-<li><p>jsonp</p>
-<p>服务：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
-
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>、、、、、、</p>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
 ]]></content>
       <categories>
-        <category>前端技术</category>
+        <category>Bug合集</category>
       </categories>
       <tags>
-        <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Frp内网穿透</title>
-    <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
-    <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
-<p>内网穿透说白了就是，我们实验室分配了一台服务器资源，但是是内网环境，外网访问不到。我们想在本地环境访问内网服务器，就要做内网穿透才可以。当然连vpn也可以访问，但是每次连vpn不仅麻烦，而且挂着vpn会影响看片的速度。那么内网穿透实现的原理是怎样的？看图：<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407214912.png" alt="image-20200407214903850"></p>
-<p>就是借助具有公网IP的服务器当做跳板来访问内网服务器。所以了，前提是你要有一台具有公网IP的服务器，或者你的宽带有公网IP，这就得咨询运营商了(一般不可能主动提供的)。</p>
-<h2 id="Frp"><a href="#Frp" class="headerlink" title="Frp"></a>Frp</h2><p><a href="https://github.com/fatedier/frp/releases">官网点这</a></p>
-<p>frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。首先要下载frp到你的内网服务器和公网代理机上，进去选择相应的版本。我这里是amd架构。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407215351.png" alt="image-20200407215349375"></p>
-<p>解压后进入文件夹，可以看到这些文件，这里注意一下，我们在<strong>内网服务器用的都是frpc，在公网代理机用的是frps。</strong>或者你直接记住，frps就是代理机，frpc就是内网服务器。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407215602.png" alt="image-20200407215600600"></p>
-<h3 id="Frps"><a href="#Frps" class="headerlink" title="Frps"></a>Frps</h3><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407220003.png" alt="image-20200407220002335"></p>
-<p>可以看到代理机的配置非常少，只要配置一个端口就行，我这里是8881端口，如果你的8881端口有服务，换成别的端口就行。</p>
-<h3 id="Frpc"><a href="#Frpc" class="headerlink" title="Frpc"></a>Frpc</h3><p>现在打开内网服务器，进入frp的目录，看一下frpc的配置有哪些：</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407220235.png" alt="image-20200407220234019"></p>
-<ul>
-<li>server_addr：这个就是跳转机的公网IP</li>
-<li>server_port：服务端口</li>
-<li>ssh的配置不用管，但是这个6000端口是我们要用的。</li>
-</ul>
-<h2 id="启动frp，访问测试"><a href="#启动frp，访问测试" class="headerlink" title="启动frp，访问测试"></a>启动frp，访问测试</h2><p><strong>启动跳转机frp(在frp目录下)</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;frps -c .&#x2F;frps.ini</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221648.png" alt="image-20200407221646951"></p>
-<p><strong>启动内网服务器frp</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;frpc -c .&#x2F;frpc.ini</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221754.png" alt="image-20200407221752608"></p>
-<p>再回头看注册机也已经发生了变化，代理成功：</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407221855.png" alt="image-20200407221854764"></p>
-<p><strong>测试访问</strong></p>
-<p>直接通过xshell新建一个连接，主机写公网IP，端口写6000，发现已经通过公网IP连接上来了。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200407222400.png" alt="image-20200407222359320"></p>
-<h2 id="配置访问gitlab"><a href="#配置访问gitlab" class="headerlink" title="配置访问gitlab"></a>配置访问gitlab</h2><p>再接下来的配置都是一个思路了，我们上边是配置了一个ssh。配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh]</span><br><span class="line">local_ip &#x3D; 127.0.0.1</span><br><span class="line">local_port &#x3D; 22</span><br><span class="line">remote_port &#x3D; 6000</span><br></pre></td></tr></table></figure>
-
-<p>因为ssh的默认端口是22端口，这个配置就是把22端口代理到远程的6000端口。</p>
-<p>现在查看gitlab的端口是8072，我们代理到1235端口，在froc,ini添加</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[gitlab]</span><br><span class="line">local_ip&#x3D;127.0.0.1</span><br><span class="line">local_port&#x3D;8072</span><br><span class="line">remote_port&#x3D;1235</span><br></pre></td></tr></table></figure>
-
-<p>然后重启frp，访问公网IP：1235发现gitlab已经打开了。</p>
-<p>别的端口代理也是一个道理，直接去frpc.ini添加相应配置就行了</p>
-<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><ul>
-<li><p><strong>connection time-out</strong></p>
-<p>看看端口有没有放行，阿里云要去控制台放行才会生效。</p>
-<p>关闭防火墙。</p>
-</li>
-<li><p>我们这种方式启动占据了命令窗口，可以后台驻留启动</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">服务端： nohup ./frps -c frps.ini &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">客户端： nohup ./frpc -c frpc.ini &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">说明：&gt;/dev/null 2&gt;&amp;1 &amp;，表示丢弃。</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>内网穿透</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -340,20 +354,6 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -842,84 +842,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Netty</title>
-    <url>/2021/03/29/Netty/</url>
-    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
-<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
-<blockquote>
-<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
-</blockquote>
-<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
-<ul>
-<li>作为NIO服务端，接收客户端的TCP连接</li>
-<li>作为NIO客户端，像服务端发起TCP连接。</li>
-<li>读取通信对端的请求或应答信息。</li>
-<li>想通信对端发送消息请求或应答消息。</li>
-</ul>
-<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
-<p>但是对于高负载、高并发的场景不合适。</p>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
-<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
-<ul>
-<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
-<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
-<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
-<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
-<p>工作流程总结如下：</p>
-<ul>
-<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
-<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
-<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
-<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
-<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
-<li>事件机制</li>
-<li>功能强大，预置了多种解码功能，支持主流协议。</li>
-<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
-</ul>
-<p><strong>为什么性能好？</strong></p>
-<ul>
-<li>纯异步，Reactor线程模型</li>
-<li>IO多路复用</li>
-<li>GC优化</li>
-<li>内存泄露检测</li>
-<li>zero copy</li>
-</ul>
-<p><strong>Zero copy</strong></p>
-<ul>
-<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
-<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
-<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
-<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
-</ul>
-<p><strong>垃圾回收</strong></p>
-<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
-<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
-<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
-<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
-<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
-<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
-<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
-<ul>
-<li>NIOChannel：水平触发</li>
-<li>EpollChannel：边缘触发</li>
-</ul>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Mysql</title>
     <url>/2021/03/24/Mysql/</url>
     <content><![CDATA[<h1 id="1、存储引擎"><a href="#1、存储引擎" class="headerlink" title="1、存储引擎"></a>1、存储引擎</h1><p>Mysql默认的存储引擎是InnoDB，在5.7版本只有InnoDB是支持事务的。</p>
@@ -1075,6 +997,84 @@
       </categories>
       <tags>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Netty</title>
+    <url>/2021/03/29/Netty/</url>
+    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
+<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
+<blockquote>
+<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
+</blockquote>
+<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
+<ul>
+<li>作为NIO服务端，接收客户端的TCP连接</li>
+<li>作为NIO客户端，像服务端发起TCP连接。</li>
+<li>读取通信对端的请求或应答信息。</li>
+<li>想通信对端发送消息请求或应答消息。</li>
+</ul>
+<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
+<p>但是对于高负载、高并发的场景不合适。</p>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
+<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
+<ul>
+<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
+<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
+<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
+<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
+<p>工作流程总结如下：</p>
+<ul>
+<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
+<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
+<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
+<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
+<li>事件机制</li>
+<li>功能强大，预置了多种解码功能，支持主流协议。</li>
+<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
+</ul>
+<p><strong>为什么性能好？</strong></p>
+<ul>
+<li>纯异步，Reactor线程模型</li>
+<li>IO多路复用</li>
+<li>GC优化</li>
+<li>内存泄露检测</li>
+<li>zero copy</li>
+</ul>
+<p><strong>Zero copy</strong></p>
+<ul>
+<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
+<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
+<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
+<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
+</ul>
+<p><strong>垃圾回收</strong></p>
+<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
+<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
+<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
+<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
+<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
+<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
+<ul>
+<li>NIOChannel：水平触发</li>
+<li>EpollChannel：边缘触发</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -1975,24 +1975,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OSS文件管理</title>
     <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
     <content><![CDATA[<blockquote>
@@ -2018,6 +2000,24 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2066,7 +2066,7 @@
 <p>以下是代码：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vectorized</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vecEvalInt</span><span class="params">(input *chunk.Chunk, result *chunk.Column)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.Errorf(<span class="string">&quot;not implemented&quot;</span>)</span><br><span class="line">	n := input.NumRows()</span><br><span class="line">	buf, err := b.bufAllocator.get(types.ETDuration, n)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> b.bufAllocator.put(buf)</span><br><span class="line">	<span class="keyword">if</span> err = b.args[<span class="number">0</span>].VecEvalDuration(b.ctx, input, buf); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result.ResizeInt64(n, <span class="literal">false</span>)</span><br><span class="line">	result.MergeNulls(buf)</span><br><span class="line">	i64s := result.Int64s()</span><br><span class="line">	ds := buf.GoDurations()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> result.IsNull(i) &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		i64s[i] = <span class="keyword">int64</span>((ds[i] % time.Second) / time.Microsecond)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/pingcap/tidb/pull/13482/files">PR链接</a></p>
+<p><a href="https://github.com/pingcap/tidb/pull/13482">PR链接</a></p>
 <p>就是这么简单，最后还送了一个马克杯，和一个勋章。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210407171511208.png" alt="image-20210407171511208"></p>
 ]]></content>
@@ -2380,6 +2380,24 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于焦虑</title>
     <url>/2020/03/20/%E5%85%B3%E4%BA%8E%E7%84%A6%E8%99%91/</url>
     <content><![CDATA[<blockquote>
@@ -2404,24 +2422,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CNN手写文字识别</title>
     <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
     <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
@@ -2436,6 +2436,25 @@
       <tags>
         <tag>深度学习</tag>
         <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>别直接修改hexo生成的文件名</title>
+    <url>/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/</url>
+    <content><![CDATA[<p>没啥说的，目录里有几个题目的开头英文没大写，看着很别扭，想修改成大写，于是寻思，hexo的文章title都是些文章名然后自动生成的，于是直接改了md文件的文件名，报了404，正确的做法是点进去md文档修改title。</p>
+<h2 id="快速执行hexo-clean-hexo-g-hexo-d"><a href="#快速执行hexo-clean-hexo-g-hexo-d" class="headerlink" title="快速执行hexo clean,hexo g,hexo d"></a>快速执行hexo clean,hexo g,hexo d</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200326172526.png" alt="image-20200326172319885"></p>
+<p>然后执行<kbd>npm start</kbd>就行了。</p>
+<ul>
+<li><input disabled="" type="checkbox"> 列表渲染测试</li>
+<li><input disabled="" type="checkbox"> 测试</li>
+<li><input disabled="" type="checkbox"> 测试</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2580,25 +2599,6 @@
       <categories>
         <category>后端技术</category>
       </categories>
-  </entry>
-  <entry>
-    <title>别直接修改hexo生成的文件名</title>
-    <url>/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/</url>
-    <content><![CDATA[<p>没啥说的，目录里有几个题目的开头英文没大写，看着很别扭，想修改成大写，于是寻思，hexo的文章title都是些文章名然后自动生成的，于是直接改了md文件的文件名，报了404，正确的做法是点进去md文档修改title。</p>
-<h2 id="快速执行hexo-clean-hexo-g-hexo-d"><a href="#快速执行hexo-clean-hexo-g-hexo-d" class="headerlink" title="快速执行hexo clean,hexo g,hexo d"></a>快速执行hexo clean,hexo g,hexo d</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200326172526.png" alt="image-20200326172319885"></p>
-<p>然后执行<kbd>npm start</kbd>就行了。</p>
-<ul>
-<li><input disabled="" type="checkbox"> 列表渲染测试</li>
-<li><input disabled="" type="checkbox"> 测试</li>
-<li><input disabled="" type="checkbox"> 测试</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
   </entry>
   <entry>
     <title>审视</title>
@@ -4583,7 +4583,7 @@
 <p>程序计数器的作用：</p>
 <ul>
 <li>字节码解释器通过改变程序计数器来以此读取指令，从而实现代码的流程控制。</li>
-<li>多线程时，程序计数器记录当前线程的执行位置，从而当线程被切换回来的时候知道县城上次运行到哪里了。</li>
+<li>多线程时，程序计数器记录当前线程的执行位置，从而当线程被切换回来的时候知道线程上次运行到哪里了。</li>
 </ul>
 <p>如果执行的是native方法， 程序计数器记录的是undefined地址，执行java代码时程序计数器记录的才是下一条指令的地址。</p>
 <p>所以程序计数器是私有是为了<strong>线程切换后能恢复到正确的执行位置</strong>。</p>
