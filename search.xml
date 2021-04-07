@@ -198,20 +198,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Frp内网穿透</title>
     <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
@@ -283,6 +269,20 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1929,6 +1929,52 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OSS文件管理</title>
+    <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
+    <content><![CDATA[<blockquote>
+<p>上一回说到贫穷的程序员同学话60多块买了一年的阿里云低配云主机，然后偶然发现是赠送了一年的OSS的，看了一下有40G，对于日常的开发来说，还是很够用的，你会不会觉得，存储的地方多了，百度网盘上千个G，为啥选择OSS？就网盘那速度先不吐槽，阿里云提供的开发接口相信你会爱上的。</p>
+</blockquote>
+<p>OSS是阿里云提供的对象存储，说白了对象存储就是你啥都可以往里面放，安全指数达到99.99999%(别数了，7个9)，可以说相当安全了。具体的<a href="https://help.aliyun.com/product/31815.html?spm=a2c4g.750001.list.22.64277b13kElgYU">帮助文档</a>看这里。OSS提供了java开发的SDK，使用起来不用不要太爽啊。</p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="1-添加pom依赖"><a href="#1-添加pom依赖" class="headerlink" title="1.添加pom依赖"></a>1.添加pom依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。允许多个可以并发使用</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建存储空间。</span></span><br><span class="line">ossClient.createBucket(bucketName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-文件上传"><a href="#3-文件上传" class="headerlink" title="3.文件上传"></a>3.文件上传</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。</span></span><br><span class="line">String content = <span class="string">&quot;Hello OSS&quot;</span>;</span><br><span class="line">ossClient.putObject(bucketName, objectName, <span class="keyword">new</span> ByteArrayInputStream(content.getBytes()));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-文件下载"><a href="#4-文件下载" class="headerlink" title="4.文件下载"></a>4.文件下载</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;从OSS下载文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用ossClient.getObject返回一个OSSObject实例，该实例包含文件内容及文件元信息。</span></span><br><span class="line">OSSObject ossObject = ossClient.getObject(bucketName, objectName);</span><br><span class="line"><span class="comment">// 调用ossObject.getObjectContent获取文件输入流，可读取此输入流获取其内容。</span></span><br><span class="line">InputStream content = ossObject.getObjectContent();</span><br><span class="line"><span class="keyword">if</span> (content != <span class="keyword">null</span>) &#123;</span><br><span class="line">    BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(content));</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        String line = reader.readLine();</span><br><span class="line">        <span class="keyword">if</span> (line == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;\n&quot;</span> + line);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。</span></span><br><span class="line">    content.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-列举文件"><a href="#5-列举文件" class="headerlink" title="5.列举文件"></a>5.列举文件</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ossClient.listObjects返回ObjectListing实例，包含此次listObject请求的返回结果。</span></span><br><span class="line">ObjectListing objectListing = ossClient.listObjects(bucketName);</span><br><span class="line"><span class="comment">// objectListing.getObjectSummaries获取所有文件的描述信息。</span></span><br><span class="line"><span class="keyword">for</span> (OSSObjectSummary objectSummary : objectListing.getObjectSummaries()) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot; - &quot;</span> + objectSummary.getKey() + <span class="string">&quot;  &quot;</span> +</span><br><span class="line">            <span class="string">&quot;(size = &quot;</span> + objectSummary.getSize() + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-文件删除"><a href="#6-文件删除" class="headerlink" title="6.文件删除"></a>6.文件删除</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;表示删除OSS文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除文件。</span></span><br><span class="line">ossClient.deleteObject(bucketName, objectName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-更多API参见文档"><a href="#7-更多API参见文档" class="headerlink" title="7.更多API参见文档"></a>7.更多API参见文档</h3><p>反正基本媒体相关的操作，阿里云的OSS是很够用的。快点跑去试试叭！！！！</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github actions托管gitee pages</title>
     <url>/2021/03/26/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
@@ -1975,49 +2021,63 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
 
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OSS文件管理</title>
-    <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
-    <content><![CDATA[<blockquote>
-<p>上一回说到贫穷的程序员同学话60多块买了一年的阿里云低配云主机，然后偶然发现是赠送了一年的OSS的，看了一下有40G，对于日常的开发来说，还是很够用的，你会不会觉得，存储的地方多了，百度网盘上千个G，为啥选择OSS？就网盘那速度先不吐槽，阿里云提供的开发接口相信你会爱上的。</p>
-</blockquote>
-<p>OSS是阿里云提供的对象存储，说白了对象存储就是你啥都可以往里面放，安全指数达到99.99999%(别数了，7个9)，可以说相当安全了。具体的<a href="https://help.aliyun.com/product/31815.html?spm=a2c4g.750001.list.22.64277b13kElgYU">帮助文档</a>看这里。OSS提供了java开发的SDK，使用起来不用不要太爽啊。</p>
-<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="1-添加pom依赖"><a href="#1-添加pom依赖" class="headerlink" title="1.添加pom依赖"></a>1.添加pom依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。允许多个可以并发使用</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建存储空间。</span></span><br><span class="line">ossClient.createBucket(bucketName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-文件上传"><a href="#3-文件上传" class="headerlink" title="3.文件上传"></a>3.文件上传</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。</span></span><br><span class="line">String content = <span class="string">&quot;Hello OSS&quot;</span>;</span><br><span class="line">ossClient.putObject(bucketName, objectName, <span class="keyword">new</span> ByteArrayInputStream(content.getBytes()));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-文件下载"><a href="#4-文件下载" class="headerlink" title="4.文件下载"></a>4.文件下载</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;从OSS下载文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用ossClient.getObject返回一个OSSObject实例，该实例包含文件内容及文件元信息。</span></span><br><span class="line">OSSObject ossObject = ossClient.getObject(bucketName, objectName);</span><br><span class="line"><span class="comment">// 调用ossObject.getObjectContent获取文件输入流，可读取此输入流获取其内容。</span></span><br><span class="line">InputStream content = ossObject.getObjectContent();</span><br><span class="line"><span class="keyword">if</span> (content != <span class="keyword">null</span>) &#123;</span><br><span class="line">    BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(content));</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        String line = reader.readLine();</span><br><span class="line">        <span class="keyword">if</span> (line == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;\n&quot;</span> + line);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。</span></span><br><span class="line">    content.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-列举文件"><a href="#5-列举文件" class="headerlink" title="5.列举文件"></a>5.列举文件</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ossClient.listObjects返回ObjectListing实例，包含此次listObject请求的返回结果。</span></span><br><span class="line">ObjectListing objectListing = ossClient.listObjects(bucketName);</span><br><span class="line"><span class="comment">// objectListing.getObjectSummaries获取所有文件的描述信息。</span></span><br><span class="line"><span class="keyword">for</span> (OSSObjectSummary objectSummary : objectListing.getObjectSummaries()) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot; - &quot;</span> + objectSummary.getKey() + <span class="string">&quot;  &quot;</span> +</span><br><span class="line">            <span class="string">&quot;(size = &quot;</span> + objectSummary.getSize() + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-文件删除"><a href="#6-文件删除" class="headerlink" title="6.文件删除"></a>6.文件删除</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;表示删除OSS文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除文件。</span></span><br><span class="line">ossClient.deleteObject(bucketName, objectName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-更多API参见文档"><a href="#7-更多API参见文档" class="headerlink" title="7.更多API参见文档"></a>7.更多API参见文档</h3><p>反正基本媒体相关的操作，阿里云的OSS是很够用的。快点跑去试试叭！！！！</p>
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
 ]]></content>
       <categories>
         <category>后端技术</category>
       </categories>
+  </entry>
+  <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
@@ -2105,66 +2165,6 @@
 <p><strong>切</strong>而知之谓之巧</p>
 </blockquote>
 <h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
       <categories>
         <category>中医理论基础</category>
       </categories>
@@ -2323,24 +2323,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于焦虑</title>
     <url>/2020/03/20/%E5%85%B3%E4%BA%8E%E7%84%A6%E8%99%91/</url>
     <content><![CDATA[<blockquote>
@@ -2362,6 +2344,24 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2398,36 +2398,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通用图纸识别调研</title>
-    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
-    <content><![CDATA[<blockquote>
-<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
-</blockquote>
-<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
-<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
-<p><strong>pom.xml</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>controller</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>static</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
-<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
-<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
-<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -2498,6 +2468,36 @@
       </categories>
       <tags>
         <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用图纸识别调研</title>
+    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
+    <content><![CDATA[<blockquote>
+<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
+</blockquote>
+<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
+<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
+<p><strong>pom.xml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>controller</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>static</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
+<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
+<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
+<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -4639,7 +4639,96 @@
 <li>如果我们不在Spring中去配置声明式事务，我们就需要在代码中手动配置事务</li>
 <li>事务在项目的开发中十分重要，涉及到数据的一致性和完整性问题，不容马虎</li>
 </ul>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-1spring?id=_51-spring%e9%9d%a2%e8%af%95%e9%a2%98%e6%80%bb%e7%bb%93">参考链接</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="什么是Spring框架"><a href="#什么是Spring框架" class="headerlink" title="什么是Spring框架"></a>什么是Spring框架</h3><ul>
+<li>模块</li>
+<li>6个特征</li>
+</ul>
+<h3 id="列举一些重要的Spring模块"><a href="#列举一些重要的Spring模块" class="headerlink" title="列举一些重要的Spring模块"></a>列举一些重要的Spring模块</h3><ul>
+<li>core</li>
+<li>Aspect</li>
+<li>AOP</li>
+<li>JDBC </li>
+<li>JMS</li>
+<li>ORM</li>
+<li>WEB</li>
+<li>Test</li>
+</ul>
+<h3 id="RestController和-Controller"><a href="#RestController和-Controller" class="headerlink" title="@RestController和@Controller"></a>@RestController和@Controller</h3><p>restcontroller在spring4之后才有，之前必须使用controller+responsebody</p>
+<h3 id="IOC和AOP"><a href="#IOC和AOP" class="headerlink" title="IOC和AOP"></a>IOC和AOP</h3><ul>
+<li><p>对IOC和AOP的理解</p>
+</li>
+<li><p>Spring AOP和AspectJ AOP的区别</p>
+<p>事务管理，日志管理，控制权限等等。</p>
+</li>
+</ul>
+<h3 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h3><ul>
+<li><p>作用域</p>
+<ul>
+<li>singleton</li>
+<li>protype</li>
+<li>request</li>
+<li>session</li>
+</ul>
+</li>
+<li><p>单例bean的线程安全</p>
+</li>
+<li><p>@Compnen和@Bean的区别</p>
+</li>
+<li><p>将一个类声明为Sprng的bean的注解</p>
+</li>
+<li><p>bean的生命周期</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt="Spring Bean 生命周期"></p>
+</li>
+</ul>
+<h3 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h3><ul>
+<li><p>对MVC的理解</p>
+<p>是一种设计模式。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/60679444.jpg" alt="img"></p>
+<ul>
+<li>Model1时代JSP</li>
+<li>Model2时代Bean（model）+JSP（View）+Servlet（controller）</li>
+</ul>
+</li>
+<li><p>MVC的工作原理</p>
+<ol>
+<li>客户端（浏览器）发送请求，直接请求到 <code>DispatcherServlet</code>。</li>
+<li><code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。</li>
+<li>解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由 <code>HandlerAdapter</code> 适配器处理。</li>
+<li><code>HandlerAdapter</code> 会根据 <code>Handler </code>来调用真正的处理器开处理请求，并处理相应的业务逻辑。</li>
+<li>处理器处理完业务后，会返回一个 <code>ModelAndView</code> 对象，<code>Model</code> 是返回的数据对象，<code>View</code> 是个逻辑上的 <code>View</code>。</li>
+<li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
+<li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code>（视图渲染）。</li>
+<li>把 <code>View</code> 返回给请求者（浏览器）</li>
+</ol>
+</li>
+</ul>
+<h3 id="Spring框架中用到的设计模式"><a href="#Spring框架中用到的设计模式" class="headerlink" title="Spring框架中用到的设计模式"></a>Spring框架中用到的设计模式</h3><ul>
+<li>工厂模式</li>
+<li>代理模式</li>
+<li>单例模式</li>
+<li>包装器设计模式</li>
+<li>观察者模式</li>
+<li>适配器模式</li>
+</ul>
+<h3 id="Spring管理事务"><a href="#Spring管理事务" class="headerlink" title="Spring管理事务"></a>Spring管理事务</h3><ul>
+<li><p>管理事务的方式</p>
+<ul>
+<li>声明式事务<ul>
+<li>基于XML</li>
+<li>基于注解</li>
+</ul>
+</li>
+<li>编程式，不推荐。</li>
+</ul>
+</li>
+<li><p>事务的隔离级别</p>
+</li>
+<li><p>哪几种事务传播行为五种</p>
+</li>
+<li><p>Transactional(rollback=Exception.class)</p>
+</li>
+</ul>
+<h3 id="使用JPA在数据库中非持久化一个字段。"><a href="#使用JPA在数据库中非持久化一个字段。" class="headerlink" title="使用JPA在数据库中非持久化一个字段。"></a>使用JPA在数据库中非持久化一个字段。</h3><p>@Transient</p>
 ]]></content>
       <categories>
         <category>复习入口</category>
