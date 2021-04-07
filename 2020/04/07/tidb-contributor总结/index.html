@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    设计模式 |  Victor&#39;s Blog
+    tidb contributor总结 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -44,7 +44,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-设计模式"
+  id="post-tidb-contributor总结"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -55,15 +55,15 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  设计模式
+  tidb contributor总结
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/04/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
-  <time datetime="2021-04-02T04:21:03.000Z" itemprop="datePublished">2021-04-02</time>
+      <a href="/2020/04/07/tidb-contributor%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2020-04-07T08:15:45.000Z" itemprop="datePublished">2020-04-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">903</span>
         </span>
     </span>
 
@@ -83,20 +83,68 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">3 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-   
+  <p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
+<p>我对数据库的理解谈不上深刻，但是我认为，数据库一定要是个产品，有企业愿意用，这样才能实现他的价值和有动力迭代。不同的是，OB走的是闭源路线，在支撑内部电商业务的同时，商业化也做的不错。而TIDB走的是开源路线。</p>
+<p>为什么开源，引用PingCAP的一句话：</p>
+<blockquote>
+<p>对一个技术型公司来说，最宝贵的资产其实是人，对一个开源项目来说，最核心的资产是一个活跃的开源社区以及他人对这个项目的认可。</p>
+</blockquote>
+<p>这正是开源的意义，我也做过一部分开源工作，而TIDB正是这一切的开始。</p>
+<p>本科时代，由于项目的规模有限，基本没机会参与到<code>协同开发</code>这一步骤，每个人单打独斗，你写的是图书管理系统，我写的是教务管理系统，这种系统的代码量靠一个人是可以搞定的，所以对于划水选手而言，也就懒得去探索github，了解git。但是当面临团队开发的时候，git便是你逃避不了的话题。可以说，在社区做贡献的同时，也让我学习到这些知识，后来我发表了一篇小论文，就是基于github提供的用户历史数据做推荐，当然这个工作更偏向于数据分析的工作，但是也是tidb的那次经历给的启发。</p>
+<p>接下来来谈谈这个contribute–<strong>表达式向量化</strong></p>
+<p>TIDB为了鼓励参与，在很简单的向量化这里留下了很多口子，对于小白来说非常友好。</p>
+<h2 id="如何访问和修改向量"><a href="#如何访问和修改向量" class="headerlink" title="如何访问和修改向量"></a>如何访问和修改向量</h2><p>在TIDB中有变长类型和定长类型，有如下读写方式：</p>
+<ul>
+<li>定长类型(int64为例)<ul>
+<li><code>ResizeInt64s(size, isNull)</code>：预分配 size 个元素的空间，并把所有位置的 <code>null</code> 标记都设置为 <code>isNull</code>；</li>
+<li><code>Int64s()</code>：返回一个 <code>[]int64</code> 的 Slice，用于直接读写数据；</li>
+<li><code>SetNull(rowID, isNull)</code>：标记第 <code>rowID</code> 行为 <code>isNull</code>。</li>
+</ul>
+</li>
+<li>变长类型(String为例)<ul>
+<li><code>ReserveString(size)</code>：预估 size 个元素的空间，并预先分配内存；</li>
+<li><code>AppendNull()</code>：追加一个 <code>null</code> 到向量末尾；</li>
+<li><code>GetString(rowID)</code>：读取下标为 <code>rowID</code> 的 string 数据。</li>
+</ul>
+</li>
+</ul>
+<h2 id="向量表达式计算框架"><a href="#向量表达式计算框架" class="headerlink" title="向量表达式计算框架"></a>向量表达式计算框架</h2><p>向量化的计算接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vectorized() bool</span><br><span class="line">vecEvalXType(input *Chunk, result *Column) error</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>xType：类型</li>
+<li>input：输入数据，类型为<code>\*Chunk</code></li>
+<li><code>result</code>存放结果数据。</li>
+</ul>
+<p>对于任意表达式，只有在其中所有的函数都支持向量化后，才认为表达式支持向量化。</p>
+<h2 id="为函数实现向量化接口"><a href="#为函数实现向量化接口" class="headerlink" title="为函数实现向量化接口"></a>为函数实现向量化接口</h2><p>向量化需要实现<code>vecEvalXType()</code>和<code>vectorized</code>接口</p>
+<ul>
+<li>在 <code>vectorized()</code> 接口中返回 <code>true</code> ，表示该函数已经实现向量化计算；</li>
+<li>在 <code>vecEvalXType()</code> 实现此函数的计算逻辑。</li>
+</ul>
+<p>向量化的代码存放在_vec.go中，文件头加上licence说明。</p>
+<p>以下是代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vectorized</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vecEvalInt</span><span class="params">(input *chunk.Chunk, result *chunk.Column)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.Errorf(<span class="string">&quot;not implemented&quot;</span>)</span><br><span class="line">	n := input.NumRows()</span><br><span class="line">	buf, err := b.bufAllocator.get(types.ETDuration, n)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> b.bufAllocator.put(buf)</span><br><span class="line">	<span class="keyword">if</span> err = b.args[<span class="number">0</span>].VecEvalDuration(b.ctx, input, buf); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result.ResizeInt64(n, <span class="literal">false</span>)</span><br><span class="line">	result.MergeNulls(buf)</span><br><span class="line">	i64s := result.Int64s()</span><br><span class="line">	ds := buf.GoDurations()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> result.IsNull(i) &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		i64s[i] = <span class="keyword">int64</span>((ds[i] % time.Second) / time.Microsecond)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/pingcap/tidb/pull/13482/files">PR链接</a></p>
+<p>就是这么简单，最后还送了一个马克杯，和一个勋章。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210407171511208.png" alt="image-20210407171511208"></p>
+ 
       <!-- reward -->
       
     </div>
@@ -160,12 +208,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2020/04/07/tidb-contributor%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
 
     </footer>
   </div>
@@ -173,19 +221,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2021/04/06/%E5%89%91%E6%8C%87offer/" class="article-nav-link">
+      <a href="/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            剑指offer
+            Frp内网穿透
           
         </div>
       </a>
     
     
-      <a href="/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/" class="article-nav-link">
+      <a href="/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">对水杉在线的思考</div>
+        <div class="article-nav-title">Java实现Word转html预览</div>
       </a>
     
   </nav>
