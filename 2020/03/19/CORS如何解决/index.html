@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">526</span>
+            <span class="post-count">522</span>
         </span>
     </span>
 
@@ -96,7 +96,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>CORS即跨域，前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
+  <p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
 <p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
 <p>先写一个服务：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
