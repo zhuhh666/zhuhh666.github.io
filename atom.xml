@@ -42,32 +42,6 @@
   </entry>
   
   <entry>
-    <title>对水杉在线的思考</title>
-    <link href="http://victor-huihui.gitee.io/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/"/>
-    <id>http://victor-huihui.gitee.io/2021/04/01/%E5%AF%B9%E6%B0%B4%E6%9D%89%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%80%9D%E8%80%83/</id>
-    <published>2021-04-01T12:36:01.000Z</published>
-    <updated>2021-04-02T09:31:48.356Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;水杉在线现在变得越来越庞大，回想起项目刚开始，林总都起了个大早和兄弟们一起奋战，到如今变得越来越完善，不禁感慨万分。我觉得重要的不是我们做出来一个什么东西，而是我们在工作中的一些探索与总结，包括云原生，数据中台的各种思考。&lt;/p&gt;
-&lt;p&gt;其实系统本身不是关键点，重要的是数据</summary>
-        
-      
-    
-    
-    
-    <category term="复习入口" scheme="http://victor-huihui.gitee.io/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/"/>
-    
-    
-    <category term="Java" scheme="http://victor-huihui.gitee.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Netty</title>
     <link href="http://victor-huihui.gitee.io/2021/03/29/Netty/"/>
     <id>http://victor-huihui.gitee.io/2021/03/29/Netty/</id>
@@ -223,7 +197,7 @@
     <link href="http://victor-huihui.gitee.io/2021/03/24/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     <id>http://victor-huihui.gitee.io/2021/03/24/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</id>
     <published>2021-03-24T09:57:53.000Z</published>
-    <updated>2021-04-07T13:32:53.616Z</updated>
+    <updated>2021-04-09T02:12:10.632Z</updated>
     
     
       
@@ -367,7 +341,7 @@
     <link href="http://victor-huihui.gitee.io/2021/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/"/>
     <id>http://victor-huihui.gitee.io/2021/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/</id>
     <published>2021-03-12T03:39:22.000Z</published>
-    <updated>2021-04-05T08:57:37.129Z</updated>
+    <updated>2021-04-09T13:57:46.959Z</updated>
     
     
       
@@ -510,6 +484,31 @@
     
     
     <category term="复杂系统" scheme="http://victor-huihui.gitee.io/tags/%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MPI分布式计算</title>
+    <link href="http://victor-huihui.gitee.io/2020/05/16/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    <id>http://victor-huihui.gitee.io/2020/05/16/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</id>
+    <published>2020-05-16T02:01:55.000Z</published>
+    <updated>2020-05-16T15:21:22.862Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1、并行计算简介&quot;&gt;&lt;a href=&quot;#1、并行计算简介&quot; class=&quot;headerlink&quot; title=&quot;1、并行计算简介&quot;&gt;&lt;/a&gt;1、并行计算简介&lt;/h1&gt;&lt;h2 id=&quot;都得从性能提升说起&quot;&gt;&lt;a href=&quot;#都得从性能提升说起&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="MPI" scheme="http://victor-huihui.gitee.io/tags/MPI/"/>
     
   </entry>
   
