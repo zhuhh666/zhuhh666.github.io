@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-04-10T11:32:31.284Z</updated>
+  <updated>2021-04-10T12:15:28.183Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://victor-huihui.gitee.io/2021/04/10/CICD/"/>
     <id>http://victor-huihui.gitee.io/2021/04/10/CICD/</id>
     <published>2021-04-10T09:59:13.000Z</published>
-    <updated>2021-04-10T11:32:31.284Z</updated>
+    <updated>2021-04-10T12:15:28.183Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;1、DevOps&quot;&gt;&lt;a href=&quot;#1、DevOps&quot; class=&quot;headerlink&quot; title=&quot;1、DevOps&quot;&gt;&lt;/a&gt;1、DevOps&lt;/h1&gt;&lt;p&gt;朴素的说，&lt;code&gt;DevOps =</summary>
+    <summary type="html">&lt;h1 id=&quot;1、DevOps&quot;&gt;&lt;a href=&quot;#1、DevOps&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -42,11 +42,11 @@
   </entry>
   
   <entry>
-    <title>tidb contributor总结</title>
+    <title>tidb contributor</title>
     <link href="http://victor-huihui.gitee.io/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/"/>
     <id>http://victor-huihui.gitee.io/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/</id>
     <published>2021-04-09T08:15:45.000Z</published>
-    <updated>2021-04-10T11:31:20.778Z</updated>
+    <updated>2021-04-10T11:36:37.700Z</updated>
     
     
       
@@ -148,7 +148,7 @@
     <link href="http://victor-huihui.gitee.io/2021/04/07/%E5%89%91%E6%8C%87offer/"/>
     <id>http://victor-huihui.gitee.io/2021/04/07/%E5%89%91%E6%8C%87offer/</id>
     <published>2021-04-07T01:51:48.000Z</published>
-    <updated>2021-04-10T11:32:44.124Z</updated>
+    <updated>2021-04-10T13:48:04.966Z</updated>
     
     
       
@@ -165,6 +165,32 @@
     
     
     <category term="剑指offer" scheme="http://victor-huihui.gitee.io/tags/%E5%89%91%E6%8C%87offer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>系统科学概述</title>
+    <link href="http://victor-huihui.gitee.io/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/"/>
+    <id>http://victor-huihui.gitee.io/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</id>
+    <published>2021-04-06T02:23:14.000Z</published>
+    <updated>2021-04-10T11:35:35.927Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;系统科学：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To Provide a Systematic(Unified,Universal) View for Varies Complex Systems By a Systematic</summary>
+        
+      
+    
+    
+    
+    <category term="复杂网络" scheme="http://victor-huihui.gitee.io/categories/%E5%A4%8D%E6%9D%82%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="复杂系统" scheme="http://victor-huihui.gitee.io/tags/%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
@@ -484,32 +510,6 @@
     
     <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>系统科学概述</title>
-    <link href="http://victor-huihui.gitee.io/2020/06/23/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/"/>
-    <id>http://victor-huihui.gitee.io/2020/06/23/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</id>
-    <published>2020-06-23T02:23:14.000Z</published>
-    <updated>2020-06-27T09:30:50.735Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;strong&gt;系统科学：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;To Provide a Systematic(Unified,Universal) View for Varies Complex Systems By a Systematic</summary>
-        
-      
-    
-    
-    
-    <category term="复杂网络" scheme="http://victor-huihui.gitee.io/categories/%E5%A4%8D%E6%9D%82%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="复杂系统" scheme="http://victor-huihui.gitee.io/tags/%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   

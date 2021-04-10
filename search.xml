@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CORS如何解决</title>
+    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
+<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
+<p>先写一个服务：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>index.html</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里接口不一致出现首图所示跨域问题</p>
+<ul>
+<li><p>修改相应头</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
+<li><p>jsonp</p>
+<p>服务：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
+
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>、、、、、、</p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Frp内网穿透</title>
     <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
@@ -59,34 +90,17 @@
       </tags>
   </entry>
   <entry>
-    <title>CORS如何解决</title>
-    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
-<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
-<p>先写一个服务：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>index.html</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里接口不一致出现首图所示跨域问题</p>
-<ul>
-<li><p>修改相应头</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
-<li><p>jsonp</p>
-<p>服务：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
-
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>、、、、、、</p>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
 ]]></content>
       <categories>
-        <category>前端技术</category>
+        <category>Bug合集</category>
       </categories>
       <tags>
-        <tag>Vue</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -103,91 +117,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to Read a Paper</title>
-    <url>/2020/04/20/How-to-Read-a-Paper/</url>
-    <content><![CDATA[<blockquote>
-<p>过去的几个月，因为不熟悉和不适应，项目占据了绝大多数的时间，甚至有些很好的课程也落下了。昨天蒲总和我们兄弟仨开了个很长的会，大概是12个月要准备开题了(我们的毕业要求是首先Paper要发一篇，然后才是毕业论文)。Paper的阅读真的要提上日程了。之前读的论文都是拿来应付课程了，先来借鉴别人的阅读方法。</p>
-</blockquote>
-<p><a href="https://paper-reading.oss-cn-zhangjiakou.aliyuncs.com/paper01.pdf">原文下载</a></p>
-<h2 id="三遍法读Paper"><a href="#三遍法读Paper" class="headerlink" title="三遍法读Paper"></a>三遍法读Paper</h2><p>主要观点是文章读三遍，第一遍：<code>gives you a general idea about the paper</code>。第二遍：<code>lets you grasp the paper’s content</code>。第三遍：<code>helps you understand the paper in depth.</code></p>
-<h2 id="The-first-pass-5-10分钟"><a href="#The-first-pass-5-10分钟" class="headerlink" title="The first pass(5-10分钟)"></a>The first pass(5-10分钟)</h2><p><strong>阅读步骤：</strong></p>
-<ul>
-<li>认真的读题目、摘要和介绍</li>
-<li>阅读小节和小节标题</li>
-<li>阅读总结</li>
-<li>浏览参考文献，看有没有阅读过的文献</li>
-</ul>
-<p><strong>读后5C：</strong></p>
-<ul>
-<li><code>Category</code>：知道Paper的类型，是测量？现有系统的分析还是原型研究？</li>
-<li><code>Context</code>：与哪些paper相关，理论基础是？</li>
-<li><code>Correctness</code>：假设的正确性？</li>
-<li><code>Contributions</code>：主要贡献？</li>
-<li><code>Clarity</code>：写得好吗？？？</li>
-</ul>
-<p><strong>总结：</strong></p>
-<ul>
-<li>第一遍要知道是否要接着阅读这篇文章，可能是不吸引你或者假设不正确</li>
-<li>自己写paper，大小标题要写清楚，简洁而全面。审稿人<code>阅读一次</code>不理解要点，凉凉。读者<code>五分钟</code>不理解亮点，失败。</li>
-</ul>
-<h2 id="The-second-pass-一小时"><a href="#The-second-pass-一小时" class="headerlink" title="The second pass(一小时)"></a>The second pass(一小时)</h2><p>第二遍更加仔细的阅读文章，忽略诸如证据之类的细节，草草记下要点，在空白处发表评论。</p>
-<p><strong>阅读步骤：</strong></p>
-<ul>
-<li>仔细看数字，图标和插图，特别关注插图表的标签是否正确，结果是否有误差条显示。没有的可以，有问题的话，一般是粗制滥造的paper，不读也罢。</li>
-<li>标记相关未读参考文献(了解论文背景的好方法)</li>
-</ul>
-<p><strong>读后：</strong></p>
-<ul>
-<li>掌握论文内容</li>
-<li>向别人分享论文主旨，提供佐证</li>
-<li>这种程度适用于你感兴趣但和你研究领域无关的论文</li>
-</ul>
-<p><strong>总结：</strong></p>
-<p>可能你在第二遍结束后并不了解这篇文章，这也很正常。可能因为是新领域，使用不熟悉的术语和缩略语，或者这篇文章写的很烂，也可能是因为夜太深。。。这种情况你可以选择：</p>
-<ul>
-<li>劳资不读了。用阿Q精神安慰自己，这些晦涩的术语对你的科研生涯没有用。</li>
-<li>稍后读。可以先看看背景资料。</li>
-<li>坚持下去，third pass来咯。</li>
-</ul>
-<h2 id="The-third-pass-4-5小时"><a href="#The-third-pass-4-5小时" class="headerlink" title="The third pass(4-5小时)"></a>The third pass(4-5小时)</h2><blockquote>
-<p>新手4-5小时，老油条1小时就够了</p>
-</blockquote>
-<p>第三遍才是重头戏。关键是<strong>尝试虚拟的重新实施这篇文章的内容</strong>。和作者做一样的假设，重新开始做论文中的工作。通过这种重新创作与实际论文比较，可以和容易发现文章的闪光点，还可以发现其中隐藏的缺陷和假设(发现了，一篇新的论文不就来了吗)</p>
-<p><strong>阅读步骤：</strong></p>
-<ul>
-<li>找出并对每一个假设提出质疑</li>
-<li>考虑你自己如何提出一个特定的假设。</li>
-<li>写下对未来工作的想法。</li>
-</ul>
-<p><strong>读后：</strong></p>
-<ul>
-<li>根据记忆重建论文的结构</li>
-<li>识别出亮点和不足</li>
-<li><strong>指出隐藏的假设、相关工作引用的遗漏，实验和分析的潜在问题</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文研读</category>
-      </categories>
-      <tags>
-        <tag>小知识集锦-1</tag>
       </tags>
   </entry>
   <entry>
@@ -499,6 +428,77 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Read a Paper</title>
+    <url>/2020/04/20/How-to-Read-a-Paper/</url>
+    <content><![CDATA[<blockquote>
+<p>过去的几个月，因为不熟悉和不适应，项目占据了绝大多数的时间，甚至有些很好的课程也落下了。昨天蒲总和我们兄弟仨开了个很长的会，大概是12个月要准备开题了(我们的毕业要求是首先Paper要发一篇，然后才是毕业论文)。Paper的阅读真的要提上日程了。之前读的论文都是拿来应付课程了，先来借鉴别人的阅读方法。</p>
+</blockquote>
+<p><a href="https://paper-reading.oss-cn-zhangjiakou.aliyuncs.com/paper01.pdf">原文下载</a></p>
+<h2 id="三遍法读Paper"><a href="#三遍法读Paper" class="headerlink" title="三遍法读Paper"></a>三遍法读Paper</h2><p>主要观点是文章读三遍，第一遍：<code>gives you a general idea about the paper</code>。第二遍：<code>lets you grasp the paper’s content</code>。第三遍：<code>helps you understand the paper in depth.</code></p>
+<h2 id="The-first-pass-5-10分钟"><a href="#The-first-pass-5-10分钟" class="headerlink" title="The first pass(5-10分钟)"></a>The first pass(5-10分钟)</h2><p><strong>阅读步骤：</strong></p>
+<ul>
+<li>认真的读题目、摘要和介绍</li>
+<li>阅读小节和小节标题</li>
+<li>阅读总结</li>
+<li>浏览参考文献，看有没有阅读过的文献</li>
+</ul>
+<p><strong>读后5C：</strong></p>
+<ul>
+<li><code>Category</code>：知道Paper的类型，是测量？现有系统的分析还是原型研究？</li>
+<li><code>Context</code>：与哪些paper相关，理论基础是？</li>
+<li><code>Correctness</code>：假设的正确性？</li>
+<li><code>Contributions</code>：主要贡献？</li>
+<li><code>Clarity</code>：写得好吗？？？</li>
+</ul>
+<p><strong>总结：</strong></p>
+<ul>
+<li>第一遍要知道是否要接着阅读这篇文章，可能是不吸引你或者假设不正确</li>
+<li>自己写paper，大小标题要写清楚，简洁而全面。审稿人<code>阅读一次</code>不理解要点，凉凉。读者<code>五分钟</code>不理解亮点，失败。</li>
+</ul>
+<h2 id="The-second-pass-一小时"><a href="#The-second-pass-一小时" class="headerlink" title="The second pass(一小时)"></a>The second pass(一小时)</h2><p>第二遍更加仔细的阅读文章，忽略诸如证据之类的细节，草草记下要点，在空白处发表评论。</p>
+<p><strong>阅读步骤：</strong></p>
+<ul>
+<li>仔细看数字，图标和插图，特别关注插图表的标签是否正确，结果是否有误差条显示。没有的可以，有问题的话，一般是粗制滥造的paper，不读也罢。</li>
+<li>标记相关未读参考文献(了解论文背景的好方法)</li>
+</ul>
+<p><strong>读后：</strong></p>
+<ul>
+<li>掌握论文内容</li>
+<li>向别人分享论文主旨，提供佐证</li>
+<li>这种程度适用于你感兴趣但和你研究领域无关的论文</li>
+</ul>
+<p><strong>总结：</strong></p>
+<p>可能你在第二遍结束后并不了解这篇文章，这也很正常。可能因为是新领域，使用不熟悉的术语和缩略语，或者这篇文章写的很烂，也可能是因为夜太深。。。这种情况你可以选择：</p>
+<ul>
+<li>劳资不读了。用阿Q精神安慰自己，这些晦涩的术语对你的科研生涯没有用。</li>
+<li>稍后读。可以先看看背景资料。</li>
+<li>坚持下去，third pass来咯。</li>
+</ul>
+<h2 id="The-third-pass-4-5小时"><a href="#The-third-pass-4-5小时" class="headerlink" title="The third pass(4-5小时)"></a>The third pass(4-5小时)</h2><blockquote>
+<p>新手4-5小时，老油条1小时就够了</p>
+</blockquote>
+<p>第三遍才是重头戏。关键是<strong>尝试虚拟的重新实施这篇文章的内容</strong>。和作者做一样的假设，重新开始做论文中的工作。通过这种重新创作与实际论文比较，可以和容易发现文章的闪光点，还可以发现其中隐藏的缺陷和假设(发现了，一篇新的论文不就来了吗)</p>
+<p><strong>阅读步骤：</strong></p>
+<ul>
+<li>找出并对每一个假设提出质疑</li>
+<li>考虑你自己如何提出一个特定的假设。</li>
+<li>写下对未来工作的想法。</li>
+</ul>
+<p><strong>读后：</strong></p>
+<ul>
+<li>根据记忆重建论文的结构</li>
+<li>识别出亮点和不足</li>
+<li><strong>指出隐藏的假设、相关工作引用的遗漏，实验和分析的潜在问题</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文研读</category>
+      </categories>
+      <tags>
+        <tag>小知识集锦-1</tag>
       </tags>
   </entry>
   <entry>
@@ -834,84 +834,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Netty</title>
-    <url>/2021/03/29/Netty/</url>
-    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
-<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
-<blockquote>
-<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
-</blockquote>
-<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
-<ul>
-<li>作为NIO服务端，接收客户端的TCP连接</li>
-<li>作为NIO客户端，像服务端发起TCP连接。</li>
-<li>读取通信对端的请求或应答信息。</li>
-<li>想通信对端发送消息请求或应答消息。</li>
-</ul>
-<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
-<p>但是对于高负载、高并发的场景不合适。</p>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
-<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
-<ul>
-<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
-<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
-<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
-<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
-<p>工作流程总结如下：</p>
-<ul>
-<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
-<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
-<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
-<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
-<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
-<li>事件机制</li>
-<li>功能强大，预置了多种解码功能，支持主流协议。</li>
-<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
-</ul>
-<p><strong>为什么性能好？</strong></p>
-<ul>
-<li>纯异步，Reactor线程模型</li>
-<li>IO多路复用</li>
-<li>GC优化</li>
-<li>内存泄露检测</li>
-<li>zero copy</li>
-</ul>
-<p><strong>Zero copy</strong></p>
-<ul>
-<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
-<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
-<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
-<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
-</ul>
-<p><strong>垃圾回收</strong></p>
-<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
-<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
-<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
-<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
-<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
-<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
-<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
-<ul>
-<li>NIOChannel：水平触发</li>
-<li>EpollChannel：边缘触发</li>
-</ul>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OAuth2.0</title>
     <url>/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/</url>
     <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
@@ -1020,6 +942,84 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Netty</title>
+    <url>/2021/03/29/Netty/</url>
+    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
+<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
+<blockquote>
+<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
+</blockquote>
+<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
+<ul>
+<li>作为NIO服务端，接收客户端的TCP连接</li>
+<li>作为NIO客户端，像服务端发起TCP连接。</li>
+<li>读取通信对端的请求或应答信息。</li>
+<li>想通信对端发送消息请求或应答消息。</li>
+</ul>
+<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
+<p>但是对于高负载、高并发的场景不合适。</p>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
+<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
+<ul>
+<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
+<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
+<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
+<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
+<p>工作流程总结如下：</p>
+<ul>
+<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
+<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
+<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
+<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
+<li>事件机制</li>
+<li>功能强大，预置了多种解码功能，支持主流协议。</li>
+<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
+</ul>
+<p><strong>为什么性能好？</strong></p>
+<ul>
+<li>纯异步，Reactor线程模型</li>
+<li>IO多路复用</li>
+<li>GC优化</li>
+<li>内存泄露检测</li>
+<li>zero copy</li>
+</ul>
+<p><strong>Zero copy</strong></p>
+<ul>
+<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
+<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
+<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
+<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
+</ul>
+<p><strong>垃圾回收</strong></p>
+<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
+<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
+<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
+<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
+<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
+<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
+<ul>
+<li>NIOChannel：水平触发</li>
+<li>EpollChannel：边缘触发</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -1685,19 +1685,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora+PicGo实现图片自动上传</title>
     <url>/2020/03/25/Typora-PicGo%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>我实在太喜欢Typora了。不仅仅因为它腿白貌。。，啊呸，页面清爽美观。而且还支持各种代码格式，写起笔记来视觉很好。但是令人痛心的是，当你想在Typora中插入图片时，OK，你可以插入，但是它本质上是一种弱引用，引用的只是图片的本地路径。所以如果你想分享你的md文件，还需要连带分享一个图片资源文件夹，十分臃肿。在使用PicGo之前，想用hexo渲染md文件，都是先打开图床工具—&gt;上传图片—&gt;复制图片URL—&gt;粘贴进Typora，属实麻烦。自从Typora支持通过PicGo自动上传之后，Typora真的完美了，用起来不要太爽。</p>
@@ -1738,6 +1725,19 @@
       <tags>
         <tag>Typora</tag>
         <tag>PicGo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1855,7 +1855,28 @@
       </tags>
   </entry>
   <entry>
-    <title>tidb contributor总结</title>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>tidb contributor</title>
     <url>/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
 <p>我对数据库的理解谈不上深刻，但是我认为，数据库一定要是个产品，有企业愿意用，这样才能实现他的价值和有动力迭代。不同的是，OB走的是闭源路线，在支撑内部电商业务的同时，商业化也做的不错。而TIDB走的是开源路线。</p>
@@ -1910,27 +1931,6 @@
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -2017,6 +2017,45 @@
 <p><strong>切</strong>而知之谓之巧</p>
 </blockquote>
 <h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>中医理论基础</category>
       </categories>
@@ -2175,45 +2214,6 @@
       </tags>
   </entry>
   <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Gitee部署Hexo遇到的神坑</title>
     <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
     <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
@@ -2229,6 +2229,23 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CNN手写文字识别</title>
+    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
+<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -2253,23 +2270,6 @@
       </categories>
       <tags>
         <tag>故事</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CNN手写文字识别</title>
-    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
-<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
-
-<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -2364,7 +2364,34 @@
 <h2 id="code-8"><a href="#code-8" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minNumberInRotateArray</span><span class="params">(<span class="keyword">int</span> [] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(array[i]&lt;min)&#123;</span><br><span class="line">                min = array[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="9-合并两个排序的链表"><a href="#9-合并两个排序的链表" class="headerlink" title="9.合并两个排序的链表"></a>9.合并两个排序的链表</h1><h2 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入两个单调递增的链表，输出两个链表合成后的链表，合并之后满足单调不递减。</p>
-<h2 id="解题思路-9"><a href="#解题思路-9" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-9"><a href="#code-9" class="headerlink" title="code"></a>code</h2>]]></content>
+<h2 id="解题思路-9"><a href="#解题思路-9" class="headerlink" title="解题思路"></a>解题思路</h2><p>就是基本得链表操作。</p>
+<h2 id="code-9"><a href="#code-9" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public class ListNode &#123;</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    ListNode next = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    ListNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">Merge</span><span class="params">(ListNode list1,ListNode list2)</span> </span>&#123;</span><br><span class="line">        ListNode newHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        ListNode current = newHead;</span><br><span class="line">        <span class="keyword">while</span> (list1 != <span class="keyword">null</span> &amp;&amp; list2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (list1.val &lt; list2.val) &#123;</span><br><span class="line">                current.next = list1;</span><br><span class="line">                list1 = list1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                current.next = list2;</span><br><span class="line">                list2 = list2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            current = current.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (list1 != <span class="keyword">null</span>) current.next = list1;</span><br><span class="line">        <span class="keyword">if</span> (list2 != <span class="keyword">null</span>) current.next = list2;</span><br><span class="line">        <span class="keyword">return</span> newHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="10-数组中出现次数超过一半的数字"><a href="#10-数组中出现次数超过一半的数字" class="headerlink" title="10.数组中出现次数超过一半的数字"></a>10.数组中出现次数超过一半的数字</h1><h2 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h2><p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。</p>
+<h2 id="解题思路-10"><a href="#解题思路-10" class="headerlink" title="解题思路"></a>解题思路</h2><p>话不多说，就是hash</p>
+<h2 id="code-10"><a href="#code-10" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">MoreThanHalfNum_Solution</span><span class="params">(<span class="keyword">int</span> [] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> all = array.length;</span><br><span class="line">        <span class="keyword">int</span> half = all/<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> test = Arrays.stream(array).max().getAsInt();</span><br><span class="line">        <span class="keyword">int</span>[] hash = <span class="keyword">new</span> <span class="keyword">int</span>[test+<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;hash.length;i++)&#123;</span><br><span class="line">            hash[i] = -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(hash[array[i]]==-<span class="number">1</span>)&#123;</span><br><span class="line">                hash[array[i]]=<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                hash[array[i]]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(hash[array[i]]&gt;=half)&#123;</span><br><span class="line">                <span class="keyword">return</span> array[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="11-连续子数组的最大和"><a href="#11-连续子数组的最大和" class="headerlink" title="11.连续子数组的最大和"></a>11.连续子数组的最大和</h1><h2 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个整型数组，数组里有正数也有负数。数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。要求时间复杂度为 O(n).</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入的数组为&#123;1,-2,3,10,—4,7,2,一5&#125;，和最大的子数组为&#123;3,10,一4,7,2&#125;，因此输出为该子数组的和 18。 </span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="解题思路-11"><a href="#解题思路-11" class="headerlink" title="解题思路"></a>解题思路</h2><p>看题目意思，再看时间复杂度，这题一定是DP没跑了。</p>
+<p>状态转义方程是$dp[n] = max{dp[n-1]+arr[n],arr[n]}$</p>
+<p>$dp[0] = arr[0]$</p>
+<h2 id="code-11"><a href="#code-11" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">9</span>&#125;;</span><br><span class="line">        System.out.println(FindGreatestSumOfSubArray(array));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[array.length+<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = array[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            dp[i] = Math.max(dp[i-<span class="number">1</span>]+array[i],array[i]);</span><br><span class="line">            <span class="keyword">if</span>(dp[i]&gt;max)max = dp[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="12-第一个只出现一次的字符"><a href="#12-第一个只出现一次的字符" class="headerlink" title="12.第一个只出现一次的字符"></a>12.第一个只出现一次的字符</h1><h2 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.（从0开始计数）</p>
+<h2 id="解题思路-12"><a href="#解题思路-12" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-12"><a href="#code-12" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+]]></content>
       <categories>
         <category>后端技术</category>
       </categories>
@@ -2710,17 +2737,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法框架</title>
-    <url>/2020/04/10/%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用Vue实现Player</title>
     <url>/2020/03/23/%E7%94%A8Vue%E5%AE%9E%E7%8E%B0Player/</url>
     <content><![CDATA[<p>项目中用到Vue，虽然没写前端，但是有时候需要测试和部署项目，懂得vue的网络请求就很重要。之前学过一点h5,js,css这些。这里主要是想学习一下vue+axios网络请求，跟着B站的大佬做了一个<a href="https://victor-huihui.gitee.io/2020/03/23/Player/">音乐播放器</a>，图片资源上传sm.ms图床。代码在元素审查都能看到，这里贴一下完整的代码：</p>
@@ -2732,6 +2748,17 @@
       </categories>
       <tags>
         <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法框架</title>
+    <url>/2020/04/10/%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -2888,7 +2915,7 @@
   </entry>
   <entry>
     <title>系统科学概述</title>
-    <url>/2020/06/23/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</url>
+    <url>/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<p><strong>系统科学：</strong></p>
 <p>To Provide a Systematic(Unified,Universal) View for Varies Complex Systems By a Systematic Approach</p>
 <ul>
@@ -5160,7 +5187,8 @@
   <entry>
     <title>DevOps实践</title>
     <url>/2021/04/10/CICD/</url>
-    <content><![CDATA[<h1 id="1、DevOps"><a href="#1、DevOps" class="headerlink" title="1、DevOps"></a>1、DevOps</h1><p>朴素的说，<code>DevOps = Dev(开发人员)+Ops(运维人员)</code>。实际上涵盖的角色范围会更广泛：除了开发，测试，运维，还涉及项目经理，产品经理等等跨职能部门相互合作，完成某一项目或者任务。</p>
+    <content><![CDATA[<h1 id="1、DevOps"><a href="#1、DevOps" class="headerlink" title="1、DevOps"></a>1、DevOps</h1><p>所谓云原生，可以概括为四个点：<strong>DevOps+持续交付+微服务+容器</strong></p>
+<p>朴素的说，<code>DevOps = Dev(开发人员)+Ops(运维人员)</code>。实际上涵盖的角色范围会更广泛：除了开发，测试，运维，还涉及项目经理，产品经理等等跨职能部门相互合作，完成某一项目或者任务。</p>
 <p>实际上DevOps从需求设计到开发、测试到运维，甚至是线上的运行反馈是整个全生命周期的，所以他是一个大桶多个部门协调的平台。至于工具和自动化只是实现的一种手段。或者说，DevOps是通过工具，自动化来达到通过工具链与持续集成、交付、反馈、优化进行端到端的整合，完成无缝的跨团队、跨系统协作。总结为三点：</p>
 <ul>
 <li>DevOps理念：以客户、业务需求为导向，向着同一个目标前进，强调多个部门紧密沟通与协作的软件交付过程。它包括产品管理，软件开发及运营等各个方面。</li>
@@ -5647,7 +5675,7 @@
 <li><p><strong>volumes</strong></p>
 </li>
 </ul>
-<h1 id="4-Docker常见面试题"><a href="#4-Docker常见面试题" class="headerlink" title="4.Docker常见面试题"></a>4.Docker常见面试题</h1>]]></content>
+]]></content>
       <categories>
         <category>复习入口</category>
       </categories>
@@ -6156,7 +6184,8 @@
 </li>
 </ul>
 <h3 id="使用JPA在数据库中非持久化一个字段。"><a href="#使用JPA在数据库中非持久化一个字段。" class="headerlink" title="使用JPA在数据库中非持久化一个字段。"></a>使用JPA在数据库中非持久化一个字段。</h3><p>@Transient</p>
-<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h2 id="面试题总结"><a href="#面试题总结" class="headerlink" title="面试题总结"></a>面试题总结</h2><ul>
+<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><p><a href="https://blog.csdn.net/ThinkWon/article/details/104397299">面试题总结，摘自CSDN</a></p>
+<h2 id="面试题总结"><a href="#面试题总结" class="headerlink" title="面试题总结"></a>面试题总结</h2><ul>
 <li><p><strong>什么是SpringBoot</strong></p>
 </li>
 <li><p>SpringBoot的优点(Spring的缺点)</p>
@@ -6241,8 +6270,26 @@
 <p> <a href="https://victor-huihui.gitee.io/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/">跨域</a></p>
 </li>
 </ul>
-<h1 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h1><p>使用框架开发，一定是越来越简单的。在整合Spring的时候的地狱配置让人头大，于是Boot出现了，而cloud不一样，cloud不是为了改进什么而出现的，它更多是为了适应<code>微服务</code>这一话题而提供的一套解决方案。</p>
-]]></content>
+<h1 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h1><p>使用框架开发，一定是越来越简单的。在整合Spring的时候的地狱配置让人头大，于是Boot出现了，而cloud不一样，cloud不是为了改进什么而出现的，它更多是为了适应<code>微服务</code>这一话题而提供的一整套解决方案。既然cloud是一整套的微服务解决方案，那就有必要先来聊聊微服务。</p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p>这词已经不新鲜了，是一种架构风格，将应用程序构建为以业务业务领域为模型的小型自治服务集合。敏捷团队可以使用可用的框架和所选的技术栈构建单独的服务组件。每个服务组件形成一个强大的微服务架构，从而提供更好的拓展性。可以单独处理每个服务组件的问题，从而对整个应用程序没有影响或者影响最小。</p>
+<h3 id="微服务的特点和优点"><a href="#微服务的特点和优点" class="headerlink" title="微服务的特点和优点"></a>微服务的特点和优点</h3><ul>
+<li><strong>特点</strong><ul>
+<li>解耦</li>
+<li>组件化</li>
+<li>自治：开发人员和团队可以彼此独立工作，从而提高速度。</li>
+<li>持续交付：CICD</li>
+<li>敏捷</li>
+</ul>
+</li>
+<li><strong>优点</strong><ul>
+<li>独立开发：微服务可以根据各自的功能轻松开发</li>
+<li>独立部署</li>
+<li>故障隔离：一项不起作用，系统可以继续运行</li>
+<li>混合技术栈：可以使用不同的语言开发。来构建同一个应用的不同服务。</li>
+</ul>
+</li>
+</ul>
+<h2 id="cloud"><a href="#cloud" class="headerlink" title="cloud"></a>cloud</h2>]]></content>
       <categories>
         <category>复习入口</category>
       </categories>
