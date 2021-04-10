@@ -198,6 +198,20 @@
       </tags>
   </entry>
   <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Frp内网穿透</title>
     <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
@@ -340,20 +354,6 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -515,153 +515,6 @@
 ]]></content>
       <categories>
         <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java集合</title>
-    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h1 id="List，Set，Map的区别"><a href="#List，Set，Map的区别" class="headerlink" title="List，Set，Map的区别"></a><strong>List，Set，Map的区别</strong></h1><ul>
-<li>元素有序，可重复</li>
-<li>元素无序，不可重复</li>
-<li>键值对，K无序，不可重复。V无序，可重复。一一映射。</li>
-</ul>
-<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
-<li>两者都不同步，也就是不保证线程安全。</li>
-<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
-<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
-<li>快速随机访问：L不支持，A支持。</li>
-<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
-</ul>
-<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
-<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
-<li>V是List的古老实现类，底层Object数组，线程安全。</li>
-</ul>
-<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
-<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
-<li><p>线程安全</p>
-<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
-</li>
-<li><p>效率</p>
-<p>因为线程安全，M效率高，T淘汰，不使用。</p>
-</li>
-<li><p>对null key和Null value的支持</p>
-<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
-</li>
-<li><p>初始容量大小和每次扩充容量大小的不同</p>
-<ul>
-<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
-<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
-</ul>
-</li>
-<li><p>底层数据结构</p>
-<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
-</li>
-</ul>
-<p>M带有初始容量的构造函数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
-<table>
-<thead>
-<tr>
-<th align="center">M</th>
-<th align="center">S</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">实现了Map接口</td>
-<td align="center">实现了Set接口</td>
-</tr>
-<tr>
-<td align="center">存储键值对</td>
-<td align="center">仅存储对象</td>
-</tr>
-<tr>
-<td align="center">调用put添加元素</td>
-<td align="center">调用Add添加元素</td>
-</tr>
-<tr>
-<td align="center">使用键计算hashcode</td>
-<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
-</tr>
-</tbody></table>
-<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
-<p><strong>hashcode和equals()的规定</strong></p>
-<ul>
-<li>对象相等，则hashcode相同</li>
-<li>对象相等，对两个equals()返回true</li>
-<li>两个对象有相同的hashcode值，也不一定相等。</li>
-</ul>
-<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
-<p><strong>==与equals的区别</strong></p>
-<ul>
-<li>基本类型来说，==比较的是值相等</li>
-<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
-<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
-</ul>
-<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
-<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
-<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
-<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
-<p><strong>算法如何设计？</strong></p>
-<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
-<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
-<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
-<ul>
-<li><p>底层数据结构</p>
-<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
-<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
-</li>
-<li><p>**实现线程安全的方式(重要)**：</p>
-<ul>
-<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
-<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
-</ul>
-<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
-</li>
-</ul>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
-<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
-<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
-<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
-<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
-<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
-<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
-<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
-<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
-<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
-<li>List<ul>
-<li>ArrayList：Object[]数组</li>
-<li>Vector：Object[]数组</li>
-<li>LinkedList：双向链表</li>
-</ul>
-</li>
-<li>Set<ul>
-<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
-<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
-<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
-<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
-<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
-<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
-</ul>
-<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
-<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -842,6 +695,84 @@
       </tags>
   </entry>
   <entry>
+    <title>Netty</title>
+    <url>/2021/03/29/Netty/</url>
+    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
+<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
+<blockquote>
+<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
+</blockquote>
+<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
+<ul>
+<li>作为NIO服务端，接收客户端的TCP连接</li>
+<li>作为NIO客户端，像服务端发起TCP连接。</li>
+<li>读取通信对端的请求或应答信息。</li>
+<li>想通信对端发送消息请求或应答消息。</li>
+</ul>
+<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
+<p>但是对于高负载、高并发的场景不合适。</p>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
+<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
+<ul>
+<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
+<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
+<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
+<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
+<p>工作流程总结如下：</p>
+<ul>
+<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
+<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
+<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
+</ul>
+<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
+<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
+<li>事件机制</li>
+<li>功能强大，预置了多种解码功能，支持主流协议。</li>
+<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
+</ul>
+<p><strong>为什么性能好？</strong></p>
+<ul>
+<li>纯异步，Reactor线程模型</li>
+<li>IO多路复用</li>
+<li>GC优化</li>
+<li>内存泄露检测</li>
+<li>zero copy</li>
+</ul>
+<p><strong>Zero copy</strong></p>
+<ul>
+<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
+<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
+<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
+<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
+</ul>
+<p><strong>垃圾回收</strong></p>
+<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
+<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
+<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
+<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
+<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
+<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
+<ul>
+<li>NIOChannel：水平触发</li>
+<li>EpollChannel：边缘触发</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mysql</title>
     <url>/2021/03/24/Mysql/</url>
     <content><![CDATA[<h1 id="1、存储引擎"><a href="#1、存储引擎" class="headerlink" title="1、存储引擎"></a>1、存储引擎</h1><p>Mysql默认的存储引擎是InnoDB，在5.7版本只有InnoDB是支持事务的。</p>
@@ -997,84 +928,6 @@
       </categories>
       <tags>
         <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Netty</title>
-    <url>/2021/03/29/Netty/</url>
-    <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
-<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>Reactor模式基于事件驱动，适合处理海量IO事件。</p>
-<blockquote>
-<p>反应器设计模式：为处理服务请求并发提交到一个或多个服务处理程序的事件设计模式。请求到达后，服务器处理程序使用多路分配策略，然后同步的派发这些请求到相关的请求处理程序。</p>
-</blockquote>
-<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>所有的IO操作，都在同一个NIO(同步非阻塞IO模型)完成，NIO线程的职责如下：</p>
-<ul>
-<li>作为NIO服务端，接收客户端的TCP连接</li>
-<li>作为NIO客户端，像服务端发起TCP连接。</li>
-<li>读取通信对端的请求或应答信息。</li>
-<li>想通信对端发送消息请求或应答消息。</li>
-</ul>
-<p>采用异步非阻塞IO，IO操作不会导致阻塞。通过Acceptor接受客户端的tcp请求，通过Dispatch将对应的byte分发到指定的handler进行消息解码。</p>
-<p>但是对于高负载、高并发的场景不合适。</p>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/dc7ff89d78fc63558bd02d4515e42f38.png"></p>
-<h2 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h2><p>与单线程最大的区别就是有一组NIO来处理线程的IO操作。</p>
-<ul>
-<li>一个专门的NIO线程监听Acceptor线程用于监听服务端，接受客户端的TCP连接请求。</li>
-<li>网络IO操作-读-写，由一个NIOP线程池负责，线程池可以采用标准的JDK线程池实现，他包含一个任务队列和N个可用的线程，有这些NIO线程负责消息的读取，编码解码和发送。</li>
-<li>一个NIO线程可以同时处理N条链路，但是1个链路只对应1个NIO线程，防止并发操作问题。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/2882a43ae27016cc885444b46a735801.png"></p>
-<h2 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h2><p>特点是服务端用于接收客户端连接的不是一个单独的NIO，而是一个独立的NIO线程池，<code>Acceptor</code> 接收到客户端 <code>TCP</code> 连接请求处理完成后（可能包含接入认证等），将新创建的 <code>SocketChannel</code> 注册到 IO 线程池（<code>sub reactor</code> 线程池）的某个 IO 线程上，由它负责 <code>SocketChannel</code> 的读写和编解码工作。 <code>Acceptor</code> 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 <code>subReactor</code> 线程池的 <code>IO</code> 线程上，由 <code>IO</code> 线程负责后续的 <code>IO</code> 操作。</p>
-<p>工作流程总结如下：</p>
-<ul>
-<li>从主线程池中随机选择一个 <code>Reactor</code> 线程作为 <code>Acceptor</code> 线程，用于绑定监听端口，接收客户端连接；</li>
-<li>Acceptor 线程接收客户端连接请求之后创建新的 <code>SocketChannel</code> ，将其注册到主线程池的其它 Reactor 线程上，由其负责接入认证、IP 黑白名单过滤、握手等操作；</li>
-<li>步骤 2 完成之后，业务层的链路正式建立，将 <code>SocketChannel</code> 从主线程池的 <code>Reactor</code> 线程的多路复用器上摘除，重新注册到 <code>Sub</code> 线程池的线程上，用于处理 I/O 的读写操作。</li>
-</ul>
-<p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/8674352e3cb3638da5807ef88b8f225d.png"></p>
-<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ul>
-<li>多路复用，在NIO的基础上进行更高层次的抽象，</li>
-<li>事件机制</li>
-<li>功能强大，预置了多种解码功能，支持主流协议。</li>
-<li>定制功能强，可以通过channelhandler对通信框架进行灵活的拓展。</li>
-</ul>
-<p><strong>为什么性能好？</strong></p>
-<ul>
-<li>纯异步，Reactor线程模型</li>
-<li>IO多路复用</li>
-<li>GC优化</li>
-<li>内存泄露检测</li>
-<li>zero copy</li>
-</ul>
-<p><strong>Zero copy</strong></p>
-<ul>
-<li>将多个 <code>ByteBuf</code> 合并为一个逻辑上的 <code>ByteBuf</code> , 避免了各个 <code>ByteBuf</code> 之间的拷贝.</li>
-<li>通过 <code>wrap</code> 操作, 我们可以将 <code>byte[]</code> <code>数组、ByteBuf</code> 、 <code>ByteBuffer</code> 等包装成一个 <code>Netty ByteBuf</code> 对象, 进而避免了拷贝操作.</li>
-<li><code>ByteBuf</code> 支持 <code>slice</code> 操作, 因此可以将 <code>ByteBuf</code> 分解为多个共享同一个存储区域的 <code>ByteBuf</code>, 避免了内存的拷贝.</li>
-<li>通过 <code>FileRegion</code> 包装的 <code>FileChannel.tranferTo</code> 实现文件传输, 可以直接将文件缓冲区的数据发送到目标 <code>Channel</code> , 避免了传统通过循环 <code>write</code> 方式导致的内存拷贝问题.</li>
-</ul>
-<p><strong>垃圾回收</strong></p>
-<p>框架里HeapByteBuffer底下的byte[]能够依赖JVM自然回收；而DirectByteBuffer底下是java堆外内存，最好主动回收。所以Netyy要有自己的计数器和回收过程。</p>
-<p>原生的JVM GC很难回收掉DirectByteBuffer占用的Native Memory</p>
-<p>Netty 中采用引用计数对 DirectByteBuffer 进行对象可达性检测，当 DirectByteBuffer 上的引用计数为 0 时将对象释放。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean release() &#123;</span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        int refCnt &#x3D; this.refCnt;</span><br><span class="line">        if (refCnt &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            throw new IllegalReferenceCountException(0, -1);</span><br><span class="line">        &#125;</span><br><span class="line">        if (refCntUpdater.compareAndSet(this, refCnt, refCnt - 1)) &#123;</span><br><span class="line">            if (refCnt &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                deallocate();</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Netty 内存泄漏，主要是针对池化的 ByteBuf 。 ByteBuf 对象被 JVM GC 掉之前，没有调用 <code>release()</code> 把底下的 <code>DirectByteBuffer</code> 或<code>byte[]</code> 归还，会导致池越来越大。而非池化的 ByteBuf ，即使像 <code>DirectByteBuf</code> 那样可能会用到 <code>System.gc()</code> ，但终归会被 release 掉的，不会出大事。因此 Netty 默认会从分配的 ByteBuf 里抽样出大约 1% 的来进行跟踪。</p>
-<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h2><h4 id="DirectBuffer-vs-HeapBuffer"><a href="#DirectBuffer-vs-HeapBuffer" class="headerlink" title="DirectBuffer vs HeapBuffer"></a>DirectBuffer vs HeapBuffer</h4><p>在执行网络IO或者文件IO时，如果是使用 <code>DirectBuffer</code> 就会少一次内存拷贝。<strong>如果是非 <code>DirectBuffer</code> ，JDK 会先创建一个 <code>DirectBuffer</code> ，再去执行真正的写操作</strong>。这是因为，当我们把一个地址通过 <code>JNI</code> 传递给底层的C库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 <code>GC</code> 管理下的对象是会在 <code>Java</code> 堆中移动的。也就是说，有可能我把一个地址传给底层的 <code>write</code> ，但是这段内存却因为 <code>GC</code> 整理内存而失效了。所以我必须要把待发送的数据放到一个 <code>GC</code> 管不着的地方。这就是调用 <code>native</code> 方法之前，数据一定要在堆外内存的原因。</p>
-<h2 id="启动以及链接建立过程"><a href="#启动以及链接建立过程" class="headerlink" title="启动以及链接建立过程"></a>启动以及链接建立过程</h2><p><img src="https://hadyang.github.io/interview/docs/fromwork/netty/images/922e67970b6ac7bf78cd43ac61f7aec0.png" alt="image"></p>
-<h1 id="Epoll触发"><a href="#Epoll触发" class="headerlink" title="Epoll触发"></a>Epoll触发</h1><p>水平触发（LT）和边缘触发（ET）</p>
-<p>在LT模式下，只要某个fd还有数据没读完，那么下次轮询还会被选出。而在ET模式下，只有fd状态发生改变后，该fd才会被再次选出。ET模式的特殊性，使在ET模式下的一次轮询必须处理完本次轮询出的fd的所有数据，否则该fd将不会在下次轮询中被选出。</p>
-<ul>
-<li>NIOChannel：水平触发</li>
-<li>EpollChannel：边缘触发</li>
-</ul>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/e-4netty">java Guide</a></p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -1253,48 +1106,150 @@
       </tags>
   </entry>
   <entry>
-    <title>Pycharm搭建PyTorch环境</title>
-    <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
-<ul>
-<li>类似于Numpy的张量计算，可使用GPU加速</li>
-<li>基于带自动微分系统的深度学习神经网络</li>
+    <title>Java集合</title>
+    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h1 id="List，Set，Map的区别"><a href="#List，Set，Map的区别" class="headerlink" title="List，Set，Map的区别"></a><strong>List，Set，Map的区别</strong></h1><ul>
+<li>元素有序，可重复</li>
+<li>元素无序，不可重复</li>
+<li>键值对，K无序，不可重复。V无序，可重复。一一映射。</li>
 </ul>
-<p>相较于其他框架比较容易上手，所以选择搭建一个pytorch的深度学习环境（使用win10+navida mx150，当然了，直接使用docker search-&gt;docker pull是最简单的方法，python的IDE选择pycharm或者jupyter）</p>
-<h1 id="1、安装anaconda"><a href="#1、安装anaconda" class="headerlink" title="1、安装anaconda"></a>1、安装anaconda</h1><p>安装软件不用多说，直接去conda官网到download页面，因为conda 37使用过程中经常出现一些问题，这里可以去anaconda的<a href="https://repo.continuum.io/archive/">历史版本库</a>里选择conda 36版本，我这里下载的这个版本号<img src="https://i.loli.net/2020/03/11/bijxQdulm14DXFk.png" alt="微信截图_20200311132631.png"></p>
-<p>安装路径脑子里备份一份，后面pycharm集成pytorch环境的时候要用到。这里说明一下，计算机的GPU起到加速作用，检查一下GPU的驱动，检查方法如下：任务管理器-&gt;性能选项卡-&gt;正确显示GPU型号，表示驱动已经正常安装。</p>
-<p>anaconda安装完成之后，开始选项里可以看到刚刚安装的anaconda</p>
-<p><img src="https://i.loli.net/2020/03/11/ts9zdEfiL52qvWo.png" alt="微信截图_20200311133243.png"></p>
-<p>我们有关conda的命令一般是在Prompt里面执行而不是cmd里面。然后我们点击Prompt，进入命令行界面，最前面显示（base），表示anaconda已经安装成功（安装conda就不用单独安装python了，conda本身也集成了很多工具包）。</p>
-<h1 id="2、创建pytorch工作区"><a href="#2、创建pytorch工作区" class="headerlink" title="2、创建pytorch工作区"></a>2、创建pytorch工作区</h1><p>在Prompt命令行执行conda create -n pytorch python=3.6(n表示name)，我们就创建了一个pytorch的工作区，当然了，这是一个空的工作区，我们只是命名为pytorch，想使用的话，还得具体安装pytorch需要的一些包。根据提示，执行conda activate pytorch可由当前的base工作区跳转到刚刚创建的pytorch工作区，这时Prompt的前面已经由base变为pytroch.然后需要在当前工作区安装torch，进入<a href="https://pytorch.org/">pytorch官网</a>，然后根据具体配置会给出相应的指令，复制指令到prompt命令行执行，安装相关包。GPU不支持CUDA的话，CUDA选项选择None。至于支不支持，可以去英伟达官网查看，一般的英伟达显卡是支持的，不支持的话，可能是驱动版本过低，更新GPU驱动。<img src="https://i.loli.net/2020/03/11/IisGTXjmoZRQcbM.png" alt="微信截图_20200311134317.png"></p>
-<p>命令行执行完成后，在prompt输入python跳转到python的执行界面,然后执行一下import torch发现没有报错，ok，torch已经安装完成，然后输入torch.cuda.is_available()，返回true，表示GPU可以被torch使用。</p>
-<p><strong>Q &amp; A：</strong></p>
-<ul>
-<li><p><strong>anaconda装环境遇到无法定位程序输入点OPENSSL_sk_new_reserve……问题?</strong></p>
-<p>查看DLLs里面的dll文件和bin里面的ddl文件日期是否一致，不一致的话，DLLS替换到bin，替换千万备份。这玩意被覆盖了要是出问题，再想找回来，也可以，重装conda就可了。呜呜呜</p>
+<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
+<li>两者都不同步，也就是不保证线程安全。</li>
+<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
+<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
+<li>快速随机访问：L不支持，A支持。</li>
+<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
+</ul>
+<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
+<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
+<li>V是List的古老实现类，底层Object数组，线程安全。</li>
+</ul>
+<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
+<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
+<li><p>线程安全</p>
+<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
 </li>
-<li><p><strong>出现出现CondaHTTPError问题，怎么办？</strong></p>
-<p>配置清华镜像，在prompt执行如下操作</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --set show_channel_urls yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<li><p>效率</p>
+<p>因为线程安全，M效率高，T淘汰，不使用。</p>
+</li>
+<li><p>对null key和Null value的支持</p>
+<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
+</li>
+<li><p>初始容量大小和每次扩充容量大小的不同</p>
+<ul>
+<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
+<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
+</ul>
+</li>
+<li><p>底层数据结构</p>
+<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
+</li>
+</ul>
+<p>M带有初始容量的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-<p>还是不行的话，就找到C盘的.condarc文件，把https改成http，至于文件怎么找，C-&gt;用户-&gt;Victor(你自己的用户名)-&gt;下滑就能找到这个文件。我的文件里是这个样子，仅供参考。<img src="https://i.loli.net/2020/03/11/tVosf9Sxbp5Jq38.png" alt="微信截图_20200311140222.png"></p>
+<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">M</th>
+<th align="center">S</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">实现了Map接口</td>
+<td align="center">实现了Set接口</td>
+</tr>
+<tr>
+<td align="center">存储键值对</td>
+<td align="center">仅存储对象</td>
+</tr>
+<tr>
+<td align="center">调用put添加元素</td>
+<td align="center">调用Add添加元素</td>
+</tr>
+<tr>
+<td align="center">使用键计算hashcode</td>
+<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
+</tr>
+</tbody></table>
+<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
+<p><strong>hashcode和equals()的规定</strong></p>
+<ul>
+<li>对象相等，则hashcode相同</li>
+<li>对象相等，对两个equals()返回true</li>
+<li>两个对象有相同的hashcode值，也不一定相等。</li>
+</ul>
+<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
+<p><strong>==与equals的区别</strong></p>
+<ul>
+<li>基本类型来说，==比较的是值相等</li>
+<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
+<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
+</ul>
+<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
+<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
+<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
+<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
+<p><strong>算法如何设计？</strong></p>
+<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
+<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
+<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
+<ul>
+<li><p>底层数据结构</p>
+<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
+<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
 </li>
-<li><p><strong>上面都用了还是不行？</strong></p>
-<p>重装conda吧熊迪，省时省心</p>
+<li><p>**实现线程安全的方式(重要)**：</p>
+<ul>
+<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
+<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
+</ul>
+<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
 </li>
 </ul>
-<h1 id="3、pycharm集成pytroch"><a href="#3、pycharm集成pytroch" class="headerlink" title="3、pycharm集成pytroch"></a>3、pycharm集成pytroch</h1><p>上面的步骤都很顺利的话，恭喜你，pytorch环境已经安装成功了，然后去<a href="https://www.jetbrains.com/pycharm/">pycharm</a>官网下载pycharm，一般社区版本就够用，学生可以使用企业邮箱获取一年的认证，亲测有效。</p>
-<p>选择新建一个项目，执行如下操作<img src="https://i.loli.net/2020/03/11/p1OWXdMGRe2AxPl.png" alt="微信截图_20200311140957.png"></p>
-<p>第一次里面肯定没有pytorch选项，后面的三个点点进去，如下（看清楚路径）：<img src="https://i.loli.net/2020/03/11/QGDgXYSBhCiaqsF.png" alt="微信截图_20200311141134.png"></p>
-<p>点击OK，至此已经在pycharm里面集成了pytorch，打开python console试一下，import torch，没错。接下来，搞点数据跑跑叭。当然这也可以使用jupyter，在安装conda的时候已经默认安装了，prompt切换到pytorch工作区，然后conda install nb_conda，安装相关的包，安装完成之后，键入jupyter notebook进入jupyter工作页面，有我们配置的pytorch环境，shift+enter跳转到下一行并执行上一行，接着探索叭！<img src="https://i.loli.net/2020/03/11/ABH6REqUFNLfbsp.png" alt="微信截图_20200311145309.png"></p>
-<p>启动tensorboard: tensorboard –logdir=logs(先使用pip命令安装tensorboard和opencv)<img src="https://i.loli.net/2020/03/11/DOEWFiXhgaBeSs7.png" alt="微信截图_20200311175938.png"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
+<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
+<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
+<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
+<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
+<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
+<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
+<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
+<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
+<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
+<li>List<ul>
+<li>ArrayList：Object[]数组</li>
+<li>Vector：Object[]数组</li>
+<li>LinkedList：双向链表</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
+<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
+<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
+<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
+<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
+<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
+</ul>
+<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
+<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>复习入口</category>
       </categories>
       <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1851,6 +1806,51 @@
       </tags>
   </entry>
   <entry>
+    <title>Pycharm搭建PyTorch环境</title>
+    <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
+<ul>
+<li>类似于Numpy的张量计算，可使用GPU加速</li>
+<li>基于带自动微分系统的深度学习神经网络</li>
+</ul>
+<p>相较于其他框架比较容易上手，所以选择搭建一个pytorch的深度学习环境（使用win10+navida mx150，当然了，直接使用docker search-&gt;docker pull是最简单的方法，python的IDE选择pycharm或者jupyter）</p>
+<h1 id="1、安装anaconda"><a href="#1、安装anaconda" class="headerlink" title="1、安装anaconda"></a>1、安装anaconda</h1><p>安装软件不用多说，直接去conda官网到download页面，因为conda 37使用过程中经常出现一些问题，这里可以去anaconda的<a href="https://repo.continuum.io/archive/">历史版本库</a>里选择conda 36版本，我这里下载的这个版本号<img src="https://i.loli.net/2020/03/11/bijxQdulm14DXFk.png" alt="微信截图_20200311132631.png"></p>
+<p>安装路径脑子里备份一份，后面pycharm集成pytorch环境的时候要用到。这里说明一下，计算机的GPU起到加速作用，检查一下GPU的驱动，检查方法如下：任务管理器-&gt;性能选项卡-&gt;正确显示GPU型号，表示驱动已经正常安装。</p>
+<p>anaconda安装完成之后，开始选项里可以看到刚刚安装的anaconda</p>
+<p><img src="https://i.loli.net/2020/03/11/ts9zdEfiL52qvWo.png" alt="微信截图_20200311133243.png"></p>
+<p>我们有关conda的命令一般是在Prompt里面执行而不是cmd里面。然后我们点击Prompt，进入命令行界面，最前面显示（base），表示anaconda已经安装成功（安装conda就不用单独安装python了，conda本身也集成了很多工具包）。</p>
+<h1 id="2、创建pytorch工作区"><a href="#2、创建pytorch工作区" class="headerlink" title="2、创建pytorch工作区"></a>2、创建pytorch工作区</h1><p>在Prompt命令行执行conda create -n pytorch python=3.6(n表示name)，我们就创建了一个pytorch的工作区，当然了，这是一个空的工作区，我们只是命名为pytorch，想使用的话，还得具体安装pytorch需要的一些包。根据提示，执行conda activate pytorch可由当前的base工作区跳转到刚刚创建的pytorch工作区，这时Prompt的前面已经由base变为pytroch.然后需要在当前工作区安装torch，进入<a href="https://pytorch.org/">pytorch官网</a>，然后根据具体配置会给出相应的指令，复制指令到prompt命令行执行，安装相关包。GPU不支持CUDA的话，CUDA选项选择None。至于支不支持，可以去英伟达官网查看，一般的英伟达显卡是支持的，不支持的话，可能是驱动版本过低，更新GPU驱动。<img src="https://i.loli.net/2020/03/11/IisGTXjmoZRQcbM.png" alt="微信截图_20200311134317.png"></p>
+<p>命令行执行完成后，在prompt输入python跳转到python的执行界面,然后执行一下import torch发现没有报错，ok，torch已经安装完成，然后输入torch.cuda.is_available()，返回true，表示GPU可以被torch使用。</p>
+<p><strong>Q &amp; A：</strong></p>
+<ul>
+<li><p><strong>anaconda装环境遇到无法定位程序输入点OPENSSL_sk_new_reserve……问题?</strong></p>
+<p>查看DLLs里面的dll文件和bin里面的ddl文件日期是否一致，不一致的话，DLLS替换到bin，替换千万备份。这玩意被覆盖了要是出问题，再想找回来，也可以，重装conda就可了。呜呜呜</p>
+</li>
+<li><p><strong>出现出现CondaHTTPError问题，怎么办？</strong></p>
+<p>配置清华镜像，在prompt执行如下操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --set show_channel_urls yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还是不行的话，就找到C盘的.condarc文件，把https改成http，至于文件怎么找，C-&gt;用户-&gt;Victor(你自己的用户名)-&gt;下滑就能找到这个文件。我的文件里是这个样子，仅供参考。<img src="https://i.loli.net/2020/03/11/tVosf9Sxbp5Jq38.png" alt="微信截图_20200311140222.png"></p>
+</li>
+<li><p><strong>上面都用了还是不行？</strong></p>
+<p>重装conda吧熊迪，省时省心</p>
+</li>
+</ul>
+<h1 id="3、pycharm集成pytroch"><a href="#3、pycharm集成pytroch" class="headerlink" title="3、pycharm集成pytroch"></a>3、pycharm集成pytroch</h1><p>上面的步骤都很顺利的话，恭喜你，pytorch环境已经安装成功了，然后去<a href="https://www.jetbrains.com/pycharm/">pycharm</a>官网下载pycharm，一般社区版本就够用，学生可以使用企业邮箱获取一年的认证，亲测有效。</p>
+<p>选择新建一个项目，执行如下操作<img src="https://i.loli.net/2020/03/11/p1OWXdMGRe2AxPl.png" alt="微信截图_20200311140957.png"></p>
+<p>第一次里面肯定没有pytorch选项，后面的三个点点进去，如下（看清楚路径）：<img src="https://i.loli.net/2020/03/11/QGDgXYSBhCiaqsF.png" alt="微信截图_20200311141134.png"></p>
+<p>点击OK，至此已经在pycharm里面集成了pytorch，打开python console试一下，import torch，没错。接下来，搞点数据跑跑叭。当然这也可以使用jupyter，在安装conda的时候已经默认安装了，prompt切换到pytorch工作区，然后conda install nb_conda，安装相关的包，安装完成之后，键入jupyter notebook进入jupyter工作页面，有我们配置的pytorch环境，shift+enter跳转到下一行并执行上一行，接着探索叭！<img src="https://i.loli.net/2020/03/11/ABH6REqUFNLfbsp.png" alt="微信截图_20200311145309.png"></p>
+<p>启动tensorboard: tensorboard –logdir=logs(先使用pip命令安装tensorboard和opencv)<img src="https://i.loli.net/2020/03/11/DOEWFiXhgaBeSs7.png" alt="微信截图_20200311175938.png"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot整合redis</title>
     <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
     <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
@@ -1861,6 +1861,28 @@
       </categories>
       <tags>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker容器的备份与迁移</title>
+    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
+<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
+
+<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
+
+<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -1907,46 +1929,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker容器的备份与迁移</title>
-    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
-<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
-
-<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
-
-<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
-
-<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
-]]></content>
-      <categories>
-        <category>云原生</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>github actions托管gitee pages</title>
     <url>/2021/03/26/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
@@ -1987,6 +1969,24 @@
 ]]></content>
       <categories>
         <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -2230,24 +2230,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>中医学哲学基础-阴阳学说</title>
     <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E9%98%B4%E9%98%B3%E5%AD%A6%E8%AF%B4/</url>
     <content><![CDATA[<blockquote>
@@ -2422,20 +2404,21 @@
       </tags>
   </entry>
   <entry>
-    <title>CNN手写文字识别</title>
-    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
-<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
-
-<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>Bug合集</category>
       </categories>
       <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2641,6 +2624,23 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CNN手写文字识别</title>
+    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
+<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -5223,9 +5223,12 @@
 <li>拉链法：把所有的同义词用单链表连接起来，在这种情况下，哈希表的每个单元存放的不再是元素本身，而是相应同义词单链表的头指针。HashMap就是用这种方法解决冲突的。</li>
 </ul>
 <h1 id="四、图"><a href="#四、图" class="headerlink" title="四、图"></a>四、图</h1><p>这里图的比较重要的算法有：深度优先，广度优先，最短路径算法，拓扑排序，并查集。</p>
-<h2 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">BFS</span><span class="params">(<span class="keyword">int</span> vexNum,<span class="keyword">int</span>[][]matrix)</span></span>&#123;</span><br><span class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; resList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] visited = <span class="keyword">new</span> <span class="keyword">int</span>[vexNum];</span><br><span class="line">        <span class="comment">//从0节点开始遍历</span></span><br><span class="line">        visited[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        queue.offer(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//队列不空的时候循环</span></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">int</span> index = queue.poll();</span><br><span class="line">            <span class="comment">//加入到结果序列</span></span><br><span class="line">            resList.add(index);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;vexNum;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(matrix[index][i]==<span class="number">1</span> &amp;&amp; visited[i] == <span class="number">0</span>)&#123;</span><br><span class="line">                    queue.offer(i);</span><br><span class="line">                    visited[i] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>queue.offer()</code>是出队，<code>queue.poll()</code>是进队</p>
+<h2 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC80LzE1LzE3MTdjM2VmM2M4M2I4OTk?x-oss-process=image/format,png" alt="深度优先搜索和广度优先搜索，超详细图文解析_Viper的程序员修炼手册-CSDN博客_深度优先广度优先图解"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">BFS</span><span class="params">(<span class="keyword">int</span> vexNum,<span class="keyword">int</span>[][]matrix)</span></span>&#123;</span><br><span class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; resList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] visited = <span class="keyword">new</span> <span class="keyword">int</span>[vexNum];</span><br><span class="line">        <span class="comment">//从0节点开始遍历</span></span><br><span class="line">        visited[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        queue.offer(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//队列不空的时候循环</span></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">int</span> index = queue.poll();</span><br><span class="line">            <span class="comment">//加入到结果序列</span></span><br><span class="line">            resList.add(index);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;vexNum;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(matrix[index][i]==<span class="number">1</span> &amp;&amp; visited[i] == <span class="number">0</span>)&#123;</span><br><span class="line">                    queue.offer(i);</span><br><span class="line">                    visited[i] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> vexNum, <span class="keyword">int</span>[][]matrix)</span></span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] visited = <span class="keyword">new</span> <span class="keyword">int</span>[vexNum];</span><br><span class="line">        List&lt;Integer&gt; resList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//从0节点开始遍历</span></span><br><span class="line">        stack.push(<span class="number">0</span>);</span><br><span class="line">        visited[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;vexNum;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> index = stack.pop();</span><br><span class="line">            <span class="keyword">if</span>(matrix[index][i]==<span class="number">1</span> &amp;&amp; visited[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                stack.push(i);</span><br><span class="line">                visited[i] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h2><p><img src="https://img-blog.csdnimg.cn/20200530055742298.gif" alt="深度优先遍历(DFS)、广度优先遍历(BFS)、随机游走(Random Walk)_Moer_hou的博客-CSDN博客"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> vexNum, <span class="keyword">int</span>[][]matrix)</span></span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] visited = <span class="keyword">new</span> <span class="keyword">int</span>[vexNum];</span><br><span class="line">        List&lt;Integer&gt; resList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">//从0节点开始遍历</span></span><br><span class="line">        stack.push(<span class="number">0</span>);</span><br><span class="line">        visited[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;vexNum;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> index = stack.pop();</span><br><span class="line">            <span class="keyword">if</span>(matrix[index][i]==<span class="number">1</span> &amp;&amp; visited[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                stack.push(i);</span><br><span class="line">                visited[i] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>例题</strong>—矩阵中的最长递增路径</p>
 <blockquote>
@@ -5252,8 +5255,25 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] findOrder(<span class="keyword">int</span> numCourses,<span class="keyword">int</span>[][]preOrders)&#123;</span><br><span class="line">    Queue&lt;Integer&gt; resQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">int</span>[] countArr = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];</span><br><span class="line">    <span class="comment">//统计每个节点的入度</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span>[] entry:preOrders)&#123;</span><br><span class="line">        countArr[entry[<span class="number">0</span>]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="comment">//没有入度的定点入栈</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;numCourses;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(countArr[i]==<span class="number">0</span>)&#123;</span><br><span class="line">            queue.offer(i);</span><br><span class="line">            numCourses--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//开始广度优先遍历</span></span><br><span class="line">    <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">int</span> index = queue.poll();</span><br><span class="line">        resQueue.offer(index);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] entry:preOrders)&#123;</span><br><span class="line">            <span class="keyword">if</span>(entry[<span class="number">1</span>]==index)&#123;</span><br><span class="line">                <span class="keyword">if</span>(--countArr[entry[<span class="number">0</span>]]==<span class="number">0</span>)&#123;</span><br><span class="line">                    numCourses--;</span><br><span class="line">                    queue.offer(entry[<span class="number">0</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(numCourses==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;numCourses;i++)&#123;</span><br><span class="line">            res[i] = resQueue.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p>并查集主要用于描述集合，如可以将一对相关点划分成几个独立的集合以及某个元素是否属于某个集合，两个元素是否在一个集合中。</p>
-<h2 id="迪杰斯特拉算法"><a href="#迪杰斯特拉算法" class="headerlink" title="迪杰斯特拉算法"></a>迪杰斯特拉算法</h2><p>求解单源点最短路径。</p>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p><img src="https://songwell1024.github.io/2018/06/16/UnionFind/3.gif" alt="并查集详解及底层实现| 记路心晴"></p>
+<p>并查集主要用于描述集合，如可以将一对相关点划分成几个独立的集合以及某个元素是否属于某个集合，两个元素是否在一个集合中。</p>
+<ul>
+<li><p>基本并查集</p>
+<p>基于数组实现的并查集，最基本的思想是，<strong>数组下标为当前元素标号，元素值是下标所在的集合</strong>，当两个严肃合并的时候，以较大元素为大哥，将另一组元素的值全部更新。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="comment">//下标为元素，值为所在集合</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Union</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] id;</span><br><span class="line">    <span class="comment">//构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> size)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">        id = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">            id[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找某个元素属于哪一个集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> element)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id[element];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断两个严肃是否属于同一个集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isConnected</span><span class="params">(<span class="keyword">int</span> first,<span class="keyword">int</span> second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> find(first)==find(second);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//合并两个集合</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> firstEle,<span class="keyword">int</span> secondEle)</span></span>&#123;</span><br><span class="line">        <span class="comment">//本来就是一个集合，直接返回</span></span><br><span class="line">        <span class="keyword">if</span>(find(firstEle)==find(secondEle))&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> firRoot = find(firstEle);</span><br><span class="line">            <span class="keyword">int</span> secRoot = find(secondEle);</span><br><span class="line">            <span class="keyword">if</span>(firRoot&lt;secRoot)&#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(id[i]==firRoot)id[i] = secRoot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(id[i] == secRoot)id[i] = firRoot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述方法在查找元素的时候很快，但是union很慢。因为每次union都需要遍历整个数组。</p>
+</li>
+<li><p>快Union，慢find</p>
+<p>在上面的例子中，每次merge都需要遍历整个数组，我们现在每次只更新一个数据，形成一个链，但是这样查找就比较慢了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查找某个元素属于哪一个集合</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> element)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (id[element]!=element)&#123;</span><br><span class="line">        element = id[element];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> id[element];</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">//合并两个集合</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> firstEle,<span class="keyword">int</span> secondEle)</span></span>&#123;</span><br><span class="line">    <span class="comment">//本来就是一个集合，直接返回</span></span><br><span class="line">    <span class="keyword">if</span>(find(firstEle)==find(secondEle))&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> firRoot = find(firstEle);</span><br><span class="line">        <span class="keyword">int</span> secRoot = find(secondEle);</span><br><span class="line">        <span class="keyword">if</span>(firRoot&lt;secRoot)&#123;</span><br><span class="line">            id[firRoot] = secRoot;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            id[secRoot] = firRoot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="迪杰斯特拉算法"><a href="#迪杰斯特拉算法" class="headerlink" title="迪杰斯特拉算法"></a>迪杰斯特拉算法</h2><p><img src="https://img-blog.csdnimg.cn/20201128093946374.gif" alt="迪杰斯特拉(Dijkstra)算法_xiaoxi_hahaha的博客-CSDN博客"></p>
+<p>求解单源点最短路径。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] d(<span class="keyword">int</span>[][]weight,<span class="keyword">int</span> start)&#123;</span><br><span class="line">    <span class="comment">//求解的是source到各个顶点的最短路径</span></span><br><span class="line">    <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[weight.length];</span><br><span class="line">    <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[weight.length];</span><br><span class="line">    <span class="comment">//初始化结果矩阵</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;weight.length;i++)&#123;</span><br><span class="line">        res[i] = weight[start][i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找n-1次，每次确定一个点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt; weight.length;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//找出一个未标记并且离出发点最近的节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt; weight.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j!=start &amp;&amp; !visited[j] &amp;&amp; res[j]&lt;min)&#123;</span><br><span class="line">                min = res[j];</span><br><span class="line">                p = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//标记节点已经访问过</span></span><br><span class="line">        visited[p] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;weight.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j==p || weight[p][j]==Integer.MAX_VALUE)&#123;</span><br><span class="line">                <span class="comment">//P点不能到达</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(res[p]+weight[p][j]&lt;res[j])&#123;</span><br><span class="line">                res[j] = res[p]+weight[p][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="弗洛伊德算法"><a href="#弗洛伊德算法" class="headerlink" title="弗洛伊德算法"></a>弗洛伊德算法</h2><p>采用动态规划的思想对路径距离进行N此更新，N是顶点数，其中顶点(i,j)之间的以K更新的条件是：dis[i][j]&gt;dis[i][k]+dis[k][j]，更新完成之后，我们得到的是图上任意两点之间的最短距离。如何通过path矩阵得到最短路径呢？需要初始化一个记录两点之间的路径的矩阵path[][]，在path矩阵更新的时候，将该对应成功更新两点间距离的点记录在path矩阵对应的位置上。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void floyd(int[][]arr,int[][]path)&#123;</span><br><span class="line">        int num &#x3D; arr.length;</span><br><span class="line">        &#x2F;&#x2F;节点轮流坐庄</span><br><span class="line">        for(int k &#x3D; 0;k&lt;num;k++)&#123;</span><br><span class="line">            for(int i &#x3D; 0;i&lt;num;i++)&#123;</span><br><span class="line">                for(int j &#x3D; 0; j&lt;num;j++ )&#123;</span><br><span class="line">                    int tmp &#x3D; arr[i][k]+arr[k][j];</span><br><span class="line">                    if(tmp&lt;arr[i][j])&#123;</span><br><span class="line">                        arr[i][j] &#x3D; tmp;</span><br><span class="line">                        path[i][j] &#x3D; k;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
