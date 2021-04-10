@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    github actions托管gitee pages |  Victor&#39;s Blog
+    tidb contributor总结 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -44,7 +44,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-github-actions托管gitee-pages部署"
+  id="post-tidb-contributor总结"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -55,18 +55,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  github actions托管gitee pages
+  tidb contributor总结
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2021/03/26/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" class="article-date">
-  <time datetime="2021-03-26T07:12:49.000Z" itemprop="datePublished">2021-03-26</time>
+      <a href="/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2021-04-09T08:15:45.000Z" itemprop="datePublished">2021-04-09</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a>
+    <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
   </div>
   
 <div class="word_count">
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">556</span>
+            <span class="post-count">903</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">2 min</span>
+            <span class="post-count">3 min</span>
         </span>
     </span>
 </div>
@@ -98,41 +98,52 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
-<h1 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h1><p>使用github actions可以参考这个<a target="_blank" rel="noopener" href="https://gitee.com/yanglbme/gitee-pages-action">开源项目</a></p>
-<p>现在问题换到hexo身上，在我们对post文件进行修改之后，一般需要执行<code>hexo c</code>清理缓存(不是必须)，<code>hexo g</code>和<code>hexo d</code>。在使用github actions的时候，需要在根目录添加文件<code>.github/workflows/test.yml</code>来定制actions的流程，但是在执行<code>hexo d</code>的时候，会将这个文件删掉，导致actions失效。我们的问题就是怎么保证.github文件夹一定存在于根目录。而根目录是hexo 托管的，我的解决办法是这样的：</p>
+  <p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
+<p>我对数据库的理解谈不上深刻，但是我认为，数据库一定要是个产品，有企业愿意用，这样才能实现他的价值和有动力迭代。不同的是，OB走的是闭源路线，在支撑内部电商业务的同时，商业化也做的不错。而TIDB走的是开源路线。</p>
+<p>为什么开源，引用PingCAP的一句话：</p>
+<blockquote>
+<p>对一个技术型公司来说，最宝贵的资产其实是人，对一个开源项目来说，最核心的资产是一个活跃的开源社区以及他人对这个项目的认可。</p>
+</blockquote>
+<p>这正是开源的意义，我也做过一部分开源工作，而TIDB正是这一切的开始。</p>
+<p>本科时代，由于项目的规模有限，基本没机会参与到<code>协同开发</code>这一步骤，每个人单打独斗，你写的是图书管理系统，我写的是教务管理系统，这种系统的代码量靠一个人是可以搞定的，所以对于划水选手而言，也就懒得去探索github，了解git。但是当面临团队开发的时候，git便是你逃避不了的话题。可以说，在社区做贡献的同时，也让我学习到这些知识，后来我发表了一篇小论文，就是基于github提供的用户历史数据做推荐，当然这个工作更偏向于数据分析的工作，但是也是tidb的那次经历给的启发。</p>
+<p>接下来来谈谈这个contribute–<strong>表达式向量化</strong></p>
+<p>TIDB为了鼓励参与，在很简单的向量化这里留下了很多口子，对于小白来说非常友好。</p>
+<h2 id="如何访问和修改向量"><a href="#如何访问和修改向量" class="headerlink" title="如何访问和修改向量"></a>如何访问和修改向量</h2><p>在TIDB中有变长类型和定长类型，有如下读写方式：</p>
 <ul>
-<li><p>把.github文件夹复制到hexo根目录的.deploy_git</p>
-<p>如果不添加进来，你会发现，即使你把.github文件夹放到public下，执行deploy命令，hexo也不会托管他。添加进来就可以保证，只要public存在这个文件夹，就可以deploy到远程的master上。</p>
+<li>定长类型(int64为例)<ul>
+<li><code>ResizeInt64s(size, isNull)</code>：预分配 size 个元素的空间，并把所有位置的 <code>null</code> 标记都设置为 <code>isNull</code>；</li>
+<li><code>Int64s()</code>：返回一个 <code>[]int64</code> 的 Slice，用于直接读写数据；</li>
+<li><code>SetNull(rowID, isNull)</code>：标记第 <code>rowID</code> 行为 <code>isNull</code>。</li>
+</ul>
 </li>
-<li><p>写脚本一键更新</p>
-<p>hexo的流程是这样的，执行hexo clean，会把整个public文件夹删除。然后执行hexo g，会渲染source文件夹里面的md文件成html页面，也就是我们在blog看到的页面。执行hexo d，更新到github。</p>
-<p>所以我们的脚本顺序是这样的：</p>
-<ul>
-<li><p>进入到hexo根目录</p>
-</li>
-<li><p>执行<code>hexo clean</code>命令</p>
-</li>
-<li><p>执行<code>hexo g</code>命令</p>
-</li>
-<li><p>复制根目录的<code>.github</code>文件夹到<code>public</code>内。</p>
-<p>这里需要我们提前把<code>.github</code>文件夹复制到根目录，放到这里是不会消失的。</p>
-</li>
-<li><p>执行<code>hexo deploy</code>命令</p>
-</li>
-<li><p>完事</p>
-</li>
+<li>变长类型(String为例)<ul>
+<li><code>ReserveString(size)</code>：预估 size 个元素的空间，并预先分配内存；</li>
+<li><code>AppendNull()</code>：追加一个 <code>null</code> 到向量末尾；</li>
+<li><code>GetString(rowID)</code>：读取下标为 <code>rowID</code> 的 string 数据。</li>
 </ul>
 </li>
 </ul>
-<p>所以最后我们更新博客的流程是这样的，双击bat文件，完事。</p>
-<p>这里是我的bat文件，仅供参考:</p>
-<p>CMD.bat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd &#x2F;k &quot;cd &#x2F;d D:\development\myblog&amp;&amp;hexo clean &amp;&amp;hexo g &amp;&amp; xcopy D:\development\myblog\.github D:\development\myblog\public\.github\ &#x2F;e &amp;&amp; hexo d&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="向量表达式计算框架"><a href="#向量表达式计算框架" class="headerlink" title="向量表达式计算框架"></a>向量表达式计算框架</h2><p>向量化的计算接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vectorized() bool</span><br><span class="line">vecEvalXType(input *Chunk, result *Column) error</span><br></pre></td></tr></table></figure>
 
-<p>最后你会发现：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326153932457.png" alt="image-20210326153932457"></p>
-<p>爽呆！！！！</p>
+<ul>
+<li>xType：类型</li>
+<li>input：输入数据，类型为<code>\*Chunk</code></li>
+<li><code>result</code>存放结果数据。</li>
+</ul>
+<p>对于任意表达式，只有在其中所有的函数都支持向量化后，才认为表达式支持向量化。</p>
+<h2 id="为函数实现向量化接口"><a href="#为函数实现向量化接口" class="headerlink" title="为函数实现向量化接口"></a>为函数实现向量化接口</h2><p>向量化需要实现<code>vecEvalXType()</code>和<code>vectorized</code>接口</p>
+<ul>
+<li>在 <code>vectorized()</code> 接口中返回 <code>true</code> ，表示该函数已经实现向量化计算；</li>
+<li>在 <code>vecEvalXType()</code> 实现此函数的计算逻辑。</li>
+</ul>
+<p>向量化的代码存放在_vec.go中，文件头加上licence说明。</p>
+<p>以下是代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vectorized</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vecEvalInt</span><span class="params">(input *chunk.Chunk, result *chunk.Column)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.Errorf(<span class="string">&quot;not implemented&quot;</span>)</span><br><span class="line">	n := input.NumRows()</span><br><span class="line">	buf, err := b.bufAllocator.get(types.ETDuration, n)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> b.bufAllocator.put(buf)</span><br><span class="line">	<span class="keyword">if</span> err = b.args[<span class="number">0</span>].VecEvalDuration(b.ctx, input, buf); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result.ResizeInt64(n, <span class="literal">false</span>)</span><br><span class="line">	result.MergeNulls(buf)</span><br><span class="line">	i64s := result.Int64s()</span><br><span class="line">	ds := buf.GoDurations()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> result.IsNull(i) &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		i64s[i] = <span class="keyword">int64</span>((ds[i] % time.Second) / time.Microsecond)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/pingcap/tidb/pull/13482">PR链接</a></p>
+<p>就是这么简单，最后还送了一个马克杯，和一个勋章。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210407171511208.png" alt="image-20210407171511208"></p>
  
       <!-- reward -->
       
@@ -197,12 +208,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/03/26/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
 
     </footer>
   </div>
@@ -210,19 +221,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2021/03/29/Netty/" class="article-nav-link">
+      <a href="/2021/04/10/CICD/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Netty
+            DevOps实践
           
         </div>
       </a>
     
     
-      <a href="/2021/03/24/Mysql/" class="article-nav-link">
+      <a href="/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Mysql</div>
+        <div class="article-nav-title">github actions托管gitee pages</div>
       </a>
     
   </nav>

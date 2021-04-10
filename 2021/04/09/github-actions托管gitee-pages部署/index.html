@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Archives: 2020 |  Victor&#39;s Blog
+    github actions托管gitee pages |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -43,57 +43,243 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-github-actions托管gitee-pages部署"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">2020</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2020" class="archive-year">2020</a>
-    </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/" class="archive-article-date">
-  <time datetime="2020-03-04T17:49:51.000Z" itemprop="datePublished">03/05</time>
-</a>
+    <header class="article-header">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/"
-    >Docker容器的备份与迁移</a> 
-</h2>
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  github actions托管gitee pages
+</h1>
  
 
     </header>
-    
-    
+     
+    <div class="article-meta">
+      <a href="/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time datetime="2021-04-09T07:12:49.000Z" itemprop="datePublished">2021-04-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/">前端技术</a>
   </div>
-</article>
-      
-      
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">556</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">2 min</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-  </div>
-  
-  
+      
+    <div class="tocbot"></div>
+
+
+
 
   
-  <nav class="page-nav">
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
+<h1 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h1><p>使用github actions可以参考这个<a target="_blank" rel="noopener" href="https://gitee.com/yanglbme/gitee-pages-action">开源项目</a></p>
+<p>现在问题换到hexo身上，在我们对post文件进行修改之后，一般需要执行<code>hexo c</code>清理缓存(不是必须)，<code>hexo g</code>和<code>hexo d</code>。在使用github actions的时候，需要在根目录添加文件<code>.github/workflows/test.yml</code>来定制actions的流程，但是在执行<code>hexo d</code>的时候，会将这个文件删掉，导致actions失效。我们的问题就是怎么保证.github文件夹一定存在于根目录。而根目录是hexo 托管的，我的解决办法是这样的：</p>
+<ul>
+<li><p>把.github文件夹复制到hexo根目录的.deploy_git</p>
+<p>如果不添加进来，你会发现，即使你把.github文件夹放到public下，执行deploy命令，hexo也不会托管他。添加进来就可以保证，只要public存在这个文件夹，就可以deploy到远程的master上。</p>
+</li>
+<li><p>写脚本一键更新</p>
+<p>hexo的流程是这样的，执行hexo clean，会把整个public文件夹删除。然后执行hexo g，会渲染source文件夹里面的md文件成html页面，也就是我们在blog看到的页面。执行hexo d，更新到github。</p>
+<p>所以我们的脚本顺序是这样的：</p>
+<ul>
+<li><p>进入到hexo根目录</p>
+</li>
+<li><p>执行<code>hexo clean</code>命令</p>
+</li>
+<li><p>执行<code>hexo g</code>命令</p>
+</li>
+<li><p>复制根目录的<code>.github</code>文件夹到<code>public</code>内。</p>
+<p>这里需要我们提前把<code>.github</code>文件夹复制到根目录，放到这里是不会消失的。</p>
+</li>
+<li><p>执行<code>hexo deploy</code>命令</p>
+</li>
+<li><p>完事</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>所以最后我们更新博客的流程是这样的，双击bat文件，完事。</p>
+<p>这里是我的bat文件，仅供参考:</p>
+<p>CMD.bat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd &#x2F;k &quot;cd &#x2F;d D:\development\myblog&amp;&amp;hexo clean &amp;&amp;hexo g &amp;&amp; xcopy D:\development\myblog\.github D:\development\myblog\public\.github\ &#x2F;e &amp;&amp; hexo d&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最后你会发现：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326153932457.png" alt="image-20210326153932457"></p>
+<p>爽呆！！！！</p>
+ 
+      <!-- reward -->
+      
+    </div>
     
-    <a class="extend prev" rel="prev" href="/archives/2020/page/4/">上一页</a><a class="page-number" href="/archives/2020/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/3/">3</a><a class="page-number" href="/archives/2020/page/4/">4</a><span class="page-number current">5</span>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            tidb contributor总结
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">OAuth2.0</div>
+      </a>
+    
   </nav>
-  
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "zUWoNtJddoKIUUWCugVrSkqY-gzGzoHsz",
+    app_key: "yegbJ1Yoz3JfCVfJUSQloPqX",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -244,6 +430,23 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">

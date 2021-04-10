@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    dockefile + docker compose |  Victor&#39;s Blog
+    DevOps实践 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -44,7 +44,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Dcoker-Componse"
+  id="post-CICD"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -55,18 +55,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  dockefile + docker compose
+  DevOps实践
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2020/08/12/Dcoker-Componse/" class="article-date">
-  <time datetime="2020-08-12T01:19:47.000Z" itemprop="datePublished">2020-08-12</time>
+      <a href="/2021/04/10/CICD/" class="article-date">
+  <time datetime="2021-04-10T09:59:13.000Z" itemprop="datePublished">2021-04-10</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a>
+    <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
   </div>
   
 <div class="word_count">
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.5k</span>
+            <span class="post-count">7.6k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">18 min</span>
+            <span class="post-count">31 min</span>
         </span>
     </span>
 </div>
@@ -98,7 +98,162 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="前因后果"><a href="#前因后果" class="headerlink" title="前因后果"></a>前因后果</h2><p>项目本身前后端分工比较明确，前端同学前期通过mock模拟数据进行页面开发，可以做到和后端完全解耦。但是最后总是要把mock的数据换到remote，这不得不进行一些前后端联调的测试。作为后端管理人员，每次需要在发现问题后，将项目重新打包部署在服务器，是一件比较繁琐的事情，这时候CICD(持续交付持续集成)的需求就应运而生。</p>
+  <h1 id="1、DevOps"><a href="#1、DevOps" class="headerlink" title="1、DevOps"></a>1、DevOps</h1><p>朴素的说，<code>DevOps = Dev(开发人员)+Ops(运维人员)</code>。实际上涵盖的角色范围会更广泛：除了开发，测试，运维，还涉及项目经理，产品经理等等跨职能部门相互合作，完成某一项目或者任务。</p>
+<p>实际上DevOps从需求设计到开发、测试到运维，甚至是线上的运行反馈是整个全生命周期的，所以他是一个大桶多个部门协调的平台。至于工具和自动化只是实现的一种手段。或者说，DevOps是通过工具，自动化来达到通过工具链与持续集成、交付、反馈、优化进行端到端的整合，完成无缝的跨团队、跨系统协作。总结为三点：</p>
+<ul>
+<li>DevOps理念：以客户、业务需求为导向，向着同一个目标前进，强调多个部门紧密沟通与协作的软件交付过程。它包括产品管理，软件开发及运营等各个方面。</li>
+<li>DevOps核心实践：人员协作文化+持续交付能力支撑</li>
+<li>DevOps目标：建立一种精诚合作的文化和环境，通过工具链与持续集成、交付、反馈、优化来实现跨团队、跨系统协作方式。</li>
+</ul>
+<p>DevOps最佳实践手段就是CICD，这是绕不开的话题，<strong>DevOps是CICD思想的延伸，CICD是DevOps的技术核心</strong>，没有CICD和自动化测试，DevOps是没有意义的。</p>
+<h2 id="CI"><a href="#CI" class="headerlink" title="CI"></a>CI</h2><p>持续集成。</p>
+<p>是一种开发实践，倡导团队需要频繁的集成工作，每次集成都通过自动化构建（编译，构建，自动化测试）来验证，从而快速发现集成中的错误。让正在开发的软件始终处于可工作状态，让产品可以快速迭代，同时保持高质量。</p>
+<h2 id="CD"><a href="#CD" class="headerlink" title="CD"></a>CD</h2><p>CD包含了两层内容，持续交付和持续部署。这两者是不相等的。</p>
+<ul>
+<li>持续交付：持续集成的延伸，他将集成后的代码部署到生产环境，确保可以以可持续的方式快速向客户发布新的更改。如果代码没有问题，可以继续手工部署到生产环境中。她强调的是，不管怎么更新，软件是随时随地可以交付的。</li>
+<li>持续部署：持续部署是持续交付的下一步，在持续交付的基础上，由开发人员或运维人员自助式的定期向生产环境部署稳定的构建版本，持续部署的目标是代码在任何时刻都是可部署的，并可自动进入到生产环境。</li>
+</ul>
+<p><strong>持续交付是指团队确保每个变更可以部署至生产环境，但也许并不需要实际部署</strong>，这通常可能是出于业务方面的原因。而<strong>持续部署是指每个变更可以自动部署到生产环境</strong>。只有成功实现持续交付的前提下，才能进行持续部署。</p>
+<h1 id="2、CICD实践"><a href="#2、CICD实践" class="headerlink" title="2、CICD实践"></a>2、CICD实践</h1><p>这部分总结我们实验室在CICD的实践。</p>
+<p>实验室最开始的软件开发过程是这样的：后端同学按照文档写API，前端同学前期用mock模拟数据保证开发进度不受影响，在前后端联调的阶段，后端同学把自己的jar包手动运行在服务器上，供前端同学调用。现在前端同学反映API有问题，后端同学在debug之后重新打包放在服务器运行，这是一个非常繁琐且无趣的过程。于是我们开始探索CICD的实现。</p>
+<p>没有使用厂商的集成工具，用的是gitlab+docker技术实现CICD。</p>
+<h2 id="1-相关概念介绍"><a href="#1-相关概念介绍" class="headerlink" title="1.相关概念介绍"></a>1.相关概念介绍</h2><ul>
+<li><p>CICD </p>
+<p>前面介绍过了</p>
+</li>
+<li><p>Docker</p>
+<p>Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。</p>
+<p>Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</p>
+<p>容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
+</li>
+<li><p>Docker-compose</p>
+<p>Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。这非常适用于我们的微服务场景，每个微服务一般部署若干实例，每个实例手动启停的开销过大，可以借助docker-compose管理。</p>
+</li>
+<li><p>container/image</p>
+<p>镜像类似于虚拟机的镜像。是一个只读模板，一个独立的文件系统，包含运行容器需要的所有数据。</p>
+<p>dcoker利用容器来创建应用：docker容器是由docker镜像创建的运行实例。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324204204902.png" alt="image-20210324204204902"></p>
+</li>
+<li><p>.gitlab-ci.yml、Dockerfile、gitlab-runner</p>
+<ul>
+<li>.gitlab-ci.yml：定义流水线阶段分级与每个阶段具体逻辑的文件</li>
+<li>Dockerfile：用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。</li>
+<li>gitlab-runner：执行软件集成脚本的机器。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-机器"><a href="#2-机器" class="headerlink" title="2.机器"></a>2.机器</h2><ul>
+<li>CI机：安装docker和gitlab-runner</li>
+<li>服务机：安装docker和docker-compose</li>
+<li>gitlab：代码仓库，在项目中设置环境变量和gitlab-runner</li>
+<li>阿里云镜像服务：需要使用云商提供的容器镜像服务来构建 <code>远程镜像仓库</code>，本文以阿里云为例。</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/CICD.png" alt="CICD"></p>
+<h2 id="3-步骤"><a href="#3-步骤" class="headerlink" title="3.步骤"></a>3.步骤</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>CI机：<code>2核8G/100Mbps</code></li>
+<li>服务机：<code>4core16G/100Mbps</code></li>
+<li>阿里云镜像容器服务：<ul>
+<li>容器镜像服务ACR</li>
+<li>个人版</li>
+<li>创建命名空间</li>
+<li>创建镜像仓库</li>
+<li>代码源：本地代码</li>
+</ul>
+</li>
+</ul>
+<h3 id="CI机器"><a href="#CI机器" class="headerlink" title="CI机器"></a>CI机器</h3><ul>
+<li><p>安装docker并设置自启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure></li>
+<li><p>配置SSH key密钥对与服务机通信</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">ssh-add ~/.ssh/id_rsa</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub root@服务机IP</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里配置是因为CICD的deploy阶段需要CIdergitlab-runner通过ssh连接来执行服务机命令。</p>
+</blockquote>
+</li>
+<li><p>安装gitlab-runner并运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name gitlab-runner --restart always \</span><br><span class="line">-v /srv/gitlab-runner/config:/etc/gitlab-runner \</span><br><span class="line">-v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">-v /root/.ssh:/root/.ssh \</span><br></pre></td></tr></table></figure>
+
+<p>命令挂载了三个东西，分别是：</p>
+<ul>
+<li>gitlab-runner的配置文件</li>
+<li>让runner里面可以执行宿主机的docker</li>
+<li>让CI机器能够免密访问服务机</li>
+</ul>
+</li>
+<li><p>将runner注册到gitlab中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it gitlab-runner gitlab-ci-multi-runner register</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第一步：输入gitlab URL(你们自己的gitlab地址)</li>
+<li>第二步：输入gitlab-ci token，去gitlab的CICD的配置里去copy</li>
+<li>第三步：输入runner的description、tags，其中tags会在后续的.gitlab-ci.yml中用到</li>
+<li>第四步：输入runner的执行器，选择docker</li>
+<li>第五步：选择默认的 docker 镜像</li>
+</ul>
+</li>
+<li><p>编辑gitlab-runner配置文件</p>
+<p>配置文件挂载到宿主机了，编辑宿主机的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;srv&#x2F;gitlab-runner&#x2F;config&#x2F;config.toml</span><br></pre></td></tr></table></figure>
+
+<p>配置样例：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">concurrent</span> = <span class="number">10</span></span><br><span class="line"><span class="section">[[runners]]</span></span><br><span class="line">  <span class="attr">name</span> = <span class="string">&quot;s****an&quot;</span></span><br><span class="line">  <span class="attr">url</span> = <span class="string">&quot;https://co*******m/&quot;</span></span><br><span class="line">  <span class="attr">token</span> = <span class="string">&quot;m********JFMHxD&quot;</span></span><br><span class="line">  <span class="attr">executor</span> = <span class="string">&quot;docker&quot;</span></span><br><span class="line">  <span class="section">[runners.custom_build_dir]</span></span><br><span class="line">  <span class="section">[runners.cache]</span></span><br><span class="line">    <span class="section">[runners.cache.s3]</span></span><br><span class="line">    <span class="section">[runners.cache.gcs]</span></span><br><span class="line">  <span class="section">[runners.docker]</span></span><br><span class="line">    <span class="attr">tls_verify</span> = <span class="literal">false</span></span><br><span class="line">    <span class="attr">image</span> = <span class="string">&quot;ccchieh/centos-common&quot;</span></span><br><span class="line">    <span class="attr">privileged</span> = <span class="literal">false</span></span><br><span class="line">    <span class="attr">disable_entrypoint_overwrite</span> = <span class="literal">false</span></span><br><span class="line">    <span class="attr">oom_kill_disable</span> = <span class="literal">false</span></span><br><span class="line">    <span class="attr">disable_cache</span> = <span class="literal">false</span></span><br><span class="line">    <span class="attr">volumes</span> = [<span class="string">&quot;/cache&quot;</span>, <span class="string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>, <span class="string">&quot;/usr/bin/docker:/usr/bin/docker&quot;</span>, <span class="string">&quot;/data/.m2:/root/.m2&quot;</span>, <span class="string">&quot;/root/.ssh:/root/.ssh&quot;</span>, <span class="string">&quot;/root/.docker/:/root/.docker/&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>这里修改的主要是<code>concurrent</code>、<code>volumes</code>、<code>pull_policy</code></p>
+<ul>
+<li><p>concurrent</p>
+<p>表示这个runner可以并行执行多少任务，常见的就是，同时提交多次任务或者在一次流水线中任务可以并行完成，例如在buile阶段，会同时执行下载依赖构建的操作。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324213059916.png" alt="image-20210324213059916"></p>
+</li>
+<li><p>volumes</p>
+<p>挂载的目录，就是docker run 的时候用的 -v 挂载的目录，因为我们后面需要编译Dockerfile，所以将docker的相关目录文件挂载上去，然后挂载下maven仓库（这里是直接挂载了，实际使用的时候也可以利用gitlab-ci文件里面的cache进行缓存）避免每次打包编译java项目的时候都要下载一次依赖（这里是针对maven的，其他依赖管理软件视情况而定）。最后我这里直接把宿主机的.ssh也挂载上去了，是为了后面可以操作远程部署的服务器，因为我这里都是内网机器，所以安全性暂时不考虑，这里再实际应用中请注意下，避免不必要的风险。</p>
+</li>
+<li><p>pull_policy</p>
+<p>表示只有当本地没镜像的时候才拉取镜像，避免每次都重新拉取镜像。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="项目文件编写与gitlab设置"><a href="#项目文件编写与gitlab设置" class="headerlink" title="项目文件编写与gitlab设置"></a>项目文件编写与gitlab设置</h3><ul>
+<li><p>设置项目的gitlab-runner</p>
+<p>在CI机器配置完成，确保之前注册的runner是available的。</p>
+</li>
+<li><p>编写Dockerfile</p>
+<p>每个项目需要编写一个Dockerfile实现项目的编译打包，这里以后端微服务的项目为例，文件如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建一个基本的微服务打包环境,将公用模块install</span></span><br><span class="line">FROM ccchieh/maven3-openjdk-8-cn as prod</span><br><span class="line">ARG MY_HOME=/usr/src/app</span><br><span class="line">COPY . <span class="variable">$MY_HOME</span></span><br><span class="line">WORKDIR <span class="variable">$MY_HOME</span></span><br><span class="line">ENV TIME_ZONE=Asia/Shanghai</span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/<span class="variable">$TIME_ZONE</span> /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="variable">$TIME_ZONE</span> &gt; /etc/timezone</span><br><span class="line">RUN /usr/<span class="built_in">local</span>/bin/mvn-entrypoint.sh mvn clean install</span><br></pre></td></tr></table></figure></li>
+<li><p>设置项目的环境变量</p>
+<p>.gitlab.yml支持环境变量，这样可以把一些敏感信息隐藏。</p>
+<p><img src="https://leofang.cn/post/docker-ci/11.png"></p>
+<p>这里设置了容器名称，进行私有仓库地址，部署服务器地址，服务器中的docker-compose的文件路径。</p>
+<p>其中镜像仓库地址的前缀需要去阿里云的镜像仓库查看。</p>
+</li>
+<li><p>编写.gitlab-ci.yml</p>
+<p>.gitlab-ci.yml文件定义了CI/CD pipeline的阶段与具体逻辑，这里我们分为四个阶段（pre-build、build、deploy、cleanup）来打包构建项目的镜像：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cleanup</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build:</span> <span class="comment"># 编译阶段</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shuishan</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">--build-arg</span> <span class="string">MODULE_NAME=$CONT_NAME</span> <span class="string">--build-arg</span> <span class="string">PROFILE_NAME=dockerdev</span> <span class="string">-t</span> <span class="string">$IMAGE_MASTER</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">$IMAGE_MASTER</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">build-prod:</span> <span class="comment"># 编译阶段</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">prod</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shuishan-aliyun-runner</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">      <span class="string">docker</span> <span class="string">build</span> <span class="string">--build-arg</span> <span class="string">MODULE_NAME=$CONT_NAME</span> <span class="string">--build-arg</span> <span class="string">PROFILE_NAME=docker</span> <span class="string">-t</span> <span class="string">$IMAGE_PROD</span> <span class="string">.</span></span><br><span class="line">      <span class="string">docker</span> <span class="string">push</span> <span class="string">$IMAGE_PROD</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy:</span> <span class="comment"># 部署阶段</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shuishan</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$TEST_SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;TEST_SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">stop</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$TEST_SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;TEST_SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">rm</span> <span class="string">-sf</span> <span class="string">$CONT_NAME</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$TEST_SERVER_ADDR</span> <span class="string">docker</span> <span class="string">rmi</span> <span class="string">$IMAGE_MASTER</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$TEST_SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;TEST_SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">up</span> <span class="string">-d</span> <span class="string">--build</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy-prod:</span> <span class="comment"># 部署阶段</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">prod</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shuishan-aliyun-runner</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">stop</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">rm</span> <span class="string">-sf</span> <span class="string">$CONT_NAME</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$SERVER_ADDR</span> <span class="string">docker</span> <span class="string">rmi</span> <span class="string">$IMAGE_PROD</span></span><br><span class="line">      <span class="string">ssh</span> <span class="string">$SERVER_ADDR</span> <span class="string">docker-compose</span> <span class="string">-f</span> <span class="string">$&#123;SERVER_PATH&#125;/docker-compose.yml</span> <span class="string">up</span> <span class="string">-d</span> <span class="string">--build</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">cleanup:</span> <span class="comment"># 清理作业</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">cleanup</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">prod</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shuishan</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;回收垃圾&quot;</span></span><br><span class="line">  <span class="comment">#    - docker system prune -f # 删除docker中间无用镜像</span></span><br><span class="line">  <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="服务机"><a href="#服务机" class="headerlink" title="服务机"></a>服务机</h3><ul>
+<li><p>连接</p>
+</li>
+<li><p>安装docker自启</p>
+</li>
+<li><p>安装docker-compose</p>
+</li>
+<li><p>安装git</p>
+</li>
+<li><p>编写docker-compose.yml</p>
+<p>Docker Compose默认的模板文件是<code>docker-compose.yml</code>，我们可以通过编在服务机上编写<code>docker-compose.yml</code>文件，将繁琐的docker命令整合成一个文件，最后通过一行命令来统一执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;3&quot;</span><br><span class="line">services:</span><br><span class="line">  nacos:</span><br><span class="line">    container_name: nacos-standalone</span><br><span class="line">    image: nacos&#x2F;nacos-server:latest</span><br><span class="line">    environment:</span><br><span class="line">    - PREFER_HOST_MODE&#x3D;hostname</span><br><span class="line">    - MODE&#x3D;standalone</span><br><span class="line">    restart: always</span><br><span class="line">    volumes:</span><br><span class="line">    - .&#x2F;nacos&#x2F;standalone-logs&#x2F;:&#x2F;home&#x2F;nacos&#x2F;logs</span><br><span class="line">    - .&#x2F;nacos&#x2F;init.d&#x2F;custom.properties:&#x2F;home&#x2F;nacos&#x2F;init.d&#x2F;custom.properties</span><br><span class="line">    ports:</span><br><span class="line">    - &quot;8848:8848&quot;</span><br><span class="line">    networks:</span><br><span class="line">      default:</span><br><span class="line">        aliases:</span><br><span class="line">         - nacos</span><br><span class="line">  redis:</span><br><span class="line">    container_name: metasequoia-redis</span><br><span class="line">    restart: always</span><br><span class="line">    image: &quot;redis:alpine&quot;</span><br><span class="line">    networks:</span><br><span class="line">      default:</span><br><span class="line">        aliases:</span><br><span class="line">         - redis</span><br><span class="line"># 后端 </span><br><span class="line">  bx-gateway-zuul:</span><br><span class="line">    container_name: bx-gateway-zuul</span><br><span class="line">    image: registry.cn-shanghai.aliyuncs.com&#x2F;shuishan-data&#x2F;shuishan-gateway-server:master</span><br><span class="line">    restart: always</span><br><span class="line">    volumes:</span><br><span class="line">    - .&#x2F;bx-gateway-zuul-logs&#x2F;:&#x2F;logs&#x2F;</span><br><span class="line">    ports:</span><br><span class="line">    - &quot;8080:8080&quot;</span><br><span class="line">    networks:</span><br><span class="line">      default:</span><br><span class="line">        aliases:</span><br><span class="line">         - api # 设置api服务的别名</span><br><span class="line">    environment:</span><br><span class="line">    - NACOS_ADDR&#x3D;nacos</span><br><span class="line">    - NACOS_PORT&#x3D;8848</span><br><span class="line">  user-center:</span><br><span class="line">    container_name: user-center</span><br><span class="line">    image: registry.cn-shanghai.aliyuncs.com&#x2F;shuishan-data&#x2F;shuishan-usercenter-server:master</span><br><span class="line">    restart: always</span><br><span class="line">    volumes:</span><br><span class="line">    - .&#x2F;user-center-logs&#x2F;:&#x2F;logs&#x2F;</span><br><span class="line">    environment:</span><br><span class="line">    - NACOS_ADDR&#x3D;nacos</span><br><span class="line">    - NACOS_PORT&#x3D;8848</span><br><span class="line">    networks:</span><br><span class="line">      default:</span><br><span class="line">        aliases:</span><br><span class="line">         - usercenter</span><br><span class="line">  shuishan-datav-server:</span><br><span class="line">    container_name: shuishan-datav-server</span><br><span class="line">    image: registry.cn-shanghai.aliyuncs.com&#x2F;shuishan-data&#x2F;shuishan-datav-server:master</span><br><span class="line">    restart: always</span><br><span class="line">    volumes:</span><br><span class="line">    - .&#x2F;shuishan-datav-server-logs&#x2F;:&#x2F;logs&#x2F;</span><br><span class="line">    - .&#x2F;data&#x2F;:&#x2F;root&#x2F;data&#x2F;</span><br><span class="line">    environment:</span><br><span class="line">    - NACOS_ADDR&#x3D;nacos</span><br><span class="line">    - NACOS_PORT&#x3D;8848</span><br></pre></td></tr></table></figure>
+
+<p>这里我们需要打包构建的服务镜像包括：nacos服务发现镜像、redis服务镜像、网关服务镜像、用户鉴权服务镜像、子服务镜像(shuishan-datav-server)。</p>
+</li>
+<li><p>构建项目的容器镜像</p>
+<p>进入到包含docker-compose.yml的目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f ./docker-compose.yml up -d --build</span><br></pre></td></tr></table></figure>
+
+<p>该命令可以自动完成包括构建镜像，(重新)创建服务，启动服务，并关联服务相关容器的一系列操作。</p>
+</li>
+</ul>
+<h1 id="3-Dockerfile-docker-compose"><a href="#3-Dockerfile-docker-compose" class="headerlink" title="3.Dockerfile+docker compose"></a>3.Dockerfile+docker compose</h1><h2 id="前因后果"><a href="#前因后果" class="headerlink" title="前因后果"></a>前因后果</h2><p>项目本身前后端分工比较明确，前端同学前期通过mock模拟数据进行页面开发，可以做到和后端完全解耦。但是最后总是要把mock的数据换到remote，这不得不进行一些前后端联调的测试。作为后端管理人员，每次需要在发现问题后，将项目重新打包部署在服务器，是一件比较繁琐的事情，这时候CICD(持续交付持续集成)的需求就应运而生。</p>
 <p>OK，思路是先把后端打包成docker镜像，然后去写配置。项目一开始是把nacos也打成一个jar包去运行，但是放到服务器就各种各样的问题。第一个想到的仍然是docker，官网查阅，果然有，运行也是如丝般顺滑。强烈安利Docker啊啊啊啊，一定要去用！！！</p>
 <img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200812092926.png" alt="image-20200812092918803" style="zoom:50%;" />
 
@@ -430,7 +585,7 @@
 <li><p><strong>volumes</strong></p>
 </li>
 </ul>
- 
+<h1 id="4-Docker常见面试题"><a href="#4-Docker常见面试题" class="headerlink" title="4.Docker常见面试题"></a>4.Docker常见面试题</h1> 
       <!-- reward -->
       
     </div>
@@ -494,12 +649,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2020/08/12/Dcoker-Componse/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/10/CICD/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DevOps/" rel="tag">DevOps</a></li></ul>
 
     </footer>
   </div>
@@ -507,19 +662,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            文件漏洞渗透
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/" class="article-nav-link">
+      <a href="/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">对象存储及使用痛点</div>
+        <div class="article-nav-title">tidb contributor总结</div>
       </a>
     
   </nav>

@@ -62,8 +62,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2021/04/06/%E5%89%91%E6%8C%87offer/" class="article-date">
-  <time datetime="2021-04-06T01:51:48.000Z" itemprop="datePublished">2021-04-06</time>
+      <a href="/2021/04/07/%E5%89%91%E6%8C%87offer/" class="article-date">
+  <time datetime="2021-04-07T01:51:48.000Z" itemprop="datePublished">2021-04-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.4k</span>
+            <span class="post-count">1.7k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">6 min</span>
+            <span class="post-count">7 min</span>
         </span>
     </span>
 </div>
@@ -110,7 +110,7 @@
 <h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>一开始的思路是先用快排对数组进行排序，然后遍历数组，但是排序超时。<br>这时候可以选择用java中的set解题，在往set中添加元素的时候，添加成功返回true，说明不重复，反之说明重复。</p>
 <h2 id="code-1"><a href="#code-1" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//排序超时</span></span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.add(nums[i]) == <span class="keyword">false</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-从微到头打印链表"><a href="#3-从微到头打印链表" class="headerlink" title="3.从微到头打印链表"></a>3.从微到头打印链表</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
+<h1 id="3-从尾到头打印链表"><a href="#3-从尾到头打印链表" class="headerlink" title="3.从尾到头打印链表"></a>3.从尾到头打印链表</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
 <blockquote>
 <p>示例1：</p>
 <p>输入：head= [1,2,3]</p>
@@ -154,10 +154,21 @@
 <p>所以$f(n) = f(n-1)+f(n-2)$</p>
 <h2 id="code-6"><a href="#code-6" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numWays</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span> || i==<span class="number">1</span>)&#123;</span><br><span class="line">                dp[i]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i] = (dp[i-<span class="number">1</span>]+dp[i-<span class="number">2</span>])%<span class="number">1000000007</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="7-旋转数组中的最小数字"><a href="#7-旋转数组中的最小数字" class="headerlink" title="7.旋转数组中的最小数字"></a>7.旋转数组中的最小数字</h1><h2 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组开始的几个元素搬到末尾，称为数组旋转，给出一个递增的数组的旋转，输出旋转数组中的最小元素。</p>
-<h2 id="解题思路-7"><a href="#解题思路-7" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-7"><a href="#code-7" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="7-变态青蛙跳台阶"><a href="#7-变态青蛙跳台阶" class="headerlink" title="7.变态青蛙跳台阶"></a>7.变态青蛙跳台阶</h1><h2 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h2><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+<h2 id="解题思路-7"><a href="#解题思路-7" class="headerlink" title="解题思路"></a>解题思路</h2><p>假设跳到n有f(n)种跳法，则:</p>
+<p>$f(n) = f(n-1)+f(n-2)+…+f(1)$</p>
+<p>$f(n-1) = f(n-2)+f(n-3)+…+f(1)$</p>
+<p>两个式子想减得到：$f(n) = 2f(n-1)$，然后就可以dp了。</p>
+<h2 id="code-7"><a href="#code-7" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">jumpFloorII</span><span class="params">(<span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//通过递推可以得到f(n) = 2f(n-1)</span></span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[target+<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i&lt;=target;i++)&#123;</span><br><span class="line">            dp[i] = <span class="number">2</span>*dp[i-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[target];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
- 
+
+
+<h1 id="8-旋转数组中的最小数字"><a href="#8-旋转数组中的最小数字" class="headerlink" title="8.旋转数组中的最小数字"></a>8.旋转数组中的最小数字</h1><h2 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组开始的几个元素搬到末尾，称为数组旋转，给出一个递增的数组的旋转，输出旋转数组中的最小元素。</p>
+<h2 id="解题思路-8"><a href="#解题思路-8" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题本质上是二分查找，实际上，暴力查找也过了的。</p>
+<h2 id="code-8"><a href="#code-8" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minNumberInRotateArray</span><span class="params">(<span class="keyword">int</span> [] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(array[i]&lt;min)&#123;</span><br><span class="line">                min = array[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> min;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-合并两个排序的链表"><a href="#9-合并两个排序的链表" class="headerlink" title="9.合并两个排序的链表"></a>9.合并两个排序的链表</h1><h2 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入两个单调递增的链表，输出两个链表合成后的链表，合并之后满足单调不递减。</p>
+<h2 id="解题思路-9"><a href="#解题思路-9" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-9"><a href="#code-9" class="headerlink" title="code"></a>code</h2> 
       <!-- reward -->
       
     </div>
@@ -221,7 +232,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/06/%E5%89%91%E6%8C%87offer/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/07/%E5%89%91%E6%8C%87offer/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -233,6 +244,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            MPI分布式计算
+          
+        </div>
+      </a>
     
     
       <a href="/2021/03/29/Netty/" class="article-nav-link">

@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    tidb contributor总结 |  Victor&#39;s Blog
+    OAuth2.0 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -44,7 +44,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-tidb-contributor总结"
+  id="post-OAuth2-0授权"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -55,15 +55,15 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  tidb contributor总结
+  OAuth2.0
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2020/04/07/tidb-contributor%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2020-04-07T08:15:45.000Z" itemprop="datePublished">2020-04-07</time>
+      <a href="/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/" class="article-date">
+  <time datetime="2021-04-08T06:18:02.000Z" itemprop="datePublished">2021-04-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">903</span>
+            <span class="post-count">1.7k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">3 min</span>
+            <span class="post-count">6 min</span>
         </span>
     </span>
 </div>
@@ -98,52 +98,106 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
-<p>我对数据库的理解谈不上深刻，但是我认为，数据库一定要是个产品，有企业愿意用，这样才能实现他的价值和有动力迭代。不同的是，OB走的是闭源路线，在支撑内部电商业务的同时，商业化也做的不错。而TIDB走的是开源路线。</p>
-<p>为什么开源，引用PingCAP的一句话：</p>
-<blockquote>
-<p>对一个技术型公司来说，最宝贵的资产其实是人，对一个开源项目来说，最核心的资产是一个活跃的开源社区以及他人对这个项目的认可。</p>
-</blockquote>
-<p>这正是开源的意义，我也做过一部分开源工作，而TIDB正是这一切的开始。</p>
-<p>本科时代，由于项目的规模有限，基本没机会参与到<code>协同开发</code>这一步骤，每个人单打独斗，你写的是图书管理系统，我写的是教务管理系统，这种系统的代码量靠一个人是可以搞定的，所以对于划水选手而言，也就懒得去探索github，了解git。但是当面临团队开发的时候，git便是你逃避不了的话题。可以说，在社区做贡献的同时，也让我学习到这些知识，后来我发表了一篇小论文，就是基于github提供的用户历史数据做推荐，当然这个工作更偏向于数据分析的工作，但是也是tidb的那次经历给的启发。</p>
-<p>接下来来谈谈这个contribute–<strong>表达式向量化</strong></p>
-<p>TIDB为了鼓励参与，在很简单的向量化这里留下了很多口子，对于小白来说非常友好。</p>
-<h2 id="如何访问和修改向量"><a href="#如何访问和修改向量" class="headerlink" title="如何访问和修改向量"></a>如何访问和修改向量</h2><p>在TIDB中有变长类型和定长类型，有如下读写方式：</p>
+  <h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
+<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
+<li>Third-party application：第三方应用程序，又称为客户端。</li>
+<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
+<li>Resource Owner：资源所有者，也称为用户。</li>
+<li>User Agent：用户代理，浏览器。</li>
+<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
+<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
+</ul>
+<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
+<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
+<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
+<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
+<li>用户同意给客户端授权。</li>
+<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
+<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
+<li>客户端使用令牌，想资源服务器请求资源。</li>
+<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
+</ol>
+<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
+<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
+<li><p><strong>授权码模式</strong></p>
+<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
+<ol>
+<li>用户访问客户端，客户端将用户导向认证服务器。</li>
+<li>用户选择是否给客户端授权。</li>
+<li>用户同意授权，认证服务器将用户导向事先指定的“重定向URI”，同时附上一个授权码。</li>
+<li>客户端收到授权码，附上早先的重定向URL“，向认证服务器申请令牌。</li>
+<li>认证服务器核对授权码和冲形象URL，确认无误后，向客户端发送令牌和更新令牌。</li>
+</ol>
+<p><strong>1步骤需要以下参数：</strong></p>
 <ul>
-<li>定长类型(int64为例)<ul>
-<li><code>ResizeInt64s(size, isNull)</code>：预分配 size 个元素的空间，并把所有位置的 <code>null</code> 标记都设置为 <code>isNull</code>；</li>
-<li><code>Int64s()</code>：返回一个 <code>[]int64</code> 的 Slice，用于直接读写数据；</li>
-<li><code>SetNull(rowID, isNull)</code>：标记第 <code>rowID</code> 行为 <code>isNull</code>。</li>
+<li>response_type：授权类型，固定值为“code”</li>
+<li>client_id：表示客户端ID，必填。</li>
+<li>redirect_url：重定向URL</li>
+<li>scope：申请的权限范围</li>
+<li>state：当前客户端状态，认证服务器会原封不动的返回这个值</li>
+</ul>
+<p>下面是一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;authorize?response_type&#x3D;code&amp;client_id&#x3D;s6BhdRkqt3&amp;state&#x3D;xyz</span><br><span class="line">        &amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>3步骤中，服务器回应客户端的URL，包含以下参数：</strong></p>
+<ul>
+<li>code：授权码，一般是十分钟。该授权码和客户端ID与重定向URL是一一对应关系。</li>
+<li>state：如果请求包含这个参数，认证服务器会原封不动的返回这个参数。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Location: https:&#x2F;&#x2F;client.example.com&#x2F;cb?code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state&#x3D;xyz</span><br></pre></td></tr></table></figure>
+
+<p><strong>4步骤中，包含以下参数：</strong></p>
+<ul>
+<li>grant_type：授权模式，固定值为“authorization_code”。</li>
+<li>code：上一步获取的授权码</li>
+<li>redirect_uri：重定向URI</li>
+<li>client_id：客户端ID，必选。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;token HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type&#x3D;authorization_code&amp;code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br></pre></td></tr></table></figure>
+
+<p><strong>5步骤中，认证服务器返回HTTP回复，包含以下参数：</strong></p>
+<ul>
+<li>access_token：访问令牌</li>
+<li>token_type：表示令牌类型，大小写不敏感。可以是Bearer或者mac</li>
+<li>expires_in：过期时间，S单位。</li>
+<li>refresh_token：更新令牌，用来获取下一次的访问令牌。</li>
+<li>scope：权限范围。</li>
+</ul>
+<p>下面是一个列子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  HTTP&#x2F;1.1 200 OK</span><br><span class="line">     Content-Type: application&#x2F;json;charset&#x3D;UTF-8</span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">       &quot;token_type&quot;:&quot;example&quot;,</span><br><span class="line">       &quot;expires_in&quot;:3600,</span><br><span class="line">       &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">       &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">     &#125;</span><br><span class="line">从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application&#x2F;json）。此外，HTTP头信息中明确指定不得缓存。</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>简化模式</strong></p>
+<p>不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了授权码步骤。所有步骤在浏览器完成， 令牌对访问者可见，且客户端不需要认证。</p>
+</li>
+<li><p><strong>密码模式</strong></p>
+<p>在密码模式中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向服务提供商获取token。</p>
+</li>
+<li><p><strong>客户端模式</strong></p>
+<p>客户端以自己的名义而不是以用户的名义想服务提供商进行认证。严格的说，客户端模式不属于pauth框架要解决的问题。在这种模式下，用户直接向客户端注册，客户端以自己的名义要求服务提供商提供服务，不存在授权问题。步骤如下：</p>
+<ul>
+<li>客户端向认证服务器进行身份认证，并要求一个token</li>
+<li>认证服务器确认无误，向客户端提供token</li>
 </ul>
 </li>
-<li>变长类型(String为例)<ul>
-<li><code>ReserveString(size)</code>：预估 size 个元素的空间，并预先分配内存；</li>
-<li><code>AppendNull()</code>：追加一个 <code>null</code> 到向量末尾；</li>
-<li><code>GetString(rowID)</code>：读取下标为 <code>rowID</code> 的 string 数据。</li>
 </ul>
-</li>
-</ul>
-<h2 id="向量表达式计算框架"><a href="#向量表达式计算框架" class="headerlink" title="向量表达式计算框架"></a>向量表达式计算框架</h2><p>向量化的计算接口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vectorized() bool</span><br><span class="line">vecEvalXType(input *Chunk, result *Column) error</span><br></pre></td></tr></table></figure>
-
+<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>用户访问的时候，如果客户端的令牌已经失效，需要使用更新令牌申请一个新的访问令牌。</p>
+<p>客户端发送更新令牌的请求，包含以下参数：</p>
 <ul>
-<li>xType：类型</li>
-<li>input：输入数据，类型为<code>\*Chunk</code></li>
-<li><code>result</code>存放结果数据。</li>
+<li>granttype：授权模式，固定为“refreshtoken”</li>
+<li>refresh_token：早前收到的更新令牌。</li>
+<li>scope：权限范围</li>
 </ul>
-<p>对于任意表达式，只有在其中所有的函数都支持向量化后，才认为表达式支持向量化。</p>
-<h2 id="为函数实现向量化接口"><a href="#为函数实现向量化接口" class="headerlink" title="为函数实现向量化接口"></a>为函数实现向量化接口</h2><p>向量化需要实现<code>vecEvalXType()</code>和<code>vectorized</code>接口</p>
+<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1><p>腾讯会议提供的oauth2.0对接的步骤如下：</p>
 <ul>
-<li>在 <code>vectorized()</code> 接口中返回 <code>true</code> ，表示该函数已经实现向量化计算；</li>
-<li>在 <code>vecEvalXType()</code> 实现此函数的计算逻辑。</li>
+<li>用户同意授权，获取auth_code</li>
+<li>通过auth_code换取token</li>
+<li>刷新token</li>
+<li>拉取用户信息(检查token是否有效)</li>
 </ul>
-<p>向量化的代码存放在_vec.go中，文件头加上licence说明。</p>
-<p>以下是代码：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vectorized</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *builtinMicroSecondSig)</span> <span class="title">vecEvalInt</span><span class="params">(input *chunk.Chunk, result *chunk.Column)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.Errorf(<span class="string">&quot;not implemented&quot;</span>)</span><br><span class="line">	n := input.NumRows()</span><br><span class="line">	buf, err := b.bufAllocator.get(types.ETDuration, n)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> b.bufAllocator.put(buf)</span><br><span class="line">	<span class="keyword">if</span> err = b.args[<span class="number">0</span>].VecEvalDuration(b.ctx, input, buf); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result.ResizeInt64(n, <span class="literal">false</span>)</span><br><span class="line">	result.MergeNulls(buf)</span><br><span class="line">	i64s := result.Int64s()</span><br><span class="line">	ds := buf.GoDurations()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> result.IsNull(i) &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		i64s[i] = <span class="keyword">int64</span>((ds[i] % time.Second) / time.Microsecond)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://github.com/pingcap/tidb/pull/13482">PR链接</a></p>
-<p>就是这么简单，最后还送了一个马克杯，和一个勋章。</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210407171511208.png" alt="image-20210407171511208"></p>
+<p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
+<h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
+<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p>这里使用redis做上下文，</p>
  
       <!-- reward -->
       
@@ -208,12 +262,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2020/04/07/tidb-contributor%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
     </footer>
   </div>
@@ -221,19 +275,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="article-nav-link">
+      <a href="/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Frp内网穿透
+            github actions托管gitee pages
           
         </div>
       </a>
     
     
-      <a href="/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/" class="article-nav-link">
+      <a href="/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Java实现Word转html预览</div>
+        <div class="article-nav-title">MPI分布式计算</div>
       </a>
     
   </nav>
