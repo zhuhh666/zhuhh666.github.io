@@ -225,7 +225,7 @@
     <link href="http://victor-huihui.gitee.io/2021/03/24/Mysql/"/>
     <id>http://victor-huihui.gitee.io/2021/03/24/Mysql/</id>
     <published>2021-03-24T10:01:08.000Z</published>
-    <updated>2021-04-05T09:15:31.710Z</updated>
+    <updated>2021-04-11T12:50:31.291Z</updated>
     
     
       
@@ -321,28 +321,11 @@
   </entry>
   
   <entry>
-    <title>Java基础</title>
-    <link href="http://victor-huihui.gitee.io/2021/03/24/Java%E5%9F%BA%E7%A1%80/"/>
-    <id>http://victor-huihui.gitee.io/2021/03/24/Java%E5%9F%BA%E7%A1%80/</id>
-    <published>2021-03-24T09:55:50.000Z</published>
-    <updated>2021-04-02T09:29:59.392Z</updated>
-    
-    
-    
-    
-    <category term="复习入口" scheme="http://victor-huihui.gitee.io/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/"/>
-    
-    
-    <category term="Java" scheme="http://victor-huihui.gitee.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Java虚拟机</title>
     <link href="http://victor-huihui.gitee.io/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     <id>http://victor-huihui.gitee.io/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</id>
     <published>2021-03-21T07:25:37.000Z</published>
-    <updated>2021-04-02T09:30:20.165Z</updated>
+    <updated>2021-04-11T12:18:08.623Z</updated>
     
     
       
@@ -392,7 +375,7 @@
     <link href="http://victor-huihui.gitee.io/2021/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/"/>
     <id>http://victor-huihui.gitee.io/2021/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/</id>
     <published>2021-03-20T11:23:35.000Z</published>
-    <updated>2021-04-06T01:32:29.796Z</updated>
+    <updated>2021-04-11T13:40:35.249Z</updated>
     
     
       
@@ -510,6 +493,33 @@
     
     <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
+    
+  </entry>
+  
+  <entry>
+    <title>通用图纸识别调研</title>
+    <link href="http://victor-huihui.gitee.io/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/"/>
+    <id>http://victor-huihui.gitee.io/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</id>
+    <published>2020-04-26T05:12:25.000Z</published>
+    <updated>2020-04-26T06:16:11.672Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程&lt;/p&gt;
+&lt;</summary>
+        
+      
+    
+    
+    
+    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="深度学习" scheme="http://victor-huihui.gitee.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

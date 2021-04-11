@@ -191,17 +191,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java基础</title>
-    <url>/2021/03/24/Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java实现Word转html预览</title>
     <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
     <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
@@ -355,150 +344,52 @@
       </tags>
   </entry>
   <entry>
-    <title>Java集合</title>
-    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h1 id="List，Set，Map的区别"><a href="#List，Set，Map的区别" class="headerlink" title="List，Set，Map的区别"></a><strong>List，Set，Map的区别</strong></h1><ul>
-<li>元素有序，可重复</li>
-<li>元素无序，不可重复</li>
-<li>键值对，K无序，不可重复。V无序，可重复。一一映射。</li>
-</ul>
-<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
-<li>两者都不同步，也就是不保证线程安全。</li>
-<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
-<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
-<li>快速随机访问：L不支持，A支持。</li>
-<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
-</ul>
-<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
-<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
-<li>V是List的古老实现类，底层Object数组，线程安全。</li>
-</ul>
-<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
-<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
-<li><p>线程安全</p>
-<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
-</li>
-<li><p>效率</p>
-<p>因为线程安全，M效率高，T淘汰，不使用。</p>
-</li>
-<li><p>对null key和Null value的支持</p>
-<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
-</li>
-<li><p>初始容量大小和每次扩充容量大小的不同</p>
-<ul>
-<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
-<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
-</ul>
-</li>
-<li><p>底层数据结构</p>
-<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
-</li>
-</ul>
-<p>M带有初始容量的构造函数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+    <title>MongoDB</title>
+    <url>/2020/04/10/MongoDB/</url>
+    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
 
-<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>show dbs：显示所有数据库</p>
+<p>use test：创建test数据库(内存中)</p>
+<p>db：当前数据库</p>
+<p>db.dropDatabase()：删除数据库</p>
+<p><strong>三个保留库：</strong></p>
+<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
+<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
+<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
+<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
+<p>show collections：显示当前的collection</p>
+<p>db.my.drop( )：删除集合</p>
+<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
+<li><p>单个文档插入：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
-<table>
-<thead>
-<tr>
-<th align="center">M</th>
-<th align="center">S</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">实现了Map接口</td>
-<td align="center">实现了Set接口</td>
-</tr>
-<tr>
-<td align="center">存储键值对</td>
-<td align="center">仅存储对象</td>
-</tr>
-<tr>
-<td align="center">调用put添加元素</td>
-<td align="center">调用Add添加元素</td>
-</tr>
-<tr>
-<td align="center">使用键计算hashcode</td>
-<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
-</tr>
-</tbody></table>
-<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
-<p><strong>hashcode和equals()的规定</strong></p>
-<ul>
-<li>对象相等，则hashcode相同</li>
-<li>对象相等，对两个equals()返回true</li>
-<li>两个对象有相同的hashcode值，也不一定相等。</li>
-</ul>
-<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
-<p><strong>==与equals的区别</strong></p>
-<ul>
-<li>基本类型来说，==比较的是值相等</li>
-<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
-<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
-</ul>
-<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
-<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
-<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
-<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
-<p><strong>算法如何设计？</strong></p>
-<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
-<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
-<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
-<ul>
-<li><p>底层数据结构</p>
-<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
-<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
-</li>
-<li><p>**实现线程安全的方式(重要)**：</p>
-<ul>
-<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
-<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
-</ul>
-<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p>db.comment.find()：查询所有数据库数据</p>
+<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
+<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
+<p><strong>投影查询</strong>：</p>
+<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
+<p>加try catch:</p>
+<p>try{</p>
+<p>insert:one or many</p>
+<p>}catch(e){</p>
+<p>print(e);</p>
+<p>}</p>
+<p><strong>文档更新：</strong></p>
+<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
+<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
+<p>批量修改：</p>
 </li>
 </ul>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
-<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
-<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
-<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
-<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
-<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
-<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
-<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
-<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
-<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
-<li>List<ul>
-<li>ArrayList：Object[]数组</li>
-<li>Vector：Object[]数组</li>
-<li>LinkedList：双向链表</li>
-</ul>
-</li>
-<li>Set<ul>
-<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
-<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
-<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
-<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
-<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
-<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
-</ul>
-<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
-<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
 ]]></content>
       <categories>
-        <category>复习入口</category>
+        <category>后端技术</category>
       </categories>
       <tags>
-        <tag>Java</tag>
+        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -627,55 +518,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MongoDB</title>
-    <url>/2020/04/10/MongoDB/</url>
-    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
-
-<p>show dbs：显示所有数据库</p>
-<p>use test：创建test数据库(内存中)</p>
-<p>db：当前数据库</p>
-<p>db.dropDatabase()：删除数据库</p>
-<p><strong>三个保留库：</strong></p>
-<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
-<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
-<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
-<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
-<p>show collections：显示当前的collection</p>
-<p>db.my.drop( )：删除集合</p>
-<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
-<li><p>单个文档插入：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
-
-<p>db.comment.find()：查询所有数据库数据</p>
-<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
-<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
-<p><strong>投影查询</strong>：</p>
-<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
-<p>加try catch:</p>
-<p>try{</p>
-<p>insert:one or many</p>
-<p>}catch(e){</p>
-<p>print(e);</p>
-<p>}</p>
-<p><strong>文档更新：</strong></p>
-<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
-<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
-<p>批量修改：</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Mysql</title>
     <url>/2021/03/24/Mysql/</url>
     <content><![CDATA[<h1 id="1、存储引擎"><a href="#1、存储引擎" class="headerlink" title="1、存储引擎"></a>1、存储引擎</h1><p>Mysql默认的存储引擎是InnoDB，在5.7版本只有InnoDB是支持事务的。</p>
@@ -720,11 +562,11 @@
 <p>M采用的是类似继承的方式制定字符集的默认值，每个数据库和每张数据表都有自己的默认值，他们逐层继承。比如：某个库中所有表的默认字符集将是该数据库所指定的字符集(这些表在没有指定字符集的情况下，才会采用摩恩字符集)。</p>
 <p>详细参考：<a href="https://www.cnblogs.com/geaozhang/p/6724393.html#MySQLyuzifuji">字符集与校对规则</a></p>
 <h1 id="3、索引"><a href="#3、索引" class="headerlink" title="3、索引"></a>3、索引</h1><p><a href="https://krains.gitee.io/blogs/MySQL/MySQL%E7%B4%A2%E5%BC%95.html#b-tree">参考</a></p>
-<p>索引的数据结构主要有：B树和哈希索引。哈希索引的底层就是哈希表，因为在绝大多数需求为单挑记录查询的时候，可以选择哈希索引，其他情况下选择B树索引。</p>
+<p>索引的数据结构主要有：B树和哈希索引。哈希索引的底层就是哈希表，因为在绝大多数需求为单条记录查询的时候，可以选择哈希索引，其他情况下选择B树索引。</p>
 <p>B树使用的是B+树。两种存储引擎的实现方式不同：</p>
 <ul>
 <li><p>MyIASM</p>
-<p>叶节点的data区域存放是是数据记录的地址。在索引检索的时候，按照B树算法索引，指定的Key存在，则取出data域的值，然后以data域的值为地址读取对应的数据记录。哲别称为“非聚簇索引”。</p>
+<p>叶节点的data区域存放是是数据记录的地址。在索引检索的时候，按照B树算法索引，指定的Key存在，则取出data域的值，然后以data域的值为地址读取对应的数据记录。这被称为“非聚簇索引”。</p>
 </li>
 <li><p>InnoDB</p>
 <p>数据文件本身就是索引文件。树的叶节点data域保存了完整的数据记录，因此InnoDB表数据文件本身就是主索引，这称为“聚簇索引”。其余的索引作为辅助索引，辅助索引的data记录的是相应记录主键的值而不是地址。</p>
@@ -737,7 +579,7 @@
 <li>原子性：事务是自小的执行单位。原子性确保动作要么全部完成，要么全部不执行。</li>
 <li>一致性：数据库从一个正确状态变化到另一个一致性状态。</li>
 <li>隔离性：并发访问数据库，两个用户的事务不干扰。并发事务之间的数据库是独立的。</li>
-<li>持久性：对数据库的改变是持久的，即使数据库发生故障也应该有影响。</li>
+<li>持久性：对数据库的改变是持久的，即使数据库发生故障也不应该有影响。</li>
 </ul>
 <h2 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h2><ul>
 <li><p><strong>脏读</strong></p>
@@ -766,7 +608,7 @@
 <p>对同一字段的多次读取结果都是一致的，除非被本身事务自己修改。</p>
 </li>
 <li><p>可串行化</p>
-<p>最该的更隔离级别。服务ACID，所以的事务逐个执行，这样事务之间不产生干扰</p>
+<p>最高的更隔离级别。服务ACID，所以的事务逐个执行，这样事务之间不产生干扰</p>
 </li>
 </ul>
 <p>InnoDB默认是可重复读。使用的是next-key lock算法，避免幻读，已经达到了可串行化的隔离级别。隔离级别越低，锁越少，所以大部分数据库的隔离级别都是读已提交，但是InnoDB使用可重复读，并且不会有性能损失。InnoDB在分布式事务的情况下使用可串行化的隔离级别。</p>
@@ -776,7 +618,7 @@
 </ul>
 <p>InnoDB存储引擎的算法有三种：</p>
 <ul>
-<li>Reacord lock：但行记录锁</li>
+<li>Reacord lock：单行记录锁</li>
 <li>Gap lock：间隙锁，锁定一个范围，不包括记录本身。</li>
 <li>Next-key lock：record+gap，包含记录本身。</li>
 </ul>
@@ -1084,51 +926,6 @@
       </categories>
       <tags>
         <tag>OSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pycharm搭建PyTorch环境</title>
-    <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
-<ul>
-<li>类似于Numpy的张量计算，可使用GPU加速</li>
-<li>基于带自动微分系统的深度学习神经网络</li>
-</ul>
-<p>相较于其他框架比较容易上手，所以选择搭建一个pytorch的深度学习环境（使用win10+navida mx150，当然了，直接使用docker search-&gt;docker pull是最简单的方法，python的IDE选择pycharm或者jupyter）</p>
-<h1 id="1、安装anaconda"><a href="#1、安装anaconda" class="headerlink" title="1、安装anaconda"></a>1、安装anaconda</h1><p>安装软件不用多说，直接去conda官网到download页面，因为conda 37使用过程中经常出现一些问题，这里可以去anaconda的<a href="https://repo.continuum.io/archive/">历史版本库</a>里选择conda 36版本，我这里下载的这个版本号<img src="https://i.loli.net/2020/03/11/bijxQdulm14DXFk.png" alt="微信截图_20200311132631.png"></p>
-<p>安装路径脑子里备份一份，后面pycharm集成pytorch环境的时候要用到。这里说明一下，计算机的GPU起到加速作用，检查一下GPU的驱动，检查方法如下：任务管理器-&gt;性能选项卡-&gt;正确显示GPU型号，表示驱动已经正常安装。</p>
-<p>anaconda安装完成之后，开始选项里可以看到刚刚安装的anaconda</p>
-<p><img src="https://i.loli.net/2020/03/11/ts9zdEfiL52qvWo.png" alt="微信截图_20200311133243.png"></p>
-<p>我们有关conda的命令一般是在Prompt里面执行而不是cmd里面。然后我们点击Prompt，进入命令行界面，最前面显示（base），表示anaconda已经安装成功（安装conda就不用单独安装python了，conda本身也集成了很多工具包）。</p>
-<h1 id="2、创建pytorch工作区"><a href="#2、创建pytorch工作区" class="headerlink" title="2、创建pytorch工作区"></a>2、创建pytorch工作区</h1><p>在Prompt命令行执行conda create -n pytorch python=3.6(n表示name)，我们就创建了一个pytorch的工作区，当然了，这是一个空的工作区，我们只是命名为pytorch，想使用的话，还得具体安装pytorch需要的一些包。根据提示，执行conda activate pytorch可由当前的base工作区跳转到刚刚创建的pytorch工作区，这时Prompt的前面已经由base变为pytroch.然后需要在当前工作区安装torch，进入<a href="https://pytorch.org/">pytorch官网</a>，然后根据具体配置会给出相应的指令，复制指令到prompt命令行执行，安装相关包。GPU不支持CUDA的话，CUDA选项选择None。至于支不支持，可以去英伟达官网查看，一般的英伟达显卡是支持的，不支持的话，可能是驱动版本过低，更新GPU驱动。<img src="https://i.loli.net/2020/03/11/IisGTXjmoZRQcbM.png" alt="微信截图_20200311134317.png"></p>
-<p>命令行执行完成后，在prompt输入python跳转到python的执行界面,然后执行一下import torch发现没有报错，ok，torch已经安装完成，然后输入torch.cuda.is_available()，返回true，表示GPU可以被torch使用。</p>
-<p><strong>Q &amp; A：</strong></p>
-<ul>
-<li><p><strong>anaconda装环境遇到无法定位程序输入点OPENSSL_sk_new_reserve……问题?</strong></p>
-<p>查看DLLs里面的dll文件和bin里面的ddl文件日期是否一致，不一致的话，DLLS替换到bin，替换千万备份。这玩意被覆盖了要是出问题，再想找回来，也可以，重装conda就可了。呜呜呜</p>
-</li>
-<li><p><strong>出现出现CondaHTTPError问题，怎么办？</strong></p>
-<p>配置清华镜像，在prompt执行如下操作</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --set show_channel_urls yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>还是不行的话，就找到C盘的.condarc文件，把https改成http，至于文件怎么找，C-&gt;用户-&gt;Victor(你自己的用户名)-&gt;下滑就能找到这个文件。我的文件里是这个样子，仅供参考。<img src="https://i.loli.net/2020/03/11/tVosf9Sxbp5Jq38.png" alt="微信截图_20200311140222.png"></p>
-</li>
-<li><p><strong>上面都用了还是不行？</strong></p>
-<p>重装conda吧熊迪，省时省心</p>
-</li>
-</ul>
-<h1 id="3、pycharm集成pytroch"><a href="#3、pycharm集成pytroch" class="headerlink" title="3、pycharm集成pytroch"></a>3、pycharm集成pytroch</h1><p>上面的步骤都很顺利的话，恭喜你，pytorch环境已经安装成功了，然后去<a href="https://www.jetbrains.com/pycharm/">pycharm</a>官网下载pycharm，一般社区版本就够用，学生可以使用企业邮箱获取一年的认证，亲测有效。</p>
-<p>选择新建一个项目，执行如下操作<img src="https://i.loli.net/2020/03/11/p1OWXdMGRe2AxPl.png" alt="微信截图_20200311140957.png"></p>
-<p>第一次里面肯定没有pytorch选项，后面的三个点点进去，如下（看清楚路径）：<img src="https://i.loli.net/2020/03/11/QGDgXYSBhCiaqsF.png" alt="微信截图_20200311141134.png"></p>
-<p>点击OK，至此已经在pycharm里面集成了pytorch，打开python console试一下，import torch，没错。接下来，搞点数据跑跑叭。当然这也可以使用jupyter，在安装conda的时候已经默认安装了，prompt切换到pytorch工作区，然后conda install nb_conda，安装相关的包，安装完成之后，键入jupyter notebook进入jupyter工作页面，有我们配置的pytorch环境，shift+enter跳转到下一行并执行上一行，接着探索叭！<img src="https://i.loli.net/2020/03/11/ABH6REqUFNLfbsp.png" alt="微信截图_20200311145309.png"></p>
-<p>启动tensorboard: tensorboard –logdir=logs(先使用pip命令安装tensorboard和opencv)<img src="https://i.loli.net/2020/03/11/DOEWFiXhgaBeSs7.png" alt="微信截图_20200311175938.png"></p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -1685,6 +1482,198 @@
       </tags>
   </entry>
   <entry>
+    <title>Java集合</title>
+    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h1 id="List，Set，Map的区别"><a href="#List，Set，Map的区别" class="headerlink" title="List，Set，Map的区别"></a><strong>List，Set，Map的区别</strong></h1><ul>
+<li>元素有序，可重复</li>
+<li>元素无序，不可重复</li>
+<li>键值对，K无序，不可重复。V无序，可重复。一一映射。</li>
+</ul>
+<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
+<li>两者都不同步，也就是不保证线程安全。</li>
+<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
+<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
+<li>快速随机访问：L不支持，A支持。</li>
+<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
+</ul>
+<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
+<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
+<li>V是List的古老实现类，底层Object数组，线程安全。</li>
+</ul>
+<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
+<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
+<li><p>线程安全</p>
+<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
+</li>
+<li><p>效率</p>
+<p>因为线程安全，M效率高，T淘汰，不使用。</p>
+</li>
+<li><p>对null key和Null value的支持</p>
+<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
+</li>
+<li><p>初始容量大小和每次扩充容量大小的不同</p>
+<ul>
+<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
+<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
+</ul>
+</li>
+<li><p>底层数据结构</p>
+<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
+</li>
+</ul>
+<p>M带有初始容量的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">M</th>
+<th align="center">S</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">实现了Map接口</td>
+<td align="center">实现了Set接口</td>
+</tr>
+<tr>
+<td align="center">存储键值对</td>
+<td align="center">仅存储对象</td>
+</tr>
+<tr>
+<td align="center">调用put添加元素</td>
+<td align="center">调用Add添加元素</td>
+</tr>
+<tr>
+<td align="center">使用键计算hashcode</td>
+<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
+</tr>
+</tbody></table>
+<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
+<p><strong>hashcode和equals()的规定</strong></p>
+<ul>
+<li>对象相等，则hashcode相同</li>
+<li>对象相等，对两个equals()返回true</li>
+<li>两个对象有相同的hashcode值，也不一定相等。</li>
+</ul>
+<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
+<p><strong>==与equals的区别</strong></p>
+<ul>
+<li>基本类型来说，==比较的是值相等</li>
+<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
+<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
+</ul>
+<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
+<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
+<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
+<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
+<p><strong>算法如何设计？</strong></p>
+<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
+<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
+<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
+<ul>
+<li><p>底层数据结构</p>
+<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
+<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
+</li>
+<li><p>**实现线程安全的方式(重要)**：</p>
+<ul>
+<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
+<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
+</ul>
+<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
+</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
+<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
+<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
+<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
+<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
+<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
+<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
+<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
+<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
+<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
+<li>List<ul>
+<li>ArrayList：Object[]数组</li>
+<li>Vector：Object[]数组</li>
+<li>LinkedList：双向链表</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
+<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
+<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
+<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
+<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
+<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
+</ul>
+<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
+<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm搭建PyTorch环境</title>
+    <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
+<ul>
+<li>类似于Numpy的张量计算，可使用GPU加速</li>
+<li>基于带自动微分系统的深度学习神经网络</li>
+</ul>
+<p>相较于其他框架比较容易上手，所以选择搭建一个pytorch的深度学习环境（使用win10+navida mx150，当然了，直接使用docker search-&gt;docker pull是最简单的方法，python的IDE选择pycharm或者jupyter）</p>
+<h1 id="1、安装anaconda"><a href="#1、安装anaconda" class="headerlink" title="1、安装anaconda"></a>1、安装anaconda</h1><p>安装软件不用多说，直接去conda官网到download页面，因为conda 37使用过程中经常出现一些问题，这里可以去anaconda的<a href="https://repo.continuum.io/archive/">历史版本库</a>里选择conda 36版本，我这里下载的这个版本号<img src="https://i.loli.net/2020/03/11/bijxQdulm14DXFk.png" alt="微信截图_20200311132631.png"></p>
+<p>安装路径脑子里备份一份，后面pycharm集成pytorch环境的时候要用到。这里说明一下，计算机的GPU起到加速作用，检查一下GPU的驱动，检查方法如下：任务管理器-&gt;性能选项卡-&gt;正确显示GPU型号，表示驱动已经正常安装。</p>
+<p>anaconda安装完成之后，开始选项里可以看到刚刚安装的anaconda</p>
+<p><img src="https://i.loli.net/2020/03/11/ts9zdEfiL52qvWo.png" alt="微信截图_20200311133243.png"></p>
+<p>我们有关conda的命令一般是在Prompt里面执行而不是cmd里面。然后我们点击Prompt，进入命令行界面，最前面显示（base），表示anaconda已经安装成功（安装conda就不用单独安装python了，conda本身也集成了很多工具包）。</p>
+<h1 id="2、创建pytorch工作区"><a href="#2、创建pytorch工作区" class="headerlink" title="2、创建pytorch工作区"></a>2、创建pytorch工作区</h1><p>在Prompt命令行执行conda create -n pytorch python=3.6(n表示name)，我们就创建了一个pytorch的工作区，当然了，这是一个空的工作区，我们只是命名为pytorch，想使用的话，还得具体安装pytorch需要的一些包。根据提示，执行conda activate pytorch可由当前的base工作区跳转到刚刚创建的pytorch工作区，这时Prompt的前面已经由base变为pytroch.然后需要在当前工作区安装torch，进入<a href="https://pytorch.org/">pytorch官网</a>，然后根据具体配置会给出相应的指令，复制指令到prompt命令行执行，安装相关包。GPU不支持CUDA的话，CUDA选项选择None。至于支不支持，可以去英伟达官网查看，一般的英伟达显卡是支持的，不支持的话，可能是驱动版本过低，更新GPU驱动。<img src="https://i.loli.net/2020/03/11/IisGTXjmoZRQcbM.png" alt="微信截图_20200311134317.png"></p>
+<p>命令行执行完成后，在prompt输入python跳转到python的执行界面,然后执行一下import torch发现没有报错，ok，torch已经安装完成，然后输入torch.cuda.is_available()，返回true，表示GPU可以被torch使用。</p>
+<p><strong>Q &amp; A：</strong></p>
+<ul>
+<li><p><strong>anaconda装环境遇到无法定位程序输入点OPENSSL_sk_new_reserve……问题?</strong></p>
+<p>查看DLLs里面的dll文件和bin里面的ddl文件日期是否一致，不一致的话，DLLS替换到bin，替换千万备份。这玩意被覆盖了要是出问题，再想找回来，也可以，重装conda就可了。呜呜呜</p>
+</li>
+<li><p><strong>出现出现CondaHTTPError问题，怎么办？</strong></p>
+<p>配置清华镜像，在prompt执行如下操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --add channels https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span></span><br><span class="line"></span><br><span class="line">(D:\Anaconda) C:\Users\Victor\Documents&gt;conda config --set show_channel_urls yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还是不行的话，就找到C盘的.condarc文件，把https改成http，至于文件怎么找，C-&gt;用户-&gt;Victor(你自己的用户名)-&gt;下滑就能找到这个文件。我的文件里是这个样子，仅供参考。<img src="https://i.loli.net/2020/03/11/tVosf9Sxbp5Jq38.png" alt="微信截图_20200311140222.png"></p>
+</li>
+<li><p><strong>上面都用了还是不行？</strong></p>
+<p>重装conda吧熊迪，省时省心</p>
+</li>
+</ul>
+<h1 id="3、pycharm集成pytroch"><a href="#3、pycharm集成pytroch" class="headerlink" title="3、pycharm集成pytroch"></a>3、pycharm集成pytroch</h1><p>上面的步骤都很顺利的话，恭喜你，pytorch环境已经安装成功了，然后去<a href="https://www.jetbrains.com/pycharm/">pycharm</a>官网下载pycharm，一般社区版本就够用，学生可以使用企业邮箱获取一年的认证，亲测有效。</p>
+<p>选择新建一个项目，执行如下操作<img src="https://i.loli.net/2020/03/11/p1OWXdMGRe2AxPl.png" alt="微信截图_20200311140957.png"></p>
+<p>第一次里面肯定没有pytorch选项，后面的三个点点进去，如下（看清楚路径）：<img src="https://i.loli.net/2020/03/11/QGDgXYSBhCiaqsF.png" alt="微信截图_20200311141134.png"></p>
+<p>点击OK，至此已经在pycharm里面集成了pytorch，打开python console试一下，import torch，没错。接下来，搞点数据跑跑叭。当然这也可以使用jupyter，在安装conda的时候已经默认安装了，prompt切换到pytorch工作区，然后conda install nb_conda，安装相关的包，安装完成之后，键入jupyter notebook进入jupyter工作页面，有我们配置的pytorch环境，shift+enter跳转到下一行并执行上一行，接着探索叭！<img src="https://i.loli.net/2020/03/11/ABH6REqUFNLfbsp.png" alt="微信截图_20200311145309.png"></p>
+<p>启动tensorboard: tensorboard –logdir=logs(先使用pip命令安装tensorboard和opencv)<img src="https://i.loli.net/2020/03/11/DOEWFiXhgaBeSs7.png" alt="微信截图_20200311175938.png"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot整合redis</title>
     <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
     <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
@@ -1855,6 +1844,27 @@
       </tags>
   </entry>
   <entry>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+  </entry>
+  <entry>
     <title>tidb contributor</title>
     <url>/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
@@ -1910,27 +1920,6 @@
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -2256,23 +2245,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CNN手写文字识别</title>
-    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
-<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
-
-<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>PyTorch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>别直接修改hexo生成的文件名</title>
     <url>/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/</url>
     <content><![CDATA[<p>没啥说的，目录里有几个题目的开头英文没大写，看着很别扭，想修改成大写，于是寻思，hexo的文章title都是些文章名然后自动生成的，于是直接改了md文件的文件名，报了404，正确的做法是点进去md文档修改title。</p>
@@ -2289,6 +2261,23 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CNN手写文字识别</title>
+    <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
+<p>平台是借助学校的超算环境搭建的，目前有两张GPU卡，CPU的资源比较充足。框架选择的是pytorch，我们也可以在本地搭建pytorch环境，电脑有英伟达的GPU的话，跑代码还是很快的。windows环境搭建pytorch环境参见之前的一篇文章<a href="https://victor-huihui.gitee.io/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/">click here</a>。我们的深度学习平台只是帮我们弄好了环境，配置比较优秀，别的和本地是一样的。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Mon Feb  3 13:15:59 2020</span></span><br><span class="line"><span class="string">@author: hhzhu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#​运用CNN进行MNIST的分类任务</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span>  optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义CNN</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CNN,self).__init__()</span><br><span class="line">        self.layer1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">1</span>,<span class="number">32</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 32, 28*28, 24*24    </span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>)) <span class="comment"># 32, 24*24, 12*12</span></span><br><span class="line">        self.layer2 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">32</span>,<span class="number">64</span>,kernel_size=<span class="number">5</span>), <span class="comment"># 64,12*12, 8*8</span></span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>,stride=<span class="number">2</span>))  <span class="comment"># 128, 8*8, 4*4</span></span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span>,<span class="number">1000</span>),</span><br><span class="line">            nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">1000</span>,<span class="number">10</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>),-<span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用内置函数下载mnist数据集</span></span><br><span class="line"><span class="comment">#train_set = mnist.MNIST(&#x27;./data&#x27;,train=True)</span></span><br><span class="line"><span class="comment">#test_set = mnist.MNIST(&#x27;./data&#x27;,train=False)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 预处理=&gt;将各种预处理组合在一起</span></span><br><span class="line"><span class="comment"># 定义一个新的data_tf,用于除以255归一化</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_tf</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = np.array(x, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    x = x / <span class="number">255</span></span><br><span class="line">    x = transforms.ToTensor()(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"><span class="comment">#data_tf = transforms.Compose(</span></span><br><span class="line"><span class="comment">#                [transforms.ToTensor(),</span></span><br><span class="line"><span class="comment">#                 transforms.Normalize([0.5],[0.5])])</span></span><br><span class="line"> </span><br><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab</span><br><span class="line"><span class="comment">#%matplotlib inline</span></span><br><span class="line"></span><br><span class="line">print(<span class="built_in">type</span>(train_set))</span><br><span class="line">print(<span class="built_in">len</span>(train_set.train_data))</span><br><span class="line"><span class="comment">#print(train_set.train_data[0])</span></span><br><span class="line">im = train_set.train_data[<span class="number">0</span>]</span><br><span class="line">im = im.reshape(-<span class="number">1</span>,<span class="number">28</span>)</span><br><span class="line">print(im)</span><br><span class="line">pylab.imshow(im)</span><br><span class="line">pylab.show()</span><br><span class="line"></span><br><span class="line">train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">test_data = DataLoader(test_set,batch_size=<span class="number">128</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = CNN()</span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment">#optimizer = optim.SGD(net.parameters(),1e-1)</span></span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr = <span class="number">0.0001</span>)</span><br><span class="line">nums_epoch = <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">losses =[]</span><br><span class="line">acces = []</span><br><span class="line">eval_losses = []</span><br><span class="line">eval_acces = []</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        net = net.cuda() </span><br><span class="line">    train_loss = <span class="number">0</span></span><br><span class="line">    train_acc = <span class="number">0</span></span><br><span class="line">    net = net.train()</span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> train_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step() </span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        train_loss += loss.item()</span><br><span class="line">        <span class="comment"># 计算分类的准确率</span></span><br><span class="line">        _,pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred == label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        train_acc += acc</span><br><span class="line">    losses.append(train_loss / <span class="built_in">len</span>(train_data))</span><br><span class="line">    acces.append(train_acc / <span class="built_in">len</span>(train_data))</span><br><span class="line">    eval_loss = <span class="number">0</span></span><br><span class="line">    eval_acc = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> img , label <span class="keyword">in</span> test_data:</span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            img = Variable(img.cuda())</span><br><span class="line">            label = Variable(label.cuda())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            img = Variable(img)</span><br><span class="line">            label = Variable(label)</span><br><span class="line">        out = net(img)</span><br><span class="line">        loss = criterion(out,label)</span><br><span class="line">        <span class="comment"># 记录误差</span></span><br><span class="line">        eval_loss += loss.item()</span><br><span class="line">        _ , pred = out.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">        num_correct = (pred==label).<span class="built_in">sum</span>().item()</span><br><span class="line">        acc = num_correct / img.shape[<span class="number">0</span>]</span><br><span class="line">        eval_acc += acc</span><br><span class="line">    eval_losses.append(eval_loss / <span class="built_in">len</span>(test_data))</span><br><span class="line">    eval_acces.append(eval_acc / <span class="built_in">len</span>(test_data))</span><br><span class="line">    print(<span class="string">&#x27;Epoch &#123;&#125; Train Loss &#123;&#125; Train  Accuracy &#123;&#125; Teat Loss &#123;&#125; Test Accuracy &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        epoch+<span class="number">1</span>, train_loss / <span class="built_in">len</span>(train_data),train_acc / <span class="built_in">len</span>(train_data), eval_loss / <span class="built_in">len</span>(test_data), eval_acc / <span class="built_in">len</span>(test_data)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="10个Epoch的结果"><a href="#10个Epoch的结果" class="headerlink" title="10个Epoch的结果"></a>10个Epoch的结果</h1><p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200408110330.png" alt="image-20200408110321833"></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>PyTorch</tag>
       </tags>
   </entry>
   <entry>
@@ -2363,6 +2352,201 @@
       <categories>
         <category>后端技术</category>
       </categories>
+  </entry>
+  <entry>
+    <title>基础记录</title>
+    <url>/2020/03/01/%E5%9F%BA%E7%A1%80%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<blockquote>
+<p>常用的SQL优化方式<br>redis的几种部署方式<br>sprigboot帮助我们做了什么事情(如果没有boot,新建一个web需要自己做哪些东西)<br>具体说一下oauth2</p>
+<p>项目的具体架构。</p>
+<p>java拦截器</p>
+<p>多线程和多进程，如何选择多线程，在并发的情况是选择多线程还是多进程。</p>
+<p>tomcat</p>
+</blockquote>
+<h1 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h1><p>面向对象的好处：</p>
+<ul>
+<li>易维护：可读性强，由于继承的存在，及时改变需求，维护的也只是在局部模块。</li>
+<li>质量高：重复现有的，在以前的项目的领域中已被测试过的类使系统满足业务需求并具有较高的质量。</li>
+<li>效率高：在以前的项目的领域中已被测试过的类使系统满足业务需求并具有较高的质量。</li>
+<li>易拓展：由于继承、封装、多态的特性，自然设计出高内聚、低耦合的系统结构，使得系统更灵活、更容易扩展，而且成本较低。</li>
+</ul>
+<p>java性能差的原因是，java是半编译语言，最终的执行代码不是可以直接被cpu执行的二进制机械码。</p>
+<p><strong>JAVA和C++的区别：</strong></p>
+<ul>
+<li>面向对象，封装继承和多态</li>
+<li>Java不提供指针直接访问内存，程序内存更加安全</li>
+<li>java类单继承，C++支持多重继承；虽然java的类不可以多继承，但是接口可以多继承。</li>
+<li>java自动内存管理，C++手动管理。</li>
+<li><strong>在 C 语言中，字符串或字符数组最后都会有一个额外的字符‘\0’来表示结束。但是，Java 语言中没有结束符这一概念。</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">字节</th>
+<th align="center">bit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">byte</td>
+<td align="center">1</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">2</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">2</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">4</td>
+<td align="center">32</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">4</td>
+<td align="center">32</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">8</td>
+<td align="center">64</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">8</td>
+<td align="center">64</td>
+</tr>
+</tbody></table>
+<p><strong>装箱与拆箱</strong></p>
+<p>装：将基本类型转化为包装器类型。</p>
+<p>拆：自动将包装器类型转换为基本数据类型。</p>
+<h2 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h2><ul>
+<li><p>封装：将对象的状态信息隐藏在对象内部，不允许外部程序直接访问对象内部信息，而是通过类提供的方法来实现内部信息的操作和访问。</p>
+<p>访问控制符：</p>
+<ul>
+<li>private：只允许当前类内部访问。</li>
+<li>package：当前包下的其他类访问。</li>
+<li>protected：当前包下的其他类访问，子类访问。</li>
+<li>public：所有类访问。</li>
+</ul>
+</li>
+<li><p>继承：extends，子类拓展了父类，获得父类的全部成员变量和方法。只能单继承，只有一个直接父类，但可以有无线个间接父类，没有显示指定，继承<code>java.lang.bject</code>。</p>
+<ul>
+<li><p>重写父类方法</p>
+<p>static静态方法不能被重写。</p>
+<p>遵循<strong>“两同两小一大”</strong>规则：方法名相同，形参列表相同；“两小”是指子类方法返回值类型和抛出异常类型比父类方法更小或者更小；一大是子类的方法的访问权限比父类更大或者相等。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;A&quot;</span>);  <span class="comment">//重写父类方法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>重载（overload）和重写（Override）的区别：</strong></p>
+<ul>
+<li><p>重载指同一类中多个同名方法根据不同的参数执行不同的逻辑。</p>
+</li>
+<li><p>重写只子类和父类的同名方法。但是内部逻辑是不一样的。</p>
+</li>
+</ul>
+</li>
+<li><p>super关键字：访问父类的构造函数，成员方法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;x:&quot;</span> + x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> x1)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(x1);</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.show();  <span class="comment">//调用被覆盖的父类方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        A a = <span class="keyword">new</span> A(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">        a.show();  <span class="comment">//x:2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>父类构造器：子类继承了父类，在初始化子类时，先初始化父类，调用super()，使用super必须放在子类构造器的第一行，而this调用同一个类中重载的构造器也要放在第一行，所以super和this不能同时出现。</p>
+</li>
+</ul>
+</li>
+<li><p>多态：相同类型的变量调用同一个方法时呈现出多种不同的特征。</p>
+<p>Java 允许把一个子类对象直接赋给一个父类引用变量，无须任何类型转换。当把一个子类对象赋给父类引用变量时，会出现编译类型和运行类型不一致的情况，此时调用子类和父类的同名方法时（这里的同名指的是子类重写了父类方法），总是表现出子类方法的行为特征。例如：<code>B b = new A()</code> 编译类型看左边，运行类型看右边，因此编译类型为 B，运行类型为 A，当 b 调用 A 和 B 的同名的方法时，运行的总是 A 中的方法。</p>
+</li>
+</ul>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>程序在运行的时候会产生很多对象，而对象信息也只是在程序运行的时候才在内存中保持其状态，一旦程序停止，内存释放，对象也就不存在了。怎么能让对象永久的保存下来呢？对象序列化。序列化的两个类ObjectOutputStream 和 ObjectInputStream。</p>
+<ul>
+<li>ProtoBuffer优点：<ul>
+<li><strong>Protobuf 更小、更快、也更简单</strong>。</li>
+<li><strong>“向后”兼容性好</strong></li>
+<li><strong>Protobuf 语义更清晰</strong></li>
+<li><strong>Protobuf 的编程模式比较友好</strong></li>
+</ul>
+</li>
+<li>缺点：由于文本并不适合用来描述数据结构，所以 <code>Protobuf</code> 也不适合用来对基于文本的标记文档（如 HTML）建模。另外，由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 <code>Protobuf</code> 不行，它以二进制的方式存储，除非你有 <code>.proto</code> 定义，否则你没法直接读出 <code>Protobuf</code> 的任何内容。</li>
+</ul>
+<p>对于不想进行序列化的变量，使用 transient 关键字修饰。</p>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>右左结合：单目，条件，赋值</p>
+<p>基本的优先级：</p>
+<ul>
+<li>指针最先，单目高于双目</li>
+<li>先乘除后加减</li>
+<li>先算数，再移位，再位运算。</li>
+<li>逻辑最后</li>
+</ul>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>Error和Exception，继承自Throwable</p>
+<p><strong>两者不同：</strong></p>
+<p>Exception:</p>
+<ul>
+<li>可以是checked或者unchecked</li>
+<li>程序员导致的错误</li>
+<li>程序级别处理</li>
+</ul>
+<p>Error:</p>
+<ul>
+<li>不可控制的unckecked</li>
+<li>系统错误或底层资源错误</li>
+<li>系统级别捕捉</li>
+</ul>
+<p>异常分类：</p>
+<ul>
+<li>checked exception</li>
+<li>unckecked exception</li>
+</ul>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>访问修饰符：private,public,,,,,,,,</p>
+<p>非访问修饰符：以下。</p>
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><ul>
+<li>静态变量：独立于对象的静态变量，无论类实例化多少对象，静态变量只有一份拷贝，也成为类变量，局部变量不能声明为static</li>
+<li>静态方法：独立于对象的静态方法，静态方法不能使用类的非静态变量，静态方法从参数列表得到数据，然后计算数据。</li>
+</ul>
+<h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><ul>
+<li><p>final变量：一旦赋值，不改变，必须显式指定初始值，一般和static一起来创建类常量。</p>
+</li>
+<li><p>final方法：可以被子类集成，但是不能重写。防止方法被篡改。</p>
+</li>
+<li><p>final类：不能被继承。</p>
+</li>
+</ul>
+<h3 id="abstract"><a href="#abstract" class="headerlink" title="abstract"></a>abstract</h3><ul>
+<li>抽象类：不能实例化对象，唯一目的就是防止将来对该类进行扩充。不能同时被final和ststic修饰，如果包含抽象方法，必须声明成抽象类，否则出现编译错误。</li>
+<li>抽象方法：抽象方法是一种没有任何实现的方法，该方法的的具体实现由子类提供。</li>
+</ul>
+<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h2><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul>
+<li>ACID<ul>
+<li>原子性：一个事务中的操作，要么全部成功，要么全部失败，如果失败，就回滚到事务开始前的状态。</li>
+<li>一致性：从一个一致性状态变换到另一个一致性状态。AB转账，总金额不变。</li>
+<li>隔离性：多个用户并发访问数据库，操作同一张表，每个用户开启事务，事务之间互不干扰，事务之间的仓发是隔离的。</li>
+<li>持久性：事务一旦提交，数据库中的数据改变就是永久性的。</li>
+</ul>
+</li>
+<li>四种隔离级别<ul>
+<li>读未提交（Read uncommitted）：select不加锁，可能读到‘脏数据’，这是并发最高，一致性最差的隔离级别。</li>
+<li>读已提交（Read committed）：避免‘脏数据’。</li>
+<li>可重复读（Repeattable read）：默认隔离级别，避免脏读，不可重复读。</li>
+<li>串行化（Serializable）：可避免脏读，不可重复读，幻读的发生。一致性最好，性能最差，一般不使用串行化和read uncommitted。</li>
+</ul>
+</li>
+<li>#和$符号的区别<ul>
+<li>#将传入的数据当成一个字符串，会自动加双引号。</li>
+<li>#防止SQL注入</li>
+<li>$会直接显示生成在SQL中</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
   <entry>
     <title>审视</title>
@@ -2643,6 +2827,158 @@
       </tags>
   </entry>
   <entry>
+    <title>分布式</title>
+    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
+<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
+<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
+<ul>
+<li>C：所有节点访问一份最新的数据副本</li>
+<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
+<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
+<ul>
+<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
+<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
+<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
+</ul>
+<p><strong>一致性解决方案：</strong></p>
+<ul>
+<li>分布式事务：两段提交</li>
+<li>分布式锁</li>
+<li>MQ消息持久化 重试 幂等</li>
+<li>Paxos算法</li>
+</ul>
+<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
+<p><strong>高可用的解决方案：</strong></p>
+<ul>
+<li>负载均衡</li>
+<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
+<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
+<li>流量控制</li>
+<li>异地多活</li>
+</ul>
+<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
+<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
+<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
+<li><p>系统拆分</p>
+<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
+</li>
+<li><p>缓存</p>
+<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
+</li>
+<li><p>MQ</p>
+<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
+</li>
+<li><p>分库分表</p>
+<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
+</li>
+<li><p>读写分离</p>
+<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
+</li>
+<li><p>ES</p>
+<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
+</li>
+</ul>
+<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
+<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
+<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
+<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
+<li><p>计数器</p>
+<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
+<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
+</li>
+<li><p>漏桶</p>
+<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
+<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
+<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
+<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
+</li>
+<li><p>令牌桶</p>
+<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
+<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
+<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
+<p><strong>算法实现：</strong></p>
+<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
+</li>
+</ul>
+<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
+<li><p>Redis请求窗口</p>
+<blockquote>
+<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
+</blockquote>
+<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
+</li>
+<li><p>Nginx限流</p>
+<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
+<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
+<ul>
+<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
+<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
+<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
+<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
+<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
+<blockquote>
+<ol>
+<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
+<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
+<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
+</ol>
+</blockquote>
+<p>服务端使用cookie可以使用以下方法：</p>
+<ul>
+<li><p>设置cookie返回给客户顿</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>读取所有cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
+<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
+<p><strong>session如何进行身份验证</strong></p>
+<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
+<p>需要注意：</p>
+<ul>
+<li>依赖session的业务需要确保客户端开启了cookie</li>
+<li>session的过期时间。</li>
+</ul>
+<p><strong>没有cookie的话，session还能用吗</strong></p>
+<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
+<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
+<p>JWT三部分构成：</p>
+<ul>
+<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
+<li>Payload(负载)：存放实际需要传递的数据。</li>
+<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
+</ul>
+<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
+<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
+<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
+<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
+<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
+<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
+<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
+<blockquote>
+<p> <strong>sso和oauth2.0的区别。</strong></p>
+<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法框架</title>
     <url>/2020/04/10/%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/</url>
     <content><![CDATA[]]></content>
@@ -2826,158 +3162,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式</title>
-    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
-<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
-<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
-<ul>
-<li>C：所有节点访问一份最新的数据副本</li>
-<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
-<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
-</ul>
-<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
-<ul>
-<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
-<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
-<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
-</ul>
-<p><strong>一致性解决方案：</strong></p>
-<ul>
-<li>分布式事务：两段提交</li>
-<li>分布式锁</li>
-<li>MQ消息持久化 重试 幂等</li>
-<li>Paxos算法</li>
-</ul>
-<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
-<p><strong>高可用的解决方案：</strong></p>
-<ul>
-<li>负载均衡</li>
-<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
-<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
-<li>流量控制</li>
-<li>异地多活</li>
-</ul>
-<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
-<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
-<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
-<li><p>系统拆分</p>
-<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
-</li>
-<li><p>缓存</p>
-<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
-</li>
-<li><p>MQ</p>
-<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
-</li>
-<li><p>分库分表</p>
-<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
-</li>
-<li><p>读写分离</p>
-<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
-</li>
-<li><p>ES</p>
-<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
-</li>
-</ul>
-<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
-<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
-<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
-<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
-<li><p>计数器</p>
-<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
-<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
-</li>
-<li><p>漏桶</p>
-<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
-<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
-<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
-<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
-</li>
-<li><p>令牌桶</p>
-<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
-<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
-<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
-<p><strong>算法实现：</strong></p>
-<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
-</li>
-</ul>
-<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
-<li><p>Redis请求窗口</p>
-<blockquote>
-<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
-</blockquote>
-<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
-</li>
-<li><p>Nginx限流</p>
-<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
-<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
-<ul>
-<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
-<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
-</ul>
-</li>
-</ul>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
-<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
-<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
-<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
-<blockquote>
-<ol>
-<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
-<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
-<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
-</ol>
-</blockquote>
-<p>服务端使用cookie可以使用以下方法：</p>
-<ul>
-<li><p>设置cookie返回给客户顿</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>读取所有cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
-<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
-<p><strong>session如何进行身份验证</strong></p>
-<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
-<p>需要注意：</p>
-<ul>
-<li>依赖session的业务需要确保客户端开启了cookie</li>
-<li>session的过期时间。</li>
-</ul>
-<p><strong>没有cookie的话，session还能用吗</strong></p>
-<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
-<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
-<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
-<p>JWT三部分构成：</p>
-<ul>
-<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
-<li>Payload(负载)：存放实际需要传递的数据。</li>
-<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
-</ul>
-<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
-<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
-<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
-<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
-<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
-<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
-<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
-<blockquote>
-<p> <strong>sso和oauth2.0的区别。</strong></p>
-<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记录一次zuul排错</title>
     <url>/2020/03/29/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1zuul%E6%8E%92%E9%94%99/</url>
     <content><![CDATA[<h2 id="某个突然出现的Bug"><a href="#某个突然出现的Bug" class="headerlink" title="某个突然出现的Bug"></a>某个突然出现的Bug</h2><p>在做微服务的时候，后端启动了几个端口，之前还想着在前端配置不同的端口方便测试，其实是可以在Zuul中设置一个共同的入口的。Zuul的配置如下(暂且不做拦截)</p>
@@ -3073,431 +3257,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java虚拟机</title>
-    <url>/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
-    <content><![CDATA[<h1 id="1、JVM架构"><a href="#1、JVM架构" class="headerlink" title="1、JVM架构"></a>1、JVM架构</h1><p>java源码通过javac编译为java字节码，java字节码是java虚拟机执行的一套代码格式，抽象了计算机的基本操作。大多数指令只有一个字节，有些操作符需要参数，导致多使用了一些字节。</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA.png" alt="java虚拟机"></p>
-<p>JVM的基础架构如上图所示：主要包含三大块：</p>
-<ul>
-<li>类加载器：负责动态加载JAVA类到JAVA虚拟机的内存空间。</li>
-<li>运行时数据区：存储JVM运行时的所有数据。</li>
-<li>执行引擎：提供JVM在不同平台的运行能力。</li>
-</ul>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>在JVM中运行着很多线程，一部分是程序创建来执行代码逻辑的<strong>应用线程</strong>，剩下的是JVM创建来执行后台任务的<strong>系统线程</strong>。</p>
-<p>主要的系统线程：</p>
-<ul>
-<li>Compile：运行时将字节码编译为本地代码使用的线程。</li>
-<li>GC：包含所有和GC有关的操作。</li>
-<li>Period Task：JVM周期性任务调度的线程，主要包含JVM内部的采样分析。</li>
-<li>Singal Dispatcher：处理OS发来的信号。</li>
-<li>VM：某些操作需要等待 JVM 到达 <strong>安全点（Safe Point）</strong>，即堆区没有变化。比如：GC 操作、线程 Dump、线程挂起 这些操作都在 VM Thread 中进行。</li>
-</ul>
-<p>类型来分，JVM内部有两种线程：</p>
-<ul>
-<li>守护线程：JVM自己使用，程序也可以把自己的线程标记为守护线程<code>（public final void setDaemon(boolean on)</code>，必须在start()方法之前调用。</li>
-<li>非守护线程：main方法执行的线程，也称为用户线程。</li>
-</ul>
-<p>只要有非守护进程运行，java程序就会继续运行，非守护都终止时，虚拟机也会自动退出。</p>
-<p>守护进程不适合进行IO，计算等操作，因为守护进程在非守护进程结束自动释放，不能判断该守护进程是否完成了操作。</p>
-<h1 id="2、类加载器"><a href="#2、类加载器" class="headerlink" title="2、类加载器"></a>2、类加载器</h1><p>负责动态加载类到虚拟机的内存空间。通常是按需加载，类第一次使用才加载。有了类加载器，java在运行时系统不需要知道文件与文件系统。每个java类都要由类加载器装入到内存。</p>
-<p>除了定位和导入二进制文件，还验证类的正确性，为变量分配初始化内存，帮助解析符号引用。按照以下顺序完成：</p>
-<ul>
-<li><strong>装载：</strong>查找并装载二进制数据。</li>
-<li><strong>链接：</strong>执行验证、准备、解析。<ul>
-<li>验证：确保被导入类型的正确性。</li>
-<li>准备：为类变量分配内存，并将其初始化为默认值。</li>
-<li>解析：把类型中的符号引用转化为直接引用。</li>
-</ul>
-</li>
-<li><strong>初始化：</strong>把类变量初始化为正确的初始值。</li>
-</ul>
-<h2 id="装载"><a href="#装载" class="headerlink" title="装载"></a>装载</h2><p>多个类装载器，应用程序可以使用两种类装载器：</p>
-<ul>
-<li><strong>Bootstrap ClassLoader</strong>：原生C编写，不继承自java.lang.ClassLoder。加载核心类库，启动类加载器通常使用某种默认的方式从本地磁盘中加载，包括java API。</li>
-<li><strong>Extention Classloader</strong>：用来在<code>&lt;JAVA_HOME&gt;/jre/lib/ext</code> ,或 <code>java.ext.dirs</code> 中指明的目录中加载 Java 的扩展库。 Java 虚拟机的实现会提供一个扩展库目录。</li>
-<li><strong>Application Classloader</strong>：根据应用程序的类路径java.class.path或者CLASSPATH加载类。一般来说，java应用的类它加载。可以通过<code>ClassLoader.getSystemClassLoader()</code> 来获取它。</li>
-<li><strong>自定义类加载器</strong>：继承java.lang.ClassLoder来实现自己的类加载器。</li>
-</ul>
-<p><strong>全盘负责双亲委托机制：</strong></p>
-<p>一个JVM系统至少3中类加载器，如何平配合工作？通过全盘负责双亲委托机制来协调类加载器。</p>
-<ul>
-<li>全盘负责：当一个ClassLoder装载一个类时，除非显示的使用另一个，该类及其所依赖的类都有这个装载。</li>
-<li>双亲委托机制：指先委托父装载器寻找目标类，只有在找不到的情况下才从自己的类路径中查找并装载目标类。</li>
-</ul>
-<p>全盘负责双亲委托是java推荐的机制，不是强制。实现自己的类加载器，保持机制，重写findClass(name)方法；破坏此机制，重写loadClass(name)方法。</p>
-<p><strong>装载入口：</strong></p>
-<p>所有java虚拟机实现必须在每个类或者接口首次主动使用时初始化。以下情况符合主动使用的要求：</p>
-<ul>
-<li>创建某个类的新实例（new、反射、克隆、序列化）</li>
-<li>调用某个类的静态方法</li>
-<li>使用类或者接口的静态字段，或对该字段赋值。final</li>
-<li>调用java API 的某些反射方法时。</li>
-<li>初始化某个类的子类时、</li>
-<li>当虚拟机启动时被表明为自动类的类。</li>
-</ul>
-<p>除了以上全是被动，不会导致java类型的初始化。</p>
-<p>对于接口来说，只有在此接口声明的非常量字段被使用，才会初始化，不会因为事先这个接口的子接口或者类要初始化而被初始化。</p>
-<p>父类需要在子类之前初始化。当实现了接口的类被初始化时，不需要初始化父接口。然而，当实现了父接口的子类（或者拓展了父接口的子接口）被装载时，父接口也要被装载（装载但不实例化）。</p>
-<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>确保装载后的类型符合java语言的语义，并且不会危害整个虚拟机的完整性。</p>
-<ul>
-<li>装载时验证：检查二进制数据保证是预期格式。确保除object外的每个类都有父类，确保该类的父类已经被装载。</li>
-<li>正式验证阶段：检查final类不能有子类，确保 final 方法不被覆盖、确保在类型和超类型之间没有不兼容的方法声明(比如拥有两个名字相同的方法，参数在数量、顺序、类型上都相同，但返回类型不同)。</li>
-<li>符号引用的验证：当虚拟机搜寻一个被符号引用的元素(类型、字段或方法)时，必须首先确认该元素存在。如果虚拟机发现元素存在，则必须进一步检查引用类型有访问该元素的权限。</li>
-</ul>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>虚拟机为类变量分配内存，设置默认初始值。初始化阶段之前，类变量都没有被初始化为真正的初始值。</p>
-<table>
-<thead>
-<tr>
-<th align="center">类型</th>
-<th align="center">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">int</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">long</td>
-<td align="center">0L</td>
-</tr>
-<tr>
-<td align="center">short</td>
-<td align="center">(short)0</td>
-</tr>
-<tr>
-<td align="center">char</td>
-<td align="center">‘\u0000’</td>
-</tr>
-<tr>
-<td align="center">byte</td>
-<td align="center">(byte)0</td>
-</tr>
-<tr>
-<td align="center">blooean</td>
-<td align="center">false</td>
-</tr>
-<tr>
-<td align="center">float</td>
-<td align="center">0.0f</td>
-</tr>
-<tr>
-<td align="center">double</td>
-<td align="center">0.0d</td>
-</tr>
-<tr>
-<td align="center">reference</td>
-<td align="center">null</td>
-</tr>
-</tbody></table>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>在类型的常量池中寻找类、接口、字段和方法的符号占用，把这些符号引用替换成直接引用的过程。</p>
-<ul>
-<li>类、接口的解析：判断所要转化成的直接引用是数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li>
-<li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li>
-</ul>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>所有类变量（静态量）初始化语句和类型的静态初始化器都被java编译器收集在一起，放到一个特殊的方法。对于类来说，方法叫初始化方法；对于接口来说，称为接口初始化方法。在类和接口的class文件中，称为<clinit></p>
-<ol>
-<li>存在直接父类且父类没被初始化，先初始化直接父类。</li>
-<li>类存在一个类初始化方法， 执行此方法。</li>
-</ol>
-<p>递归执行，所以第一个初始化的类一定是object。</p>
-<p>虚拟机须确保初始化过程正确同步。如果多个县城需要初始化一个类，仅仅允许一个，其余的等待。</p>
-<h3 id="Clinit方法"><a href="#Clinit方法" class="headerlink" title="Clinit方法"></a>Clinit方法</h3><ul>
-<li>对于静态变量和静态初始化语句来说：执行的顺序和它们在类或接口中出现的顺序有关。</li>
-<li><strong>并非所有的类都需要在它们的<code>class</code>文件中拥有<code>&lt;clinit&gt;()</code>方法，</strong> 如果类没有声明任何类变量，也没有静态初始化语句，那么它就不会有<code>&lt;clinit&gt;()</code>方法。如果类声明了类变量，但没有明确的使用类变量初始化语句或者静态代码块来初始化它们，也不会有<code>&lt;clinit&gt;()</code>方法。如果类仅包含静态<code>final</code>常量的类变量初始化语句，而且这些类变量初始化语句采用编译时常量表达式，类也不会有<code>&lt;clinit&gt;()</code>方法。**只有那些需要执行Java代码来赋值的类才会有<code>&lt;clinit&gt;()</code>**’</li>
-<li><code>final</code>常量：Java虚拟机在使用它们的任何类的常量池或字节码中直接存放的是它们表示的常量值。</li>
-</ul>
-<h1 id="3、内存模型"><a href="#3、内存模型" class="headerlink" title="3、内存模型"></a>3、内存模型</h1><p>运行时数据区保存JVM在运行过程中产生的数据。</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%202%20%E9%A1%B5.png" alt="java虚拟机-第 2 页"></p>
-<h2 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h2><p>各线程共享的内存区域，是虚拟机管理内存区域最大的一块。几乎所有的对象实例和数组实例都是在堆上分配，但是对着JIT编译器以及逃逸分析技术的发展，也可能被优化为在栈上分配。</p>
-<p>还包含字符串字面量常量池。包含一个新生代，一个老年代。</p>
-<p>新生代三个区，大部分对象在Eden去生成，survivor总有一个是空的。</p>
-<p>老年代保存一些生命周期比较长的对象，当一个对象经过对此GC还没被回收，将移动到老年代。</p>
-<h2 id="Method-Area"><a href="#Method-Area" class="headerlink" title="Method Area"></a>Method Area</h2><p>方法区的数据所有线程共享，为安全使用方法区的数据，需要注意线程安全问题。</p>
-<p>主要保存类级别的数据，包括：</p>
-<ul>
-<li>ClassLoader Reference</li>
-<li>Runtime Constant Pool<ul>
-<li>数字常量</li>
-<li>类属性引用</li>
-<li>方法引用</li>
-</ul>
-</li>
-</ul>
-<p>在JVM1.8之前，方法区的实现为永久代。经常内存溢出。在JVM1.8方法区的实现改为<strong>元空间</strong>，元空间是在Native的一块内存空间。</p>
-<h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><p>JVM线程启动时，分配独立的运行时栈，来保存方法调用。每个方法调用，都会入栈一个栈帧。</p>
-<p>栈帧保存三个引用：本地变量表，操作数帧和当前方法所属类的运行时常量池。由于本地变量表和操作数栈的大小都在编译时确定，所以栈帧的大小是固定的。</p>
-<p>被调用的方法返回或抛出异常，栈帧弹出。在抛出异常时 <code>printStackTrace()</code> 打印的每一行就是一个栈帧。同时得益于栈帧的特点，栈帧内的数据是线程安全的。</p>
-<p>栈大小可以动态拓展，但是如果一个线程需要栈的大小超出允许的大小，抛出<code>StackOverflowError</code>。</p>
-<h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
-<h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地房发展执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
-<h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
-<h1 id="4、垃圾收集"><a href="#4、垃圾收集" class="headerlink" title="4、垃圾收集"></a>4、垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
-<ul>
-<li><p>引用计数算法</p>
-<p>对象添加引用计数器，引用时+1,引用失效-1。致命缺陷就是两个对象相互引用导致两个都无法回收。</p>
-</li>
-<li><p>根搜索算法</p>
-<p>实际上是追踪从根节点开始的引用图。</p>
-<p>在根搜索算法追踪的过程，起点是GC Root，根据JVM的实现不同而不同，但是总会包含以下几个方面（堆外引用）：</p>
-<ul>
-<li>虚拟机栈中引用的对象</li>
-<li>方法区中的类静态属性引用的变量</li>
-<li>方法区中的常量引用的变量</li>
-<li>本地方法JNI的引用对象</li>
-</ul>
-<p>从GC Root开始的引用图，有向图，节点时对象，边是引用类型。JVM分为四种引用类型：<strong>强引用，软引用，弱引用，虚引用。</strong></p>
-<p>一个对象的引用类型有多个，如何确定回收策略：</p>
-<ul>
-<li>单条引用链以链上最弱的一个引用类型来决定；</li>
-<li>多条引用链以多个单条引用链中最强的一个引用类型来决定；</li>
-</ul>
-<p>在引用图，如果一个节点没有任何路径可达，确定回收。</p>
-<p><strong>强引用：</strong></p>
-<p>在java中普遍存在，类似于<code>Object o = new Object;</code>和其他引用的区别是：强引用禁止引用目标被GC收集，其他引用不禁止。</p>
-<p><strong>软引用：</strong></p>
-<p>对象可以从根节点通过一个或多个软引用对象触及，GC在要发生内存溢出之前将这些对象列入回收范围进行回收，如果该软引用和引用队列关联，他会吧改软引用对象加入队列。<strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
-<p><strong>弱引用：</strong></p>
-<p>垃圾收集器在GC的时候会回收所有的所引用，如果该弱引用和引用队列相关联，他会吧改弱引用加入到队列。</p>
-<p><strong>虚引用：</strong></p>
-<p>GC不会清楚虚引用，程序明确清除。同时也不能通过虚引用来取得一个实例。</p>
-</li>
-</ul>
-<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="1、复制回收"><a href="#1、复制回收" class="headerlink" title="1、复制回收"></a>1、复制回收</h3><p>可用内存等分两份，同一时刻值使用其中一份。用完后将还存活的对象赋值到另一份，然后将这一份清空。能够有效避免内存碎片，但是减低了内存使用率。</p>
-<h3 id="2、标记清除算法"><a href="#2、标记清除算法" class="headerlink" title="2、标记清除算法"></a>2、标记清除算法</h3><p>先暂停整个程序的全部运行线程，让回收线程以单线程进行扫描标记，并进行直接清除回收，然后回收完成后恢复运行线程。标记清除后会产生大量不连续的内存碎片，造成空间浪费。</p>
-<h3 id="3、标记整理算法"><a href="#3、标记整理算法" class="headerlink" title="3、标记整理算法"></a>3、标记整理算法</h3><p>和标记清除相似，不同的是，回收期间同时会将保留的存储对象搬运汇集到连续的内存空间，从而集成空闲时间。</p>
-<h3 id="4、增量回收"><a href="#4、增量回收" class="headerlink" title="4、增量回收"></a>4、增量回收</h3><p>将程序拥有的内存空间分成若干区。程序的存储对象会分布在分区中，每次只对其中一个分区进行回收，从而避免程序全部运行线程暂停来进行回收，允许部分线程在不影响回收行为的情况下保持运行，降低回收时间，增加线程响应速度。</p>
-<h3 id="5、分代回收"><a href="#5、分代回收" class="headerlink" title="5、分代回收"></a>5、分代回收</h3><p>对象拥有不同的生命周期，不同生命周期的对象采用不同的回收算法，以提高效率。</p>
-<p><strong>记忆集：</strong></p>
-<p>对象C在新生代，只被一个在老年代的D引用。如果运行新生代GC，要确定C是否被堆外引用，需要便利老年代，代价比较大。JVM在对象引用的时候，会有个记忆集，记录从老年代到新生代的引用关系，并把记忆集中的老年代作为GC ROOT构建索引图，遮掩在新生代GC的时候就不需要遍历老年代。</p>
-<p>但是记忆集有缺点：C &amp; D 其实都可以进行回收，但是由于记忆集的存在，不会将 C 回收。这里其实有一点 <strong>空间换时间</strong> 的意思。不过无论如何，它依然确保了垃圾回收所遵循的原则：<strong>垃圾回收确保回收的对象必然是不可达对象，但是不确保所有的不可达对象都会被回收</strong>。</p>
-<h2 id="垃圾回收触发条件"><a href="#垃圾回收触发条件" class="headerlink" title="垃圾回收触发条件"></a>垃圾回收触发条件</h2><h3 id="1、堆内内存"><a href="#1、堆内内存" class="headerlink" title="1、堆内内存"></a>1、堆内内存</h3><p>对于HotSpot VM实现，GC只有两大种：</p>
-<ol>
-<li>Partial GC：并不收集整个GC堆<ul>
-<li>Young GC：只收集新生代的GC</li>
-<li>Old GC：只收集老年代的GC。只有 CMS的 Concurrent Collection 是这个模式</li>
-<li>Mixed GC：收集整个 Young Gen 以及部分 Old Gen 的 GC。只有 G1 有这个模式</li>
-</ul>
-</li>
-<li>Full GC：收集整个堆，包括 Young Gen、Old Gen、Perm Gen（如果存在的话）等所有部分的 GC 模式。</li>
-</ol>
-<p>最简单的分代式GC策略，按照HotSpot的serial GC的实现看，出发条件是：</p>
-<ul>
-<li>Young GC：新生代的eden区分配满的时候触发，把eden区存货的对象复制到一个Survivor区，当这个Survivor区满时，存活的对象被复制到另一个survivor区。</li>
-<li>Full GC<ul>
-<li>当准备要触发一次 Young GC 时，如果发现之前 Young GC 的平均晋升大小比目前 Old Gen剩余的空间大，则不会触发 Young GC 而是转为触发 Full GC</li>
-<li>如果有 Perm Gen 的话，要在 Perm Gen分配空间但已经没有足够空间时</li>
-<li><code>System.gc()</code></li>
-<li>Heap dump</li>
-</ul>
-</li>
-</ul>
-<p>并发 GC 的触发条件就不太一样。以 CMS GC 为例，它主要是定时去检查 Old Gen 的使用量，当使用量超过了触发比例就会启动一次 GC，对 Old Gen做并发收集。</p>
-<h3 id="2、堆外内存"><a href="#2、堆外内存" class="headerlink" title="2、堆外内存"></a>2、堆外内存</h3><p>DirectByteBuffer的引用时直接分配在堆的old区，回收时机是在FULLGC，因此需要避免频繁的分配directByteBuffer，这样就很容易导致Native Memory溢出。</p>
-<p>DirectByteBuffer申请的直接内存，不在G范围内，无法自动回收。JDK提供一种机制，可以为堆内存对象注册一个钩子函数(其实就是实现 <code>Runnable</code> 接口的子类)，当堆内存对象被GC回收的时候，会回调run方法，我们可以在这个方法中执行释放 <code>DirectByteBuffer</code> 引用的直接内存，即在run方法中调用 <code>Unsafe</code> 的 <code>freeMemory</code> 方法。注册是通过<code>sun.misc.Cleaner</code> 类来实现的。</p>
-<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>内存回收的具体实现，以下为7钟不同分代的收集器，有连线表示可以搭配使用。</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%203%20%E9%A1%B5.png" alt="java虚拟机-第 3 页"></p>
-<h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器。优点是：简单高效。此收集器没有线程交互的开销，效率高。在用户桌面的场景下，分配给JVM的内存不会太多，停顿时间在几十到一百多毫秒之间，只要不频繁收集，完全可以接受。</p>
-<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><p>Serial的多线程版本，是许多运行在Server模式下的默认新生代GC，主要与CMS收集器配合工作。</p>
-<h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><p>新生代GC，多线程收集器。更关注可控制的吞吐量，吞吐量等于运行用户代码的时间/（运行用户代码的时间+垃圾收集时间）。</p>
-<h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><p>Serial的老年代版本，单线程，采用“标记-整理算法”进行垃圾回收。</p>
-<h3 id="5、Parallel-Old"><a href="#5、Parallel-Old" class="headerlink" title="5、Parallel Old"></a>5、Parallel Old</h3><p>是Parallel Scavenge的老年代版本，多线程，通常与Parallel Scavenge配合使用。</p>
-<h3 id="6、CMS-收集器"><a href="#6、CMS-收集器" class="headerlink" title="6、CMS 收集器"></a>6、CMS 收集器</h3><p>目标是获取最短停顿时间，采用“标记-清除”算法，运行在老年代，包含以下步骤：</p>
-<ul>
-<li>初始标记</li>
-<li>并发标记</li>
-<li>重新标记</li>
-<li>并发清除。</li>
-</ul>
-<p>其中初始标记和重新标记仍然需要stop the world。初始标记仅仅标记GC ROOT能直接关联的对象，并发标记是为了记性GC ROOT Tracing过程，重新标记是为了修正并发标记期间，因为用户程序继续运行而导致标记变动的那部分对象的标记记录。</p>
-<p>最耗时的是并发表标记和并发清除，收集线程和用户线程一起工作，总体来说，CMS GC回收和用户程序并行。优点是并发收集、低停顿，但是有三个缺点：</p>
-<ul>
-<li>对CPU资源很敏感：并发阶段不停用用户进程，但是占用线程导致程序变慢。</li>
-<li>不能处理浮动垃圾：浮动垃圾就是在并发标记阶段，用户程序运行产生新的垃圾，这部分垃圾在标记后，CMS无法在当次集中处理，只能在下一次GC处理，这部分垃圾就称为浮动垃圾。</li>
-</ul>
-<p>正是由于在垃圾收集阶段程序还需要运行，即还需要预留足够的内存空间供用户使用，因此 CMS 收集器不能像其他收集器那样等到老年代几乎填满才进行收集，需要预留一部分空间提供并发收集时程序运作使用。要是 CMS 预留的内存空间不能满足程序的要求，这是 JVM 就会启动预备方案：<strong>临时启动 Serial Old 收集器来收集老年代</strong>，这样停顿的时间就会很长。</p>
-<h3 id="6、G1收集器"><a href="#6、G1收集器" class="headerlink" title="6、G1收集器"></a>6、G1收集器</h3><p>比GMS有很大改进：</p>
-<ul>
-<li>标记整理算法：采用标记整理算法实现</li>
-<li>增量回收模式：将Heap分割成多个Region，并在后台维护一个优先列表，每次根据允许的时间，优先回收垃圾最多的区域。</li>
-</ul>
-<p>因此G1收集器可以实现在基本不牺牲吞吐量的情况下完成低停顿的内存回收，这是正式由于他极力的避免全区域回收。</p>
-<p><strong>总结</strong></p>
-<table>
-<thead>
-<tr>
-<th align="center">垃圾收集器</th>
-<th align="center">特性</th>
-<th align="center">算法</th>
-<th align="center">优点</th>
-<th align="center">缺点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Serial</td>
-<td align="center">串行</td>
-<td align="center">复制</td>
-<td align="center">高效：无线程切换</td>
-<td align="center">无法利用多核CPU</td>
-</tr>
-<tr>
-<td align="center">ParNew</td>
-<td align="center">并行</td>
-<td align="center">复制</td>
-<td align="center">可利用多核CPU、唯一能与CMS配合的并行收集器</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Parallel Scavenge</td>
-<td align="center">并行</td>
-<td align="center">复制</td>
-<td align="center">高吞吐量</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Serial Old</td>
-<td align="center">串行</td>
-<td align="center">标记整理</td>
-<td align="center">高效</td>
-<td align="center">无法利用多核CPU</td>
-</tr>
-<tr>
-<td align="center">Parallel Old</td>
-<td align="center">并行</td>
-<td align="center">标记整理</td>
-<td align="center">高吞吐量</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">CMS</td>
-<td align="center">并行</td>
-<td align="center">标记清除</td>
-<td align="center">低停顿</td>
-<td align="center">CPU敏感，浮动垃圾，内存碎片</td>
-</tr>
-<tr>
-<td align="center">G1</td>
-<td align="center">并行</td>
-<td align="center">增量回收</td>
-<td align="center">低停顿。高吞吐量</td>
-<td align="center">内存使用效率低：分区导致内存不能充分使用</td>
-</tr>
-</tbody></table>
-<h1 id="5、Java分配机制"><a href="#5、Java分配机制" class="headerlink" title="5、Java分配机制"></a>5、Java分配机制</h1><p>java中符合“编译时可知，运行时不可变”要求的主要是静态方法和私有方法。因此适合在类加载时进行解析。</p>
-<p>java虚拟机中有四种方法调用指令：</p>
-<ul>
-<li>invokestatic：调用静态方法。</li>
-<li>invokespecial：调用实例构造方法，私有方法和super</li>
-<li>invokeinterface：调用接口方法</li>
-<li>invokevirtual：调用以上指令不能调用的方法（虚方法）。</li>
-</ul>
-<p>只要能被static和special指令调用的方法，都可以在解析阶段唯一确定调用版本，符合条件的有：静态方法，私有方法，实例构造器，父类方法，他们在类加载的时候就会把符号引用解析为该方法的直接引用。这些方法称为非虚方法， 反之称为虚方法，（final除外）。</p>
-<blockquote>
-<p>虽然final方法是使用virtual指令来调用，但是无法被覆盖，多态的选择是唯一的，所以是一种虚方法。</p>
-</blockquote>
-<h2 id="静态分派"><a href="#静态分派" class="headerlink" title="静态分派"></a>静态分派</h2><blockquote>
-<p>对于类字段的访问也采用静态分派</p>
-</blockquote>
-<p><code>People man =  new Man()</code></p>
-<p>静态分派主要针对重载，方法调用时如何选择。在上面的代码，Peopel被称为变量的引用类型，Man称为变量的实际类型。静态类型在编译时可知，动态类型在运行时可知。</p>
-<p>编译器在重载时候通过参数的静态类型而不是实际类型作为判断依据。并且静态类型咋编译时可知，所以编译器根据重载的参数的静态类型进行方法选择。</p>
-<blockquote>
-<p>在某些情况下有多个重载，那编译器如何选择呢？ 编译器会选择”最合适”的函数版本，那么怎么判断”最合适“呢？越接近传入参数的类型，越容易被调用。</p>
-</blockquote>
-<h2 id="动态分派"><a href="#动态分派" class="headerlink" title="动态分派"></a>动态分派</h2><p>主要针对重写，使用virtual指令调用，virtual指令多态查找过程：</p>
-<ul>
-<li>找到操作数栈顶的第一个元素所指向的对象的实际类型，记为C</li>
-<li>如果在类型C中找到与常量中的描述符合简单名称都相符的方法，则进行访问权限校验，如果通过则返回这个方法的直接引用，查找过程结束；如果权限校验不通过，返回java.lang.IllegalAccessError异常。</li>
-<li>否则，按照继承关系从下往上一次对C的各个父类进行第2步的搜索和验证过程。</li>
-<li>如果始终没有找到合适的方法，则抛出 java.lang.AbstractMethodError异常。</li>
-</ul>
-<h2 id="虚拟机动态分派的实现"><a href="#虚拟机动态分派的实现" class="headerlink" title="虚拟机动态分派的实现"></a>虚拟机动态分派的实现</h2><p>动态分配很繁琐，而且动态分派的方法版本的选择需要考虑运行时咋类的方法数据中搜索合适的目标方法，因为在虚拟机的实现中基于性能的考虑，咋方法区中建立一个虚方法表来提高性能。</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324125440920.png" alt="image-20210324125440920"></p>
-<p>虚方法表中存放各个方法的实际入口地址。如果某个方法在子类中没有重写，那么子类的虚方法表里的入口和父类入口一致，如果子类重写了这个方法，那么子类方法表中的地址会被替换成子类实现版本的入口地址。</p>
-<h1 id="6、String常量池"><a href="#6、String常量池" class="headerlink" title="6、String常量池"></a>6、String常量池</h1><p>常量池类似于一个JAVA系统级别提供的缓存。</p>
-<p>String类型的常量池比较特殊，使用方法：</p>
-<ul>
-<li>直接使用双引号声明的String对象会直接存储在常量池。</li>
-<li>不是使用双引号，可以使用String提供的inter方法，该方法会从字符串常量池中查询当前字符串是否存在，不存在则放入常量池。</li>
-</ul>
-<h2 id="Intern"><a href="#Intern" class="headerlink" title="Intern"></a>Intern</h2><p>java使用Jni调用C++实现的StringTable的Intern方法，StringTable跟java中的HashMap实现差不多，但是不能扩容。默认大小是<code>1009</code></p>
-<p>要注意的是， <code>String</code> 的 <code>String Pool</code> 是一个固定大小的 <code>Hashtable</code> ，默认值大小长度是 <code>1009</code> ，如果放进 <code>String Pool</code> 的 <code>String</code> 非常多，就会造成 Hash 冲突严重，从而导致链表会很长，而链表长了后直接会造成的影响就是当调用 <code>String.intern</code> 时性能会大幅下降。</p>
-<p>JDK6中StringTable固定，但是JDK7可以通过参数指定：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-XX：StringTableSize&#x3D;99991</span><br></pre></td></tr></table></figure>
-
-<p>在6和以前的版本，字符串的常量池存放在Perm区，7的版本中，转移到正常的Heap区</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    s.intern();</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    s3.intern();</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行结果：</p>
-<ul>
-<li>JDK6：false false</li>
-<li>JDK7：fale true</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    s.intern();</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    s3.intern();</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行结果：</p>
-<ul>
-<li>6：false false</li>
-<li>7：false false</li>
-</ul>
-<p>由于7将字符串常量池放到Heap中，导致差异。</p>
-<h3 id="JDK-6"><a href="#JDK-6" class="headerlink" title="JDK 6"></a>JDK 6</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/1.png" alt="1"></p>
-<p>黑色线表示String对象的内容指向，红色代表地址指向。</p>
-<p>在jdk6中所有打印都是false，因为常量池在Perm中，Perm和正常的Heap是分开的，引号声明的字符串直接在常量池生成，而new出来的String存放在Heap，地址肯定不同，及时调用String.intern()方法也是没有很合关系。</p>
-<h3 id="JDK-7"><a href="#JDK-7" class="headerlink" title="JDK 7"></a>JDK 7</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%205%20%E9%A1%B5.png" alt="java虚拟机-第 5 页"></p>
-<ul>
-<li>第一段代码，<code>String s3 = new String(&quot;1&quot;)+new String(&quot;1&quot;);</code>，代码生成两个最终对象，是常量池中的“1”和Heap中S3引用指向的对象。此时S3引用的对象是“11”，但是常量池没有“11”对象。</li>
-<li>接下来S3.intern()是讲S3中的“11”放入常量池。但是7中的常量池不在Perm区域了，常量池中不需要再存储一份对象，可以直接存储占中的引用。这份引用指向S3的对象。引用地址是相同的。</li>
-<li>最后 <code>String s4 = &quot;11&quot;;</code> 这句代码中 <code>”11”</code> 是显示声明的，因此会直接去常量池中创建，创建的时候发现已经有这个对象了，此时也就是指向 <code>s3</code> 引用对象的一个引用。所以 <code>s4</code> 引用就指向和 <code>s3</code> 一样了。因此最后的比较 <code>s3 == s4</code> 是 <code>true</code> 。</li>
-<li>再看 <code>s</code> 和 <code>s2</code> 对象。 <code>String s = new String(&quot;1&quot;);</code> 第一句代码，生成了2个对象。常量池中的 <code>“1”</code> 和 <code>JAVA Heap</code> 中的字符串对象。<code>s.intern();</code> 这一句是 <code>s</code> 对象去常量池中寻找后发现 <code>“1”</code> 已经在常量池里了。</li>
-<li>接下来 <code>String s2 = &quot;1&quot;;</code> 这句代码是生成一个 <code>s2</code> 的引用指向常量池中的 <code>“1”</code> 对象。 结果就是 <code>s</code> 和 <code>s2</code> 的引用地址明显不同。</li>
-</ul>
-<p>接下来是第二段代码：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%206%20%E9%A1%B5.png" alt="java虚拟机-第 6 页"></p>
-<ul>
-<li>第一段代码和第二段代码的改变就是 <code>s3.intern();</code> 的顺序是放在 <code>String s4 = &quot;11&quot;;</code> 后了。这样，首先执行 <code>String s4 = &quot;11&quot;;</code> 声明 <code>s4</code> 的时候常量池中是不存在 <code>“11”</code> 对象的，执行完毕后， <code>“11“</code> 对象是 <code>s4</code> 声明产生的新对象。然后再执行 <code>s3.intern();</code> 时，常量池中 <code>“11”</code> 对象已经存在了，因此 <code>s3</code> 和 <code>s4</code> 的引用是不同的。</li>
-<li>二段代码中的 <code>s</code> 和 <code>s2</code> 代码中，<code>s.intern();</code>，这一句往后放也不会有什么影响了，因为对象池中在执行第一句代码<code>String s = new String(&quot;1&quot;);</code> 的时候已经生成 <code>“1”</code> 对象了。下边的 <code>s2</code> 声明都是直接从常量池中取地址引用的。 <code>s</code> 和 <code>s2</code> 的引用地址是不会相等的。</li>
-</ul>
-<h3 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h3><p>对intern和常量池都做了一定的修改，主要包括：</p>
-<ul>
-<li>将String常量池从Perm区移动到了Heap区</li>
-<li>String.intern方法时，如果heap中存在对象，将会直接保存对象的引用，而不是重新创建对象。</li>
-</ul>
-<h3 id="使用范例"><a href="#使用范例" class="headerlink" title="使用范例"></a>使用范例</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static final int MAX &#x3D; 1000 * 10000;</span><br><span class="line">static final String[] arr &#x3D; new String[MAX];</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">    Integer[] DB_DATA &#x3D; new Integer[10];</span><br><span class="line">    Random random &#x3D; new Random(10 * 10000);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; DB_DATA.length; i++) &#123;</span><br><span class="line">        DB_DATA[i] &#x3D; random.nextInt();</span><br><span class="line">    &#125;</span><br><span class="line">	long t &#x3D; System.currentTimeMillis();</span><br><span class="line">    for (int i &#x3D; 0; i &lt; MAX; i++) &#123;</span><br><span class="line">        &#x2F;&#x2F;arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length]));</span><br><span class="line">         arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length])).intern();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	System.out.println((System.currentTimeMillis() - t) + &quot;ms&quot;);</span><br><span class="line">    System.gc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一条是使用 intern，一条是未使用 intern。</p>
-<p>通过上述结果，我们发现不使用 <code>intern</code> 的代码生成了 <code>1000w</code> 个字符串，占用了大约 <code>640m</code> 空间。 使用了 <code>intern</code> 的代码生成了 <code>1345</code> 个字符串，占用总空间 <code>133k</code> 左右。其实通过观察程序中只是用到了 <code>10</code> 个字符串，所以准确计算后应该是正好相差 <code>100w</code> 倍。虽然例子有些极端，但确实能准确反应出 intern 使用后产生的巨大空间节省。</p>
-<p> <code>intern</code> 方法后时间上有了一些增长。这是因为程序中每次都是用了 <code>new String</code> 后，然后又进行 <code>intern</code> 操作的耗时时间，这一点如果在内存空间充足的情况下确实是无法避免的，但我们平时使用时，内存空间肯定不是无限大的，不使用 <code>intern</code> 占用空间导致 <code>jvm</code> 垃圾回收的时间是要远远大于这点时间的。</p>
-<h1 id="7、对象生命周期"><a href="#7、对象生命周期" class="headerlink" title="7、对象生命周期"></a>7、对象生命周期</h1><h2 id="类实例化"><a href="#类实例化" class="headerlink" title="类实例化"></a>类实例化</h2><p>实例化类的四个途径：</p>
-<ul>
-<li>new</li>
-<li>调用class或者java.lang.reflect.Constructor对象的NewInstance</li>
-<li>调用任何现有对象的clone</li>
-<li>通过<code>java.io.ObjectInputStream.getObject()</code>反序列化。</li>
-</ul>
-<p>隐含的实例化：</p>
-<ul>
-<li>保存命令行参数的String对象</li>
-<li>虚拟机装载的每个类，都会暗中实例化一个class对象来代表这个类型。</li>
-<li>当Java虚拟机装载了在常量池中包含<code>CONSTANT_String_info</code>入口的类的时候，它会创建新的<code>String</code>对象来表示这些常量字符串。</li>
-<li>执行包含字符串连接操作符的表达式会产生新的对象。</li>
-</ul>
-<h2 id="垃圾收集和对象的终结"><a href="#垃圾收集和对象的终结" class="headerlink" title="垃圾收集和对象的终结"></a>垃圾收集和对象的终结</h2><p>程序可以分配内存但不能释放内存，一个对象不再为程序引用，虚拟机必须回收那部分内存。</p>
-<h2 id="卸载类"><a href="#卸载类" class="headerlink" title="卸载类"></a>卸载类</h2><p>虚拟机中类的生命周期和对象的生命周期相似。当程序不再使用某个类的时候，可以选择卸载他们。</p>
-<p>虚拟机通过判断类是否在被引用来实现垃圾收集。判断动态装载类的Class实例在正常的垃圾收集过程中是否可触及有两种方式：</p>
-<ul>
-<li>如果实例非Class实例的明确引用。</li>
-<li>如果在堆中还存在一个可触及对象，在方法区中它的类型数据指向一个Class实例。</li>
-</ul>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324173320715.png" alt="image-20210324173320715"></p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -4972,7 +4731,7 @@
 <li>如果没有同步标识（SYN），则此为第一个数据比特的序列码</li>
 </ul>
 </li>
-<li>确认号：希望收到的下一个数据报的序列号，表明到序列号 <code>N-1</code> 为止的所有数据已经正确收到。</li>
+<li>32位确认号：希望收到的下一个数据报的序列号，表明到序列号 <code>N-1</code> 为止的所有数据已经正确收到。</li>
 <li>TCP协议数据报头长：4位长。表明TCP头中包含多少个 4字节</li>
 <li>保留：置0</li>
 <li><strong>ACK</strong>：期望收到的数据的开始序列号。也即已经收到的数据的字节长度加1</li>
@@ -5021,10 +4780,11 @@
 <h2 id="TCP，UDP协议的区别"><a href="#TCP，UDP协议的区别" class="headerlink" title="TCP，UDP协议的区别"></a>TCP，UDP协议的区别</h2><p>UDP在传送数据之前不需要建立连接，远程主机收到UDP报文后，不需要给出任何确认。虽然UDP不提供可交付，但是比较有效。比如：QQ语音，视屏，直播。</p>
 <p>TCP提供面向连接的服务。传送前建立连接，传送后断开连接。不提供广播或者多播服务。（可靠性体现在三次握手，在数据传输时，还有确认，窗口，重传等等，在数据传输之后，还会断开连接来释放资源）。增加很多开销，使得协议数据单元的首部增大很多。一般用于文件传输，发送和接受邮件，远程登陆。</p>
 <p><strong>TCP如何保证可靠传输？</strong></p>
+<p>分块，编号，校验和，流量控制，拥塞机制，ARQ，超时重传。</p>
 <ul>
 <li>数据被分割成TCP认为最适合传输的数据块</li>
 <li>给发送的每一个包进行编号，接收方对数据报进行排序，把有序数据传给应用层。</li>
-<li><strong>校验和：</strong>TCP将保持他首部和数据的校验和。这是一个端到端的检验和，目的是检验数据再传输的过程中的任何变化，有变化则丢弃并不确认收到此报文。</li>
+<li><strong>校验和：</strong>TCP将保持他首部和数据的校验和。这是一个端到端的检验和，目的是检验数据在传输的过程中的任何变化，有变化则丢弃并不确认收到此报文。</li>
 <li>TCP接收端会丢弃重复的数据。</li>
 <li><strong>流量控制：</strong>连接双方有缓冲空间，只允许发送缓冲区能接纳的数据，接收端来不及处理的时候提示发送方降低发送速率，防止丢包。缓冲区是可改变大小的滑动窗口协议。</li>
 <li><strong>拥塞控制：</strong>网络阻塞时，减少数据的发送</li>
@@ -5032,7 +4792,7 @@
 <li><strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
 </ul>
 <h2 id="滑动窗口和流量控制"><a href="#滑动窗口和流量控制" class="headerlink" title="滑动窗口和流量控制"></a>滑动窗口和流量控制</h2><p><strong>TCP 利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。</strong> 接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</p>
-<h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><p>为了进行控制，TCP维持一个<strong>拥塞窗口</strong>的状态变量。窗口的大小取决于网络的拥塞程度，动态变化，发送方让自己的发送窗口取为拥塞窗口和结束方的接收窗口中较小的一个。</p>
+<h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><p>为了进行控制，TCP维持一个<strong>拥塞窗口</strong>的状态变量。窗口的大小取决于网络的拥塞程度，动态变化，发送方让自己的发送窗口取为拥塞窗口和接收方的接收窗口中较小的一个。</p>
 <p>采用了四种算法：慢开始、拥塞避免、快重传、快恢复。</p>
 <ul>
 <li><strong>慢开始：</strong>因为不知道情况，小到大增加发送窗口，cwnd(拥塞窗口)初始1，每次加倍。</li>
@@ -5741,6 +5501,433 @@
       </categories>
       <tags>
         <tag>DevOps</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java虚拟机</title>
+    <url>/2021/03/21/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    <content><![CDATA[<h1 id="1、JVM架构"><a href="#1、JVM架构" class="headerlink" title="1、JVM架构"></a>1、JVM架构</h1><p>java源码通过javac编译为java字节码，java字节码是java虚拟机执行的一套代码格式，抽象了计算机的基本操作。大多数指令只有一个字节，有些操作符需要参数，导致多使用了一些字节。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA.png" alt="java虚拟机"></p>
+<p>JVM的基础架构如上图所示：主要包含三大块：</p>
+<ul>
+<li>类加载器：负责动态加载JAVA类到JAVA虚拟机的内存空间。</li>
+<li>运行时数据区：存储JVM运行时的所有数据。</li>
+<li>执行引擎：提供JVM在不同平台的运行能力。</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>在JVM中运行着很多线程，一部分是程序创建来执行代码逻辑的<strong>应用线程</strong>，剩下的是JVM创建来执行后台任务的<strong>系统线程</strong>。</p>
+<p>主要的系统线程：</p>
+<ul>
+<li>Compile：运行时将字节码编译为本地代码使用的线程。</li>
+<li>GC：包含所有和GC有关的操作。</li>
+<li>Period Task：JVM周期性任务调度的线程，主要包含JVM内部的采样分析。</li>
+<li>Singal Dispatcher：处理OS发来的信号。</li>
+<li>VM：某些操作需要等待 JVM 到达 <strong>安全点（Safe Point）</strong>，即堆区没有变化。比如：GC 操作、线程 Dump、线程挂起 这些操作都在 VM Thread 中进行。</li>
+</ul>
+<p>类型来分，JVM内部有两种线程：</p>
+<ul>
+<li>守护线程：JVM自己使用，程序也可以把自己的线程标记为守护线程<code>（public final void setDaemon(boolean on)</code>，必须在start()方法之前调用。</li>
+<li>非守护线程：main方法执行的线程，也称为用户线程。</li>
+</ul>
+<p>只要有非守护进程运行，java程序就会继续运行，非守护都终止时，虚拟机也会自动退出。</p>
+<p>守护进程不适合进行IO，计算等操作，因为守护进程在非守护进程结束自动释放，不能判断该守护进程是否完成了操作。</p>
+<h1 id="2、类加载器"><a href="#2、类加载器" class="headerlink" title="2、类加载器"></a>2、类加载器</h1><p>负责动态加载类到虚拟机的内存空间。通常是按需加载，类第一次使用才加载。有了类加载器，java在运行时系统不需要知道文件与文件系统。每个java类都要由类加载器装入到内存。</p>
+<p>除了定位和导入二进制文件，还验证类的正确性，为变量分配初始化内存，帮助解析符号引用。按照以下顺序完成：</p>
+<ul>
+<li><strong>装载：</strong>查找并装载二进制数据。</li>
+<li><strong>链接：</strong>执行验证、准备、解析。<ul>
+<li>验证：确保被导入类型的正确性。</li>
+<li>准备：为类变量分配内存，并将其初始化为默认值。</li>
+<li>解析：把类型中的符号引用转化为直接引用。</li>
+</ul>
+</li>
+<li><strong>初始化：</strong>把类变量初始化为正确的初始值。</li>
+</ul>
+<h2 id="装载"><a href="#装载" class="headerlink" title="装载"></a>装载</h2><p>多个类装载器，应用程序可以使用两种类装载器：</p>
+<ul>
+<li><strong>Bootstrap ClassLoader</strong>：原生C编写，不继承自java.lang.ClassLoder。加载核心类库，启动类加载器通常使用某种默认的方式从本地磁盘中加载，包括java API。</li>
+<li><strong>Extention Classloader</strong>：用来在<code>&lt;JAVA_HOME&gt;/jre/lib/ext</code> ,或 <code>java.ext.dirs</code> 中指明的目录中加载 Java 的扩展库。 Java 虚拟机的实现会提供一个扩展库目录。</li>
+<li><strong>Application Classloader</strong>：根据应用程序的类路径java.class.path或者CLASSPATH加载类。一般来说，java应用的类它加载。可以通过<code>ClassLoader.getSystemClassLoader()</code> 来获取它。</li>
+<li><strong>自定义类加载器</strong>：继承java.lang.ClassLoder来实现自己的类加载器。</li>
+</ul>
+<p><strong>全盘负责双亲委托机制：</strong></p>
+<p>一个JVM系统至少3中类加载器，如何平配合工作？通过全盘负责双亲委托机制来协调类加载器。</p>
+<ul>
+<li>全盘负责：当一个ClassLoder装载一个类时，除非显示的使用另一个，该类及其所依赖的类都有这个装载。</li>
+<li>双亲委托机制：指先委托父装载器寻找目标类，只有在找不到的情况下才从自己的类路径中查找并装载目标类。</li>
+</ul>
+<p>全盘负责双亲委托是java推荐的机制，不是强制。实现自己的类加载器，保持机制，重写findClass(name)方法；破坏此机制，重写loadClass(name)方法。</p>
+<p><strong>装载入口：</strong></p>
+<p>所有java虚拟机实现必须在每个类或者接口首次主动使用时初始化。以下情况符合主动使用的要求：</p>
+<ul>
+<li>创建某个类的新实例（new、反射、克隆、序列化）</li>
+<li>调用某个类的静态方法</li>
+<li>使用类或者接口的静态字段，或对该字段赋值。final</li>
+<li>调用java API 的某些反射方法时。</li>
+<li>初始化某个类的子类时、</li>
+<li>当虚拟机启动时被表明为自动类的类。</li>
+</ul>
+<p>除了以上全是被动，不会导致java类型的初始化。</p>
+<p>对于接口来说，只有在此接口声明的非常量字段被使用，才会初始化，不会因为事先这个接口的子接口或者类要初始化而被初始化。</p>
+<p>父类需要在子类之前初始化。当实现了接口的类被初始化时，不需要初始化父接口。然而，当实现了父接口的子类（或者拓展了父接口的子接口）被装载时，父接口也要被装载（装载但不实例化）。</p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>确保装载后的类型符合java语言的语义，并且不会危害整个虚拟机的完整性。</p>
+<ul>
+<li>装载时验证：检查二进制数据保证是预期格式。确保除object外的每个类都有父类，确保该类的父类已经被装载。</li>
+<li>正式验证阶段：检查final类不能有子类，确保 final 方法不被覆盖、确保在类型和超类型之间没有不兼容的方法声明(比如拥有两个名字相同的方法，参数在数量、顺序、类型上都相同，但返回类型不同)。</li>
+<li>符号引用的验证：当虚拟机搜寻一个被符号引用的元素(类型、字段或方法)时，必须首先确认该元素存在。如果虚拟机发现元素存在，则必须进一步检查引用类型有访问该元素的权限。</li>
+</ul>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>虚拟机为类变量分配内存，设置默认初始值。初始化阶段之前，类变量都没有被初始化为真正的初始值。</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">0L</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">(short)0</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">‘\u0000’</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">(byte)0</td>
+</tr>
+<tr>
+<td align="center">blooean</td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">0.0f</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">0.0d</td>
+</tr>
+<tr>
+<td align="center">reference</td>
+<td align="center">null</td>
+</tr>
+</tbody></table>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>在类型的常量池中寻找类、接口、字段和方法的符号占用，把这些符号引用替换成直接引用的过程。</p>
+<ul>
+<li>类、接口的解析：判断所要转化成的直接引用是数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li>
+<li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li>
+</ul>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>所有类变量（静态量）初始化语句和类型的静态初始化器都被java编译器收集在一起，放到一个特殊的方法。对于类来说，方法叫初始化方法；对于接口来说，称为接口初始化方法。在类和接口的class文件中，称为<clinit></p>
+<ol>
+<li>存在直接父类且父类没被初始化，先初始化直接父类。</li>
+<li>类存在一个类初始化方法， 执行此方法。</li>
+</ol>
+<p>递归执行，所以第一个初始化的类一定是object。</p>
+<p>虚拟机须确保初始化过程正确同步。如果多个县城需要初始化一个类，仅仅允许一个，其余的等待。</p>
+<h3 id="Clinit方法"><a href="#Clinit方法" class="headerlink" title="Clinit方法"></a>Clinit方法</h3><ul>
+<li>对于静态变量和静态初始化语句来说：执行的顺序和它们在类或接口中出现的顺序有关。</li>
+<li><strong>并非所有的类都需要在它们的<code>class</code>文件中拥有<code>&lt;clinit&gt;()</code>方法，</strong> 如果类没有声明任何类变量，也没有静态初始化语句，那么它就不会有<code>&lt;clinit&gt;()</code>方法。如果类声明了类变量，但没有明确的使用类变量初始化语句或者静态代码块来初始化它们，也不会有<code>&lt;clinit&gt;()</code>方法。如果类仅包含静态<code>final</code>常量的类变量初始化语句，而且这些类变量初始化语句采用编译时常量表达式，类也不会有<code>&lt;clinit&gt;()</code>方法。**只有那些需要执行Java代码来赋值的类才会有<code>&lt;clinit&gt;()</code>**’</li>
+<li><code>final</code>常量：Java虚拟机在使用它们的任何类的常量池或字节码中直接存放的是它们表示的常量值。</li>
+</ul>
+<h1 id="3、内存模型"><a href="#3、内存模型" class="headerlink" title="3、内存模型"></a>3、内存模型</h1><p>运行时数据区保存JVM在运行过程中产生的数据。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%202%20%E9%A1%B5.png" alt="java虚拟机-第 2 页"></p>
+<h2 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h2><p>各线程共享的内存区域，是虚拟机管理内存区域最大的一块。几乎所有的对象实例和数组实例都是在堆上分配，但是对着JIT编译器以及逃逸分析技术的发展，也可能被优化为在栈上分配。</p>
+<p>还包含字符串字面量常量池。包含一个新生代，一个老年代。</p>
+<p>新生代三个区，大部分对象在Eden去生成，survivor总有一个是空的。</p>
+<p>老年代保存一些生命周期比较长的对象，当一个对象经过对此GC还没被回收，将移动到老年代。</p>
+<h2 id="Method-Area"><a href="#Method-Area" class="headerlink" title="Method Area"></a>Method Area</h2><p>方法区的数据所有线程共享，为安全使用方法区的数据，需要注意线程安全问题。</p>
+<p>方法区与 Java 堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然 <strong>Java 虚拟机规范把方法区描述为堆的一个逻辑部分</strong>，但是它却有一个别名叫做 <strong>Non-Heap（非堆）</strong>，目的应该是与 Java 堆区分开来。</p>
+<p>主要保存类级别的数据，包括：</p>
+<ul>
+<li>ClassLoader Reference</li>
+<li>Runtime Constant Pool<ul>
+<li>数字常量</li>
+<li>类属性引用</li>
+<li>方法引用</li>
+</ul>
+</li>
+</ul>
+<p>在JVM1.8之前，方法区的实现为永久代。经常内存溢出。在JVM1.8方法区的实现改为<strong>元空间</strong>，元空间是在Native的一块内存空间。</p>
+<h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><p>JVM线程启动时，分配独立的运行时栈，来保存方法调用。每个方法调用，都会入栈一个栈帧。</p>
+<p>栈帧保存三个引用：本地变量表，操作数帧和当前方法所属类的运行时常量池。由于本地变量表和操作数栈的大小都在编译时确定，所以栈帧的大小是固定的。</p>
+<p>被调用的方法返回或抛出异常，栈帧弹出。在抛出异常时 <code>printStackTrace()</code> 打印的每一行就是一个栈帧。同时得益于栈帧的特点，栈帧内的数据是线程安全的。</p>
+<p>栈大小可以动态拓展，但是如果一个线程需要栈的大小超出允许的大小，抛出<code>StackOverflowError</code>。</p>
+<h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
+<h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地方法栈执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
+<h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
+<h1 id="4、垃圾收集"><a href="#4、垃圾收集" class="headerlink" title="4、垃圾收集"></a>4、垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
+<ul>
+<li><p>引用计数算法</p>
+<p>对象添加引用计数器，引用时+1,引用失效-1。致命缺陷就是两个对象相互引用导致两个都无法回收。</p>
+</li>
+<li><p>根搜索算法</p>
+<p>实际上是追踪从根节点开始的引用图。通过一系列的称为 <strong>“GC Roots”</strong> 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为<strong>引用链</strong>，当一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的。</p>
+<p>在根搜索算法追踪的过程，起点是GC Root，根据JVM的实现不同而不同，但是总会包含以下几个方面（堆外引用）：</p>
+<ul>
+<li>虚拟机栈中引用的对象 </li>
+<li>方法区中的类静态属性引用的变量</li>
+<li>方法区中的常量引用的变量</li>
+<li>本地方法JNI的引用对象</li>
+</ul>
+<p>从GC Root开始的引用图，有向图，节点时对象，边是引用类型。JVM分为四种引用类型：<strong>强引用，软引用，弱引用，虚引用。</strong></p>
+<p>一个对象的引用类型有多个，如何确定回收策略：</p>
+<ul>
+<li>单条引用链以链上最弱的一个引用类型来决定；</li>
+<li>多条引用链以多个单条引用链中最强的一个引用类型来决定；</li>
+</ul>
+<p>在引用图，如果一个节点没有任何路径可达，确定回收。</p>
+<p><strong>强引用：</strong></p>
+<p>在java中普遍存在，类似于<code>Object o = new Object;</code>和其他引用的区别是：强引用禁止引用目标被GC收集，其他引用不禁止。</p>
+<p><strong>软引用：</strong></p>
+<p>对象可以从根节点通过一个或多个软引用对象触及，GC在要发生内存溢出之前将这些对象列入回收范围进行回收，如果该软引用和引用队列关联，他会把该软引用对象加入队列。<strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p><strong>弱引用：</strong></p>
+<p>垃圾收集器在GC的时候会回收所有的弱引用，如果该弱引用和引用队列相关联，他会把该弱引用加入到队列。</p>
+<p><strong>虚引用：</strong></p>
+<p>“虚引用”顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收。</p>
+</li>
+</ul>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="1、复制回收"><a href="#1、复制回收" class="headerlink" title="1、复制回收"></a>1、复制回收</h3><p>可用内存等分两份，同一时刻值使用其中一份。用完后将还存活的对象赋值到另一份，然后将这一份清空。能够有效避免内存碎片，但是减低了内存使用率。</p>
+<p>解决了标记清除回收可能会产生大量不连续内存的问题。</p>
+<h3 id="2、标记清除算法"><a href="#2、标记清除算法" class="headerlink" title="2、标记清除算法"></a>2、标记清除算法</h3><p>先暂停整个程序的全部运行线程，让回收线程以单线程进行扫描标记，并进行直接清除回收，然后回收完成后恢复运行线程。标记清除后会产生大量不连续的内存碎片，造成空间浪费。</p>
+<h3 id="3、标记整理算法"><a href="#3、标记整理算法" class="headerlink" title="3、标记整理算法"></a>3、标记整理算法</h3><p>和标记清除相似，不同的是，回收期间同时会将保留的存储对象搬运汇集到连续的内存空间，从而集成空闲时间。</p>
+<h3 id="4、增量回收"><a href="#4、增量回收" class="headerlink" title="4、增量回收"></a>4、增量回收</h3><p>将程序拥有的内存空间分成若干区。程序的存储对象会分布在分区中，每次只对其中一个分区进行回收，从而避免程序全部运行线程暂停来进行回收，允许部分线程在不影响回收行为的情况下保持运行，降低回收时间，增加线程响应速度。</p>
+<h3 id="5、分代回收"><a href="#5、分代回收" class="headerlink" title="5、分代回收"></a>5、分代回收</h3><p>对象拥有不同的生命周期，不同生命周期的对象采用不同的回收算法，以提高效率。</p>
+<p><strong>记忆集：</strong></p>
+<p>对象C在新生代，只被一个在老年代的D引用。如果运行新生代GC，要确定C是否被堆外引用，需要遍历老年代，代价比较大。JVM在对象引用的时候，会有个记忆集，记录从老年代到新生代的引用关系，并把记忆集中的老年代作为GC ROOT构建索引图，这样在新生代GC的时候就不需要遍历老年代。</p>
+<p>但是记忆集有缺点：C &amp; D 其实都可以进行回收，但是由于记忆集的存在，不会将 C 回收。这里其实有一点 <strong>空间换时间</strong> 的意思。不过无论如何，它依然确保了垃圾回收所遵循的原则：<strong>垃圾回收确保回收的对象必然是不可达对象，但是不确保所有的不可达对象都会被回收</strong>。</p>
+<h2 id="垃圾回收触发条件"><a href="#垃圾回收触发条件" class="headerlink" title="垃圾回收触发条件"></a>垃圾回收触发条件</h2><h3 id="1、堆内内存"><a href="#1、堆内内存" class="headerlink" title="1、堆内内存"></a>1、堆内内存</h3><p>对于HotSpot VM实现，GC只有两大种：</p>
+<ol>
+<li>Partial GC：并不收集整个GC堆<ul>
+<li>Young GC：只收集新生代的GC</li>
+<li>Old GC：只收集老年代的GC。只有 CMS的 Concurrent Collection 是这个模式</li>
+<li>Mixed GC：收集整个 Young Gen 以及部分 Old Gen 的 GC。只有 G1 有这个模式</li>
+</ul>
+</li>
+<li>Full GC：收集整个堆，包括 Young Gen、Old Gen、Perm Gen（如果存在的话）等所有部分的 GC 模式。</li>
+</ol>
+<p>最简单的分代式GC策略，按照HotSpot的serial GC的实现看，触发条件是：</p>
+<ul>
+<li>Young GC：新生代的eden区分配满的时候触发，把eden区存货的对象复制到一个Survivor区，当这个Survivor区满时，存活的对象被复制到另一个survivor区。</li>
+<li>Full GC<ul>
+<li>当准备要触发一次 Young GC 时，如果发现之前 Young GC 的平均晋升大小比目前 Old Gen剩余的空间大，则不会触发 Young GC 而是转为触发 Full GC</li>
+<li>如果有 Perm Gen 的话，要在 Perm Gen分配空间但已经没有足够空间时</li>
+<li><code>System.gc()</code></li>
+<li>Heap dump</li>
+</ul>
+</li>
+</ul>
+<p>并发 GC 的触发条件就不太一样。以 CMS GC 为例，它主要是定时去检查 Old Gen 的使用量，当使用量超过了触发比例就会启动一次 GC，对 Old Gen做并发收集。</p>
+<h3 id="2、堆外内存"><a href="#2、堆外内存" class="headerlink" title="2、堆外内存"></a>2、堆外内存</h3><p>DirectByteBuffer的引用是直接分配在堆的old区，回收时机是在FULLGC，因此需要避免频繁的分配directByteBuffer，这样就很容易导致Native Memory溢出。</p>
+<p>DirectByteBuffer申请的直接内存，不在G范围内，无法自动回收。JDK提供一种机制，可以为堆内存对象注册一个钩子函数(其实就是实现 <code>Runnable</code> 接口的子类)，当堆内存对象被GC回收的时候，会回调run方法，我们可以在这个方法中执行释放 <code>DirectByteBuffer</code> 引用的直接内存，即在run方法中调用 <code>Unsafe</code> 的 <code>freeMemory</code> 方法。注册是通过<code>sun.misc.Cleaner</code> 类来实现的。</p>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>内存回收的具体实现，以下为7种不同分代的收集器，有连线表示可以搭配使用。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%203%20%E9%A1%B5.png" alt="java虚拟机-第 3 页"></p>
+<h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器。优点是：简单高效。此收集器没有线程交互的开销，效率高。在用户桌面的场景下，分配给JVM的内存不会太多，停顿时间在几十到一百多毫秒之间，只要不频繁收集，完全可以接受。</p>
+<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><p>Serial的多线程版本，是许多运行在Server模式下的默认新生代GC，主要与CMS收集器配合工作。</p>
+<h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><p>新生代GC，多线程收集器。更关注可控制的吞吐量，吞吐量等于运行用户代码的时间/（运行用户代码的时间+垃圾收集时间）。</p>
+<h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><p>Serial的老年代版本，单线程，采用“标记-整理算法”进行垃圾回收。</p>
+<h3 id="5、Parallel-Old"><a href="#5、Parallel-Old" class="headerlink" title="5、Parallel Old"></a>5、Parallel Old</h3><p>是Parallel Scavenge的老年代版本，多线程，通常与Parallel Scavenge配合使用。</p>
+<h3 id="6、CMS-收集器"><a href="#6、CMS-收集器" class="headerlink" title="6、CMS 收集器"></a>6、CMS 收集器</h3><p>目标是获取最短停顿时间，采用“标记-清除”算法，运行在老年代，包含以下步骤：</p>
+<ul>
+<li>初始标记</li>
+<li>并发标记</li>
+<li>重新标记</li>
+<li>并发清除。</li>
+</ul>
+<p>其中初始标记和重新标记仍然需要stop the world。初始标记仅仅标记GC ROOT能直接关联的对象，并发标记是为了记性GC ROOT Tracing过程，重新标记是为了修正并发标记期间，因为用户程序继续运行而导致标记变动的那部分对象的标记记录。</p>
+<p>最耗时的是并发表标记和并发清除，收集线程和用户线程一起工作，总体来说，CMS GC回收和用户程序并行。优点是并发收集、低停顿，但是有三个缺点：</p>
+<ul>
+<li>对CPU资源很敏感：并发阶段不停用用户进程，但是占用线程导致程序变慢。</li>
+<li>不能处理浮动垃圾：浮动垃圾就是在并发标记阶段，用户程序运行产生新的垃圾，这部分垃圾在标记后，CMS无法在当次集中处理，只能在下一次GC处理，这部分垃圾就称为浮动垃圾。</li>
+</ul>
+<p>正是由于在垃圾收集阶段程序还需要运行，即还需要预留足够的内存空间供用户使用，因此 CMS 收集器不能像其他收集器那样等到老年代几乎填满才进行收集，需要预留一部分空间提供并发收集时程序运作使用。要是 CMS 预留的内存空间不能满足程序的要求，这是 JVM 就会启动预备方案：<strong>临时启动 Serial Old 收集器来收集老年代</strong>，这样停顿的时间就会很长。</p>
+<h3 id="6、G1收集器"><a href="#6、G1收集器" class="headerlink" title="6、G1收集器"></a>6、G1收集器</h3><p>比GMS有很大改进：</p>
+<ul>
+<li>标记整理算法：采用标记整理算法实现</li>
+<li>增量回收模式：将Heap分割成多个Region，并在后台维护一个优先列表，每次根据允许的时间，优先回收垃圾最多的区域。</li>
+</ul>
+<p>因此G1收集器可以实现在基本不牺牲吞吐量的情况下完成低停顿的内存回收，这是正式由于他极力的避免全区域回收。</p>
+<p><strong>总结</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">垃圾收集器</th>
+<th align="center">特性</th>
+<th align="center">算法</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Serial</td>
+<td align="center">串行</td>
+<td align="center">复制</td>
+<td align="center">高效：无线程切换</td>
+<td align="center">无法利用多核CPU</td>
+</tr>
+<tr>
+<td align="center">ParNew</td>
+<td align="center">并行</td>
+<td align="center">复制</td>
+<td align="center">可利用多核CPU、唯一能与CMS配合的并行收集器</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Parallel Scavenge</td>
+<td align="center">并行</td>
+<td align="center">复制</td>
+<td align="center">高吞吐量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Serial Old</td>
+<td align="center">串行</td>
+<td align="center">标记整理</td>
+<td align="center">高效</td>
+<td align="center">无法利用多核CPU</td>
+</tr>
+<tr>
+<td align="center">Parallel Old</td>
+<td align="center">并行</td>
+<td align="center">标记整理</td>
+<td align="center">高吞吐量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">CMS</td>
+<td align="center">并行</td>
+<td align="center">标记清除</td>
+<td align="center">低停顿</td>
+<td align="center">CPU敏感，浮动垃圾，内存碎片</td>
+</tr>
+<tr>
+<td align="center">G1</td>
+<td align="center">并行</td>
+<td align="center">增量回收</td>
+<td align="center">低停顿。高吞吐量</td>
+<td align="center">内存使用效率低：分区导致内存不能充分使用</td>
+</tr>
+</tbody></table>
+<h1 id="5、Java分配机制"><a href="#5、Java分配机制" class="headerlink" title="5、Java分配机制"></a>5、Java分配机制</h1><p>java中符合“编译时可知，运行时不可变”要求的主要是静态方法和私有方法。因此适合在类加载时进行解析。</p>
+<p>java虚拟机中有四种方法调用指令：</p>
+<ul>
+<li>invokestatic：调用静态方法。</li>
+<li>invokespecial：调用实例构造方法，私有方法和super</li>
+<li>invokeinterface：调用接口方法</li>
+<li>invokevirtual：调用以上指令不能调用的方法（虚方法）。</li>
+</ul>
+<p>只要能被static和special指令调用的方法，都可以在解析阶段唯一确定调用版本，符合条件的有：静态方法，私有方法，实例构造器，父类方法，他们在类加载的时候就会把符号引用解析为该方法的直接引用。这些方法称为非虚方法， 反之称为虚方法，（final除外）。</p>
+<blockquote>
+<p>虽然final方法是使用virtual指令来调用，但是无法被覆盖，多态的选择是唯一的，所以是一种虚方法。</p>
+</blockquote>
+<h2 id="静态分派"><a href="#静态分派" class="headerlink" title="静态分派"></a>静态分派</h2><blockquote>
+<p>对于类字段的访问也采用静态分派</p>
+</blockquote>
+<p><code>People man =  new Man()</code></p>
+<p>静态分派主要针对重载，方法调用时如何选择。在上面的代码，Peopel被称为变量的引用类型，Man称为变量的实际类型。静态类型在编译时可知，动态类型在运行时可知。</p>
+<p>编译器在重载时候通过参数的静态类型而不是实际类型作为判断依据。并且静态类型咋编译时可知，所以编译器根据重载的参数的静态类型进行方法选择。</p>
+<blockquote>
+<p>在某些情况下有多个重载，那编译器如何选择呢？ 编译器会选择”最合适”的函数版本，那么怎么判断”最合适“呢？越接近传入参数的类型，越容易被调用。</p>
+</blockquote>
+<h2 id="动态分派"><a href="#动态分派" class="headerlink" title="动态分派"></a>动态分派</h2><p>主要针对重写，使用virtual指令调用，virtual指令多态查找过程：</p>
+<ul>
+<li>找到操作数栈顶的第一个元素所指向的对象的实际类型，记为C</li>
+<li>如果在类型C中找到与常量中的描述符合简单名称都相符的方法，则进行访问权限校验，如果通过则返回这个方法的直接引用，查找过程结束；如果权限校验不通过，返回java.lang.IllegalAccessError异常。</li>
+<li>否则，按照继承关系从下往上一次对C的各个父类进行第2步的搜索和验证过程。</li>
+<li>如果始终没有找到合适的方法，则抛出 java.lang.AbstractMethodError异常。</li>
+</ul>
+<h2 id="虚拟机动态分派的实现"><a href="#虚拟机动态分派的实现" class="headerlink" title="虚拟机动态分派的实现"></a>虚拟机动态分派的实现</h2><p>动态分配很繁琐，而且动态分派的方法版本的选择需要考虑运行时咋类的方法数据中搜索合适的目标方法，因为在虚拟机的实现中基于性能的考虑，在方法区中建立一个虚方法表来提高性能。</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324125440920.png" alt="image-20210324125440920"></p>
+<p>虚方法表中存放各个方法的实际入口地址。如果某个方法在子类中没有重写，那么子类的虚方法表里的入口和父类入口一致，如果子类重写了这个方法，那么子类方法表中的地址会被替换成子类实现版本的入口地址。</p>
+<h1 id="6、String常量池"><a href="#6、String常量池" class="headerlink" title="6、String常量池"></a>6、String常量池</h1><p>常量池类似于一个JAVA系统级别提供的缓存。</p>
+<p>String类型的常量池比较特殊，使用方法：</p>
+<ul>
+<li>直接使用双引号声明的String对象会直接存储在常量池。</li>
+<li>不是使用双引号，可以使用String提供的inter方法，该方法会从字符串常量池中查询当前字符串是否存在，不存在则放入常量池。</li>
+</ul>
+<h2 id="Intern"><a href="#Intern" class="headerlink" title="Intern"></a>Intern</h2><p>java使用Jni调用C++实现的StringTable的Intern方法，StringTable跟java中的HashMap实现差不多，但是不能扩容。默认大小是<code>1009</code></p>
+<p>要注意的是， <code>String</code> 的 <code>String Pool</code> 是一个固定大小的 <code>Hashtable</code> ，默认值大小长度是 <code>1009</code> ，如果放进 <code>String Pool</code> 的 <code>String</code> 非常多，就会造成 Hash 冲突严重，从而导致链表会很长，而链表长了后直接会造成的影响就是当调用 <code>String.intern</code> 时性能会大幅下降。</p>
+<p>JDK6中StringTable固定，但是JDK7可以通过参数指定：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-XX：StringTableSize&#x3D;99991</span><br></pre></td></tr></table></figure>
+
+<p>在6和以前的版本，字符串的常量池存放在Perm区，7的版本中，转移到正常的Heap区</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    s.intern();</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    s3.intern();</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<ul>
+<li>JDK6：false false</li>
+<li>JDK7：fale true</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s &#x3D; new String(&quot;1&quot;);</span><br><span class="line">    String s2 &#x3D; &quot;1&quot;;</span><br><span class="line">    s.intern();</span><br><span class="line">    System.out.println(s &#x3D;&#x3D; s2);</span><br><span class="line"></span><br><span class="line">    String s3 &#x3D; new String(&quot;1&quot;) + new String(&quot;1&quot;);</span><br><span class="line">    String s4 &#x3D; &quot;11&quot;;</span><br><span class="line">    s3.intern();</span><br><span class="line">    System.out.println(s3 &#x3D;&#x3D; s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<ul>
+<li>6：false false</li>
+<li>7：false false</li>
+</ul>
+<p>由于7将字符串常量池放到Heap中，导致差异。</p>
+<h3 id="JDK-6"><a href="#JDK-6" class="headerlink" title="JDK 6"></a>JDK 6</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/1.png" alt="1"></p>
+<p>黑色线表示String对象的内容指向，红色代表地址指向。</p>
+<p>在jdk6中所有打印都是false，因为常量池在Perm中，Perm和正常的Heap是分开的，引号声明的字符串直接在常量池生成，而new出来的String存放在Heap，地址肯定不同，及时调用String.intern()方法也是没有很合关系。</p>
+<h3 id="JDK-7"><a href="#JDK-7" class="headerlink" title="JDK 7"></a>JDK 7</h3><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%205%20%E9%A1%B5.png" alt="java虚拟机-第 5 页"></p>
+<ul>
+<li>第一段代码，<code>String s3 = new String(&quot;1&quot;)+new String(&quot;1&quot;);</code>，代码生成两个最终对象，是常量池中的“1”和Heap中S3引用指向的对象。此时S3引用的对象是“11”，但是常量池没有“11”对象。</li>
+<li>接下来S3.intern()是讲S3中的“11”放入常量池。但是7中的常量池不在Perm区域了，常量池中不需要再存储一份对象，可以直接存储占中的引用。这份引用指向S3的对象。引用地址是相同的。</li>
+<li>最后 <code>String s4 = &quot;11&quot;;</code> 这句代码中 <code>”11”</code> 是显示声明的，因此会直接去常量池中创建，创建的时候发现已经有这个对象了，此时也就是指向 <code>s3</code> 引用对象的一个引用。所以 <code>s4</code> 引用就指向和 <code>s3</code> 一样了。因此最后的比较 <code>s3 == s4</code> 是 <code>true</code> 。</li>
+<li>再看 <code>s</code> 和 <code>s2</code> 对象。 <code>String s = new String(&quot;1&quot;);</code> 第一句代码，生成了2个对象。常量池中的 <code>“1”</code> 和 <code>JAVA Heap</code> 中的字符串对象。<code>s.intern();</code> 这一句是 <code>s</code> 对象去常量池中寻找后发现 <code>“1”</code> 已经在常量池里了。</li>
+<li>接下来 <code>String s2 = &quot;1&quot;;</code> 这句代码是生成一个 <code>s2</code> 的引用指向常量池中的 <code>“1”</code> 对象。 结果就是 <code>s</code> 和 <code>s2</code> 的引用地址明显不同。</li>
+</ul>
+<p>接下来是第二段代码：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%206%20%E9%A1%B5.png" alt="java虚拟机-第 6 页"></p>
+<ul>
+<li>第一段代码和第二段代码的改变就是 <code>s3.intern();</code> 的顺序是放在 <code>String s4 = &quot;11&quot;;</code> 后了。这样，首先执行 <code>String s4 = &quot;11&quot;;</code> 声明 <code>s4</code> 的时候常量池中是不存在 <code>“11”</code> 对象的，执行完毕后， <code>“11“</code> 对象是 <code>s4</code> 声明产生的新对象。然后再执行 <code>s3.intern();</code> 时，常量池中 <code>“11”</code> 对象已经存在了，因此 <code>s3</code> 和 <code>s4</code> 的引用是不同的。</li>
+<li>二段代码中的 <code>s</code> 和 <code>s2</code> 代码中，<code>s.intern();</code>，这一句往后放也不会有什么影响了，因为对象池中在执行第一句代码<code>String s = new String(&quot;1&quot;);</code> 的时候已经生成 <code>“1”</code> 对象了。下边的 <code>s2</code> 声明都是直接从常量池中取地址引用的。 <code>s</code> 和 <code>s2</code> 的引用地址是不会相等的。</li>
+</ul>
+<h3 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h3><p>对intern和常量池都做了一定的修改，主要包括：</p>
+<ul>
+<li>将String常量池从Perm区移动到了Heap区</li>
+<li>String.intern方法时，如果heap中存在对象，将会直接保存对象的引用，而不是重新创建对象。</li>
+</ul>
+<h3 id="使用范例"><a href="#使用范例" class="headerlink" title="使用范例"></a>使用范例</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static final int MAX &#x3D; 1000 * 10000;</span><br><span class="line">static final String[] arr &#x3D; new String[MAX];</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">    Integer[] DB_DATA &#x3D; new Integer[10];</span><br><span class="line">    Random random &#x3D; new Random(10 * 10000);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; DB_DATA.length; i++) &#123;</span><br><span class="line">        DB_DATA[i] &#x3D; random.nextInt();</span><br><span class="line">    &#125;</span><br><span class="line">	long t &#x3D; System.currentTimeMillis();</span><br><span class="line">    for (int i &#x3D; 0; i &lt; MAX; i++) &#123;</span><br><span class="line">        &#x2F;&#x2F;arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length]));</span><br><span class="line">         arr[i] &#x3D; new String(String.valueOf(DB_DATA[i % DB_DATA.length])).intern();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	System.out.println((System.currentTimeMillis() - t) + &quot;ms&quot;);</span><br><span class="line">    System.gc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一条是使用 intern，一条是未使用 intern。</p>
+<p>通过上述结果，我们发现不使用 <code>intern</code> 的代码生成了 <code>1000w</code> 个字符串，占用了大约 <code>640m</code> 空间。 使用了 <code>intern</code> 的代码生成了 <code>1345</code> 个字符串，占用总空间 <code>133k</code> 左右。其实通过观察程序中只是用到了 <code>10</code> 个字符串，所以准确计算后应该是正好相差 <code>100w</code> 倍。虽然例子有些极端，但确实能准确反应出 intern 使用后产生的巨大空间节省。</p>
+<p> <code>intern</code> 方法后时间上有了一些增长。这是因为程序中每次都是用了 <code>new String</code> 后，然后又进行 <code>intern</code> 操作的耗时时间，这一点如果在内存空间充足的情况下确实是无法避免的，但我们平时使用时，内存空间肯定不是无限大的，不使用 <code>intern</code> 占用空间导致 <code>jvm</code> 垃圾回收的时间是要远远大于这点时间的。</p>
+<h1 id="7、对象生命周期"><a href="#7、对象生命周期" class="headerlink" title="7、对象生命周期"></a>7、对象生命周期</h1><h2 id="类实例化"><a href="#类实例化" class="headerlink" title="类实例化"></a>类实例化</h2><p>实例化类的四个途径：</p>
+<ul>
+<li>new</li>
+<li>调用class或者java.lang.reflect.Constructor对象的NewInstance</li>
+<li>调用任何现有对象的clone</li>
+<li>通过<code>java.io.ObjectInputStream.getObject()</code>反序列化。</li>
+</ul>
+<p>隐含的实例化：</p>
+<ul>
+<li>保存命令行参数的String对象</li>
+<li>虚拟机装载的每个类，都会暗中实例化一个class对象来代表这个类型。</li>
+<li>当Java虚拟机装载了在常量池中包含<code>CONSTANT_String_info</code>入口的类的时候，它会创建新的<code>String</code>对象来表示这些常量字符串。</li>
+<li>执行包含字符串连接操作符的表达式会产生新的对象。</li>
+</ul>
+<h2 id="垃圾收集和对象的终结"><a href="#垃圾收集和对象的终结" class="headerlink" title="垃圾收集和对象的终结"></a>垃圾收集和对象的终结</h2><p>程序可以分配内存但不能释放内存，一个对象不再为程序引用，虚拟机必须回收那部分内存。</p>
+<h2 id="卸载类"><a href="#卸载类" class="headerlink" title="卸载类"></a>卸载类</h2><p>虚拟机中类的生命周期和对象的生命周期相似。当程序不再使用某个类的时候，可以选择卸载他们。</p>
+<p>虚拟机通过判断类是否在被引用来实现垃圾收集。判断动态装载类的Class实例在正常的垃圾收集过程中是否可触及有两种方式：</p>
+<ul>
+<li>如果实例非Class实例的明确引用。</li>
+<li>如果在堆中还存在一个可触及对象，在方法区中它的类型数据指向一个Class实例。</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210324173320715.png" alt="image-20210324173320715"></p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
