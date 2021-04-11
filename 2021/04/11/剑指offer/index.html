@@ -62,8 +62,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2021/04/07/%E5%89%91%E6%8C%87offer/" class="article-date">
-  <time datetime="2021-04-07T01:51:48.000Z" itemprop="datePublished">2021-04-07</time>
+      <a href="/2021/04/11/%E5%89%91%E6%8C%87offer/" class="article-date">
+  <time datetime="2021-04-11T01:51:48.000Z" itemprop="datePublished">2021-04-11</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.3k</span>
+            <span class="post-count">3.1k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">10 min</span>
+            <span class="post-count">14 min</span>
         </span>
     </span>
 </div>
@@ -108,7 +108,12 @@
 <h1 id="2-数组中的重复数字"><a href="#2-数组中的重复数字" class="headerlink" title="2.数组中的重复数字"></a>2.数组中的重复数字</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="number">2</span>或<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>一开始的思路是先用快排对数组进行排序，然后遍历数组，但是排序超时。<br>这时候可以选择用java中的set解题，在往set中添加元素的时候，添加成功返回true，说明不重复，反之说明重复。</p>
+<p>第二遍做的时候，第一个想法是用哈希。代码也写上。4-11</p>
 <h2 id="code-1"><a href="#code-1" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//排序超时</span></span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.add(nums[i]) == <span class="keyword">false</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">duplicate</span> <span class="params">(<span class="keyword">int</span>[] numbers)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write code here</span></span><br><span class="line">    <span class="keyword">int</span>[] hash = <span class="keyword">new</span> <span class="keyword">int</span>[numbers.length+<span class="number">2</span>];</span><br><span class="line">    <span class="comment">//java中的数组默认都是0，所以哈希不用再考虑初始化</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;numbers.length;i++)&#123;</span><br><span class="line">        hash[numbers[i]]++;</span><br><span class="line">        <span class="keyword">if</span>(hash[numbers[i]]&gt;<span class="number">1</span>)<span class="keyword">return</span> numbers[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 
 <h1 id="3-从尾到头打印链表"><a href="#3-从尾到头打印链表" class="headerlink" title="3.从尾到头打印链表"></a>3.从尾到头打印链表</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
 <blockquote>
@@ -185,7 +190,40 @@
 <h2 id="code-11"><a href="#code-11" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">9</span>&#125;;</span><br><span class="line">        System.out.println(FindGreatestSumOfSubArray(array));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[array.length+<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = array[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">            dp[i] = Math.max(dp[i-<span class="number">1</span>]+array[i],array[i]);</span><br><span class="line">            <span class="keyword">if</span>(dp[i]&gt;max)max = dp[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="12-第一个只出现一次的字符"><a href="#12-第一个只出现一次的字符" class="headerlink" title="12.第一个只出现一次的字符"></a>12.第一个只出现一次的字符</h1><h2 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.（从0开始计数）</p>
-<h2 id="解题思路-12"><a href="#解题思路-12" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-12"><a href="#code-12" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="解题思路-12"><a href="#解题思路-12" class="headerlink" title="解题思路"></a>解题思路</h2><p>本质上也是哈希，我这里用map统计，然后再遍历一遍就好了。</p>
+<h2 id="code-12"><a href="#code-12" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FirstNotRepeatingChar</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">char</span>[] st = str.toCharArray();</span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//统计每个字符出现的次数。</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;st.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.get(st[i])==<span class="keyword">null</span>)&#123;</span><br><span class="line">                map.put(st[i],<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> index = map.get(st[i]);</span><br><span class="line">                map.put(st[i],++index);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;st.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.get(st[i])==<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="13-二叉树的深度"><a href="#13-二叉树的深度" class="headerlink" title="13.二叉树的深度"></a>13.二叉树的深度</h1><h2 id="题目描述-13"><a href="#题目描述-13" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入二叉树，求树的深度。从根节点到叶节点经过的节点（含根，叶节点）形成树的路径，最长路径的长度为树的深度。</p>
+<h2 id="解题思路-13"><a href="#解题思路-13" class="headerlink" title="解题思路"></a>解题思路</h2><p>关于树的题目，基本都是套用遍历的模板。或者是层次遍历。</p>
+<h2 id="code-13"><a href="#code-13" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">TreeDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">int</span> lh,rh;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            lh = TreeDepth(root.left);</span><br><span class="line">            rh = TreeDepth(root.right);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>+(lh&gt;rh?lh:rh);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="14-平衡二叉树"><a href="#14-平衡二叉树" class="headerlink" title="14.平衡二叉树"></a>14.平衡二叉树</h1><h2 id="题目描述-14"><a href="#题目描述-14" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一个二叉树，判断二叉树是不是平衡二叉树</p>
+<h2 id="解题思路-14"><a href="#解题思路-14" class="headerlink" title="解题思路"></a>解题思路</h2><p>分别求左子树和右子树的高度，然后求差。树的递归思想</p>
+<h2 id="code-14"><a href="#code-14" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">IsBalanced_Solution</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = depth(root);</span><br><span class="line">        <span class="keyword">if</span>(res==-<span class="number">1</span>)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">depth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = depth(root.left);</span><br><span class="line">        <span class="keyword">if</span>(left == -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right = depth(root.right);</span><br><span class="line">        <span class="keyword">if</span>(right == -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="comment">//返回-1表示不是平二二叉树；</span></span><br><span class="line">        <span class="keyword">if</span>(left-right&lt;-<span class="number">1</span> || left-right&gt;<span class="number">1</span>)<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>+(left&gt;right?left:right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="15-不用加减乘除做加法"><a href="#15-不用加减乘除做加法" class="headerlink" title="15.不用加减乘除做加法"></a>15.不用加减乘除做加法</h1><h2 id="题目描述-15"><a href="#题目描述-15" class="headerlink" title="题目描述"></a>题目描述</h2><p>写一个函数，求两个整数之和，函数内不能使用四则运算</p>
+<h2 id="解题思路-15"><a href="#解题思路-15" class="headerlink" title="解题思路"></a>解题思路</h2><p>没有加减乘除，那就只能位运算了啊。位运算一般是有规律的，那先找一下规律啊，来计算$2+3$</p>
+<blockquote>
+<p>0010</p>
+<p>0011</p>
+<p><strong>0101</strong></p>
+</blockquote>
+<p>不考虑进位的加法可以直接采用异或操作，进位可以用与运算表示。进位用移位表示。</p>
+<ul>
+<li>x^y：执行加法</li>
+<li>(x&amp;y)&lt;&lt;1：执行进位操作。</li>
+</ul>
+<h2 id="code-15"><a href="#code-15" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> num1,<span class="keyword">int</span> num2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (num2!=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">//不进位的加法</span></span><br><span class="line">            <span class="keyword">int</span> temp = num1^num2;</span><br><span class="line">            <span class="comment">//进位</span></span><br><span class="line">            num2 = (num1&amp;num2)&lt;&lt;<span class="number">1</span>;</span><br><span class="line">            num1 = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> num1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="16-构造乘积数组"><a href="#16-构造乘积数组" class="headerlink" title="16.构造乘积数组"></a>16.构造乘积数组</h1><h2 id="题目描述-16"><a href="#题目描述-16" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个数组A[0,1,…,n-1],请构建一个数组B[0,1,…,n-1],其中B中的元素B[i]=A[0]*A[1]*…*A[i-1]*A[i+1]*…*A[n-1]。不能使用除法。（注意：规定B[0] = A[1] * A[2] * … * A[n-1]，B[n-1] = A[0] * A[1] * … * A[n-2];）</p>
+<p>对于A长度为1的情况，B无意义，故而无法构建，因此该情况不会存在。</p>
+<blockquote>
+<p>输入：[1,2,3,4,5]</p>
+<p>输出：[120,60,40,30,24]</p>
+</blockquote>
+<h2 id="解题思路-16"><a href="#解题思路-16" class="headerlink" title="解题思路"></a>解题思路</h2><h2 id="code-16"><a href="#code-16" class="headerlink" title="code"></a>code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 
 
 
@@ -259,7 +297,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/07/%E5%89%91%E6%8C%87offer/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2021/04/11/%E5%89%91%E6%8C%87offer/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -272,19 +310,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            MPI分布式计算
-          
-        </div>
-      </a>
     
-    
-      <a href="/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+      <a href="/2021/04/10/CICD/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">系统科学概述</div>
+        <div class="article-nav-title">DevOps实践</div>
       </a>
     
   </nav>
