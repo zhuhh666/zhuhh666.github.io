@@ -134,7 +134,7 @@
 </li>
 <li><strong>初始化：</strong>把类变量初始化为正确的初始值。</li>
 </ul>
-<h2 id="装载"><a href="#装载" class="headerlink" title="装载"></a>装载</h2><p>多个类装载器，应用程序可以使用两种类装载器：</p>
+<h2 id="1-装载"><a href="#1-装载" class="headerlink" title="1.装载"></a>1.装载</h2><p>多个类装载器，应用程序可以使用两种类装载器：</p>
 <ul>
 <li><strong>Bootstrap ClassLoader</strong>：原生C编写，不继承自java.lang.ClassLoder。加载核心类库，启动类加载器通常使用某种默认的方式从本地磁盘中加载，包括java API。</li>
 <li><strong>Extention Classloader</strong>：用来在<code>&lt;JAVA_HOME&gt;/jre/lib/ext</code> ,或 <code>java.ext.dirs</code> 中指明的目录中加载 Java 的扩展库。 Java 虚拟机的实现会提供一个扩展库目录。</li>
@@ -142,9 +142,9 @@
 <li><strong>自定义类加载器</strong>：继承java.lang.ClassLoder来实现自己的类加载器。</li>
 </ul>
 <p><strong>全盘负责双亲委托机制：</strong></p>
-<p>一个JVM系统至少3中类加载器，如何平配合工作？通过全盘负责双亲委托机制来协调类加载器。</p>
+<p>一个JVM系统至少3种类加载器，如何平配合工作？通过全盘负责双亲委托机制来协调类加载器。</p>
 <ul>
-<li>全盘负责：当一个ClassLoder装载一个类时，除非显示的使用另一个，该类及其所依赖的类都有这个装载。</li>
+<li>全盘负责：当一个ClassLoder装载一个类时，除非显示的使用另一个，该类及其所依赖的类都用这个装载。</li>
 <li>双亲委托机制：指先委托父装载器寻找目标类，只有在找不到的情况下才从自己的类路径中查找并装载目标类。</li>
 </ul>
 <p>全盘负责双亲委托是java推荐的机制，不是强制。实现自己的类加载器，保持机制，重写findClass(name)方法；破坏此机制，重写loadClass(name)方法。</p>
@@ -161,13 +161,13 @@
 <p>除了以上全是被动，不会导致java类型的初始化。</p>
 <p>对于接口来说，只有在此接口声明的非常量字段被使用，才会初始化，不会因为事先这个接口的子接口或者类要初始化而被初始化。</p>
 <p>父类需要在子类之前初始化。当实现了接口的类被初始化时，不需要初始化父接口。然而，当实现了父接口的子类（或者拓展了父接口的子接口）被装载时，父接口也要被装载（装载但不实例化）。</p>
-<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>确保装载后的类型符合java语言的语义，并且不会危害整个虚拟机的完整性。</p>
+<h2 id="2-链接"><a href="#2-链接" class="headerlink" title="2.链接"></a>2.链接</h2><h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>确保装载后的类型符合java语言的语义，并且不会危害整个虚拟机的完整性。</p>
 <ul>
 <li>装载时验证：检查二进制数据保证是预期格式。确保除object外的每个类都有父类，确保该类的父类已经被装载。</li>
 <li>正式验证阶段：检查final类不能有子类，确保 final 方法不被覆盖、确保在类型和超类型之间没有不兼容的方法声明(比如拥有两个名字相同的方法，参数在数量、顺序、类型上都相同，但返回类型不同)。</li>
 <li>符号引用的验证：当虚拟机搜寻一个被符号引用的元素(类型、字段或方法)时，必须首先确认该元素存在。如果虚拟机发现元素存在，则必须进一步检查引用类型有访问该元素的权限。</li>
 </ul>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>虚拟机为类变量分配内存，设置默认初始值。初始化阶段之前，类变量都没有被初始化为真正的初始值。</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>虚拟机为类变量分配内存，设置默认初始值。初始化阶段之前，类变量都没有被初始化为真正的初始值。</p>
 <table>
 <thead>
 <tr>
@@ -212,12 +212,13 @@
 <td align="center">null</td>
 </tr>
 </tbody></table>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>在类型的常量池中寻找类、接口、字段和方法的符号占用，把这些符号引用替换成直接引用的过程。</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>直白一点就是，将符号引用转化为直接引用，比如，将package com.source….转化为物理地址。</p>
+<p>在类型的常量池中寻找类、接口、字段和方法的符号占用，把这些符号引用替换成直接引用的过程。</p>
 <ul>
 <li>类、接口的解析：判断所要转化成的直接引用是数组类型，还是普通的对象类型的引用，从而进行不同的解析。</li>
 <li>字段解析：对字段进行解析时，会先在本类中查找是否包含有简单名称和字段描述符都与目标相匹配的字段，如果有，则查找结束；如果没有，则会按照继承关系从上往下递归搜索该类所实现的各个接口和它们的父接口，还没有，则按照继承关系从上往下递归搜索其父类，直至查找结束。</li>
 </ul>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>所有类变量（静态量）初始化语句和类型的静态初始化器都被java编译器收集在一起，放到一个特殊的方法。对于类来说，方法叫初始化方法；对于接口来说，称为接口初始化方法。在类和接口的class文件中，称为<clinit></p>
+<h2 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3.初始化"></a>3.初始化</h2><p>所有类变量（静态量）初始化语句和类型的静态初始化器都被java编译器收集在一起，放到一个特殊的方法。对于类来说，方法叫初始化方法；对于接口来说，称为接口初始化方法。在类和接口的class文件中，称为&lt;clinit&gt;</p>
 <ol>
 <li>存在直接父类且父类没被初始化，先初始化直接父类。</li>
 <li>类存在一个类初始化方法， 执行此方法。</li>
@@ -249,12 +250,13 @@
 </ul>
 <p>在JVM1.8之前，方法区的实现为永久代。经常内存溢出。在JVM1.8方法区的实现改为<strong>元空间</strong>，元空间是在Native的一块内存空间。</p>
 <h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><p>JVM线程启动时，分配独立的运行时栈，来保存方法调用。每个方法调用，都会入栈一个栈帧。</p>
-<p>栈帧保存三个引用：本地变量表，操作数帧和当前方法所属类的运行时常量池。由于本地变量表和操作数栈的大小都在编译时确定，所以栈帧的大小是固定的。</p>
-<p>被调用的方法返回或抛出异常，栈帧弹出。在抛出异常时 <code>printStackTrace()</code> 打印的每一行就是一个栈帧。同时得益于栈帧的特点，栈帧内的数据是线程安全的。</p>
+<p>栈帧保存三个引用：<strong>本地变量表</strong>，<strong>操作数帧</strong>和当前方法<strong>所属类的运行时常量池</strong>。由于本地变量表和操作数栈的大小都在编译时确定，所以栈帧的大小是固定的。</p>
+<p>被调用的方法返回或抛出异常，栈帧弹出。栈帧内的数据是线程安全的。</p>
 <p>栈大小可以动态拓展，但是如果一个线程需要栈的大小超出允许的大小，抛出<code>StackOverflowError</code>。</p>
 <h2 id="PC-Register"><a href="#PC-Register" class="headerlink" title="PC Register"></a>PC Register</h2><p>对于每个JVM线程，线程启动时有一个独立的PC计数器，保存当前执行的代码地址。如果是Native方法， PC的值是NULL。一旦执行完成，PC计数器会被更新为下一个需要执行代码的地址。</p>
-<h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈和虚拟机栈的作用相似，虚拟机执行的是字节码，本地方法栈执行的是native方法。本地方法栈使用传统的栈来支持native方法。</p>
-<h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
+<h2 id="Native-Method-Stack"><a href="#Native-Method-Stack" class="headerlink" title="Native Method Stack"></a>Native Method Stack</h2><p>本地方法栈执行的是native方法。native方法就是C++写的方法。</p>
+<h2 id="Direct-Memory"><a href="#Direct-Memory" class="headerlink" title="Direct Memory"></a>Direct Memory</h2><p>可以直接调用的内存。堆外内存。D可以使用堆外内存。</p>
+<p>在 JDK 1.4 中新加入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过一个存储在 Java 堆里的 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为 <strong>避免了在 Java 堆和 Native 堆中来回复制数据</strong>。</p>
 <h1 id="4、垃圾收集"><a href="#4、垃圾收集" class="headerlink" title="4、垃圾收集"></a>4、垃圾收集</h1><h2 id="对象存活检测"><a href="#对象存活检测" class="headerlink" title="对象存活检测"></a>对象存活检测</h2><p>垃圾回收器回收内存之前，先要确定哪些对象是活的，哪些对象可以回收。</p>
 <ul>
 <li><p>引用计数算法</p>
@@ -322,16 +324,16 @@
 <h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>内存回收的具体实现，以下为7种不同分代的收集器，有连线表示可以搭配使用。</p>
 <p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/java%E8%99%9A%E6%8B%9F%E6%9C%BA-%E7%AC%AC%203%20%E9%A1%B5.png" alt="java虚拟机-第 3 页"></p>
 <h3 id="1、Serial-收集器"><a href="#1、Serial-收集器" class="headerlink" title="1、Serial 收集器"></a>1、Serial 收集器</h3><p>最基本的收集器，单线程。是JVM在client模式下的默认新生代收集器。优点是：简单高效。此收集器没有线程交互的开销，效率高。在用户桌面的场景下，分配给JVM的内存不会太多，停顿时间在几十到一百多毫秒之间，只要不频繁收集，完全可以接受。</p>
-<h3 id="2、ParNew-收集器"><a href="#2、ParNew-收集器" class="headerlink" title="2、ParNew 收集器"></a>2、ParNew 收集器</h3><p>Serial的多线程版本，是许多运行在Server模式下的默认新生代GC，主要与CMS收集器配合工作。</p>
-<h3 id="3、Parallel-Scavenge-收集器"><a href="#3、Parallel-Scavenge-收集器" class="headerlink" title="3、Parallel Scavenge 收集器"></a>3、Parallel Scavenge 收集器</h3><p>新生代GC，多线程收集器。更关注可控制的吞吐量，吞吐量等于运行用户代码的时间/（运行用户代码的时间+垃圾收集时间）。</p>
-<h3 id="4、Serial-Old收集器"><a href="#4、Serial-Old收集器" class="headerlink" title="4、Serial Old收集器"></a>4、Serial Old收集器</h3><p>Serial的老年代版本，单线程，采用“标记-整理算法”进行垃圾回收。</p>
+<h3 id="2、Serial-Old收集器"><a href="#2、Serial-Old收集器" class="headerlink" title="2、Serial Old收集器"></a>2、Serial Old收集器</h3><p>Serial的老年代版本，单线程，采用“标记-整理算法”进行垃圾回收。</p>
+<h3 id="3、ParNew-收集器"><a href="#3、ParNew-收集器" class="headerlink" title="3、ParNew 收集器"></a>3、ParNew 收集器</h3><p>Serial的多线程版本，是许多运行在Server模式下的默认新生代GC，主要与CMS收集器配合工作。</p>
+<h3 id="4、Parallel-Scavenge-收集器"><a href="#4、Parallel-Scavenge-收集器" class="headerlink" title="4、Parallel Scavenge 收集器"></a>4、Parallel Scavenge 收集器</h3><p>新生代GC，多线程收集器。更关注可控制的吞吐量，吞吐量等于运行用户代码的时间/（运行用户代码的时间+垃圾收集时间）。</p>
 <h3 id="5、Parallel-Old"><a href="#5、Parallel-Old" class="headerlink" title="5、Parallel Old"></a>5、Parallel Old</h3><p>是Parallel Scavenge的老年代版本，多线程，通常与Parallel Scavenge配合使用。</p>
 <h3 id="6、CMS-收集器"><a href="#6、CMS-收集器" class="headerlink" title="6、CMS 收集器"></a>6、CMS 收集器</h3><p>目标是获取最短停顿时间，采用“标记-清除”算法，运行在老年代，包含以下步骤：</p>
 <ul>
 <li>初始标记</li>
 <li>并发标记</li>
 <li>重新标记</li>
-<li>并发清除。</li>
+<li>并发清除</li>
 </ul>
 <p>其中初始标记和重新标记仍然需要stop the world。初始标记仅仅标记GC ROOT能直接关联的对象，并发标记是为了记性GC ROOT Tracing过程，重新标记是为了修正并发标记期间，因为用户程序继续运行而导致标记变动的那部分对象的标记记录。</p>
 <p>最耗时的是并发表标记和并发清除，收集线程和用户线程一起工作，总体来说，CMS GC回收和用户程序并行。优点是并发收集、低停顿，但是有三个缺点：</p>

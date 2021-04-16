@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.2k</span>
+            <span class="post-count">2.4k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">7 min</span>
+            <span class="post-count">8 min</span>
         </span>
     </span>
 </div>
@@ -282,6 +282,23 @@
 </ul>
 </li>
 </ul>
+<h1 id="面试问题记录"><a href="#面试问题记录" class="headerlink" title="面试问题记录"></a>面试问题记录</h1><h2 id="linux定位cpu占用率高问题"><a href="#linux定位cpu占用率高问题" class="headerlink" title="linux定位cpu占用率高问题"></a>linux定位cpu占用率高问题</h2><ul>
+<li><p>top命令查到最占cpu的进程 <code>22686</code>。</p>
+</li>
+<li><p>pstack跟踪进程栈 <code>pstack 22686</code>。</p>
+<p>该命令可以显示每个进程的栈追踪，如果发现一个服务一直处于work状态，在一段时间内，多次执行pstack，发现代码栈总是停在同一个位置，则需要重点关注。很有可能出了问题。</p>
+</li>
+<li><p>使用<code>top -H -p 22688</code>查看进程中最占用资源的线程，查到是22970。</p>
+</li>
+<li><p>使用线程的pid反查其对应的线程号。</p>
+</li>
+<li><p>pstack 22680|grep 22970—&gt;是thread10。</p>
+</li>
+<li><p>然后使用vim查看进程快照，定位到具体的线程，并查看其调用堆栈。</p>
+</li>
+</ul>
+<h2 id="java1-8默认的垃圾收集器"><a href="#java1-8默认的垃圾收集器" class="headerlink" title="java1.8默认的垃圾收集器"></a>java1.8默认的垃圾收集器</h2><p>新生代的parallel scavenge（复制）+parallel old（标记整理）</p>
+<h2 id="底层网络模型"><a href="#底层网络模型" class="headerlink" title="底层网络模型"></a>底层网络模型</h2><p><a target="_blank" rel="noopener" href="https://developer.51cto.com/art/202010/628344.htm?pc">参考链接</a></p>
  
       <!-- reward -->
       

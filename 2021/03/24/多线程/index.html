@@ -238,10 +238,10 @@
 <li>V主要用于解决变量在多个线程之间的可见性，S解决的是多个线程之间访问资源的同步性。</li>
 </ul>
 <h1 id="三、ThreadLocal"><a href="#三、ThreadLocal" class="headerlink" title="三、ThreadLocal"></a>三、ThreadLocal</h1><p><a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide-interview/#/./docs/b-3Java%E5%A4%9A%E7%BA%BF%E7%A8%8B?id=_2318-threadlocal-%e4%ba%86%e8%a7%a3%e4%b9%88%ef%bc%9f">参考阅读</a></p>
-<p>T为解决多线程程序的并发问题提供新思路。使用这个工具类可以简洁的编写出优美的多线程程序。使用T维护变量时，T为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立的改变自己的副本，而不会影响其他线程所对应的副本。</p>
-<p>每个线程中都保存一个<code>ThreadLocalMap</code>的成员变量，TM内部采用<code>WeakReference</code>数组保存，数组的key是T的哈希值。</p>
+<p>使用T维护变量时，T为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立的改变自己的副本，而不会影响其他线程所对应的副本。</p>
+<p>每个线程中都保存一个<code>ThreadLocalMap</code>的成员变量，<strong>，而<code>ThreadLocalMap</code>可以存储以<code>ThreadLocal</code>为 key ，value就是threadlocal 调用set方法设置的值。</strong></p>
 <p><strong>内存泄露：</strong></p>
-<p><code>ThreadLocalMap</code> 使用 <code>ThreadLocal</code> 的弱引用作为 key ，value是强引用。如果一个 <code>ThreadLocal</code> 没有外部强引用来引用它，那么系统 GC 的时候，这个 <code>ThreadLocal</code> 的key清理，value不会清理，这样一来，<code>ThreadLocalMap</code> 中就会出现 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> ，就没有办法访问这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code>，如果当前线程再迟迟不结束的话，这些 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> 的 <code>value</code> 就会一直存在一条强引用链：<code>Thread Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value</code> 永远无法回收，造成内存泄漏。</p>
+<p><code>ThreadLocalMap</code> 使用 <code>ThreadLocal</code> 的弱引用作为 key ，value是强引用。如果一个 <code>ThreadLocal</code> 没有外部强引用来引用它，那么系统 GC 的时候，这个 <code>ThreadLocal</code> 的key清理，value不会清理，这样一来，<code>ThreadLocalMap</code> 中就会出现 <code>key</code> 为 <code>null</code> 的 <code>Entry</code> ，假如我们不做任何措施的话，value 永远无法被 GC 回收，这个时候就可能会产生内存泄露。</p>
 <p>其实，<code>ThreadLocalMap</code> 的设计中已经考虑到这种情况，也加上了一些防护措施：在 <code>ThreadLocal</code> 的 <code>get(),set(),remove()</code>的时候都会清除线程 <code>ThreadLocalMap</code> 里所有 <code>key</code> 为 <code>null</code> 的 <code>value</code></p>
 <h1 id="四、线程池"><a href="#四、线程池" class="headerlink" title="四、线程池"></a>四、线程池</h1><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/%E5%9B%BE%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.png"></p>
 <blockquote>
@@ -315,7 +315,7 @@
 <h1 id="五、Automic"><a href="#五、Automic" class="headerlink" title="五、Automic"></a>五、Automic</h1><p>基本类型，数组类型，引用类型，对象的属性修改类型。</p>
 <p>在这里指的是一个操作是不可中断的，即使是在多个线程一起执行的时候，一个操作一旦开始，就不会被其他线程干扰。所以，原子类就是指具有原子或者原子操作特征的类。并发包<code>java.util.concurrent</code>的原子类都存放在<code>java.util.concurrent.atomic</code>。</p>
 <p>AtomicInteger是java钟常见的原子类，每种基础类型对应。AI中最重要的就是原子更新操作。</p>
-<h1 id="六、AQS"><a href="#六、AQS" class="headerlink" title="六、AQS"></a>六、AQS</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>AQS 的全称为（<code>AbstractQueuedSynchronizer</code>），这个类在<code>java.util.concurrent.locks</code>包下面。AQS 是一个用来构建锁和同步器的框架，使用 AQS 能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的 <code>ReentrantLock</code>，<code>Semaphore</code>，其他的诸如 <code>ReentrantReadWriteLock</code>，<code>SynchronousQueue</code>，<code>FutureTask</code> 等等皆是基于 AQS 的。当然，我们自己也能利用 AQS 非常轻松容易地构造出符合我们自己需求的同步器。</p>
+<h1 id="六、AQS"><a href="#六、AQS" class="headerlink" title="六、AQS"></a>六、AQS</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>用来构建锁和同步器的框架，使用 AQS 能简单且高效地构造出应用广泛的大量的同步器。</p>
 <p>AQS的核心思想是，如果被请求的共享资源空闲，则将当前请求资源的线程设置成有效的工作线程，并将资源设置成锁定状态。如果资源占用，就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将暂时获取不到锁的线程加入到队列中。</p>
 <blockquote>
 <p>CLH队列是一个虚拟的双向队列。AQS将每条请求共享资源的线程封装成一个CLH锁队列的一个结点来实现锁的分配。</p>
@@ -335,6 +335,9 @@
 <li>CountDownLatch：倒计时器，同步工具类，用来控制线程等待。他可以让某个线程等待直到倒计时结束，再开始执行。</li>
 <li>CyclicBarrier：循环栅栏。让一组线程到达一个同步点时被阻塞，直到最后一个线程到达屏障，屏障才会开门，所有被屏障拦截的线程才会继续工作。</li>
 </ul>
+<p><code>CountDownLatch</code> 的作用就是 允许 count 个线程阻塞在一个地方，直至所有线程的任务都执行完毕。之前在项目中，有一个使用多线程读取多个文件处理的场景，我用到了 <code>CountDownLatch</code> 。具体场景是下面这样的：</p>
+<p>我们要读取处理 6 个文件，这 6 个任务都是没有执行顺序依赖的任务，但是我们需要返回给用户的时候将这几个文件的处理的结果进行统计整理。</p>
+<p>为此我们定义了一个线程池和 count 为 6 的<code>CountDownLatch</code>对象 。使用线程池处理读取任务，每一个线程处理完之后就将 count-1，调用<code>CountDownLatch</code>对象的 <code>await()</code>方法，直到所有文件读取完之后，才会接着执行后面的逻辑。</p>
  
       <!-- reward -->
       
