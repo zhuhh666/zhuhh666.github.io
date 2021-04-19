@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">6.2k</span>
+            <span class="post-count">6.7k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">25 min</span>
+            <span class="post-count">27 min</span>
         </span>
     </span>
 </div>
@@ -395,7 +395,7 @@
 <p>1.使用过滤器中的哈希函数对元素值计算，得到哈希值。(几个哈希函数得到几个哈希值)</p>
 <p>2.根据得到的哈希值，数组中对应的下标标记为1</p>
 </li>
-<li><p>判断是否存钻</p>
+<li><p>判断是否存在</p>
 <p>1.对给定元素计算哈希值。</p>
 <p>2.得到值之后判断数组中的每个元素位置是否都为1，是，说明在过滤器，存在一个值不是1，说明不在。</p>
 </li>
@@ -405,6 +405,22 @@
 </ul>
 </li>
 </ul>
+<h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>就是一个很长的数组，在存入数据的过程中，先通过三次（也可能是更多次）的哈希计算，然后把这些hash的值都标记为1，在查询的时候，先通过三次hash值，然后去查数组，有一个不是1，则数据一定不存在。但是过滤器很难实现删除操作，本质原因是没有解决哈希冲突。</p>
+<p>有点是插入和删除很快。保密性好，因为只存0和1.</p>
+<p>缺点就是不好删除；容易出现误判，原因是哈希冲突。问题就是如何去计量避免误判呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> size = <span class="number">1000000</span>;</span><br><span class="line">        <span class="comment">//期望的误判率</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> fpp = <span class="number">0.01</span>;</span><br><span class="line">        <span class="comment">//布隆过滤器</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> BloomFilter&lt;Integer&gt; bloomFilter = BloomFilter.create(Funnels.integerFunnel(),size,fpp);</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> total = <span class="number">1000000</span>;</span><br><span class="line">        psvm&#123;</span><br><span class="line">            <span class="comment">//插入10万样本数据</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;total;i++)&#123;</span><br><span class="line">                bloomFilter.put(i);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//用另外十万测试数据，测试误判率</span></span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = total;i&lt;total+<span class="number">100000</span>;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(bloomFilter.mightContain(i))&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                    sout(i+<span class="string">&quot;误判了&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            sout(<span class="string">&quot;总的误判数是：&quot;</span>+count);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是误判率不能设置成无线小，这会拖慢过滤器的计算速度。</p>
+<blockquote>
+<p>误判率的底层原理：</p>
+<p>给出更多的哈希函数和数组空间，使用多个哈希函数算出来的哈希位置也不一样，多对应的二进制数据也就越多，这样就可以减少重复的概率。</p>
+</blockquote>
+<p><strong>使用布隆过滤器解决redis缓存穿透的问题：</strong></p>
+<p>将数据库的数据全部存放在布隆过滤器上，先查过滤器。没有返回，有的哈，从redis查找。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisBloomFilter</span></span>&#123;</span><br><span class="line">    psvm&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        config.useSingleServer.setSddress(<span class="string">&quot;redis://127.0.0.1:6379&quot;</span>);</span><br><span class="line">        config.useSingleServer().setPassword(<span class="string">&quot;1234&quot;</span>);</span><br><span class="line">        <span class="comment">//构造过滤器</span></span><br><span class="line">        RedissonClient redisson = Redisson.create(config);</span><br><span class="line">        RBloomFilter&lt;String&gt; bloomFilter = redisson.getBloomFilter(<span class="string">&quot;phoneList&quot;</span>);</span><br><span class="line">        <span class="comment">//初始化过滤器，预计元素是1000000L,误差率是3%</span></span><br><span class="line">        bloomFilter.tryInit(<span class="number">10000L</span>,<span class="number">0.03</span>);</span><br><span class="line">        <span class="comment">//将号码10086插入到过滤器</span></span><br><span class="line">        bloomFilter.put(<span class="string">&quot;10086&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//判断号码是否在过滤器</span></span><br><span class="line">        sout(bloomFilter.contains(<span class="string">&quot;123456&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>缓存在同一时间大面积失效,后面的请求落在数据库，造成短时间内数据库承受大量请求。（缓存模块宕机）</p>
 <p>还有一种是有一些被大量访问的数据在某一时刻失效，导致请求落在数据库。</p>
 <p><strong>解决办法：</strong></p>
