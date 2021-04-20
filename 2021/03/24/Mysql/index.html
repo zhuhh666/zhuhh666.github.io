@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.8k</span>
+            <span class="post-count">4.4k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">9 min</span>
+            <span class="post-count">15 min</span>
         </span>
     </span>
 </div>
@@ -245,6 +245,50 @@
 <p>数据库连接本质就是一个 socket 的连接。数据库服务端还要维护一些缓存和用户权限信息之类的 所以占用了一些内存。我们可以把数据库连接池是看做是维护的数据库连接的缓存，以便将来需要对数据库的请求时可以重用这些连接。为每个用户打开和维护数据库连接，尤其是对动态数据库驱动的网站应用程序的请求，既昂贵又浪费资源。<strong>在连接池中，创建连接后，将其放置在池中，并再次使用它，因此不必建立新的连接。如果使用了所有连接，则会建立一个新连接并将其添加到池中</strong>。 连接池还减少了用户必须等待建立与数据库的连接的时间。</p>
 <h1 id="8、常见问题："><a href="#8、常见问题：" class="headerlink" title="8、常见问题："></a>8、常见问题：</h1><h2 id="MySQL高性能规范"><a href="#MySQL高性能规范" class="headerlink" title="MySQL高性能规范"></a>MySQL高性能规范</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485097&idx=1&sn=84c89da477b1338bdf3e9fcd65514ac1&chksm=cea24962f9d5c074d8d3ff1ab04ee8f0d6486e3d015cfd783503685986485c11738ccb542ba7&token=79317275&lang=zh_CN#rd">参考阅读</a></p>
 <h2 id="SQL执行的很慢的原因"><a href="#SQL执行的很慢的原因" class="headerlink" title="SQL执行的很慢的原因"></a>SQL执行的很慢的原因</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485185&idx=1&sn=66ef08b4ab6af5757792223a83fc0d45&chksm=cea248caf9d5c1dc72ec8a281ec16aa3ec3e8066dbb252e27362438a26c33fbe842b0e0adf47&token=79317275&lang=zh_CN#rd">参考阅读</a></p>
+<h2 id="行存储与列存储"><a href="#行存储与列存储" class="headerlink" title="行存储与列存储"></a>行存储与列存储</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35622907">摘自</a></p>
+<p>主流的（OLTP）数据库大多数采用行存储，随着分析性数据库（OLAP）数据库的兴起，列存储又变的流行。</p>
+<p>列存储优势一方面体现在存储上节约空间，减少IO。另一方面依靠列式数据结构做了计算上的优化。</p>
+<h3 id="什么是列式存储"><a href="#什么是列式存储" class="headerlink" title="什么是列式存储"></a>什么是列式存储</h3><p><img src="https://pic2.zhimg.com/80/v2-8b8fc4a44e17f2d10b82a7f802a31011_720w.jpg" alt="img"></p>
+<p>传统OLTP数据库通常采用行存储，所有的列依次排列成一行，以行为单位存储，再配合B+树或者SS-Table作为索引，就能快速通过主键找到相应的行数据。</p>
+<p>行存储对于OLTP场景很自然：大多数操作都是以实体为单位，把一行数据存储在相邻的位置是个很好的选择。</p>
+<p>对于OLAP场景来说，一个典型的查询需要遍历整张表，进行分组、排序、聚合等操作，这样一来行存储就没有优势了。更糟糕的是，分新型SQL通常不会用到所有的列，仅仅对某些感兴趣的列运算，一行中的无关列也不得不参与扫描。</p>
+<p>列存储就是为这样的需求设计的。如下图所示，同一列的数据被一个一个紧挨着放在一起，表的每列构成一个长数组。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-57bf414b5fc1af277cbf74d9e4412bc1_720w.jpg" alt="img"></p>
+<p>列存储对于OLTP的场景不友好，一行数据的写入需要同时修改多个列。但是对于OLAP数据库有着很大的优势。</p>
+<ul>
+<li>当查询语句只设计到部分列时，只需要扫描相关的列。</li>
+<li>每一列的数据都是相同类型，彼此间的相关性更大，对列数据存储的压缩效率高。</li>
+</ul>
+<blockquote>
+<p><strong>Bigtable(HBase)是列存储吗？</strong></p>
+<p>其实不是列存储，是按照key-value pair存储数据，和列存储无关系。</p>
+<p>但是BT有列簇概念。列簇可以指定给某个locality group，决定改列簇数据的物理位置，从而让同一主键的各个列簇分别存放在最优的物理节点上，</p>
+<p>由于 column family 内的数据通常具有相似性，对它做压缩要比对整个表压缩效果更好。</p>
+<blockquote>
+<p>列式数据库可以是关系型、也可以是 NoSQL，这和是否是列式并无关系。</p>
+</blockquote>
+</blockquote>
+<h3 id="DSM-分页模式"><a href="#DSM-分页模式" class="headerlink" title="DSM 分页模式"></a>DSM 分页模式</h3><p>我们知道，由于机械磁盘受限于磁头寻址过程，读写通常都以一块（block）为单位，<strong>故在操作系统中被抽象为块设备</strong>，与流设备相对。这能帮助上层应用是更好地管理储存空间、增加读写效率等。这一特性直接影响了数据库储存格式的设计：数据库的 Page 对应一个或几个物理扇区，让数据库的 Page 和扇区对齐，提升读写效率。</p>
+<p>大多数服务于在线查询的DBMS采用NSM即安行存储的方式，将完整的行从header开依次存放。页的最后有一个索引，存放了页内各行的起始偏移量。由于每行的长度不一定固定，索引可以帮我们快速找到需要的行，无序逐个扫描。但是缺点在于，如果每次只涉及到很小的一部分列，那多余的列依然浪费内存以及CPU cache，导致更多的IO，为了避免这一问题，分析性数据库采用DSM列存储：将relationan按照列拆分成多个sub-relation。类似的，在页尾部存放一个索引。</p>
+<p>NSM可以快速取出某一行的数据，因为一行的数据保存在同一页；DSM能更好的利用CPU cache以及更紧凑的压缩。</p>
+<blockquote>
+<p>分布式储存系统虽然不再有页的概念，但是仍然会将文件切割成分块进行储存，但分块的粒度要远远大于一般扇区的大小（如 HDFS 的 Block Size 一般是 128MB）。更大的读写粒度是为了适应网络 IO 更低的带宽以获得更大的吞吐量，但另一方面也牺牲了细粒度随机读写。</p>
+</blockquote>
+<p><img src="https://pic1.zhimg.com/80/v2-f6b341f0aa6345e5fe7f1c3dc52da510_720w.jpg" alt="img"></p>
+<h3 id="列存储与分布式文件系统"><a href="#列存储与分布式文件系统" class="headerlink" title="列存储与分布式文件系统"></a>列存储与分布式文件系统</h3><p>在现代的大数据架构中，GFS，HDFS等分布式文件系统已经成为存放按规模数据集的主流方式，。分布式文件系统相比单机的磁盘，具备多副本高可用容量大成本低等优势，但是也有一些单机架构没有的问题。</p>
+<ul>
+<li>读写均要经过网络，吞吐量可以追平甚至超过硬盘，但是<strong>延迟要比硬盘大得多</strong>，且受网络环境影响很大。</li>
+<li>可以进行大吞吐量的顺序读写，但随机访问性能很差，大多<strong>不支持随机写入</strong>。为了抵消网络的 overhead，通常写入都以几十 MB 为单位。</li>
+</ul>
+<p>以上缺点对于重度依赖读写的OLTP场景数据库来说是致命的。所以很多定位于OLAP的列存储放弃OLTP能力，从而构建在分布式文件系统之上。</p>
+<p>充分发挥分布式文件系统的性能，有以下几种方式：按块读取数据，流式读取，追加写入等。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文介绍了列式存储的存储结构设计。抛开种种繁复的细节，我们看到，以下这些思想或设计是具有共性的。</p>
+<ol>
+<li><strong>跳过无关的数据</strong>。从行存到列存，就是消除了无关列的扫描；ORC 中通过三层索引信息，能快速跳过无关的数据分片。</li>
+<li><strong>编码既是压缩，也是索引</strong>。Dremel 中用精巧的嵌套编码避免了大量 NULL 的出现；C-Store 对 distinct 值的编码同时也是对 distinct 值的索引；PowerDrill 则将字典编码用到了极致（见下一篇文章）。</li>
+<li><strong>假设数据不可变</strong>。无论 C-Store、Dremel 还是 ORC，它们的编码和压缩方式都完全不考虑数据更新。如果一定要有更新，暂时写到别处、读时合并即可。</li>
+<li><strong>数据分片</strong>。处理大规模数据，既要纵向切分也要横向切分，不必多说。</li>
+</ol>
  
       <!-- reward -->
       
