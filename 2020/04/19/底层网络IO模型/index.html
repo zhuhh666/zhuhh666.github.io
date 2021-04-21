@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.5k</span>
+            <span class="post-count">1.7k</span>
         </span>
     </span>
 
@@ -106,6 +106,7 @@
 <li>SIO：信号驱动IO</li>
 <li>AIO：异步IO</li>
 </ul>
+<p>根据冯诺依曼结构，计算机分为5个部分，分别是：运算器、控制器、存储器、输入设备、输出设备。IO描述了计算机系统与外部设备之间的通信过程。</p>
 <h1 id="Unix网络编程中的五种IO模型"><a href="#Unix网络编程中的五种IO模型" class="headerlink" title="Unix网络编程中的五种IO模型"></a>Unix网络编程中的五种IO模型</h1><h2 id="阻塞IO——Blocking-IO"><a href="#阻塞IO——Blocking-IO" class="headerlink" title="阻塞IO——Blocking IO"></a>阻塞IO——Blocking IO</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/5108c314bdae4d18ea91c8dd2969ef0f.jpg-wh_600x-s_1540292916.jpg" alt="img"></p>
 <p>最传统的IO模型，在读写数据的过程中会发生阻塞现象。</p>
 <p>用户线程发出IO请求，内核先去查看数据是否就绪，如果没有就绪就会等待数据就绪，此时用户线程处于阻塞状态，交出CPU。数据就绪之后，内核将数据拷贝到用户线程，返回结果给用户线程，线程结束阻塞状态。</p>
@@ -118,6 +119,7 @@
 <li>用户进程轮询发起recvfrom系统调用直到数据报可达，这个时候等待系统内核复制数据报到用户进程的缓冲区，复制完成之后返回成功提示。</li>
 </ul>
 <h2 id="IO多路复用——IO-Multiplexing"><a href="#IO多路复用——IO-Multiplexing" class="headerlink" title="IO多路复用——IO Multiplexing"></a>IO多路复用——IO Multiplexing</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/3f9a924f4b90ce4e1be2f87ec25dbe53.jpg-wh_600x-s_915420489.jpg" alt="img"></p>
+<p>IO多路复用中，线程首先发起select调用，询问内核数据是否准备就绪，等内核吧数据准备好了，用户线程发起read调用。read调用的过程（数据从内核空间–&gt;用户空间）还是阻塞的。</p>
 <p>通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者是写就绪），能通知程序进行相应的读写操作，需要select，poll，epoll配合</p>
 <p>在多路复用IO模型中，会有一个内核线程不断的轮询多个socket的状态，只有当真正读写事件发送时，才会调用实际的IO读写操作。因为在多路复用IO模型中，只需要使用一个线程就可以管理多个socket，系统不需要建立新的进程或者线程，大大减少资源占用。</p>
 <ul>

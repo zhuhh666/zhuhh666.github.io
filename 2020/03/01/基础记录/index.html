@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.4k</span>
+            <span class="post-count">2.5k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">8 min</span>
+            <span class="post-count">9 min</span>
         </span>
     </span>
 </div>
@@ -299,9 +299,12 @@
 </ul>
 <h2 id="2-java1-8默认的垃圾收集器"><a href="#2-java1-8默认的垃圾收集器" class="headerlink" title="2.java1.8默认的垃圾收集器"></a>2.java1.8默认的垃圾收集器</h2><p>新生代的parallel scavenge（复制）+parallel old（标记整理）</p>
 <h2 id="3-底层网络模型"><a href="#3-底层网络模型" class="headerlink" title="3.底层网络模型"></a>3.底层网络模型</h2><p><a target="_blank" rel="noopener" href="https://developer.51cto.com/art/202010/628344.htm?pc">参考链接</a></p>
-<h2 id="4-java内存泄漏"><a href="#4-java内存泄漏" class="headerlink" title="4.java内存泄漏"></a>4.java内存泄漏</h2><h2 id="5-见过哪些弱引用和虚引用"><a href="#5-见过哪些弱引用和虚引用" class="headerlink" title="5.见过哪些弱引用和虚引用"></a>5.见过哪些弱引用和虚引用</h2><h2 id="6-设计一个文件格式，要考虑哪些问题"><a href="#6-设计一个文件格式，要考虑哪些问题" class="headerlink" title="6.设计一个文件格式，要考虑哪些问题"></a>6.设计一个文件格式，要考虑哪些问题</h2><p>操作系统中的文件系统。</p>
+<h2 id="4-java内存泄漏"><a href="#4-java内存泄漏" class="headerlink" title="4.java内存泄漏"></a>4.java内存泄漏</h2><p><strong>内存溢出：</strong>申请了10个字节的空间，但是在这个空间写入11或者以上的字节，出现溢出。</p>
+<p><strong>内存泄漏：</strong>new申请内存，但是很久不用，但是因为一直被某些实例持有导致GC不能回收，就是应该释放的对象没有被释放。</p>
+<h2 id="5-见过哪些弱引用和虚引用"><a href="#5-见过哪些弱引用和虚引用" class="headerlink" title="5.见过哪些弱引用和虚引用"></a>5.见过哪些弱引用和虚引用</h2><h2 id="6-设计一个文件格式，要考虑哪些问题"><a href="#6-设计一个文件格式，要考虑哪些问题" class="headerlink" title="6.设计一个文件格式，要考虑哪些问题"></a>6.设计一个文件格式，要考虑哪些问题</h2><p>操作系统中的文件系统。</p>
 <h2 id="7-列存储"><a href="#7-列存储" class="headerlink" title="7.列存储"></a>7.列存储</h2><p><a href="https://victor-huihui.gitee.io/2021/03/24/Mysql/#%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8">在这篇笔记里</a></p>
-<h2 id="8-Mysql复制问题"><a href="#8-Mysql复制问题" class="headerlink" title="8.Mysql复制问题"></a>8.Mysql复制问题</h2> 
+<h2 id="8-Mysql复制问题"><a href="#8-Mysql复制问题" class="headerlink" title="8.Mysql复制问题"></a>8.Mysql复制问题</h2><p><a href="https://victor-huihui.gitee.io/2021/03/24/Mysql/#MYSQL%E5%A4%8D%E5%88%B6">在这里</a></p>
+ 
       <!-- reward -->
       
     </div>
