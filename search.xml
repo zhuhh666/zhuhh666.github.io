@@ -90,20 +90,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git版本回退</title>
     <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
     <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
@@ -140,77 +126,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to Read a Paper</title>
-    <url>/2020/04/20/How-to-Read-a-Paper/</url>
-    <content><![CDATA[<blockquote>
-<p>过去的几个月，因为不熟悉和不适应，项目占据了绝大多数的时间，甚至有些很好的课程也落下了。昨天蒲总和我们兄弟仨开了个很长的会，大概是12个月要准备开题了(我们的毕业要求是首先Paper要发一篇，然后才是毕业论文)。Paper的阅读真的要提上日程了。之前读的论文都是拿来应付课程了，先来借鉴别人的阅读方法。</p>
-</blockquote>
-<p><a href="https://paper-reading.oss-cn-zhangjiakou.aliyuncs.com/paper01.pdf">原文下载</a></p>
-<h2 id="三遍法读Paper"><a href="#三遍法读Paper" class="headerlink" title="三遍法读Paper"></a>三遍法读Paper</h2><p>主要观点是文章读三遍，第一遍：<code>gives you a general idea about the paper</code>。第二遍：<code>lets you grasp the paper’s content</code>。第三遍：<code>helps you understand the paper in depth.</code></p>
-<h2 id="The-first-pass-5-10分钟"><a href="#The-first-pass-5-10分钟" class="headerlink" title="The first pass(5-10分钟)"></a>The first pass(5-10分钟)</h2><p><strong>阅读步骤：</strong></p>
-<ul>
-<li>认真的读题目、摘要和介绍</li>
-<li>阅读小节和小节标题</li>
-<li>阅读总结</li>
-<li>浏览参考文献，看有没有阅读过的文献</li>
-</ul>
-<p><strong>读后5C：</strong></p>
-<ul>
-<li><code>Category</code>：知道Paper的类型，是测量？现有系统的分析还是原型研究？</li>
-<li><code>Context</code>：与哪些paper相关，理论基础是？</li>
-<li><code>Correctness</code>：假设的正确性？</li>
-<li><code>Contributions</code>：主要贡献？</li>
-<li><code>Clarity</code>：写得好吗？？？</li>
-</ul>
-<p><strong>总结：</strong></p>
-<ul>
-<li>第一遍要知道是否要接着阅读这篇文章，可能是不吸引你或者假设不正确</li>
-<li>自己写paper，大小标题要写清楚，简洁而全面。审稿人<code>阅读一次</code>不理解要点，凉凉。读者<code>五分钟</code>不理解亮点，失败。</li>
-</ul>
-<h2 id="The-second-pass-一小时"><a href="#The-second-pass-一小时" class="headerlink" title="The second pass(一小时)"></a>The second pass(一小时)</h2><p>第二遍更加仔细的阅读文章，忽略诸如证据之类的细节，草草记下要点，在空白处发表评论。</p>
-<p><strong>阅读步骤：</strong></p>
-<ul>
-<li>仔细看数字，图标和插图，特别关注插图表的标签是否正确，结果是否有误差条显示。没有的可以，有问题的话，一般是粗制滥造的paper，不读也罢。</li>
-<li>标记相关未读参考文献(了解论文背景的好方法)</li>
-</ul>
-<p><strong>读后：</strong></p>
-<ul>
-<li>掌握论文内容</li>
-<li>向别人分享论文主旨，提供佐证</li>
-<li>这种程度适用于你感兴趣但和你研究领域无关的论文</li>
-</ul>
-<p><strong>总结：</strong></p>
-<p>可能你在第二遍结束后并不了解这篇文章，这也很正常。可能因为是新领域，使用不熟悉的术语和缩略语，或者这篇文章写的很烂，也可能是因为夜太深。。。这种情况你可以选择：</p>
-<ul>
-<li>劳资不读了。用阿Q精神安慰自己，这些晦涩的术语对你的科研生涯没有用。</li>
-<li>稍后读。可以先看看背景资料。</li>
-<li>坚持下去，third pass来咯。</li>
-</ul>
-<h2 id="The-third-pass-4-5小时"><a href="#The-third-pass-4-5小时" class="headerlink" title="The third pass(4-5小时)"></a>The third pass(4-5小时)</h2><blockquote>
-<p>新手4-5小时，老油条1小时就够了</p>
-</blockquote>
-<p>第三遍才是重头戏。关键是<strong>尝试虚拟的重新实施这篇文章的内容</strong>。和作者做一样的假设，重新开始做论文中的工作。通过这种重新创作与实际论文比较，可以和容易发现文章的闪光点，还可以发现其中隐藏的缺陷和假设(发现了，一篇新的论文不就来了吗)</p>
-<p><strong>阅读步骤：</strong></p>
-<ul>
-<li>找出并对每一个假设提出质疑</li>
-<li>考虑你自己如何提出一个特定的假设。</li>
-<li>写下对未来工作的想法。</li>
-</ul>
-<p><strong>读后：</strong></p>
-<ul>
-<li>根据记忆重建论文的结构</li>
-<li>识别出亮点和不足</li>
-<li><strong>指出隐藏的假设、相关工作引用的遗漏，实验和分析的潜在问题</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文研读</category>
-      </categories>
-      <tags>
-        <tag>小知识集锦-1</tag>
       </tags>
   </entry>
   <entry>
@@ -341,6 +256,91 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Read a Paper</title>
+    <url>/2020/04/20/How-to-Read-a-Paper/</url>
+    <content><![CDATA[<blockquote>
+<p>过去的几个月，因为不熟悉和不适应，项目占据了绝大多数的时间，甚至有些很好的课程也落下了。昨天蒲总和我们兄弟仨开了个很长的会，大概是12个月要准备开题了(我们的毕业要求是首先Paper要发一篇，然后才是毕业论文)。Paper的阅读真的要提上日程了。之前读的论文都是拿来应付课程了，先来借鉴别人的阅读方法。</p>
+</blockquote>
+<p><a href="https://paper-reading.oss-cn-zhangjiakou.aliyuncs.com/paper01.pdf">原文下载</a></p>
+<h2 id="三遍法读Paper"><a href="#三遍法读Paper" class="headerlink" title="三遍法读Paper"></a>三遍法读Paper</h2><p>主要观点是文章读三遍，第一遍：<code>gives you a general idea about the paper</code>。第二遍：<code>lets you grasp the paper’s content</code>。第三遍：<code>helps you understand the paper in depth.</code></p>
+<h2 id="The-first-pass-5-10分钟"><a href="#The-first-pass-5-10分钟" class="headerlink" title="The first pass(5-10分钟)"></a>The first pass(5-10分钟)</h2><p><strong>阅读步骤：</strong></p>
+<ul>
+<li>认真的读题目、摘要和介绍</li>
+<li>阅读小节和小节标题</li>
+<li>阅读总结</li>
+<li>浏览参考文献，看有没有阅读过的文献</li>
+</ul>
+<p><strong>读后5C：</strong></p>
+<ul>
+<li><code>Category</code>：知道Paper的类型，是测量？现有系统的分析还是原型研究？</li>
+<li><code>Context</code>：与哪些paper相关，理论基础是？</li>
+<li><code>Correctness</code>：假设的正确性？</li>
+<li><code>Contributions</code>：主要贡献？</li>
+<li><code>Clarity</code>：写得好吗？？？</li>
+</ul>
+<p><strong>总结：</strong></p>
+<ul>
+<li>第一遍要知道是否要接着阅读这篇文章，可能是不吸引你或者假设不正确</li>
+<li>自己写paper，大小标题要写清楚，简洁而全面。审稿人<code>阅读一次</code>不理解要点，凉凉。读者<code>五分钟</code>不理解亮点，失败。</li>
+</ul>
+<h2 id="The-second-pass-一小时"><a href="#The-second-pass-一小时" class="headerlink" title="The second pass(一小时)"></a>The second pass(一小时)</h2><p>第二遍更加仔细的阅读文章，忽略诸如证据之类的细节，草草记下要点，在空白处发表评论。</p>
+<p><strong>阅读步骤：</strong></p>
+<ul>
+<li>仔细看数字，图标和插图，特别关注插图表的标签是否正确，结果是否有误差条显示。没有的可以，有问题的话，一般是粗制滥造的paper，不读也罢。</li>
+<li>标记相关未读参考文献(了解论文背景的好方法)</li>
+</ul>
+<p><strong>读后：</strong></p>
+<ul>
+<li>掌握论文内容</li>
+<li>向别人分享论文主旨，提供佐证</li>
+<li>这种程度适用于你感兴趣但和你研究领域无关的论文</li>
+</ul>
+<p><strong>总结：</strong></p>
+<p>可能你在第二遍结束后并不了解这篇文章，这也很正常。可能因为是新领域，使用不熟悉的术语和缩略语，或者这篇文章写的很烂，也可能是因为夜太深。。。这种情况你可以选择：</p>
+<ul>
+<li>劳资不读了。用阿Q精神安慰自己，这些晦涩的术语对你的科研生涯没有用。</li>
+<li>稍后读。可以先看看背景资料。</li>
+<li>坚持下去，third pass来咯。</li>
+</ul>
+<h2 id="The-third-pass-4-5小时"><a href="#The-third-pass-4-5小时" class="headerlink" title="The third pass(4-5小时)"></a>The third pass(4-5小时)</h2><blockquote>
+<p>新手4-5小时，老油条1小时就够了</p>
+</blockquote>
+<p>第三遍才是重头戏。关键是<strong>尝试虚拟的重新实施这篇文章的内容</strong>。和作者做一样的假设，重新开始做论文中的工作。通过这种重新创作与实际论文比较，可以和容易发现文章的闪光点，还可以发现其中隐藏的缺陷和假设(发现了，一篇新的论文不就来了吗)</p>
+<p><strong>阅读步骤：</strong></p>
+<ul>
+<li>找出并对每一个假设提出质疑</li>
+<li>考虑你自己如何提出一个特定的假设。</li>
+<li>写下对未来工作的想法。</li>
+</ul>
+<p><strong>读后：</strong></p>
+<ul>
+<li>根据记忆重建论文的结构</li>
+<li>识别出亮点和不足</li>
+<li><strong>指出隐藏的假设、相关工作引用的遗漏，实验和分析的潜在问题</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文研读</category>
+      </categories>
+      <tags>
+        <tag>小知识集锦-1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -616,6 +616,55 @@
       </tags>
   </entry>
   <entry>
+    <title>MongoDB</title>
+    <url>/2020/04/10/MongoDB/</url>
+    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
+
+<p>show dbs：显示所有数据库</p>
+<p>use test：创建test数据库(内存中)</p>
+<p>db：当前数据库</p>
+<p>db.dropDatabase()：删除数据库</p>
+<p><strong>三个保留库：</strong></p>
+<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
+<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
+<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
+<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
+<p>show collections：显示当前的collection</p>
+<p>db.my.drop( )：删除集合</p>
+<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
+<li><p>单个文档插入：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p>db.comment.find()：查询所有数据库数据</p>
+<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
+<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
+<p><strong>投影查询</strong>：</p>
+<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
+<p>加try catch:</p>
+<p>try{</p>
+<p>insert:one or many</p>
+<p>}catch(e){</p>
+<p>print(e);</p>
+<p>}</p>
+<p><strong>文档更新：</strong></p>
+<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
+<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
+<p>批量修改：</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Netty</title>
     <url>/2021/03/29/Netty/</url>
     <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
@@ -802,70 +851,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
-<ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
-</ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
-
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
-<ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>OSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1422,6 +1407,70 @@
       </tags>
   </entry>
   <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pycharm搭建PyTorch环境</title>
     <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
@@ -1464,55 +1513,6 @@
       <tags>
         <tag>深度学习</tag>
         <tag>PyTorch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MongoDB</title>
-    <url>/2020/04/10/MongoDB/</url>
-    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
-
-<p>show dbs：显示所有数据库</p>
-<p>use test：创建test数据库(内存中)</p>
-<p>db：当前数据库</p>
-<p>db.dropDatabase()：删除数据库</p>
-<p><strong>三个保留库：</strong></p>
-<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
-<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
-<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
-<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
-<p>show collections：显示当前的collection</p>
-<p>db.my.drop( )：删除集合</p>
-<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
-<li><p>单个文档插入：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
-
-<p>db.comment.find()：查询所有数据库数据</p>
-<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
-<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
-<p><strong>投影查询</strong>：</p>
-<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
-<p>加try catch:</p>
-<p>try{</p>
-<p>insert:one or many</p>
-<p>}catch(e){</p>
-<p>print(e);</p>
-<p>}</p>
-<p><strong>文档更新：</strong></p>
-<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
-<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
-<p>批量修改：</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -1572,6 +1572,28 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker容器的备份与迁移</title>
+    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
+<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
+
+<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
+
+<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+]]></content>
+      <categories>
+        <category>云原生</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github actions托管gitee pages</title>
     <url>/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
@@ -1618,25 +1640,21 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker容器的备份与迁移</title>
-    <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
-<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker commit -p <span class="number">37</span>br3874 container-backup</span><br></pre></td></tr></table></figure>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
 
-<p>该命令会生成一个作为Docker镜像的容器快照,上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker save -o ~/container-backup.tar container-backup</span><br></pre></td></tr></table></figure>
-
-<h2 id="恢复容器"><a href="#恢复容器" class="headerlink" title="恢复容器"></a>恢复容器</h2><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">docker load -i ~/container-backup.tar</span><br></pre></td></tr></table></figure>
-
-<h2 id="迁移docker容器"><a href="#迁移docker容器" class="headerlink" title="迁移docker容器"></a>迁移docker容器</h2><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
 ]]></content>
       <categories>
-        <category>云原生</category>
+        <category>Bug合集</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1665,24 +1683,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1762,6 +1762,45 @@
       <categories>
         <category>后端技术</category>
       </categories>
+  </entry>
+  <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -1848,45 +1887,6 @@
 <p><strong>切</strong>而知之谓之巧</p>
 </blockquote>
 <h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
       <categories>
         <category>中医理论基础</category>
       </categories>
@@ -2382,7 +2382,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="面试问题记录"><a href="#面试问题记录" class="headerlink" title="面试问题记录"></a>面试问题记录</h1><h2 id="linux定位cpu占用率高问题"><a href="#linux定位cpu占用率高问题" class="headerlink" title="linux定位cpu占用率高问题"></a>linux定位cpu占用率高问题</h2><ul>
+<h1 id="面试问题记录"><a href="#面试问题记录" class="headerlink" title="面试问题记录"></a>面试问题记录</h1><h2 id="1-linux定位cpu占用率高问题"><a href="#1-linux定位cpu占用率高问题" class="headerlink" title="1.linux定位cpu占用率高问题"></a>1.linux定位cpu占用率高问题</h2><ul>
 <li><p>top命令查到最占cpu的进程 <code>22686</code>。</p>
 </li>
 <li><p>pstack跟踪进程栈 <code>pstack 22686</code>。</p>
@@ -2397,9 +2397,11 @@
 <li><p>然后使用vim查看进程快照，定位到具体的线程，并查看其调用堆栈。</p>
 </li>
 </ul>
-<h2 id="java1-8默认的垃圾收集器"><a href="#java1-8默认的垃圾收集器" class="headerlink" title="java1.8默认的垃圾收集器"></a>java1.8默认的垃圾收集器</h2><p>新生代的parallel scavenge（复制）+parallel old（标记整理）</p>
-<h2 id="底层网络模型"><a href="#底层网络模型" class="headerlink" title="底层网络模型"></a>底层网络模型</h2><p><a href="https://developer.51cto.com/art/202010/628344.htm?pc">参考链接</a></p>
-]]></content>
+<h2 id="2-java1-8默认的垃圾收集器"><a href="#2-java1-8默认的垃圾收集器" class="headerlink" title="2.java1.8默认的垃圾收集器"></a>2.java1.8默认的垃圾收集器</h2><p>新生代的parallel scavenge（复制）+parallel old（标记整理）</p>
+<h2 id="3-底层网络模型"><a href="#3-底层网络模型" class="headerlink" title="3.底层网络模型"></a>3.底层网络模型</h2><p><a href="https://developer.51cto.com/art/202010/628344.htm?pc">参考链接</a></p>
+<h2 id="4-java内存泄漏"><a href="#4-java内存泄漏" class="headerlink" title="4.java内存泄漏"></a>4.java内存泄漏</h2><h2 id="5-见过哪些弱引用和虚引用"><a href="#5-见过哪些弱引用和虚引用" class="headerlink" title="5.见过哪些弱引用和虚引用"></a>5.见过哪些弱引用和虚引用</h2><h2 id="6-设计一个文件格式，要考虑哪些问题"><a href="#6-设计一个文件格式，要考虑哪些问题" class="headerlink" title="6.设计一个文件格式，要考虑哪些问题"></a>6.设计一个文件格式，要考虑哪些问题</h2><p>操作系统中的文件系统。</p>
+<h2 id="7-列存储"><a href="#7-列存储" class="headerlink" title="7.列存储"></a>7.列存储</h2><p><a href="https://victor-huihui.gitee.io/2021/03/24/Mysql/#%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8">在这篇笔记里</a></p>
+<h2 id="8-Mysql复制问题"><a href="#8-Mysql复制问题" class="headerlink" title="8.Mysql复制问题"></a>8.Mysql复制问题</h2>]]></content>
       <categories>
         <category>复习入口</category>
       </categories>
@@ -2461,10 +2463,10 @@
 <li>SIO：信号驱动IO</li>
 <li>AIO：异步IO</li>
 </ul>
-<h1 id="Unix网络编程中的五种IO模型"><a href="#Unix网络编程中的五种IO模型" class="headerlink" title="Unix网络编程中的五种IO模型"></a>Unix网络编程中的五种IO模型</h1><h2 id="阻塞IO——Blocking-IO"><a href="#阻塞IO——Blocking-IO" class="headerlink" title="阻塞IO——Blocking IO"></a>阻塞IO——Blocking IO</h2><p><img src="https://s5.51cto.com/oss/202010/13/5108c314bdae4d18ea91c8dd2969ef0f.jpg-wh_600x-s_1540292916.jpg" alt="img"></p>
+<h1 id="Unix网络编程中的五种IO模型"><a href="#Unix网络编程中的五种IO模型" class="headerlink" title="Unix网络编程中的五种IO模型"></a>Unix网络编程中的五种IO模型</h1><h2 id="阻塞IO——Blocking-IO"><a href="#阻塞IO——Blocking-IO" class="headerlink" title="阻塞IO——Blocking IO"></a>阻塞IO——Blocking IO</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/5108c314bdae4d18ea91c8dd2969ef0f.jpg-wh_600x-s_1540292916.jpg" alt="img"></p>
 <p>最传统的IO模型，在读写数据的过程中会发生阻塞现象。</p>
 <p>用户线程发出IO请求，内核先去查看数据是否就绪，如果没有就绪就会等待数据就绪，此时用户线程处于阻塞状态，交出CPU。数据就绪之后，内核将数据拷贝到用户线程，返回结果给用户线程，线程结束阻塞状态。</p>
-<h2 id="非阻塞IO——NoneBlocking-IO"><a href="#非阻塞IO——NoneBlocking-IO" class="headerlink" title="非阻塞IO——NoneBlocking IO"></a>非阻塞IO——NoneBlocking IO</h2><p><img src="https://s4.51cto.com/oss/202010/13/92fd6efb11936b879561931f1e895f02.jpg-wh_600x-s_2030517755.jpg" alt="img"></p>
+<h2 id="非阻塞IO——NoneBlocking-IO"><a href="#非阻塞IO——NoneBlocking-IO" class="headerlink" title="非阻塞IO——NoneBlocking IO"></a>非阻塞IO——NoneBlocking IO</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/92fd6efb11936b879561931f1e895f02.jpg-wh_600x-s_2030517755.jpg" alt="img"></p>
 <p>用户发送一个IO操作后，不需要等待，马上得到一个结果。如果结果是一个error时，就知道数据还没有准备好，于是可以再次发送IO操作。一旦内核的数据准备好了，并且再次收到了用户线程的请求，马上将数据拷贝到用户线程，然后返回。</p>
 <p>在非阻塞IO中，用户线程需要不断的询问内核数据是否就绪，说明NIO不会交出自己的CPU时间片，一直占用。对于非阻塞IO来说，一个严重的问题就是，在while循环中需要不断去询问数据是否就绪，这样会导致CPU占用率高，因为一般情况下很少使用while循环的方式来读取数据。</p>
 <ul>
@@ -2472,7 +2474,7 @@
 <li>用户接收到消息，但是不知道什么时候数据报可达，于是开始不断轮询（polling）想系统内核发起recvfrom的系统调用。</li>
 <li>用户进程轮询发起recvfrom系统调用直到数据报可达，这个时候等待系统内核复制数据报到用户进程的缓冲区，复制完成之后返回成功提示。</li>
 </ul>
-<h2 id="IO多路复用——IO-Multiplexing"><a href="#IO多路复用——IO-Multiplexing" class="headerlink" title="IO多路复用——IO Multiplexing"></a>IO多路复用——IO Multiplexing</h2><p><img src="https://s4.51cto.com/oss/202010/13/3f9a924f4b90ce4e1be2f87ec25dbe53.jpg-wh_600x-s_915420489.jpg" alt="img"></p>
+<h2 id="IO多路复用——IO-Multiplexing"><a href="#IO多路复用——IO-Multiplexing" class="headerlink" title="IO多路复用——IO Multiplexing"></a>IO多路复用——IO Multiplexing</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/3f9a924f4b90ce4e1be2f87ec25dbe53.jpg-wh_600x-s_915420489.jpg" alt="img"></p>
 <p>通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者是写就绪），能通知程序进行相应的读写操作，需要select，poll，epoll配合</p>
 <p>在多路复用IO模型中，会有一个内核线程不断的轮询多个socket的状态，只有当真正读写事件发送时，才会调用实际的IO读写操作。因为在多路复用IO模型中，只需要使用一个线程就可以管理多个socket，系统不需要建立新的进程或者线程，大大减少资源占用。</p>
 <ul>
@@ -2481,7 +2483,7 @@
 <li>当select套接字返回可读状态的时候,就可以发起recvfrom调用把数据报复制到用户空间的缓冲区</li>
 </ul>
 <h2 id="信号驱动——signal-driven-IO"><a href="#信号驱动——signal-driven-IO" class="headerlink" title="信号驱动——signal driven IO"></a>信号驱动——signal driven IO</h2><p>在信号驱动的IO模型中，用户线程发起一个IO请求操作，会给对用的socket注册一个信号函数，然后用户线程继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接到信号后，在信号函数中调用IO读写操作来进行实际的IO请求操作。一般用于UDP中，对TCP套接字基本没用，原因是信号产生的过于频繁，并且信号的出现没有告诉我们发生了什么请求。</p>
-<p><img src="https://s4.51cto.com/oss/202010/13/65d1e77c0b548cba43d6443fc8bcaf69.jpg-wh_600x-s_1923680265.jpg" alt="img"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/65d1e77c0b548cba43d6443fc8bcaf69.jpg-wh_600x-s_1923680265.jpg" alt="img"></p>
 <p>用户进程可以使用信号方式，当系统内描述符就绪时就会发送SIGNO给到用户空间，这个时候再发起recvfrom的系统调用等待返回成功提示：</p>
 <ul>
 <li>开启套接字的信息IO启动功能，并通过一个内置安装信号处理函数signaction系统调用，发起调用之后直接返回。</li>
@@ -2507,6 +2509,34 @@
       </categories>
       <tags>
         <tag>IO模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统学习笔记</title>
+    <url>/2021/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h2 id="概念功能和目标"><a href="#概念功能和目标" class="headerlink" title="概念功能和目标"></a>概念功能和目标</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E6%A6%82%E8%A7%88.png" alt="概览"></p>
+<h2 id="OS的特征"><a href="#OS的特征" class="headerlink" title="OS的特征"></a>OS的特征</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210418150912681.png" alt="image-20210418150912681"></p>
+<h2 id="OS的发展和分类"><a href="#OS的发展和分类" class="headerlink" title="OS的发展和分类"></a>OS的发展和分类</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/OS%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E5%88%86%E7%B1%BB.png" alt="OS的发展与分类"></p>
+<h2 id="OS的运行机制与体系结构"><a href="#OS的运行机制与体系结构" class="headerlink" title="OS的运行机制与体系结构"></a>OS的运行机制与体系结构</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/OS%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="OS运行机制与体系结构"></p>
+<blockquote>
+<p>指令：CPU能识别，执行的最基本指令。</p>
+</blockquote>
+<p>内核计算机配置的底层软件，是OS最基本，最核心的部分。实现OS内核功能的那些程序就是内核程序。</p>
+<h2 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h2><ul>
+<li>发生中断时，CPU立即进入和心态。</li>
+<li>发生中断后，当前运行的程序暂停运行，并由OS内核对中断进行处理</li>
+<li>对于不同的中断信号，会进行不同处理。</li>
+</ul>
+<blockquote>
+<p>用户态到系统态的切换时通过中断实现的，并且中断是唯一途径。</p>
+<p>核心态到用户态的切换时通过执行一个特权指令，将程序状态字（PSW）的标志位设置成“用户态”。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2548,34 +2578,6 @@
       </categories>
       <tags>
         <tag>文件上传渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统学习笔记</title>
-    <url>/2021/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h2 id="概念功能和目标"><a href="#概念功能和目标" class="headerlink" title="概念功能和目标"></a>概念功能和目标</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E6%A6%82%E8%A7%88.png" alt="概览"></p>
-<h2 id="OS的特征"><a href="#OS的特征" class="headerlink" title="OS的特征"></a>OS的特征</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210418150912681.png" alt="image-20210418150912681"></p>
-<h2 id="OS的发展和分类"><a href="#OS的发展和分类" class="headerlink" title="OS的发展和分类"></a>OS的发展和分类</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/OS%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E5%88%86%E7%B1%BB.png" alt="OS的发展与分类"></p>
-<h2 id="OS的运行机制与体系结构"><a href="#OS的运行机制与体系结构" class="headerlink" title="OS的运行机制与体系结构"></a>OS的运行机制与体系结构</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/OS%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="OS运行机制与体系结构"></p>
-<blockquote>
-<p>指令：CPU能识别，执行的最基本指令。</p>
-</blockquote>
-<p>内核计算机配置的底层软件，是OS最基本，最核心的部分。实现OS内核功能的那些程序就是内核程序。</p>
-<h2 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h2><ul>
-<li>发生中断时，CPU立即进入和心态。</li>
-<li>发生中断后，当前运行的程序暂停运行，并由OS内核对中断进行处理</li>
-<li>对于不同的中断信号，会进行不同处理。</li>
-</ul>
-<blockquote>
-<p>用户态到系统态的切换时通过中断实现的，并且中断是唯一途径。</p>
-<p>核心态到用户态的切换时通过执行一个特权指令，将程序状态字（PSW）的标志位设置成“用户态”。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -2770,6 +2772,172 @@
       </tags>
   </entry>
   <entry>
+    <title>用Vue实现Player</title>
+    <url>/2020/03/23/%E7%94%A8Vue%E5%AE%9E%E7%8E%B0Player/</url>
+    <content><![CDATA[<p>项目中用到Vue，虽然没写前端，但是有时候需要测试和部署项目，懂得vue的网络请求就很重要。之前学过一点h5,js,css这些。这里主要是想学习一下vue+axios网络请求，跟着B站的大佬做了一个<a href="https://victor-huihui.gitee.io/2020/03/23/Player/">音乐播放器</a>，图片资源上传sm.ms图床。代码在元素审查都能看到，这里贴一下完整的代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>朱会会的云播放器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 样式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--  &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/index.css&quot;&gt;--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">ul</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">dl</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">dd</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .wrap &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/gz9abCBAcphv6jF.jpg&quot;</span>) no-repeat;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-size</span>: <span class="number">100%</span> <span class="number">100%</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .play_wrap &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">544px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: -<span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">272px</span>;</span></span><br><span class="line"><span class="css">      <span class="comment">/* background-color: #f9f9f9; */</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .search_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#1eacda</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-top-left-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-top-right-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">      <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">11</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.search_bar</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: <span class="number">23px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.search_bar</span> <span class="selector-tag">input</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">296px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">34px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/9FeKnVlohsY3krO.png&quot;</span>) <span class="number">265px</span> center no-repeat</span></span><br><span class="line">      rgba(255, 255, 255, 0.45);</span><br><span class="line"><span class="css">      <span class="attribute">text-indent</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">outline</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .center_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.5</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_wrapper &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">1</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_stretch &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">600px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_list &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow-y</span>: auto;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow-x</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .song_list::-webkit-scrollbar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">display</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#333</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">flex-wrap</span>: wrap;</span></span><br><span class="line"><span class="css">      <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">580px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-left</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span><span class="selector-pseudo">:nth-child</span>(odd) &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">240</span>, <span class="number">240</span>, <span class="number">240</span>, <span class="number">0.3</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/chJ89uNpofneFrS.png&quot;</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">background-size</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">b</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-weight</span>: normal;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">122px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">text-overflow</span>: ellipsis;</span></span><br><span class="line"><span class="css">      <span class="attribute">white-space</span>: nowrap;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_stretch</span> <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">b</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_stretch</span> <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">em</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">150px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">span</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">50px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">span</span> <span class="selector-tag">i</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/HFyBnJ5loLhI7qK.png&quot;</span>) left -<span class="number">48px</span> no-repeat;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">em</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">i</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-style</span>: normal;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .player_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .player_con2 &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.player_con2</span> <span class="selector-tag">video</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">355px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">265px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .disc &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">73px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">9</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .cover &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">125px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">112px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">150px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">150px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">75px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">8</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">180px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">600px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">25px</span> <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .title &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .comment_list &#123;</span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: auto;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">410px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .comment_list::-webkit-scrollbar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">display</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dl</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-top</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-left</span>: <span class="number">55px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dt</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dt</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">20px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dd</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .comment_wrapper .name &#123;</span><br><span class="line"><span class="css">      <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#333</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-top</span>: <span class="number">5px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .comment_wrapper .detail &#123;</span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">line-height</span>: <span class="number">18px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .audio_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#f1f3f4</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-bottom-left-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-bottom-right-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .myaudio &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">outline</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#f1f3f4</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 旋转的动画 */</span></span></span><br><span class="line"><span class="css">    <span class="keyword">@keyframes</span> Rotate &#123;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">from</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">transform</span>: <span class="built_in">rotateZ</span>(<span class="number">0</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-tag">to</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">transform</span>: <span class="built_in">rotateZ</span>(<span class="number">360deg</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 旋转的类名 */</span></span></span><br><span class="line">    .autoRotate &#123;</span><br><span class="line"><span class="css">      <span class="attribute">animation-name</span>: Rotate;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-iteration-count</span>: infinite;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-play-state</span>: paused;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-timing-function</span>: linear;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-duration</span>: <span class="number">5s</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 是否正在播放 */</span></span></span><br><span class="line">    .player_con.playing .disc,</span><br><span class="line">    .player_con.playing .cover &#123;</span><br><span class="line"><span class="css">      <span class="attribute">animation-play-state</span>: running;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .play_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: -<span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">10</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">25deg</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">transform-origin</span>: <span class="number">12px</span> <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transition</span>: <span class="number">1s</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 播放杆 转回去 */</span></span></span><br><span class="line">    .player_con.playing .play_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 搜索历史列表 */</span></span></span><br><span class="line">    .search_history &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">296px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">right</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">17px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.search_history</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">line-height</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .switch_btn &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">right</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .right_line &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.video_con</span> <span class="selector-tag">video</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">546px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">273px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">990</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .video_con .mask &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">980</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.8</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line">    .video_con .shutoff &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/ZWSChyBwjA5uRfL.png&quot;</span>) no-repeat;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">273px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">995</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;play_wrap&quot;</span> <span class="attr">id</span>=<span class="string">&quot;player&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;search_bar&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://sm.ms/image/FO95hAIXyZqoHct&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 搜索歌曲 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;输入要搜索的Music&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> <span class="attr">v-model</span>=<span class="string">&#x27;query&#x27;</span> @<span class="attr">keyup.enter</span>=<span class="string">&quot;searchMusic();&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;center_con&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 搜索歌曲列表 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;song_wrapper&#x27;</span> <span class="attr">ref</span>=<span class="string">&#x27;song_wrapper&#x27;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;song_list&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in musicList&quot;</span>&gt;</span></span><br><span class="line">              <span class="comment">&lt;!-- 点击放歌 --&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> @<span class="attr">click</span>=<span class="string">&#x27;playMusic(item.id)&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">i</span> @<span class="attr">click</span>=<span class="string">&quot;playMv(item.mvid)&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;item.mvid!=0&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;switch_btn&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 歌曲信息容器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;player_con&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;playing:isPlay&#125;&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/gZHko2WlpJNcGPv.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;play_bar&quot;</span> /&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 黑胶碟片 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/hQPuH4gNRx7XayI.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;disc autoRotate&quot;</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;coverUrl==&#x27;&#x27;?&#x27;https://i.loli.net/2020/03/23/QEL4rdy5KCsn3cz.png&#x27;:coverUrl&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cover autoRotate&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 评论容器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;comment_wrapper&quot;</span> <span class="attr">ref</span>=<span class="string">&#x27;comment_wrapper&#x27;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">&#x27;title&#x27;</span>&gt;</span>热门留言<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;comment_list&#x27;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">dl</span> <span class="attr">v-for</span>=<span class="string">&quot;item in hotComments&quot;</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dt</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;item.user.avatarUrl&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">dt</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dd</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123;item.user.nickname&#125;&#125;<span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dd</span> <span class="attr">class</span>=<span class="string">&quot;detail&quot;</span>&gt;</span></span><br><span class="line">                &#123;&#123;item.content&#125;&#125;</span><br><span class="line">              <span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;right_line&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;audio_con&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">audio</span> <span class="attr">ref</span>=<span class="string">&#x27;audio&#x27;</span> @<span class="attr">play</span>=<span class="string">&quot;play&quot;</span> @<span class="attr">pause</span>=<span class="string">&quot;pause&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;musicUrl&quot;</span> <span class="attr">controls</span> <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">class</span>=<span class="string">&quot;myaudio&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;video_con&quot;</span> <span class="attr">v-show</span>=<span class="string">&quot;showVideo&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">video</span> <span class="attr">ref</span>=<span class="string">&#x27;video&#x27;</span> <span class="attr">:src</span>=<span class="string">&quot;mvUrl&quot;</span> <span class="attr">controls</span>=<span class="string">&quot;controls&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mask&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;closeMv&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 官网提供的 axios 在线地址 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/axios/dist/axios.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 设置axios的基地址</span></span></span><br><span class="line"><span class="javascript">    axios.defaults.baseURL = <span class="string">&#x27;https://autumnfish.cn&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// axios.defaults.baseURL = &#x27;http://localhost:3000&#x27;;</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="comment">// 实例化vue</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">      el: <span class="string">&quot;#player&quot;</span>,</span></span><br><span class="line">      data: &#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索关键字</span></span></span><br><span class="line"><span class="javascript">        query: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲列表</span></span></span><br><span class="line">        musicList: [],</span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲url</span></span></span><br><span class="line"><span class="javascript">        musicUrl: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 是否正在播放</span></span></span><br><span class="line"><span class="javascript">        isPlay: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲热门评论</span></span></span><br><span class="line">        hotComments: [],</span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲封面地址</span></span></span><br><span class="line"><span class="javascript">        coverUrl: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 显示视频播放</span></span></span><br><span class="line"><span class="javascript">        showVideo: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// mv地址</span></span></span><br><span class="line"><span class="javascript">        mvUrl: <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">      &#125;,</span><br><span class="line"><span class="javascript">      <span class="comment">// 方法</span></span></span><br><span class="line">      methods: &#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">searchMusic</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span> (<span class="built_in">this</span>.query == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line">          &#125;</span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/search?keywords=&#x27;</span> + <span class="built_in">this</span>.query).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存内容</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.musicList = response.data.result.songs;</span></span><br><span class="line"></span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line"><span class="javascript">          <span class="comment">// 清空搜索</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.query = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 播放歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">playMusic</span>(<span class="params">musicId</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲url</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/song/url?id=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存歌曲url地址</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.musicUrl = response.data.data[<span class="number">0</span>].url</span></span><br><span class="line">          &#125;)</span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲热门评论</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/comment/hot?type=0&amp;id=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存热门评论</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.hotComments = response.data.hotComments</span></span><br><span class="line"></span><br><span class="line">          &#125;)</span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲封面</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/song/detail?ids=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 设置封面</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.coverUrl = response.data.songs[<span class="number">0</span>].al.picUrl</span></span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// audio的play事件</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">play</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.isPlay = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">          <span class="comment">// 清空mv的信息</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.mvUrl = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// audio的pause事件</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">pause</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.isPlay = <span class="literal">false</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 播放mv</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">playMv</span>(<span class="params">vid</span>)</span> &#123;</span></span><br><span class="line">          if (vid) &#123;</span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.showVideo = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取mv信息</span></span></span><br><span class="line"><span class="javascript">            axios.get(<span class="string">&#x27;/mv/url?id=&#x27;</span> + vid).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">              <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">              <span class="comment">// 暂停歌曲播放</span></span></span><br><span class="line"><span class="javascript">              <span class="built_in">this</span>.$refs.audio.pause()</span></span><br><span class="line"><span class="javascript">              <span class="comment">// 获取mv地址</span></span></span><br><span class="line"><span class="javascript">              <span class="built_in">this</span>.mvUrl = response.data.data.url</span></span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 关闭mv界面</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">closeMv</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.showVideo = <span class="literal">false</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.$refs.video.pause()</span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索历史记录中的歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">historySearch</span>(<span class="params">history</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.query = history</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.searchMusic()</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.showHistory = <span class="literal">false</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式</title>
+    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
+<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
+<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
+<ul>
+<li>C：所有节点访问一份最新的数据副本</li>
+<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
+<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
+<ul>
+<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
+<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
+<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
+</ul>
+<p><strong>一致性解决方案：</strong></p>
+<ul>
+<li>分布式事务：两段提交</li>
+<li>分布式锁</li>
+<li>MQ消息持久化 重试 幂等</li>
+<li>Paxos算法</li>
+</ul>
+<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
+<p><strong>高可用的解决方案：</strong></p>
+<ul>
+<li>负载均衡</li>
+<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
+<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
+<li>流量控制</li>
+<li>异地多活</li>
+</ul>
+<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
+<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
+<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
+<li><p>系统拆分</p>
+<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
+</li>
+<li><p>缓存</p>
+<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
+</li>
+<li><p>MQ</p>
+<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
+</li>
+<li><p>分库分表</p>
+<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
+</li>
+<li><p>读写分离</p>
+<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
+</li>
+<li><p>ES</p>
+<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
+</li>
+</ul>
+<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
+<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
+<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
+<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
+<li><p>计数器</p>
+<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
+<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
+</li>
+<li><p>漏桶</p>
+<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
+<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
+<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
+<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
+</li>
+<li><p>令牌桶</p>
+<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
+<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
+<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
+<p><strong>算法实现：</strong></p>
+<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
+</li>
+</ul>
+<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
+<li><p>Redis请求窗口</p>
+<blockquote>
+<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
+</blockquote>
+<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
+</li>
+<li><p>Nginx限流</p>
+<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
+<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
+<ul>
+<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
+<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
+<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
+<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
+<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
+<blockquote>
+<ol>
+<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
+<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
+<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
+</ol>
+</blockquote>
+<p>服务端使用cookie可以使用以下方法：</p>
+<ul>
+<li><p>设置cookie返回给客户顿</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>读取所有cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
+<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
+<p><strong>session如何进行身份验证</strong></p>
+<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
+<p>需要注意：</p>
+<ul>
+<li>依赖session的业务需要确保客户端开启了cookie</li>
+<li>session的过期时间。</li>
+</ul>
+<p><strong>没有cookie的话，session还能用吗</strong></p>
+<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
+<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
+<p>JWT三部分构成：</p>
+<ul>
+<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
+<li>Payload(负载)：存放实际需要传递的数据。</li>
+<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
+</ul>
+<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
+<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
+<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
+<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
+<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
+<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
+<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
+<blockquote>
+<p> <strong>sso和oauth2.0的区别。</strong></p>
+<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>系统科学概述</title>
     <url>/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<p><strong>系统科学：</strong></p>
@@ -2939,172 +3107,6 @@
       </categories>
       <tags>
         <tag>复杂系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式</title>
-    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
-<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
-<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
-<ul>
-<li>C：所有节点访问一份最新的数据副本</li>
-<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
-<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
-</ul>
-<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
-<ul>
-<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
-<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
-<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
-</ul>
-<p><strong>一致性解决方案：</strong></p>
-<ul>
-<li>分布式事务：两段提交</li>
-<li>分布式锁</li>
-<li>MQ消息持久化 重试 幂等</li>
-<li>Paxos算法</li>
-</ul>
-<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
-<p><strong>高可用的解决方案：</strong></p>
-<ul>
-<li>负载均衡</li>
-<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
-<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
-<li>流量控制</li>
-<li>异地多活</li>
-</ul>
-<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
-<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
-<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
-<li><p>系统拆分</p>
-<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
-</li>
-<li><p>缓存</p>
-<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
-</li>
-<li><p>MQ</p>
-<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
-</li>
-<li><p>分库分表</p>
-<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
-</li>
-<li><p>读写分离</p>
-<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
-</li>
-<li><p>ES</p>
-<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
-</li>
-</ul>
-<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
-<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
-<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
-<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
-<li><p>计数器</p>
-<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
-<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
-</li>
-<li><p>漏桶</p>
-<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
-<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
-<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
-<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
-</li>
-<li><p>令牌桶</p>
-<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
-<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
-<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
-<p><strong>算法实现：</strong></p>
-<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
-</li>
-</ul>
-<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
-<li><p>Redis请求窗口</p>
-<blockquote>
-<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
-</blockquote>
-<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
-</li>
-<li><p>Nginx限流</p>
-<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
-<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
-<ul>
-<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
-<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
-</ul>
-</li>
-</ul>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
-<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
-<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
-<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
-<blockquote>
-<ol>
-<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
-<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
-<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
-</ol>
-</blockquote>
-<p>服务端使用cookie可以使用以下方法：</p>
-<ul>
-<li><p>设置cookie返回给客户顿</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>读取所有cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
-<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
-<p><strong>session如何进行身份验证</strong></p>
-<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
-<p>需要注意：</p>
-<ul>
-<li>依赖session的业务需要确保客户端开启了cookie</li>
-<li>session的过期时间。</li>
-</ul>
-<p><strong>没有cookie的话，session还能用吗</strong></p>
-<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
-<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
-<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
-<p>JWT三部分构成：</p>
-<ul>
-<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
-<li>Payload(负载)：存放实际需要传递的数据。</li>
-<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
-</ul>
-<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
-<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
-<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
-<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
-<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
-<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
-<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
-<blockquote>
-<p> <strong>sso和oauth2.0的区别。</strong></p>
-<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用Vue实现Player</title>
-    <url>/2020/03/23/%E7%94%A8Vue%E5%AE%9E%E7%8E%B0Player/</url>
-    <content><![CDATA[<p>项目中用到Vue，虽然没写前端，但是有时候需要测试和部署项目，懂得vue的网络请求就很重要。之前学过一点h5,js,css这些。这里主要是想学习一下vue+axios网络请求，跟着B站的大佬做了一个<a href="https://victor-huihui.gitee.io/2020/03/23/Player/">音乐播放器</a>，图片资源上传sm.ms图床。代码在元素审查都能看到，这里贴一下完整的代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>朱会会的云播放器<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 样式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--  &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/index.css&quot;&gt;--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">body</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">ul</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">dl</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-tag">dd</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .wrap &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/gz9abCBAcphv6jF.jpg&quot;</span>) no-repeat;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-size</span>: <span class="number">100%</span> <span class="number">100%</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .play_wrap &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">544px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: -<span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">272px</span>;</span></span><br><span class="line"><span class="css">      <span class="comment">/* background-color: #f9f9f9; */</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .search_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#1eacda</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-top-left-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-top-right-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">      <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">11</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.search_bar</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: <span class="number">23px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.search_bar</span> <span class="selector-tag">input</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">296px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">34px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/9FeKnVlohsY3krO.png&quot;</span>) <span class="number">265px</span> center no-repeat</span></span><br><span class="line">      rgba(255, 255, 255, 0.45);</span><br><span class="line"><span class="css">      <span class="attribute">text-indent</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">outline</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .center_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.5</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_wrapper &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">1</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_stretch &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">600px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .song_list &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow-y</span>: auto;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow-x</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .song_list::-webkit-scrollbar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">display</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#333</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="css">      <span class="attribute">flex-wrap</span>: wrap;</span></span><br><span class="line"><span class="css">      <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">580px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-left</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span><span class="selector-pseudo">:nth-child</span>(odd) &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">240</span>, <span class="number">240</span>, <span class="number">240</span>, <span class="number">0.3</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/chJ89uNpofneFrS.png&quot;</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">background-size</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">b</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-weight</span>: normal;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">122px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">text-overflow</span>: ellipsis;</span></span><br><span class="line"><span class="css">      <span class="attribute">white-space</span>: nowrap;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_stretch</span> <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">b</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_stretch</span> <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">em</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">150px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">span</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">17px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-right</span>: <span class="number">50px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">span</span> <span class="selector-tag">i</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/HFyBnJ5loLhI7qK.png&quot;</span>) left -<span class="number">48px</span> no-repeat;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">em</span>,</span></span><br><span class="line"><span class="css">    <span class="selector-class">.song_list</span> <span class="selector-tag">li</span> <span class="selector-tag">i</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-style</span>: normal;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .player_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .player_con2 &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.player_con2</span> <span class="selector-tag">video</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">30px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">355px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">265px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .disc &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">73px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">60px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">9</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .cover &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">125px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">112px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">150px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">150px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">75px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">8</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">180px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">435px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">600px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">25px</span> <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .title &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .comment_list &#123;</span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: auto;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">410px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .comment_wrapper .comment_list::-webkit-scrollbar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">display</span>: none;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dl</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-top</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-left</span>: <span class="number">55px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: relative;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dt</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">10px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dt</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">20px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.comment_wrapper</span> <span class="selector-tag">dd</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .comment_wrapper .name &#123;</span><br><span class="line"><span class="css">      <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#333</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding-top</span>: <span class="number">5px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .comment_wrapper .detail &#123;</span><br><span class="line"><span class="css">      <span class="attribute">color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">line-height</span>: <span class="number">18px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .audio_con &#123;</span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#f1f3f4</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-bottom-left-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-bottom-right-radius</span>: <span class="number">4px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .myaudio &#123;</span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">outline</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="number">#f1f3f4</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 旋转的动画 */</span></span></span><br><span class="line"><span class="css">    <span class="keyword">@keyframes</span> Rotate &#123;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">from</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">transform</span>: <span class="built_in">rotateZ</span>(<span class="number">0</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="css">      <span class="selector-tag">to</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="attribute">transform</span>: <span class="built_in">rotateZ</span>(<span class="number">360deg</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 旋转的类名 */</span></span></span><br><span class="line">    .autoRotate &#123;</span><br><span class="line"><span class="css">      <span class="attribute">animation-name</span>: Rotate;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-iteration-count</span>: infinite;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-play-state</span>: paused;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-timing-function</span>: linear;</span></span><br><span class="line"><span class="css">      <span class="attribute">animation-duration</span>: <span class="number">5s</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 是否正在播放 */</span></span></span><br><span class="line">    .player_con.playing .disc,</span><br><span class="line">    .player_con.playing .cover &#123;</span><br><span class="line"><span class="css">      <span class="attribute">animation-play-state</span>: running;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .play_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: -<span class="number">10px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">10</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">25deg</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">transform-origin</span>: <span class="number">12px</span> <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transition</span>: <span class="number">1s</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 播放杆 转回去 */</span></span></span><br><span class="line">    .player_con.playing .play_bar &#123;</span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="comment">/* 搜索历史列表 */</span></span></span><br><span class="line">    .search_history &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">296px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">list-style</span>: none;</span></span><br><span class="line"><span class="css">      <span class="attribute">right</span>: <span class="number">23px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">box-sizing</span>: border-box;</span></span><br><span class="line"><span class="css">      <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">20px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">border-radius</span>: <span class="number">17px</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.search_history</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">line-height</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .switch_btn &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">right</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">cursor</span>: pointer;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .right_line &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="css">    <span class="selector-class">.video_con</span> <span class="selector-tag">video</span> &#123;</span></span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">546px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">273px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">990</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">    .video_con .mask &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">980</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.8</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line">    .video_con .shutoff &#123;</span><br><span class="line"><span class="css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="css">      <span class="attribute">width</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">height</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&quot;https://i.loli.net/2020/03/23/ZWSChyBwjA5uRfL.png&quot;</span>) no-repeat;</span></span><br><span class="line"><span class="css">      <span class="attribute">left</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-left</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">margin-top</span>: -<span class="number">273px</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">top</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="css">      <span class="attribute">z-index</span>: <span class="number">995</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;play_wrap&quot;</span> <span class="attr">id</span>=<span class="string">&quot;player&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;search_bar&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://sm.ms/image/FO95hAIXyZqoHct&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 搜索歌曲 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;输入要搜索的Music&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span> <span class="attr">v-model</span>=<span class="string">&#x27;query&#x27;</span> @<span class="attr">keyup.enter</span>=<span class="string">&quot;searchMusic();&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;center_con&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 搜索歌曲列表 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;song_wrapper&#x27;</span> <span class="attr">ref</span>=<span class="string">&#x27;song_wrapper&#x27;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;song_list&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in musicList&quot;</span>&gt;</span></span><br><span class="line">              <span class="comment">&lt;!-- 点击放歌 --&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> @<span class="attr">click</span>=<span class="string">&#x27;playMusic(item.id)&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">i</span> @<span class="attr">click</span>=<span class="string">&quot;playMv(item.mvid)&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;item.mvid!=0&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;switch_btn&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 歌曲信息容器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;player_con&quot;</span> <span class="attr">:class</span>=<span class="string">&quot;&#123;playing:isPlay&#125;&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/gZHko2WlpJNcGPv.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;play_bar&quot;</span> /&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 黑胶碟片 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/hQPuH4gNRx7XayI.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;disc autoRotate&quot;</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;coverUrl==&#x27;&#x27;?&#x27;https://i.loli.net/2020/03/23/QEL4rdy5KCsn3cz.png&#x27;:coverUrl&quot;</span> <span class="attr">class</span>=<span class="string">&quot;cover autoRotate&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 评论容器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;comment_wrapper&quot;</span> <span class="attr">ref</span>=<span class="string">&#x27;comment_wrapper&#x27;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">&#x27;title&#x27;</span>&gt;</span>热门留言<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;comment_list&#x27;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">dl</span> <span class="attr">v-for</span>=<span class="string">&quot;item in hotComments&quot;</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dt</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;item.user.avatarUrl&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">dt</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dd</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123;item.user.nickname&#125;&#125;<span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">dd</span> <span class="attr">class</span>=<span class="string">&quot;detail&quot;</span>&gt;</span></span><br><span class="line">                &#123;&#123;item.content&#125;&#125;</span><br><span class="line">              <span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.loli.net/2020/03/23/dor23bhZtIvK17X.png&quot;</span> <span class="attr">class</span>=<span class="string">&quot;right_line&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;audio_con&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">audio</span> <span class="attr">ref</span>=<span class="string">&#x27;audio&#x27;</span> @<span class="attr">play</span>=<span class="string">&quot;play&quot;</span> @<span class="attr">pause</span>=<span class="string">&quot;pause&quot;</span> <span class="attr">:src</span>=<span class="string">&quot;musicUrl&quot;</span> <span class="attr">controls</span> <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">class</span>=<span class="string">&quot;myaudio&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;video_con&quot;</span> <span class="attr">v-show</span>=<span class="string">&quot;showVideo&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">video</span> <span class="attr">ref</span>=<span class="string">&#x27;video&#x27;</span> <span class="attr">:src</span>=<span class="string">&quot;mvUrl&quot;</span> <span class="attr">controls</span>=<span class="string">&quot;controls&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mask&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;closeMv&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 官网提供的 axios 在线地址 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/axios/dist/axios.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 设置axios的基地址</span></span></span><br><span class="line"><span class="javascript">    axios.defaults.baseURL = <span class="string">&#x27;https://autumnfish.cn&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// axios.defaults.baseURL = &#x27;http://localhost:3000&#x27;;</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="comment">// 实例化vue</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">      el: <span class="string">&quot;#player&quot;</span>,</span></span><br><span class="line">      data: &#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索关键字</span></span></span><br><span class="line"><span class="javascript">        query: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲列表</span></span></span><br><span class="line">        musicList: [],</span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲url</span></span></span><br><span class="line"><span class="javascript">        musicUrl: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 是否正在播放</span></span></span><br><span class="line"><span class="javascript">        isPlay: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲热门评论</span></span></span><br><span class="line">        hotComments: [],</span><br><span class="line"><span class="javascript">        <span class="comment">// 歌曲封面地址</span></span></span><br><span class="line"><span class="javascript">        coverUrl: <span class="string">&#x27;&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 显示视频播放</span></span></span><br><span class="line"><span class="javascript">        showVideo: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// mv地址</span></span></span><br><span class="line"><span class="javascript">        mvUrl: <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">      &#125;,</span><br><span class="line"><span class="javascript">      <span class="comment">// 方法</span></span></span><br><span class="line">      methods: &#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">searchMusic</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span> (<span class="built_in">this</span>.query == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line">          &#125;</span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/search?keywords=&#x27;</span> + <span class="built_in">this</span>.query).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存内容</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.musicList = response.data.result.songs;</span></span><br><span class="line"></span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line"><span class="javascript">          <span class="comment">// 清空搜索</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.query = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 播放歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">playMusic</span>(<span class="params">musicId</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲url</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/song/url?id=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存歌曲url地址</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.musicUrl = response.data.data[<span class="number">0</span>].url</span></span><br><span class="line">          &#125;)</span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲热门评论</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/comment/hot?type=0&amp;id=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 保存热门评论</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.hotComments = response.data.hotComments</span></span><br><span class="line"></span><br><span class="line">          &#125;)</span><br><span class="line"><span class="javascript">          <span class="comment">// 获取歌曲封面</span></span></span><br><span class="line"><span class="javascript">          axios.get(<span class="string">&#x27;/song/detail?ids=&#x27;</span> + musicId).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 设置封面</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.coverUrl = response.data.songs[<span class="number">0</span>].al.picUrl</span></span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// audio的play事件</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">play</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.isPlay = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">          <span class="comment">// 清空mv的信息</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.mvUrl = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// audio的pause事件</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">pause</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.isPlay = <span class="literal">false</span></span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 播放mv</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">playMv</span>(<span class="params">vid</span>)</span> &#123;</span></span><br><span class="line">          if (vid) &#123;</span><br><span class="line"><span class="javascript">            <span class="built_in">this</span>.showVideo = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取mv信息</span></span></span><br><span class="line"><span class="javascript">            axios.get(<span class="string">&#x27;/mv/url?id=&#x27;</span> + vid).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">              <span class="comment">// console.log(response)</span></span></span><br><span class="line"><span class="javascript">              <span class="comment">// 暂停歌曲播放</span></span></span><br><span class="line"><span class="javascript">              <span class="built_in">this</span>.$refs.audio.pause()</span></span><br><span class="line"><span class="javascript">              <span class="comment">// 获取mv地址</span></span></span><br><span class="line"><span class="javascript">              <span class="built_in">this</span>.mvUrl = response.data.data.url</span></span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 关闭mv界面</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">closeMv</span>(<span class="params"></span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.showVideo = <span class="literal">false</span></span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.$refs.video.pause()</span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="comment">// 搜索历史记录中的歌曲</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="title">historySearch</span>(<span class="params">history</span>)</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.query = history</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.searchMusic()</span></span><br><span class="line"><span class="javascript">          <span class="built_in">this</span>.showHistory = <span class="literal">false</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -3399,6 +3401,62 @@
 <li><strong>假设数据不可变</strong>。无论 C-Store、Dremel 还是 ORC，它们的编码和压缩方式都完全不考虑数据更新。如果一定要有更新，暂时写到别处、读时合并即可。</li>
 <li><strong>数据分片</strong>。处理大规模数据，既要纵向切分也要横向切分，不必多说。</li>
 </ol>
+<h2 id="MYSQL复制"><a href="#MYSQL复制" class="headerlink" title="MYSQL复制"></a>MYSQL复制</h2><p>摘自<a href="https://www.jianshu.com/p/63c1a1babfd1">简书</a></p>
+<blockquote>
+<p>保证主服务器(master)和从服务器(Slave)的数据是一致性的，向master插入数据后，slave会自动从master把修改的数据同步过来(有一定延迟)，通过这种方式保证数据一致性，就是mysql复制。</p>
+</blockquote>
+<h3 id="复制能解决什么问题？"><a href="#复制能解决什么问题？" class="headerlink" title="复制能解决什么问题？"></a>复制能解决什么问题？</h3><ul>
+<li><p>高可用和故障切换</p>
+<p>master挂掉后可以指定一台slave充当master继续保证服务运行。</p>
+</li>
+<li><p>负载均衡</p>
+<p>开发中可能会遇到锁表，导致暂时不能使用读的操作，使用主从复制，主库负责写，从库负责读，这样即使主库锁表，读从库也能保证业务的正常运行。</p>
+<p>调查发现一般读写的比例是10:1，所以需要多个slave。保证了系统的高可用。</p>
+</li>
+<li><p>数据备份</p>
+</li>
+<li><p>业务模块化</p>
+<p>可以一个业务模块读取slave，再针对不同的业务场景进行数据库的索引创建和根据业务选择mysql引擎，不同的slave可以根据不同需求设置不同的索引和存储引擎。</p>
+</li>
+</ul>
+<p><strong>主从节点需要注意：</strong></p>
+<p>(1)主从服务器操作系统版本和位数一致；<br> (2) Master和Slave数据库的版本要一致；<br> (3) Master和Slave数据库中的数据要一致；<br> (4) Master开启二进制日志，Master和Slave的server_id在局域网内必须唯一；</p>
+<h3 id="复制的流程"><a href="#复制的流程" class="headerlink" title="复制的流程"></a>复制的流程</h3><ul>
+<li>master将数据改变写到二进制日志(binary log)中，也就是配置文件login-bin 指定的文件。</li>
+<li>slave通过线程IO读取日志文件并写入到中继日志（relay log）</li>
+<li>slave重做中继日志中的事件，把中继日志的事件信息一条条的本地执行，完成数据在本地的存储，从而实现将改变反映到他自己的数据（数据重放）。</li>
+</ul>
+<p><strong>复制涉及到三个线程</strong>：</p>
+<ul>
+<li><p>主节点binary log dump线程（IO线程）</p>
+<p>slave连接master时，master创建log dump线程，发送bin-log内容。在读取bin-log中的操作时，线程会给bin-log加锁。</p>
+</li>
+<li><p>从节点IO线程‘</p>
+<p>当从节点执行<code>start slave</code>命令之后，从节点创建一个IO线程来连接主节点，请求从主库中更新bin-log。IO线程收到主节点的binlog sump线程发来的更新之后，保存在本地的relay-log中。</p>
+</li>
+<li><p>从节点SQL线程</p>
+<p>读取relay log中的内容，解析成具体的操作并执行，最终保证主从数据库的一致性。</p>
+</li>
+</ul>
+<h3 id="复制类型"><a href="#复制类型" class="headerlink" title="复制类型"></a>复制类型</h3><ul>
+<li><p>基于语句的复制 statement-base Replication(SBR)</p>
+<p>在master上执行的SQL语句，在slave上会执行相同的语句。Mysql默认采用基于语句的复制，效率比较高。一旦发现没法精准复制时，会自动选基于行的复制。</p>
+<blockquote>
+<p>优点是只需要记录修改数据的sql语句到binlog，减少binlog日志量，节约IO。</p>
+<p>缺点是语句很复杂的时候，slave执行消耗过多资源，而基于行复制的话，只会记录变更的行记录。</p>
+</blockquote>
+</li>
+<li><p>基于行的复制</p>
+<p>把改变的内容复制到slave，而不是把命令在slave执行一遍。</p>
+<blockquote>
+<p>优点：只会记录变更的行记录，哪怕一个语句很复杂，但是它最后只影响几条记录，那么行的复制，只会把影响到几条记录记录到binlog，降低slave重放日志时的资源消耗。</p>
+<p>缺点：日志庞大，不利于数据库的还原。</p>
+</blockquote>
+</li>
+<li><p>混合类型的复制</p>
+<p>默认采用基于语句的复制，当发现基于语句的复制无法精确的复制时，采用基于行的复制。</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>复习入口</category>
