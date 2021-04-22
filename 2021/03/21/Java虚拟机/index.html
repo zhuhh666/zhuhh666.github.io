@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">31 min</span>
+            <span class="post-count">30 min</span>
         </span>
     </span>
 </div>
@@ -281,7 +281,8 @@
 <p><strong>强引用：</strong></p>
 <p>在java中普遍存在，类似于<code>Object o = new Object;</code>和其他引用的区别是：强引用禁止引用目标被GC收集，其他引用不禁止。</p>
 <p><strong>软引用：</strong></p>
-<p>对象可以从根节点通过一个或多个软引用对象触及，GC在要发生内存溢出之前将这些对象列入回收范围进行回收，如果该软引用和引用队列关联，他会把该软引用对象加入队列。<strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p><strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p>有用但不是必须，使用<code>java.lang.red.SoftReferencr</code>类表示，这个特性很适合做缓存，比如：网页缓存，图片缓存。</p>
 <p><strong>弱引用：</strong></p>
 <p>垃圾收集器在GC的时候会回收所有的弱引用，如果该弱引用和引用队列相关联，他会把该弱引用加入到队列。</p>
 <p><strong>虚引用：</strong></p>

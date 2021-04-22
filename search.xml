@@ -344,6 +344,131 @@
       </tags>
   </entry>
   <entry>
+    <title>MPI分布式计算</title>
+    <url>/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
+<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
+<li>人类基因解码、更精准的医疗成像等等</li>
+<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
+</ul>
+</li>
+<li>需要更加强大的计算能力</li>
+<li>并行计算是云计算的重要支撑技术之一</li>
+</ul>
+<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
+<li>单处理器的性能提升已经接近极限。</li>
+<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
+<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
+</ul>
+<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
+<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
+<li>自动将串行改为并行鲜有突破，需要手动编写</li>
+<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
+</ul>
+<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
+<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
+<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
+</ul>
+<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
+<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
+<li>协调包括：通信，负载平衡，同步</li>
+<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
+<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
+<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
+</ul>
+<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
+<ul>
+<li><p>单指令单数据流(SISD)系统</p>
+<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
+</li>
+<li><p>单指令多数据流(SIMD)系统</p>
+<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
+</li>
+<li><p>多指令多数据流(MIMD)系统</p>
+<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
+</li>
+</ul>
+<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
+<li><p>加速比</p>
+<ul>
+<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
+<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
+</ul>
+</li>
+<li><p>效率</p>
+<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
+</li>
+</ul>
+<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
+<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
+<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
+<li>MPI本身不是一个具体实现，是一种标准描述</li>
+</ul>
+<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
+<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
+</li>
+<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
+</li>
+<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
+</li>
+<li><p>MPI的主要特点有：</p>
+<ul>
+<li><p>程序编写灵活，功能强大</p>
+<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
+</li>
+<li><p>支持多种语言</p>
+</li>
+<li><p>对计算的支持强大，对文件的支持较弱。</p>
+</li>
+<li><p>MPI需要自己实现求解问题的并行化</p>
+</li>
+<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
+</li>
+<li><p>网络是MPI的瓶颈</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
+<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
+<li>OUT 输出：MPI返回给调用部分的结果参数</li>
+<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
+</ul>
+<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
+<ul>
+<li>独立于具体语言的说明</li>
+<li>C形式的原型声明</li>
+<li>FORTRAN形式的原型声明</li>
+</ul>
+<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
+<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
+<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
+<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
+<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
+
+<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
+<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MPI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java集合</title>
     <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
@@ -495,131 +620,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MPI分布式计算</title>
-    <url>/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
-<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
-<li>人类基因解码、更精准的医疗成像等等</li>
-<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
-</ul>
-</li>
-<li>需要更加强大的计算能力</li>
-<li>并行计算是云计算的重要支撑技术之一</li>
-</ul>
-<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
-<li>单处理器的性能提升已经接近极限。</li>
-<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
-<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
-</ul>
-<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
-<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
-<li>自动将串行改为并行鲜有突破，需要手动编写</li>
-<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
-</ul>
-<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
-<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
-<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
-</ul>
-<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
-<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
-<li>协调包括：通信，负载平衡，同步</li>
-<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
-<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
-<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
-</ul>
-<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
-<ul>
-<li><p>单指令单数据流(SISD)系统</p>
-<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
-</li>
-<li><p>单指令多数据流(SIMD)系统</p>
-<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
-</li>
-<li><p>多指令多数据流(MIMD)系统</p>
-<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
-</li>
-</ul>
-<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
-<li><p>加速比</p>
-<ul>
-<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
-<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
-</ul>
-</li>
-<li><p>效率</p>
-<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
-</li>
-</ul>
-<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
-<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
-<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
-<li>MPI本身不是一个具体实现，是一种标准描述</li>
-</ul>
-<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
-<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
-</li>
-<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
-</li>
-<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
-</li>
-<li><p>MPI的主要特点有：</p>
-<ul>
-<li><p>程序编写灵活，功能强大</p>
-<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
-</li>
-<li><p>支持多种语言</p>
-</li>
-<li><p>对计算的支持强大，对文件的支持较弱。</p>
-</li>
-<li><p>MPI需要自己实现求解问题的并行化</p>
-</li>
-<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
-</li>
-<li><p>网络是MPI的瓶颈</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
-<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
-<li>OUT 输出：MPI返回给调用部分的结果参数</li>
-<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
-</ul>
-<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
-<ul>
-<li>独立于具体语言的说明</li>
-<li>C形式的原型声明</li>
-<li>FORTRAN形式的原型声明</li>
-</ul>
-<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
-<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
-<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
-<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
-<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
-
-<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
-<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MPI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MongoDB</title>
     <url>/2020/04/10/MongoDB/</url>
     <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
@@ -747,67 +747,114 @@
       </tags>
   </entry>
   <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
+    <title>OAuth2.0</title>
+    <url>/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
+<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
+<li>Third-party application：第三方应用程序，又称为客户端。</li>
+<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
+<li>Resource Owner：资源所有者，也称为用户。</li>
+<li>User Agent：用户代理，浏览器。</li>
+<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
+<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
+</ul>
+<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
+<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
+<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
+<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
+<li>用户同意给客户端授权。</li>
+<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
+<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
+<li>客户端使用令牌，想资源服务器请求资源。</li>
+<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
+</ol>
+<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
+<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
+<li><p><strong>授权码模式</strong></p>
+<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
+<ol>
+<li>用户访问客户端，客户端将用户导向认证服务器。</li>
+<li>用户选择是否给客户端授权。</li>
+<li>用户同意授权，认证服务器将用户导向事先指定的“重定向URI”，同时附上一个授权码。</li>
+<li>客户端收到授权码，附上早先的重定向URL“，向认证服务器申请令牌。</li>
+<li>认证服务器核对授权码和冲形象URL，确认无误后，向客户端发送令牌和更新令牌。</li>
+</ol>
+<p><strong>1步骤需要以下参数：</strong></p>
 <ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
+<li>response_type：授权类型，固定值为“code”</li>
+<li>client_id：表示客户端ID，必填。</li>
+<li>redirect_url：重定向URL</li>
+<li>scope：申请的权限范围</li>
+<li>state：当前客户端状态，认证服务器会原封不动的返回这个值</li>
 </ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+<p>下面是一个例子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;authorize?response_type&#x3D;code&amp;client_id&#x3D;s6BhdRkqt3&amp;state&#x3D;xyz</span><br><span class="line">        &amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
 
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<p><strong>3步骤中，服务器回应客户端的URL，包含以下参数：</strong></p>
 <ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
+<li>code：授权码，一般是十分钟。该授权码和客户端ID与重定向URL是一一对应关系。</li>
+<li>state：如果请求包含这个参数，认证服务器会原封不动的返回这个参数。</li>
 </ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Location: https:&#x2F;&#x2F;client.example.com&#x2F;cb?code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state&#x3D;xyz</span><br></pre></td></tr></table></figure>
+
+<p><strong>4步骤中，包含以下参数：</strong></p>
+<ul>
+<li>grant_type：授权模式，固定值为“authorization_code”。</li>
+<li>code：上一步获取的授权码</li>
+<li>redirect_uri：重定向URI</li>
+<li>client_id：客户端ID，必选。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;token HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type&#x3D;authorization_code&amp;code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br></pre></td></tr></table></figure>
+
+<p><strong>5步骤中，认证服务器返回HTTP回复，包含以下参数：</strong></p>
+<ul>
+<li>access_token：访问令牌</li>
+<li>token_type：表示令牌类型，大小写不敏感。可以是Bearer或者mac</li>
+<li>expires_in：过期时间，S单位。</li>
+<li>refresh_token：更新令牌，用来获取下一次的访问令牌。</li>
+<li>scope：权限范围。</li>
+</ul>
+<p>下面是一个列子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  HTTP&#x2F;1.1 200 OK</span><br><span class="line">     Content-Type: application&#x2F;json;charset&#x3D;UTF-8</span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">       &quot;token_type&quot;:&quot;example&quot;,</span><br><span class="line">       &quot;expires_in&quot;:3600,</span><br><span class="line">       &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">       &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">     &#125;</span><br><span class="line">从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application&#x2F;json）。此外，HTTP头信息中明确指定不得缓存。</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>简化模式</strong></p>
+<p>不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了授权码步骤。所有步骤在浏览器完成， 令牌对访问者可见，且客户端不需要认证。</p>
+</li>
+<li><p><strong>密码模式</strong></p>
+<p>在密码模式中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向服务提供商获取token。</p>
+</li>
+<li><p><strong>客户端模式</strong></p>
+<p>客户端以自己的名义而不是以用户的名义想服务提供商进行认证。严格的说，客户端模式不属于pauth框架要解决的问题。在这种模式下，用户直接向客户端注册，客户端以自己的名义要求服务提供商提供服务，不存在授权问题。步骤如下：</p>
+<ul>
+<li>客户端向认证服务器进行身份认证，并要求一个token</li>
+<li>认证服务器确认无误，向客户端提供token</li>
+</ul>
+</li>
+</ul>
+<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>用户访问的时候，如果客户端的令牌已经失效，需要使用更新令牌申请一个新的访问令牌。</p>
+<p>客户端发送更新令牌的请求，包含以下参数：</p>
+<ul>
+<li>granttype：授权模式，固定为“refreshtoken”</li>
+<li>refresh_token：早前收到的更新令牌。</li>
+<li>scope：权限范围</li>
+</ul>
+<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1><p>腾讯会议提供的oauth2.0对接的步骤如下：</p>
+<ul>
+<li>用户同意授权，获取auth_code</li>
+<li>通过auth_code换取token</li>
+<li>刷新token</li>
+<li>拉取用户信息(检查token是否有效)</li>
+</ul>
+<p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
+<h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
+<p>关于上下文，在oauth2.0的连接中，会传两个参数，一个是state，另一个是auth_code，auth_code用于换取token，state用于参数校验，我们这里可以利用state做上下文，在state中放学生学号，然后在回调的时候，通过state作为主键查询，从而做到数据绑定。</p>
 ]]></content>
       <categories>
-        <category>后端技术</category>
+        <category>复习入口</category>
       </categories>
       <tags>
-        <tag>OSS</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1364,6 +1411,70 @@
       </tags>
   </entry>
   <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pycharm搭建PyTorch环境</title>
     <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
@@ -1406,6 +1517,19 @@
       <tags>
         <tag>深度学习</tag>
         <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1452,19 +1576,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker容器的备份与迁移</title>
     <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
     <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
@@ -1484,117 +1595,6 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OAuth2.0</title>
-    <url>/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
-<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
-<li>Third-party application：第三方应用程序，又称为客户端。</li>
-<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
-<li>Resource Owner：资源所有者，也称为用户。</li>
-<li>User Agent：用户代理，浏览器。</li>
-<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
-<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
-</ul>
-<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
-<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
-<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
-<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
-<li>用户同意给客户端授权。</li>
-<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
-<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
-<li>客户端使用令牌，想资源服务器请求资源。</li>
-<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
-</ol>
-<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
-<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
-<li><p><strong>授权码模式</strong></p>
-<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
-<ol>
-<li>用户访问客户端，客户端将用户导向认证服务器。</li>
-<li>用户选择是否给客户端授权。</li>
-<li>用户同意授权，认证服务器将用户导向事先指定的“重定向URI”，同时附上一个授权码。</li>
-<li>客户端收到授权码，附上早先的重定向URL“，向认证服务器申请令牌。</li>
-<li>认证服务器核对授权码和冲形象URL，确认无误后，向客户端发送令牌和更新令牌。</li>
-</ol>
-<p><strong>1步骤需要以下参数：</strong></p>
-<ul>
-<li>response_type：授权类型，固定值为“code”</li>
-<li>client_id：表示客户端ID，必填。</li>
-<li>redirect_url：重定向URL</li>
-<li>scope：申请的权限范围</li>
-<li>state：当前客户端状态，认证服务器会原封不动的返回这个值</li>
-</ul>
-<p>下面是一个例子</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;authorize?response_type&#x3D;code&amp;client_id&#x3D;s6BhdRkqt3&amp;state&#x3D;xyz</span><br><span class="line">        &amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
-
-<p><strong>3步骤中，服务器回应客户端的URL，包含以下参数：</strong></p>
-<ul>
-<li>code：授权码，一般是十分钟。该授权码和客户端ID与重定向URL是一一对应关系。</li>
-<li>state：如果请求包含这个参数，认证服务器会原封不动的返回这个参数。</li>
-</ul>
-<p>下面是一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Location: https:&#x2F;&#x2F;client.example.com&#x2F;cb?code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state&#x3D;xyz</span><br></pre></td></tr></table></figure>
-
-<p><strong>4步骤中，包含以下参数：</strong></p>
-<ul>
-<li>grant_type：授权模式，固定值为“authorization_code”。</li>
-<li>code：上一步获取的授权码</li>
-<li>redirect_uri：重定向URI</li>
-<li>client_id：客户端ID，必选。</li>
-</ul>
-<p>下面是一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;token HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type&#x3D;authorization_code&amp;code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br></pre></td></tr></table></figure>
-
-<p><strong>5步骤中，认证服务器返回HTTP回复，包含以下参数：</strong></p>
-<ul>
-<li>access_token：访问令牌</li>
-<li>token_type：表示令牌类型，大小写不敏感。可以是Bearer或者mac</li>
-<li>expires_in：过期时间，S单位。</li>
-<li>refresh_token：更新令牌，用来获取下一次的访问令牌。</li>
-<li>scope：权限范围。</li>
-</ul>
-<p>下面是一个列子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  HTTP&#x2F;1.1 200 OK</span><br><span class="line">     Content-Type: application&#x2F;json;charset&#x3D;UTF-8</span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">       &quot;token_type&quot;:&quot;example&quot;,</span><br><span class="line">       &quot;expires_in&quot;:3600,</span><br><span class="line">       &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">       &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">     &#125;</span><br><span class="line">从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application&#x2F;json）。此外，HTTP头信息中明确指定不得缓存。</span><br></pre></td></tr></table></figure></li>
-<li><p><strong>简化模式</strong></p>
-<p>不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了授权码步骤。所有步骤在浏览器完成， 令牌对访问者可见，且客户端不需要认证。</p>
-</li>
-<li><p><strong>密码模式</strong></p>
-<p>在密码模式中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向服务提供商获取token。</p>
-</li>
-<li><p><strong>客户端模式</strong></p>
-<p>客户端以自己的名义而不是以用户的名义想服务提供商进行认证。严格的说，客户端模式不属于pauth框架要解决的问题。在这种模式下，用户直接向客户端注册，客户端以自己的名义要求服务提供商提供服务，不存在授权问题。步骤如下：</p>
-<ul>
-<li>客户端向认证服务器进行身份认证，并要求一个token</li>
-<li>认证服务器确认无误，向客户端提供token</li>
-</ul>
-</li>
-</ul>
-<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>用户访问的时候，如果客户端的令牌已经失效，需要使用更新令牌申请一个新的访问令牌。</p>
-<p>客户端发送更新令牌的请求，包含以下参数：</p>
-<ul>
-<li>granttype：授权模式，固定为“refreshtoken”</li>
-<li>refresh_token：早前收到的更新令牌。</li>
-<li>scope：权限范围</li>
-</ul>
-<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1><p>腾讯会议提供的oauth2.0对接的步骤如下：</p>
-<ul>
-<li>用户同意授权，获取auth_code</li>
-<li>通过auth_code换取token</li>
-<li>刷新token</li>
-<li>拉取用户信息(检查token是否有效)</li>
-</ul>
-<p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
-<h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
-<p>关于上下文，在oauth2.0的连接中，会传两个参数，一个是state，另一个是auth_code，auth_code用于换取token，state用于参数校验，我们这里可以利用state做上下文，在state中放学生学号，然后在回调的时候，通过state作为主键查询，从而做到数据绑定。</p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1747,6 +1747,119 @@
       </tags>
   </entry>
   <entry>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>中医基础理论-绪论</title>
+    <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA-%E7%BB%AA%E8%AE%BA/</url>
+    <content><![CDATA[<p>什么是中医学？中医学的学科属性？</p>
+<ul>
+<li><strong>中医基础理论的组成部分</strong></li>
+<li><strong>中医理论体系的发展简史</strong></li>
+<li><strong>中医理论体系的主要特点</strong></li>
+</ul>
+<h2 id="1、中医基础理论的组成部分"><a href="#1、中医基础理论的组成部分" class="headerlink" title="1、中医基础理论的组成部分"></a>1、中医基础理论的组成部分</h2><p><strong>中医学：</strong>是发祥于中国古代，<em>建立在中国传统文化基础上</em>，以<em>整体观念</em>为知道思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命、健康、疾病的学科。(易学难精，因为文化二字)。</p>
+<p>西医看微观，中医看整体。西医治病，中医也治病，中西更强调因人而异，量体裁衣。</p>
+<p><strong>中医基础理论：</strong></p>
+<ul>
+<li>中医学的哲学基础</li>
+<li><strong>中医对正常人体的认识</strong></li>
+<li><strong>中医对疾病的认识</strong></li>
+<li>中医养生和诊疗疾病的原则</li>
+</ul>
+<p>《中医学大辞典》</p>
+<p><strong>中医学的学科属性：</strong></p>
+<ul>
+<li>自然科学与社会科学的交叉性</li>
+<li>基础学科与应用学科的双重性</li>
+<li>东方传统文化的综合性</li>
+<li>科学、仁(天地良心)术和技艺的融合性</li>
+</ul>
+<p>道理：</p>
+<ul>
+<li>道：道可道非常道，两层含义。一是本质，二是规律。</li>
+<li>理：具体的东西。</li>
+</ul>
+<p>医道：医学，医技(术)。西医就是医技，因为他们并不追求道。</p>
+<h2 id="2、中医理论体系的形成与发展"><a href="#2、中医理论体系的形成与发展" class="headerlink" title="2、中医理论体系的形成与发展"></a>2、中医理论体系的形成与发展</h2><h3 id="中医理论体系的形成："><a href="#中医理论体系的形成：" class="headerlink" title="中医理论体系的形成："></a>中医理论体系的形成：</h3><ul>
+<li>医药知识的积累</li>
+<li>对人体生命现象和自然现象的观察<ul>
+<li>直接观察法(解剖)</li>
+<li>整体观察法(没等到显微镜的发明)</li>
+</ul>
+</li>
+<li>有利的社会文化背景</li>
+<li>古代哲学思想对医学的渗透</li>
+</ul>
+<h3 id="中医理论体系的确立"><a href="#中医理论体系的确立" class="headerlink" title="中医理论体系的确立"></a>中医理论体系的确立</h3><p>**黄帝内经:**分《灵枢》《素问》两部分，为古代医学家托轩辕黄帝名之作，为医学家、医学理论家联合创作，一般认为形成于战国、秦汉时期。现存最早中医学专著，标志着中医理论体系的建立。</p>
+<p><strong>扁鹊：</strong>战国时期著名医学家，相传中医典籍《难经》(《难经》不难，《易经》不易)为其所著。补内径不足。中医像大哥二哥，西医像扁鹊。</p>
+<p><strong>张仲景：</strong>东汉末著名医学家，“医圣”，撰《伤寒杂病论》。后世整理成《伤寒论》《金匮要略》。这是中国第一部从理论到时间、确立辩证论治法则的医学专著。(别说是最高水平)</p>
+<p><strong>华佗：</strong>吃亏，没书啊</p>
+<p><strong>神农本草经：</strong>又名《神农本草》，撰人不详，“神农”为托名，为中医药理理论依稀的形成奠定了基础</p>
+<blockquote>
+<p><strong>病、证、症</strong></p>
+</blockquote>
+<h3 id="中医学理论体系的发展"><a href="#中医学理论体系的发展" class="headerlink" title="中医学理论体系的发展"></a>中医学理论体系的发展</h3><p><strong>脉经：</strong>魏晋之际的著名医学家、医术编纂家王叔和。撰写了第一部脉学专著<strong>《脉经》</strong></p>
+<p><strong>针灸甲乙经：</strong>晋代皇普谧编撰，是中国现存最早的一步针灸学专著。10卷，南北朝时期改为12卷。</p>
+<p><strong>诸病源候论：</strong>隋朝巢元方所撰，第一部病因病机症候学专著</p>
+<p><strong>魏晋隋唐：</strong>丰富实践时期。</p>
+<p><strong>宋金元：</strong>争鸣突破时期。三因极–病症方论：宋代陈无择撰，中医综合性专著。金元四大家：</p>
+<ul>
+<li><p>刘完素：金代医学家，属于“寒凉派”(王老吉)</p>
+</li>
+<li><p>李东垣：“易水派”，牵扯五行学说</p>
+</li>
+<li><p>张从正：“攻邪派”。中医的邪一般指病因</p>
+</li>
+<li><p>朱震亨：“养阴派”。阴阳学说(六味地黄丸，只适合肾阴虚，肾阳虚的话越吃越糟糕奥)</p>
+<p><strong>门户这件事，还是不好的</strong>。</p>
+</li>
+</ul>
+<p><strong>明清时期：</strong>综合汇通，深化发展时期。</p>
+<ul>
+<li>明：王肯堂《证治准绳》</li>
+<li>清：吴谦《医宗金鉴》、陈梦雷《古今图书集成-医部全录》</li>
+<li><strong>温病论的创立：</strong><ul>
+<li>明：吴又可《瘟疫论》—“戾气说”</li>
+<li>清：叶天士《温热论》–“卫气营血辩证”。吴鞠通《温病条辨》—“三焦辨证”。薛生白《温热条辨》</li>
+</ul>
+</li>
+<li>《医林改错》：清代王清任撰，中医脏象著作(解剖)。活血化瘀</li>
+</ul>
+<p><strong>现代和近代：</strong>一言难尽</p>
+<blockquote>
+<p><strong>望</strong>而知之谓之神</p>
+<p><strong>闻</strong>而止之为之圣</p>
+<p><strong>问</strong>而知之谓之工</p>
+<p><strong>切</strong>而知之谓之巧</p>
+</blockquote>
+<h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中医学哲学基础-五行学说</title>
     <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
     <content><![CDATA[<blockquote>
@@ -1784,27 +1897,6 @@
       <tags>
         <tag>中医</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
   </entry>
   <entry>
     <title>中医学哲学基础-阴阳学说</title>
@@ -1957,98 +2049,6 @@
       </tags>
   </entry>
   <entry>
-    <title>中医基础理论-绪论</title>
-    <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA-%E7%BB%AA%E8%AE%BA/</url>
-    <content><![CDATA[<p>什么是中医学？中医学的学科属性？</p>
-<ul>
-<li><strong>中医基础理论的组成部分</strong></li>
-<li><strong>中医理论体系的发展简史</strong></li>
-<li><strong>中医理论体系的主要特点</strong></li>
-</ul>
-<h2 id="1、中医基础理论的组成部分"><a href="#1、中医基础理论的组成部分" class="headerlink" title="1、中医基础理论的组成部分"></a>1、中医基础理论的组成部分</h2><p><strong>中医学：</strong>是发祥于中国古代，<em>建立在中国传统文化基础上</em>，以<em>整体观念</em>为知道思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命、健康、疾病的学科。(易学难精，因为文化二字)。</p>
-<p>西医看微观，中医看整体。西医治病，中医也治病，中西更强调因人而异，量体裁衣。</p>
-<p><strong>中医基础理论：</strong></p>
-<ul>
-<li>中医学的哲学基础</li>
-<li><strong>中医对正常人体的认识</strong></li>
-<li><strong>中医对疾病的认识</strong></li>
-<li>中医养生和诊疗疾病的原则</li>
-</ul>
-<p>《中医学大辞典》</p>
-<p><strong>中医学的学科属性：</strong></p>
-<ul>
-<li>自然科学与社会科学的交叉性</li>
-<li>基础学科与应用学科的双重性</li>
-<li>东方传统文化的综合性</li>
-<li>科学、仁(天地良心)术和技艺的融合性</li>
-</ul>
-<p>道理：</p>
-<ul>
-<li>道：道可道非常道，两层含义。一是本质，二是规律。</li>
-<li>理：具体的东西。</li>
-</ul>
-<p>医道：医学，医技(术)。西医就是医技，因为他们并不追求道。</p>
-<h2 id="2、中医理论体系的形成与发展"><a href="#2、中医理论体系的形成与发展" class="headerlink" title="2、中医理论体系的形成与发展"></a>2、中医理论体系的形成与发展</h2><h3 id="中医理论体系的形成："><a href="#中医理论体系的形成：" class="headerlink" title="中医理论体系的形成："></a>中医理论体系的形成：</h3><ul>
-<li>医药知识的积累</li>
-<li>对人体生命现象和自然现象的观察<ul>
-<li>直接观察法(解剖)</li>
-<li>整体观察法(没等到显微镜的发明)</li>
-</ul>
-</li>
-<li>有利的社会文化背景</li>
-<li>古代哲学思想对医学的渗透</li>
-</ul>
-<h3 id="中医理论体系的确立"><a href="#中医理论体系的确立" class="headerlink" title="中医理论体系的确立"></a>中医理论体系的确立</h3><p>**黄帝内经:**分《灵枢》《素问》两部分，为古代医学家托轩辕黄帝名之作，为医学家、医学理论家联合创作，一般认为形成于战国、秦汉时期。现存最早中医学专著，标志着中医理论体系的建立。</p>
-<p><strong>扁鹊：</strong>战国时期著名医学家，相传中医典籍《难经》(《难经》不难，《易经》不易)为其所著。补内径不足。中医像大哥二哥，西医像扁鹊。</p>
-<p><strong>张仲景：</strong>东汉末著名医学家，“医圣”，撰《伤寒杂病论》。后世整理成《伤寒论》《金匮要略》。这是中国第一部从理论到时间、确立辩证论治法则的医学专著。(别说是最高水平)</p>
-<p><strong>华佗：</strong>吃亏，没书啊</p>
-<p><strong>神农本草经：</strong>又名《神农本草》，撰人不详，“神农”为托名，为中医药理理论依稀的形成奠定了基础</p>
-<blockquote>
-<p><strong>病、证、症</strong></p>
-</blockquote>
-<h3 id="中医学理论体系的发展"><a href="#中医学理论体系的发展" class="headerlink" title="中医学理论体系的发展"></a>中医学理论体系的发展</h3><p><strong>脉经：</strong>魏晋之际的著名医学家、医术编纂家王叔和。撰写了第一部脉学专著<strong>《脉经》</strong></p>
-<p><strong>针灸甲乙经：</strong>晋代皇普谧编撰，是中国现存最早的一步针灸学专著。10卷，南北朝时期改为12卷。</p>
-<p><strong>诸病源候论：</strong>隋朝巢元方所撰，第一部病因病机症候学专著</p>
-<p><strong>魏晋隋唐：</strong>丰富实践时期。</p>
-<p><strong>宋金元：</strong>争鸣突破时期。三因极–病症方论：宋代陈无择撰，中医综合性专著。金元四大家：</p>
-<ul>
-<li><p>刘完素：金代医学家，属于“寒凉派”(王老吉)</p>
-</li>
-<li><p>李东垣：“易水派”，牵扯五行学说</p>
-</li>
-<li><p>张从正：“攻邪派”。中医的邪一般指病因</p>
-</li>
-<li><p>朱震亨：“养阴派”。阴阳学说(六味地黄丸，只适合肾阴虚，肾阳虚的话越吃越糟糕奥)</p>
-<p><strong>门户这件事，还是不好的</strong>。</p>
-</li>
-</ul>
-<p><strong>明清时期：</strong>综合汇通，深化发展时期。</p>
-<ul>
-<li>明：王肯堂《证治准绳》</li>
-<li>清：吴谦《医宗金鉴》、陈梦雷《古今图书集成-医部全录》</li>
-<li><strong>温病论的创立：</strong><ul>
-<li>明：吴又可《瘟疫论》—“戾气说”</li>
-<li>清：叶天士《温热论》–“卫气营血辩证”。吴鞠通《温病条辨》—“三焦辨证”。薛生白《温热条辨》</li>
-</ul>
-</li>
-<li>《医林改错》：清代王清任撰，中医脏象著作(解剖)。活血化瘀</li>
-</ul>
-<p><strong>现代和近代：</strong>一言难尽</p>
-<blockquote>
-<p><strong>望</strong>而知之谓之神</p>
-<p><strong>闻</strong>而止之为之圣</p>
-<p><strong>问</strong>而知之谓之工</p>
-<p><strong>切</strong>而知之谓之巧</p>
-</blockquote>
-<h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>代理模式</title>
     <url>/2021/04/22/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<p>使用代理对象代替对真实对象的访问，这样就可以在不修改原目标对象的前提下，提供额外的操作，拓展目标对象的功能。代理模式的主要作用是拓展目标对象的功能，比如在目标对象的某个方法执行前后可以增加一些自定义的操作。</p>
@@ -2126,6 +2126,24 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于焦虑</title>
     <url>/2020/03/20/%E5%85%B3%E4%BA%8E%E7%84%A6%E8%99%91/</url>
     <content><![CDATA[<blockquote>
@@ -2147,24 +2165,6 @@
       </categories>
       <tags>
         <tag>故事</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2442,7 +2442,7 @@
 <h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><ul>
 <li><p>final变量：一旦赋值，不改变，必须显式指定初始值，一般和static一起来创建类常量。</p>
 </li>
-<li><p>final方法：可以被子类集成，但是不能重写。防止方法被篡改。</p>
+<li><p>final方法：可以被子类继承，但是不能重写。防止方法被篡改。</p>
 </li>
 <li><p>final类：不能被继承。</p>
 </li>
@@ -2506,6 +2506,49 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>审视</title>
+    <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
+    <content><![CDATA[<blockquote>
+<p>人活着的时候审视自己是一种不痛不痒的审视。</p>
+</blockquote>
+<h1 id="大奶奶"><a href="#大奶奶" class="headerlink" title="大奶奶"></a>大奶奶</h1><p>大奶奶是奶奶的妯娌，得了小脑萎缩，疯言疯语成了常态。但是她认得我们。她最信任的人是我老叔，他倾诉最多的人，是我奶奶。她也认得我和小妹。可能在她那还清醒的脑区域，为这些她觉得无害的人，保留了少许位置。</p>
+<p>大奶奶不是谁都信任。她整天疯言疯语的对象，是我的邻居，<strong>瞎奶奶</strong>。</p>
+<p>我打记事起瞎奶奶眼睛就瞧不见。瞎奶奶家里卖醋，买来醋精兑上水，两毛钱装满一瓶。我小时候觉得醋是甜的，打醋回家的路上拧开盖子呷一口，甚是快活。瞎奶奶人也慈祥，身体有点不舒服去找瞎奶奶，她摸摸地再摸摸头，嘴里念着咒语，心里就觉得踏实。我向来胆子大，不肯信什么迷信，但是瞎奶奶的那一套，更像是一种心灵的安抚。</p>
+<p>大奶奶骂瞎奶奶，小脑萎缩后这成了她业余生活的全部。</p>
+<p>她一个人自言自语的时候没人知道，所以我理解她找奶奶倾诉是缓解自己的害怕。</p>
+<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我把吃的给他，给她一箱，我为啥要给她啊，我这么大年纪了，我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
+<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“你听我跟你说，啥事也没有，年轻的时候，也不知谁管谁借了一瓢面，说是忘了还还是怎么的，就这样结下了梁子，谁知道她能记一辈子，你瞎奶奶可是个好人”。瞎奶奶生前，也是奶奶最好的朋友。</p>
+<p>大奶奶逢人便说瞎奶奶，大家也都道她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前，别人怎么劝都没用，那是她心头的结。</p>
+<p>奶奶这辈人，经历过太多事情，听见过炮弹声，挣过工分换饭吃，甚至三年自然灾害也捡了条命。他们从不和平走向和平，从挨饿到衣食无忧。所以他们走的一遭真正该记住的东西是什么？大奶奶的答案却是这样的。</p>
+<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在一个梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
+<p>我希望大奶奶的梦能醒来，她饶过自己。</p>
+<p>而我回家路上又呷了一口甜美的醋。</p>
+<p><strong>谁又能饶过自己。</strong></p>
+<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200331023927.jpg" width="300" alt="审视" style="border-radius:50%">
+
+<hr>
+<h1 id="喜棺"><a href="#喜棺" class="headerlink" title="喜棺"></a>喜棺</h1><blockquote>
+<p>那些自认为活的通透的人，你能不能告诉我，我们到底该如何正视死亡？</p>
+</blockquote>
+<p>五百口人的小村庄被一条恶臭的小河隔开。</p>
+<p>小河原本是不臭的，冬天结了很厚的冰，老实的农村爷们搬了张桌子在上面打麻将。村子也热闹，我跟着父亲去地里看庄稼，村里一位比我大结了婚的哥哥开玩笑把我的裤子脱了下来，我抹不开面，提上裤子骂他娘。从那以后，他每次看到我一个人的时候，都扬言要打我，我至今仍讨厌他，他也没敢真的打我。</p>
+<p>小河的一侧是我家挨着瞎奶奶家，小河的另一侧，住着我儿时的玩伴–蹦蹦。</p>
+<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦，可能是因为他太会蹦了，他走路东倒西歪的走不好，他也不太聪明。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
+<p>主人公是蹦蹦的奶奶。</p>
+<p>这期间工作多停了几天，直到今天早上得知主人公已经去世。</p>
+<p>我出门听见河对过满院子的哭声，心里百感交集。我没想过要以文学的手法表现这世间的疾苦，这每一句话，都是我努力找到一个最准确的回忆，最真实的记录。如您所见，抛开别的不谈，这世间如此残忍。一遭一遭的总会变了样子，活着的人感叹、思考、也开心也难过，死的人呢，再疾苦也好，快乐也好，也都消失不见了。</p>
+<p>河这边的我们准备吃烤鱼，我下午忙着开会，精神欠佳。</p>
+<p>河那边的他们，用哭声送死者最后一程。</p>
+<p>逝者安息。</p>
+]]></content>
+      <categories>
+        <category>听个故事吧</category>
+      </categories>
+      <tags>
+        <tag>故事</tag>
       </tags>
   </entry>
   <entry>
@@ -2816,49 +2859,6 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>审视</title>
-    <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
-    <content><![CDATA[<blockquote>
-<p>人活着的时候审视自己是一种不痛不痒的审视。</p>
-</blockquote>
-<h1 id="大奶奶"><a href="#大奶奶" class="headerlink" title="大奶奶"></a>大奶奶</h1><p>大奶奶是奶奶的妯娌，得了小脑萎缩，疯言疯语成了常态。但是她认得我们。她最信任的人是我老叔，他倾诉最多的人，是我奶奶。她也认得我和小妹。可能在她那还清醒的脑区域，为这些她觉得无害的人，保留了少许位置。</p>
-<p>大奶奶不是谁都信任。她整天疯言疯语的对象，是我的邻居，<strong>瞎奶奶</strong>。</p>
-<p>我打记事起瞎奶奶眼睛就瞧不见。瞎奶奶家里卖醋，买来醋精兑上水，两毛钱装满一瓶。我小时候觉得醋是甜的，打醋回家的路上拧开盖子呷一口，甚是快活。瞎奶奶人也慈祥，身体有点不舒服去找瞎奶奶，她摸摸地再摸摸头，嘴里念着咒语，心里就觉得踏实。我向来胆子大，不肯信什么迷信，但是瞎奶奶的那一套，更像是一种心灵的安抚。</p>
-<p>大奶奶骂瞎奶奶，小脑萎缩后这成了她业余生活的全部。</p>
-<p>她一个人自言自语的时候没人知道，所以我理解她找奶奶倾诉是缓解自己的害怕。</p>
-<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我把吃的给他，给她一箱，我为啥要给她啊，我这么大年纪了，我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
-<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“你听我跟你说，啥事也没有，年轻的时候，也不知谁管谁借了一瓢面，说是忘了还还是怎么的，就这样结下了梁子，谁知道她能记一辈子，你瞎奶奶可是个好人”。瞎奶奶生前，也是奶奶最好的朋友。</p>
-<p>大奶奶逢人便说瞎奶奶，大家也都道她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前，别人怎么劝都没用，那是她心头的结。</p>
-<p>奶奶这辈人，经历过太多事情，听见过炮弹声，挣过工分换饭吃，甚至三年自然灾害也捡了条命。他们从不和平走向和平，从挨饿到衣食无忧。所以他们走的一遭真正该记住的东西是什么？大奶奶的答案却是这样的。</p>
-<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在一个梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
-<p>我希望大奶奶的梦能醒来，她饶过自己。</p>
-<p>而我回家路上又呷了一口甜美的醋。</p>
-<p><strong>谁又能饶过自己。</strong></p>
-<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200331023927.jpg" width="300" alt="审视" style="border-radius:50%">
-
-<hr>
-<h1 id="喜棺"><a href="#喜棺" class="headerlink" title="喜棺"></a>喜棺</h1><blockquote>
-<p>那些自认为活的通透的人，你能不能告诉我，我们到底该如何正视死亡？</p>
-</blockquote>
-<p>五百口人的小村庄被一条恶臭的小河隔开。</p>
-<p>小河原本是不臭的，冬天结了很厚的冰，老实的农村爷们搬了张桌子在上面打麻将。村子也热闹，我跟着父亲去地里看庄稼，村里一位比我大结了婚的哥哥开玩笑把我的裤子脱了下来，我抹不开面，提上裤子骂他娘。从那以后，他每次看到我一个人的时候，都扬言要打我，我至今仍讨厌他，他也没敢真的打我。</p>
-<p>小河的一侧是我家挨着瞎奶奶家，小河的另一侧，住着我儿时的玩伴–蹦蹦。</p>
-<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦，可能是因为他太会蹦了，他走路东倒西歪的走不好，他也不太聪明。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
-<p>主人公是蹦蹦的奶奶。</p>
-<p>这期间工作多停了几天，直到今天早上得知主人公已经去世。</p>
-<p>我出门听见河对过满院子的哭声，心里百感交集。我没想过要以文学的手法表现这世间的疾苦，这每一句话，都是我努力找到一个最准确的回忆，最真实的记录。如您所见，抛开别的不谈，这世间如此残忍。一遭一遭的总会变了样子，活着的人感叹、思考、也开心也难过，死的人呢，再疾苦也好，快乐也好，也都消失不见了。</p>
-<p>河这边的我们准备吃烤鱼，我下午忙着开会，精神欠佳。</p>
-<p>河那边的他们，用哭声送死者最后一程。</p>
-<p>逝者安息。</p>
-]]></content>
-      <categories>
-        <category>听个故事吧</category>
-      </categories>
-      <tags>
-        <tag>故事</tag>
       </tags>
   </entry>
   <entry>
@@ -3211,6 +3211,41 @@
       </tags>
   </entry>
   <entry>
+    <title>身份证信息识别</title>
+    <url>/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<blockquote>
+<p>调用阿里云实现身份证信息的识别</p>
+</blockquote>
+<h2 id="阿里云SDK"><a href="#阿里云SDK" class="headerlink" title="阿里云SDK"></a>阿里云SDK</h2><p>阿里云提供了身份证信息识别的java代码，先看源码，然后进行改写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.alibaba.ocr.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONArray;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.api.gateway.demo.util.HttpUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.apache.commons.codec.binary.Base64.encodeBase64;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用APPCODE进行云市场ocr服务接口调用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">APPCodeDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 获取参数的json对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">getParam</span><span class="params">(<span class="keyword">int</span> type, String dataValue)</span> </span>&#123;</span><br><span class="line">        JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj.put(<span class="string">&quot;dataType&quot;</span>, type);</span><br><span class="line">            obj.put(<span class="string">&quot;dataValue&quot;</span>, dataValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = <span class="string">&quot;http://dm-51.data.aliyun.com&quot;</span>;</span><br><span class="line">        String path = <span class="string">&quot;/rest/160601/ocr/ocr_idcard.json&quot;</span>;</span><br><span class="line">        String appcode = <span class="string">&quot;你的APPCODE&quot;</span>;</span><br><span class="line">        String imgFile = <span class="string">&quot;图片路径&quot;</span>;</span><br><span class="line">        Boolean is_old_format = <span class="keyword">false</span>;<span class="comment">//如果文档的输入中含有inputs字段，设置为True， 否则设置为False</span></span><br><span class="line">        <span class="comment">//请根据线上文档修改configure字段</span></span><br><span class="line">        JSONObject configObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        configObj.put(<span class="string">&quot;side&quot;</span>, <span class="string">&quot;face&quot;</span>);</span><br><span class="line">        String config_str = configObj.toString();</span><br><span class="line">        <span class="comment">//            configObj.put(&quot;min_size&quot;, 5);</span></span><br><span class="line">        <span class="comment">//            String config_str = &quot;&quot;;</span></span><br><span class="line"></span><br><span class="line">        String method = <span class="string">&quot;POST&quot;</span>;</span><br><span class="line">        Map&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105</span></span><br><span class="line">        headers.put(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;APPCODE &quot;</span> + appcode);</span><br><span class="line"></span><br><span class="line">        Map&lt;String, String&gt; querys = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对图像进行base64编码</span></span><br><span class="line">        String imgBase64 = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            File file = <span class="keyword">new</span> File(imgFile);</span><br><span class="line">            <span class="keyword">byte</span>[] content = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) file.length()];</span><br><span class="line">            FileInputStream finputstream = <span class="keyword">new</span> FileInputStream(file);</span><br><span class="line">            finputstream.read(content);</span><br><span class="line">            finputstream.close();</span><br><span class="line">            imgBase64 = <span class="keyword">new</span> String(encodeBase64(content));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 拼装请求body的json字符串</span></span><br><span class="line">        JSONObject requestObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                obj.put(<span class="string">&quot;image&quot;</span>, getParam(<span class="number">50</span>, imgBase64));</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    obj.put(<span class="string">&quot;configure&quot;</span>, getParam(<span class="number">50</span>, config_str));</span><br><span class="line">                &#125;</span><br><span class="line">                JSONArray inputArray = <span class="keyword">new</span> JSONArray();</span><br><span class="line">                inputArray.add(obj);</span><br><span class="line">                requestObj.put(<span class="string">&quot;inputs&quot;</span>, inputArray);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                requestObj.put(<span class="string">&quot;image&quot;</span>, imgBase64);</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    requestObj.put(<span class="string">&quot;configure&quot;</span>, config_str);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String bodys = requestObj.toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 重要提示如下:</span></span><br><span class="line"><span class="comment">             * HttpUtils请从</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java</span></span><br><span class="line"><span class="comment">             * 下载</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 相应的依赖请参照</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            HttpResponse response = HttpUtils.doPost(host, path, method, headers, querys, bodys);</span><br><span class="line">            <span class="keyword">int</span> stat = response.getStatusLine().getStatusCode();</span><br><span class="line">            <span class="keyword">if</span>(stat != <span class="number">200</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Http code: &quot;</span> + stat);</span><br><span class="line">                System.out.println(<span class="string">&quot;http header error msg: &quot;</span>+ response.getFirstHeader(<span class="string">&quot;X-Ca-Error-Message&quot;</span>));</span><br><span class="line">                System.out.println(<span class="string">&quot;Http body error msg:&quot;</span> + EntityUtils.toString(response.getEntity()));</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            String res = EntityUtils.toString(response.getEntity());</span><br><span class="line">            JSONObject res_obj = JSON.parseObject(res);</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONArray outputArray = res_obj.getJSONArray(<span class="string">&quot;outputs&quot;</span>);</span><br><span class="line">                String output = outputArray.getJSONObject(<span class="number">0</span>).getJSONObject(<span class="string">&quot;outputValue&quot;</span>).getString(<span class="string">&quot;dataValue&quot;</span>);</span><br><span class="line">                JSONObject out = JSON.parseObject(output);</span><br><span class="line">                System.out.println(out.toJSONString());</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(res_obj.toJSONString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="需求分析和代码改写"><a href="#需求分析和代码改写" class="headerlink" title="需求分析和代码改写"></a>需求分析和代码改写</h2><p>我们要把这个代码改写成工具类方便调用，这样controller里面的内容比较清晰明了。需求是，在注册的时候把身份证信息传上来，然后调用api进行身份证信息的识别，在注册的时候肯定是本地上传文件，所以前端过来的参数时multipartfile类型，我们要转换成base64类型(注意不要直接传base64作为参数类型，太长了，不允许)。</p>
+<p>所以我们在controller里面调用工具类，把multipartfile类型转换成base64类型，工具类如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">MultipartFile2Base64</span><span class="params">(MultipartFile multipartFile)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] byteArr = multipartFile.getBytes();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(Base64.encodeBase64(byteArr));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在controller里面已经得到了图片的base64编码，然后调用改写好的阿里云接口就行，改写之后的代码如下(提供了base64代码瞬间变得简洁)：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONArray;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 阿里云身份证识别服务接口调用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 16:50</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdCardUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 获取参数的json对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">getParam</span><span class="params">(<span class="keyword">int</span> type, String dataValue)</span> </span>&#123;</span><br><span class="line">        JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj.put(<span class="string">&quot;dataType&quot;</span>, type);</span><br><span class="line">            obj.put(<span class="string">&quot;dataValue&quot;</span>, dataValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getMessage</span><span class="params">(String imgBase64)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        String path = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        String appcode = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        Boolean is_old_format = <span class="keyword">false</span>;<span class="comment">//如果文档的输入中含有inputs字段，设置为True， 否则设置为False</span></span><br><span class="line">        <span class="comment">//请根据线上文档修改configure字段</span></span><br><span class="line">        JSONObject configObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="comment">//只识别正面，获取姓名存入数据库</span></span><br><span class="line">        configObj.put(<span class="string">&quot;side&quot;</span>, <span class="string">&quot;face&quot;</span>);</span><br><span class="line">        String config_str = configObj.toString();</span><br><span class="line">        <span class="comment">//            configObj.put(&quot;min_size&quot;, 5);</span></span><br><span class="line">        <span class="comment">//            String config_str = &quot;&quot;;</span></span><br><span class="line"></span><br><span class="line">        String method = <span class="string">&quot;POST&quot;</span>;</span><br><span class="line">        Map&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105</span></span><br><span class="line">        headers.put(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;APPCODE &quot;</span> + appcode);</span><br><span class="line">        Map&lt;String, String&gt; querys = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">// 拼装请求body的json字符串</span></span><br><span class="line">        JSONObject requestObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                obj.put(<span class="string">&quot;image&quot;</span>, getParam(<span class="number">50</span>, imgBase64));</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    obj.put(<span class="string">&quot;configure&quot;</span>, getParam(<span class="number">50</span>, config_str));</span><br><span class="line">                &#125;</span><br><span class="line">                JSONArray inputArray = <span class="keyword">new</span> JSONArray();</span><br><span class="line">                inputArray.add(obj);</span><br><span class="line">                requestObj.put(<span class="string">&quot;inputs&quot;</span>, inputArray);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                requestObj.put(<span class="string">&quot;image&quot;</span>, imgBase64);</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    requestObj.put(<span class="string">&quot;configure&quot;</span>, config_str);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String bodys = requestObj.toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 重要提示如下:</span></span><br><span class="line"><span class="comment">             * HttpUtils请从</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java</span></span><br><span class="line"><span class="comment">             * 下载</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 相应的依赖请参照</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            HttpResponse response = HttpUtil.doPost(host, path, method, headers, querys, bodys);</span><br><span class="line">            <span class="keyword">int</span> stat = response.getStatusLine().getStatusCode();</span><br><span class="line">            <span class="keyword">if</span>(stat != <span class="number">200</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Http code: &quot;</span> + stat);</span><br><span class="line">                System.out.println(<span class="string">&quot;http header error msg: &quot;</span>+ response.getFirstHeader(<span class="string">&quot;X-Ca-Error-Message&quot;</span>));</span><br><span class="line">                System.out.println(<span class="string">&quot;Http body error msg:&quot;</span> + EntityUtils.toString(response.getEntity()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            String res = EntityUtils.toString(response.getEntity());</span><br><span class="line">            JSONObject res_obj = JSON.parseObject(res);</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONArray outputArray = res_obj.getJSONArray(<span class="string">&quot;outputs&quot;</span>);</span><br><span class="line">                String output = outputArray.getJSONObject(<span class="number">0</span>).getJSONObject(<span class="string">&quot;outputValue&quot;</span>).getString(<span class="string">&quot;dataValue&quot;</span>);</span><br><span class="line">                JSONObject out = JSON.parseObject(output);</span><br><span class="line">                <span class="comment">//System.out.println(out.toJSONString());</span></span><br><span class="line">                <span class="keyword">return</span> out.toJSONString();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//System.out.println(res_obj.toJSONString());</span></span><br><span class="line">                <span class="keyword">return</span> res_obj.toJSONString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li><p>一是不要把base64编码直接作为参数</p>
+</li>
+<li><p>二是调用接口返回的类型是一个String，要转换成对象才方便存取，工具类如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">json2Map</span><span class="params">(String jsonStr)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(jsonStr != <span class="keyword">null</span> &amp;&amp; !<span class="string">&quot;&quot;</span>.equals(jsonStr))&#123;</span><br><span class="line">            <span class="comment">//最外层解析</span></span><br><span class="line">            JSONObject json = JSONObject.fromObject(jsonStr);</span><br><span class="line">            <span class="keyword">for</span> (Object k : json.keySet()) &#123;</span><br><span class="line">                Object v = json.get(k);</span><br><span class="line">                <span class="comment">//如果内层还是数组的话，继续解析</span></span><br><span class="line">                <span class="keyword">if</span> (v <span class="keyword">instanceof</span> JSONArray) &#123;</span><br><span class="line">                    List&lt;Map&lt;String, Object&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span><br><span class="line">                    Iterator&lt;JSONObject&gt; it = ((JSONArray) v).iterator();</span><br><span class="line">                    <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                        JSONObject json2 = it.next();</span><br><span class="line">                        list.add(json2Map(json2.toString()));</span><br><span class="line">                    &#125;</span><br><span class="line">                    map.put(k.toString(), list);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    map.put(k.toString(), v);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> map;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200409132257.png" alt="image-20200409132248536"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>阿里云SDK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记录一次zuul排错</title>
     <url>/2020/03/29/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1zuul%E6%8E%92%E9%94%99/</url>
     <content><![CDATA[<h2 id="某个突然出现的Bug"><a href="#某个突然出现的Bug" class="headerlink" title="某个突然出现的Bug"></a>某个突然出现的Bug</h2><p>在做微服务的时候，后端启动了几个端口，之前还想着在前端配置不同的端口方便测试，其实是可以在Zuul中设置一个共同的入口的。Zuul的配置如下(暂且不做拦截)</p>
@@ -3271,41 +3306,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>身份证信息识别</title>
-    <url>/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/</url>
-    <content><![CDATA[<blockquote>
-<p>调用阿里云实现身份证信息的识别</p>
-</blockquote>
-<h2 id="阿里云SDK"><a href="#阿里云SDK" class="headerlink" title="阿里云SDK"></a>阿里云SDK</h2><p>阿里云提供了身份证信息识别的java代码，先看源码，然后进行改写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.alibaba.ocr.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONArray;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.aliyun.api.gateway.demo.util.HttpUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.apache.commons.codec.binary.Base64.encodeBase64;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用APPCODE进行云市场ocr服务接口调用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">APPCodeDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 获取参数的json对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">getParam</span><span class="params">(<span class="keyword">int</span> type, String dataValue)</span> </span>&#123;</span><br><span class="line">        JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj.put(<span class="string">&quot;dataType&quot;</span>, type);</span><br><span class="line">            obj.put(<span class="string">&quot;dataValue&quot;</span>, dataValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = <span class="string">&quot;http://dm-51.data.aliyun.com&quot;</span>;</span><br><span class="line">        String path = <span class="string">&quot;/rest/160601/ocr/ocr_idcard.json&quot;</span>;</span><br><span class="line">        String appcode = <span class="string">&quot;你的APPCODE&quot;</span>;</span><br><span class="line">        String imgFile = <span class="string">&quot;图片路径&quot;</span>;</span><br><span class="line">        Boolean is_old_format = <span class="keyword">false</span>;<span class="comment">//如果文档的输入中含有inputs字段，设置为True， 否则设置为False</span></span><br><span class="line">        <span class="comment">//请根据线上文档修改configure字段</span></span><br><span class="line">        JSONObject configObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        configObj.put(<span class="string">&quot;side&quot;</span>, <span class="string">&quot;face&quot;</span>);</span><br><span class="line">        String config_str = configObj.toString();</span><br><span class="line">        <span class="comment">//            configObj.put(&quot;min_size&quot;, 5);</span></span><br><span class="line">        <span class="comment">//            String config_str = &quot;&quot;;</span></span><br><span class="line"></span><br><span class="line">        String method = <span class="string">&quot;POST&quot;</span>;</span><br><span class="line">        Map&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105</span></span><br><span class="line">        headers.put(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;APPCODE &quot;</span> + appcode);</span><br><span class="line"></span><br><span class="line">        Map&lt;String, String&gt; querys = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对图像进行base64编码</span></span><br><span class="line">        String imgBase64 = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            File file = <span class="keyword">new</span> File(imgFile);</span><br><span class="line">            <span class="keyword">byte</span>[] content = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) file.length()];</span><br><span class="line">            FileInputStream finputstream = <span class="keyword">new</span> FileInputStream(file);</span><br><span class="line">            finputstream.read(content);</span><br><span class="line">            finputstream.close();</span><br><span class="line">            imgBase64 = <span class="keyword">new</span> String(encodeBase64(content));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 拼装请求body的json字符串</span></span><br><span class="line">        JSONObject requestObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                obj.put(<span class="string">&quot;image&quot;</span>, getParam(<span class="number">50</span>, imgBase64));</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    obj.put(<span class="string">&quot;configure&quot;</span>, getParam(<span class="number">50</span>, config_str));</span><br><span class="line">                &#125;</span><br><span class="line">                JSONArray inputArray = <span class="keyword">new</span> JSONArray();</span><br><span class="line">                inputArray.add(obj);</span><br><span class="line">                requestObj.put(<span class="string">&quot;inputs&quot;</span>, inputArray);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                requestObj.put(<span class="string">&quot;image&quot;</span>, imgBase64);</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    requestObj.put(<span class="string">&quot;configure&quot;</span>, config_str);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String bodys = requestObj.toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 重要提示如下:</span></span><br><span class="line"><span class="comment">             * HttpUtils请从</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java</span></span><br><span class="line"><span class="comment">             * 下载</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 相应的依赖请参照</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            HttpResponse response = HttpUtils.doPost(host, path, method, headers, querys, bodys);</span><br><span class="line">            <span class="keyword">int</span> stat = response.getStatusLine().getStatusCode();</span><br><span class="line">            <span class="keyword">if</span>(stat != <span class="number">200</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Http code: &quot;</span> + stat);</span><br><span class="line">                System.out.println(<span class="string">&quot;http header error msg: &quot;</span>+ response.getFirstHeader(<span class="string">&quot;X-Ca-Error-Message&quot;</span>));</span><br><span class="line">                System.out.println(<span class="string">&quot;Http body error msg:&quot;</span> + EntityUtils.toString(response.getEntity()));</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            String res = EntityUtils.toString(response.getEntity());</span><br><span class="line">            JSONObject res_obj = JSON.parseObject(res);</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONArray outputArray = res_obj.getJSONArray(<span class="string">&quot;outputs&quot;</span>);</span><br><span class="line">                String output = outputArray.getJSONObject(<span class="number">0</span>).getJSONObject(<span class="string">&quot;outputValue&quot;</span>).getString(<span class="string">&quot;dataValue&quot;</span>);</span><br><span class="line">                JSONObject out = JSON.parseObject(output);</span><br><span class="line">                System.out.println(out.toJSONString());</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(res_obj.toJSONString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="需求分析和代码改写"><a href="#需求分析和代码改写" class="headerlink" title="需求分析和代码改写"></a>需求分析和代码改写</h2><p>我们要把这个代码改写成工具类方便调用，这样controller里面的内容比较清晰明了。需求是，在注册的时候把身份证信息传上来，然后调用api进行身份证信息的识别，在注册的时候肯定是本地上传文件，所以前端过来的参数时multipartfile类型，我们要转换成base64类型(注意不要直接传base64作为参数类型，太长了，不允许)。</p>
-<p>所以我们在controller里面调用工具类，把multipartfile类型转换成base64类型，工具类如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">MultipartFile2Base64</span><span class="params">(MultipartFile multipartFile)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] byteArr = multipartFile.getBytes();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(Base64.encodeBase64(byteArr));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>现在controller里面已经得到了图片的base64编码，然后调用改写好的阿里云接口就行，改写之后的代码如下(提供了base64代码瞬间变得简洁)：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONArray;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONException;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 阿里云身份证识别服务接口调用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 16:50</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdCardUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 获取参数的json对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">getParam</span><span class="params">(<span class="keyword">int</span> type, String dataValue)</span> </span>&#123;</span><br><span class="line">        JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            obj.put(<span class="string">&quot;dataType&quot;</span>, type);</span><br><span class="line">            obj.put(<span class="string">&quot;dataValue&quot;</span>, dataValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getMessage</span><span class="params">(String imgBase64)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        String path = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        String appcode = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        Boolean is_old_format = <span class="keyword">false</span>;<span class="comment">//如果文档的输入中含有inputs字段，设置为True， 否则设置为False</span></span><br><span class="line">        <span class="comment">//请根据线上文档修改configure字段</span></span><br><span class="line">        JSONObject configObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="comment">//只识别正面，获取姓名存入数据库</span></span><br><span class="line">        configObj.put(<span class="string">&quot;side&quot;</span>, <span class="string">&quot;face&quot;</span>);</span><br><span class="line">        String config_str = configObj.toString();</span><br><span class="line">        <span class="comment">//            configObj.put(&quot;min_size&quot;, 5);</span></span><br><span class="line">        <span class="comment">//            String config_str = &quot;&quot;;</span></span><br><span class="line"></span><br><span class="line">        String method = <span class="string">&quot;POST&quot;</span>;</span><br><span class="line">        Map&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105</span></span><br><span class="line">        headers.put(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;APPCODE &quot;</span> + appcode);</span><br><span class="line">        Map&lt;String, String&gt; querys = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">// 拼装请求body的json字符串</span></span><br><span class="line">        JSONObject requestObj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                obj.put(<span class="string">&quot;image&quot;</span>, getParam(<span class="number">50</span>, imgBase64));</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    obj.put(<span class="string">&quot;configure&quot;</span>, getParam(<span class="number">50</span>, config_str));</span><br><span class="line">                &#125;</span><br><span class="line">                JSONArray inputArray = <span class="keyword">new</span> JSONArray();</span><br><span class="line">                inputArray.add(obj);</span><br><span class="line">                requestObj.put(<span class="string">&quot;inputs&quot;</span>, inputArray);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                requestObj.put(<span class="string">&quot;image&quot;</span>, imgBase64);</span><br><span class="line">                <span class="keyword">if</span>(config_str.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    requestObj.put(<span class="string">&quot;configure&quot;</span>, config_str);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        String bodys = requestObj.toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 重要提示如下:</span></span><br><span class="line"><span class="comment">             * HttpUtils请从</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java</span></span><br><span class="line"><span class="comment">             * 下载</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 相应的依赖请参照</span></span><br><span class="line"><span class="comment">             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            HttpResponse response = HttpUtil.doPost(host, path, method, headers, querys, bodys);</span><br><span class="line">            <span class="keyword">int</span> stat = response.getStatusLine().getStatusCode();</span><br><span class="line">            <span class="keyword">if</span>(stat != <span class="number">200</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Http code: &quot;</span> + stat);</span><br><span class="line">                System.out.println(<span class="string">&quot;http header error msg: &quot;</span>+ response.getFirstHeader(<span class="string">&quot;X-Ca-Error-Message&quot;</span>));</span><br><span class="line">                System.out.println(<span class="string">&quot;Http body error msg:&quot;</span> + EntityUtils.toString(response.getEntity()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            String res = EntityUtils.toString(response.getEntity());</span><br><span class="line">            JSONObject res_obj = JSON.parseObject(res);</span><br><span class="line">            <span class="keyword">if</span>(is_old_format) &#123;</span><br><span class="line">                JSONArray outputArray = res_obj.getJSONArray(<span class="string">&quot;outputs&quot;</span>);</span><br><span class="line">                String output = outputArray.getJSONObject(<span class="number">0</span>).getJSONObject(<span class="string">&quot;outputValue&quot;</span>).getString(<span class="string">&quot;dataValue&quot;</span>);</span><br><span class="line">                JSONObject out = JSON.parseObject(output);</span><br><span class="line">                <span class="comment">//System.out.println(out.toJSONString());</span></span><br><span class="line">                <span class="keyword">return</span> out.toJSONString();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//System.out.println(res_obj.toJSONString());</span></span><br><span class="line">                <span class="keyword">return</span> res_obj.toJSONString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
-<li><p>一是不要把base64编码直接作为参数</p>
-</li>
-<li><p>二是调用接口返回的类型是一个String，要转换成对象才方便存取，工具类如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">json2Map</span><span class="params">(String jsonStr)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(jsonStr != <span class="keyword">null</span> &amp;&amp; !<span class="string">&quot;&quot;</span>.equals(jsonStr))&#123;</span><br><span class="line">            <span class="comment">//最外层解析</span></span><br><span class="line">            JSONObject json = JSONObject.fromObject(jsonStr);</span><br><span class="line">            <span class="keyword">for</span> (Object k : json.keySet()) &#123;</span><br><span class="line">                Object v = json.get(k);</span><br><span class="line">                <span class="comment">//如果内层还是数组的话，继续解析</span></span><br><span class="line">                <span class="keyword">if</span> (v <span class="keyword">instanceof</span> JSONArray) &#123;</span><br><span class="line">                    List&lt;Map&lt;String, Object&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span><br><span class="line">                    Iterator&lt;JSONObject&gt; it = ((JSONArray) v).iterator();</span><br><span class="line">                    <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                        JSONObject json2 = it.next();</span><br><span class="line">                        list.add(json2Map(json2.toString()));</span><br><span class="line">                    &#125;</span><br><span class="line">                    map.put(k.toString(), list);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    map.put(k.toString(), v);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> map;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200409132257.png" alt="image-20200409132248536"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>阿里云SDK</tag>
       </tags>
   </entry>
   <entry>
@@ -6044,7 +6044,8 @@
 <p><strong>强引用：</strong></p>
 <p>在java中普遍存在，类似于<code>Object o = new Object;</code>和其他引用的区别是：强引用禁止引用目标被GC收集，其他引用不禁止。</p>
 <p><strong>软引用：</strong></p>
-<p>对象可以从根节点通过一个或多个软引用对象触及，GC在要发生内存溢出之前将这些对象列入回收范围进行回收，如果该软引用和引用队列关联，他会把该软引用对象加入队列。<strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p><strong>JVM 的实现需要在抛出 OutOfMemoryError 之前清除 SoftReference</strong>，但在其他的情况下可以选择清理的时间或者是否清除它们。</p>
+<p>有用但不是必须，使用<code>java.lang.red.SoftReferencr</code>类表示，这个特性很适合做缓存，比如：网页缓存，图片缓存。</p>
 <p><strong>弱引用：</strong></p>
 <p>垃圾收集器在GC的时候会回收所有的弱引用，如果该弱引用和引用队列相关联，他会把该弱引用加入到队列。</p>
 <p><strong>虚引用：</strong></p>
@@ -6698,42 +6699,51 @@
 <li>如果我们不在Spring中去配置声明式事务，我们就需要在代码中手动配置事务</li>
 <li>事务在项目的开发中十分重要，涉及到数据的一致性和完整性问题，不容马虎</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="什么是Spring框架"><a href="#什么是Spring框架" class="headerlink" title="什么是Spring框架"></a>什么是Spring框架</h3><ul>
-<li>模块</li>
-<li>6个特征</li>
-</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/framework/spring/Spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93">参考自javaGuide</a></p>
+<h3 id="什么是Spring框架"><a href="#什么是Spring框架" class="headerlink" title="什么是Spring框架"></a>什么是Spring框架</h3><p>我们一般说 Spring 框架指的都是 Spring Framework，它是很多模块的集合，使用这些模块可以很方便地协助我们进行开发。这些模块是：核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。比如：Core Container 中的 Core 组件是Spring 所有组件的核心，Beans 组件和 Context 组件是实现IOC和依赖注入的基础，AOP组件用来实现面向切面编程。</p>
 <h3 id="列举一些重要的Spring模块"><a href="#列举一些重要的Spring模块" class="headerlink" title="列举一些重要的Spring模块"></a>列举一些重要的Spring模块</h3><ul>
-<li>core</li>
-<li>Aspect</li>
-<li>AOP</li>
-<li>JDBC </li>
-<li>JMS</li>
-<li>ORM</li>
-<li>WEB</li>
-<li>Test</li>
+<li>core：基础，主要提供IOC依赖注入功能。</li>
+<li>AOP：面向切面编程的实现</li>
+<li>JDBC ：java数据库连接</li>
+<li>JMS：消息服务</li>
+<li>WEB：创建web应用程序提供支持</li>
+<li>Test：提供了对JUnit和TestNG测试的支持。</li>
 </ul>
 <h3 id="RestController和-Controller"><a href="#RestController和-Controller" class="headerlink" title="@RestController和@Controller"></a>@RestController和@Controller</h3><p>restcontroller在spring4之后才有，之前必须使用controller+responsebody</p>
 <h3 id="IOC和AOP"><a href="#IOC和AOP" class="headerlink" title="IOC和AOP"></a>IOC和AOP</h3><ul>
 <li><p>对IOC和AOP的理解</p>
-</li>
-<li><p>Spring AOP和AspectJ AOP的区别</p>
-<p>事务管理，日志管理，控制权限等等。</p>
+<p>IOC容器实际上就是一个Map(key,value)，存放的是各种对象。spring时代通过xml配置bean，在boot时代通过注解配置bean。</p>
+<p>AOP能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。基于动态代理的。如果代理的对象，实现了某个接口，使用JDK，没有实现的使用CGLAB代理。</p>
 </li>
 </ul>
 <h3 id="Spring-Bean"><a href="#Spring-Bean" class="headerlink" title="Spring Bean"></a>Spring Bean</h3><ul>
 <li><p>作用域</p>
 <ul>
-<li>singleton</li>
-<li>protype</li>
-<li>request</li>
-<li>session</li>
+<li>singleton：唯一bean实例，默认是单例。</li>
+<li>protype：每次请求都会创建一个新的bean实例</li>
+<li>request：每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li>session ：每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效。</li>
+<li>global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。</li>
 </ul>
 </li>
 <li><p>单例bean的线程安全</p>
+<p>一般情况下，我们常用的 <code>Controller</code>、<code>Service</code>、<code>Dao</code> 这些 Bean 是无状态的。无状态的 Bean 不能保存数据，因此是线程安全的。</p>
+<p>常见的两种解决办法：</p>
+<ul>
+<li>在类中定义threadLocal成员变量。</li>
+<li>改变 Bean 的作用域为 “prototype”：每次请求都会创建一个新的 bean 实例，自然不会存在线程安全问题。</li>
+</ul>
 </li>
 <li><p>@Compnen和@Bean的区别</p>
 </li>
 <li><p>将一个类声明为Sprng的bean的注解</p>
+<p>一般使用<code>@Autowired</code>注解自动装配bean，想把类标识成可用于autowired自动装配的类，可以使用以下注解：</p>
+<ul>
+<li><code>@Component</code> ：通用的注解，可标注任意类为 <code>Spring</code> 组件。如果一个Bean不知道属于哪个层，可以使用<code>@Component</code> 注解标注。</li>
+<li><code>@Repository</code> : 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li><code>@Service</code> : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
+<li><code>@Controller</code> : 对应 Spring MVC 控制层，主要用于接受用户请求并调用 Service 层返回数据给前端页面。</li>
+</ul>
 </li>
 <li><p>bean的生命周期</p>
 <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt="Spring Bean 生命周期"></p>
@@ -6762,22 +6772,23 @@
 </li>
 </ul>
 <h3 id="Spring框架中用到的设计模式"><a href="#Spring框架中用到的设计模式" class="headerlink" title="Spring框架中用到的设计模式"></a>Spring框架中用到的设计模式</h3><ul>
-<li>工厂模式</li>
-<li>代理模式</li>
-<li>单例模式</li>
-<li>包装器设计模式</li>
-<li>观察者模式</li>
-<li>适配器模式</li>
+<li>工厂模式：创建Bean</li>
+<li>代理模式：AOP</li>
+<li>单例模式：Bean单例模式</li>
+<li>包装器设计模式：Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
+<li>观察者模式：事件驱动</li>
 </ul>
 <h3 id="Spring管理事务"><a href="#Spring管理事务" class="headerlink" title="Spring管理事务"></a>Spring管理事务</h3><ul>
 <li><p>管理事务的方式</p>
 <ul>
-<li>声明式事务<ul>
+<li><p>编程式，不推荐。</p>
+</li>
+<li><p>声明式事务</p>
+<ul>
 <li>基于XML</li>
 <li>基于注解</li>
 </ul>
 </li>
-<li>编程式，不推荐。</li>
 </ul>
 </li>
 <li><p>事务的隔离级别</p>
@@ -6785,6 +6796,7 @@
 <li><p>哪几种事务传播行为五种</p>
 </li>
 <li><p>Transactional(rollback=Exception.class)</p>
+<p>在<code>@Transactional</code>注解中如果不配置<code>rollbackFor</code>属性,那么事务只会在遇到<code>RuntimeException</code>的时候才会回滚,加上<code>rollbackFor=Exception.class</code>,可以让事务在遇到非运行时异常时也回滚。</p>
 </li>
 </ul>
 <h3 id="使用JPA在数据库中非持久化一个字段。"><a href="#使用JPA在数据库中非持久化一个字段。" class="headerlink" title="使用JPA在数据库中非持久化一个字段。"></a>使用JPA在数据库中非持久化一个字段。</h3><p>@Transient</p>
