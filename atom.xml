@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-04-18T12:49:29.691Z</updated>
+  <updated>2021-04-22T11:18:53.060Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>代理模式</title>
+    <link href="http://victor-huihui.gitee.io/2021/04/22/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://victor-huihui.gitee.io/2021/04/22/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-04-22T08:31:16.000Z</published>
+    <updated>2021-04-22T11:18:53.060Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;使用代理对象代替对真实对象的访问，这样就可以在不修改原目标对象的前提下，提供额外的操作，拓展目标对象的功能。代理模式的主要作用是拓展目标对象的功能，比如在目标对象的某个方法执行前后可以增加一些自定义的操作。&lt;/p&gt;
+&lt;h1 id=&quot;静态代理&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="复习入口" scheme="http://victor-huihui.gitee.io/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/"/>
+    
+    
+    <category term="设计模式" scheme="http://victor-huihui.gitee.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>操作系统学习笔记</title>
@@ -250,7 +276,7 @@
     <link href="http://victor-huihui.gitee.io/2021/03/24/Mysql/"/>
     <id>http://victor-huihui.gitee.io/2021/03/24/Mysql/</id>
     <published>2021-03-24T10:01:08.000Z</published>
-    <updated>2021-04-20T12:07:05.041Z</updated>
+    <updated>2021-04-22T08:27:40.716Z</updated>
     
     
       
@@ -495,29 +521,6 @@
     
     
     <category term="OSS" scheme="http://victor-huihui.gitee.io/tags/OSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于matlab实现PCA图像压缩</title>
-    <link href="http://victor-huihui.gitee.io/2020/06/24/%E5%9F%BA%E4%BA%8Ematlab%E5%AE%9E%E7%8E%B0PCA%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/"/>
-    <id>http://victor-huihui.gitee.io/2020/06/24/%E5%9F%BA%E4%BA%8Ematlab%E5%AE%9E%E7%8E%B0PCA%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/</id>
-    <published>2020-06-24T08:29:32.000Z</published>
-    <updated>2020-06-24T08:53:04.063Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;数据在大数据时代成为一笔宝贵的财富，随之而来的是海量的数据的传输和存储问题。大量数据的重复和冗余让我们不得不对数据进行压缩处理。对于图像压缩的问题，目标是最小化压缩数据和最大化保留原样本数据，方法可以分为有损压缩和无损压缩。本文就是基于PCA实现的一种图像的有损压缩方法，项</summary>
-        
-      
-    
-    
-    
-    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
     
   </entry>
   

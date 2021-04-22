@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.5k</span>
+            <span class="post-count">2.7k</span>
         </span>
     </span>
 
@@ -215,6 +215,16 @@
 <li>缺点：由于文本并不适合用来描述数据结构，所以 <code>Protobuf</code> 也不适合用来对基于文本的标记文档（如 HTML）建模。另外，由于 XML 具有某种程度上的自解释性，它可以被人直接读取编辑，在这一点上 <code>Protobuf</code> 不行，它以二进制的方式存储，除非你有 <code>.proto</code> 定义，否则你没法直接读出 <code>Protobuf</code> 的任何内容。</li>
 </ul>
 <p>对于不想进行序列化的变量，使用 transient 关键字修饰。</p>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p><strong>反射的应用场景</strong></p>
+<p>业务代码中使用反射比较少，但是有用，像spring/springboot，mybatis等框架都大量使用了反射机制。</p>
+<p>这些框架中大量使用了动态代理，动态代理也是依赖反射。通过反射可以获取任意一个类的所有属性和方法，可以调用这些属性和方法。</p>
+<p>注解中也是使用了反射。</p>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li>优点：代码灵活，为各种框架提供开箱即用的功能提供了便利。</li>
+<li>缺点：让我们在运行时有了分析操作类的能力，这同样也增加了安全问题。比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点。</li>
+</ul>
+<p><strong>反射实战</strong></p>
 <h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>右左结合：单目，条件，赋值</p>
 <p>基本的优先级：</p>
 <ul>
