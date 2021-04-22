@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.9k</span>
+            <span class="post-count">3.1k</span>
         </span>
     </span>
 
@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">10 min</span>
+            <span class="post-count">11 min</span>
         </span>
     </span>
 </div>
@@ -98,12 +98,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="List，Set，Map的区别"><a href="#List，Set，Map的区别" class="headerlink" title="List，Set，Map的区别"></a><strong>List，Set，Map的区别</strong></h1><ul>
-<li>元素有序，可重复</li>
-<li>元素无序，不可重复</li>
-<li>键值对，K无序，不可重复。V无序，可重复。一一映射。</li>
-</ul>
-<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
+  <h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
 <li>两者都不同步，也就是不保证线程安全。</li>
 <li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
 <li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
@@ -180,7 +175,16 @@
 <li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
 <li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
 </ul>
-<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
+<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><p>Node对象，有key,value,hash,next.</p>
+<p>hash字段的值是key.hashcode()二次加工得到的，高16位于低16位异或(实际的table长度不会很大，一般在16位以内，这么一来，高16位就浪费了)。寻址算法是hash&amp;(table.length-1)，长度一定是2的次方树，length转化为二进制一定是1高位。其余是0，减1之后，就全是1了。</p>
+<p>Put写数据的流程。先获得slot，这里有四种情况：</p>
+<ul>
+<li>slot是null，直接放。</li>
+<li>slot不是null，但是没有链化。先判断node对象的key和当前对象的key是不是完全相等，相等就replace操作，否则就是hash冲突。</li>
+<li>slot链化，但是没有树化。不一致则加链。判断有没有达到树化阈值，有的话则转化为红黑树</li>
+<li>slot已经树化，则红黑树的平衡操作。</li>
+</ul>
+<h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
 <p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
 <h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
 <h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
@@ -234,7 +238,7 @@
 </ul>
 <h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
 <p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
-<h1 id="hashmap专题"><a href="#hashmap专题" class="headerlink" title="hashmap专题"></a>hashmap专题</h1> 
+ 
       <!-- reward -->
       
     </div>

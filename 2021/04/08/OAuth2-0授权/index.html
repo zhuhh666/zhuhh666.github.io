@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.7k</span>
+            <span class="post-count">1.8k</span>
         </span>
     </span>
 
@@ -197,7 +197,7 @@
 </ul>
 <p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
 <h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
-<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p>这里使用redis做上下文，</p>
+<p>关于上下文，在oauth2.0的连接中，会传两个参数，一个是state，另一个是auth_code，auth_code用于换取token，state用于参数校验，我们这里可以利用state做上下文，在state中放学生学号，然后在回调的时候，通过state作为主键查询，从而做到数据绑定。</p>
  
       <!-- reward -->
       
