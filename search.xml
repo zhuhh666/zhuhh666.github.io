@@ -104,22 +104,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Git版本回退</title>
-    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
-    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
-
-<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
-<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Read a Paper</title>
     <url>/2020/04/20/How-to-Read-a-Paper/</url>
     <content><![CDATA[<blockquote>
@@ -188,6 +172,22 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git版本回退</title>
+    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
+    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
+<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -338,6 +338,157 @@
 ]]></content>
       <categories>
         <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java集合</title>
+    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
+<li>两者都不同步，也就是不保证线程安全。</li>
+<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
+<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
+<li>快速随机访问：L不支持，A支持。</li>
+<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
+</ul>
+<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
+<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
+<li>V是List的古老实现类，底层Object数组，线程安全。</li>
+</ul>
+<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
+<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
+<li><p>线程安全</p>
+<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
+</li>
+<li><p>效率</p>
+<p>因为线程安全，M效率高，T淘汰，不使用。</p>
+</li>
+<li><p>对null key和Null value的支持</p>
+<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
+</li>
+<li><p>初始容量大小和每次扩充容量大小的不同</p>
+<ul>
+<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
+<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
+</ul>
+</li>
+<li><p>底层数据结构</p>
+<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
+</li>
+</ul>
+<p>M带有初始容量的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">M</th>
+<th align="center">S</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">实现了Map接口</td>
+<td align="center">实现了Set接口</td>
+</tr>
+<tr>
+<td align="center">存储键值对</td>
+<td align="center">仅存储对象</td>
+</tr>
+<tr>
+<td align="center">调用put添加元素</td>
+<td align="center">调用Add添加元素</td>
+</tr>
+<tr>
+<td align="center">使用键计算hashcode</td>
+<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
+</tr>
+</tbody></table>
+<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
+<p><strong>hashcode和equals()的规定</strong></p>
+<ul>
+<li>对象相等，则hashcode相同</li>
+<li>对象相等，对两个equals()返回true</li>
+<li>两个对象有相同的hashcode值，也不一定相等。</li>
+</ul>
+<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
+<p><strong>==与equals的区别</strong></p>
+<ul>
+<li>基本类型来说，==比较的是值相等</li>
+<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
+<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
+</ul>
+<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><p>Node对象，有key,value,hash,next.</p>
+<p>hash字段的值是key.hashcode()二次加工得到的，高16位于低16位异或(实际的table长度不会很大，一般在16位以内，这么一来，高16位就浪费了)。寻址算法是hash&amp;(table.length-1)，长度一定是2的次方树，length转化为二进制一定是1高位。其余是0，减1之后，就全是1了。</p>
+<p>Put写数据的流程。先获得slot，这里有四种情况：</p>
+<ul>
+<li>slot是null，直接放。</li>
+<li>slot不是null，但是没有链化。先判断node对象的key和当前对象的key是不是完全相等，相等就replace操作，否则就是hash冲突。</li>
+<li>slot链化，但是没有树化。不一致则加链。判断有没有达到树化阈值，有的话则转化为红黑树</li>
+<li>slot已经树化，则红黑树的平衡操作。</li>
+</ul>
+<h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
+<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
+<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
+<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
+<p><strong>算法如何设计？</strong></p>
+<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
+<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
+<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
+<ul>
+<li><p>底层数据结构</p>
+<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
+<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
+</li>
+<li><p>**实现线程安全的方式(重要)**：</p>
+<ul>
+<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
+<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
+</ul>
+<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
+</li>
+</ul>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
+<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
+<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
+<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
+<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
+<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
+<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
+<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
+<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
+<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
+<li>List<ul>
+<li>ArrayList：Object[]数组</li>
+<li>Vector：Object[]数组</li>
+<li>LinkedList：双向链表</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
+<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
+<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
+<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
+<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
+<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
+</ul>
+<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
+<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
+]]></content>
+      <categories>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -518,157 +669,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java集合</title>
-    <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
-<li>两者都不同步，也就是不保证线程安全。</li>
-<li>底层数据结构：A用的是Object数组，L使用双向链表。（1.6之前是循环列表，JDK1.7取消循环）</li>
-<li>插入和删除元素是否受元素位置影响：A是数组，默认追加到末尾，但是如果指定i位置插入和删除（<code>add(int index, E element)</code>）时间复杂度是$O(n-i)$，因为顺序后移。L是链表，插入删除是O（1）。如果是在I位置插入删除，时间复杂度是O(n)，因为需要先移动都指定位置。</li>
-<li>快速随机访问：L不支持，A支持。</li>
-<li>内存占用空间：A浪费体现在list列表的结尾会预留一定的容量空间。而L体现在他的每一个元素消耗更多空间（存放直接后继和前驱以及数据）。</li>
-</ul>
-<h1 id="ArrayList和Vector区别，为什么用A取代V"><a href="#ArrayList和Vector区别，为什么用A取代V" class="headerlink" title="ArrayList和Vector区别，为什么用A取代V"></a><strong>ArrayList和Vector区别，为什么用A取代V</strong></h1><ul>
-<li>A是List的主要实现类，适用于频繁的查找，线程不安全。</li>
-<li>V是List的古老实现类，底层Object数组，线程安全。</li>
-</ul>
-<h1 id="ArrayList的扩容机制"><a href="#ArrayList的扩容机制" class="headerlink" title="ArrayList的扩容机制"></a><strong>ArrayList的扩容机制</strong></h1><p><a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/ArrayList%E6%BA%90%E7%A0%81+%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90?id=_3-arraylist-%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6%e5%88%86%e6%9e%90">扩容机制</a></p>
-<h1 id="hashMap和Hashtable区别"><a href="#hashMap和Hashtable区别" class="headerlink" title="hashMap和Hashtable区别"></a><strong>hashMap和Hashtable区别</strong></h1><ul>
-<li><p>线程安全</p>
-<p>M非线程安全，T线程安全。因为T内部的方法经过synchronized修饰</p>
-</li>
-<li><p>效率</p>
-<p>因为线程安全，M效率高，T淘汰，不使用。</p>
-</li>
-<li><p>对null key和Null value的支持</p>
-<p>M可以存储null的K和V，但是null作为K只能有一个，作为V可以多个。T不可。</p>
-</li>
-<li><p>初始容量大小和每次扩充容量大小的不同</p>
-<ul>
-<li>不指定初始：T默认11，每次扩2n+1；M初始16，每次2倍</li>
-<li>给定：T直接使用给定大小，M将其扩充为2的幂次方。</li>
-</ul>
-</li>
-<li><p>底层数据结构</p>
-<p>DK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</p>
-</li>
-</ul>
-<p>M带有初始容量的构造函数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">      if (initialCapacity &lt; 0)</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">          initialCapacity &#x3D; MAXIMUM_CAPACITY;</span><br><span class="line">      if (loadFactor &lt;&#x3D; 0 || Float.isNaN(loadFactor))</span><br><span class="line">          throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">      this.loadFactor &#x3D; loadFactor;</span><br><span class="line">      this.threshold &#x3D; tableSizeFor(initialCapacity);</span><br><span class="line">  &#125;</span><br><span class="line">   public HashMap(int initialCapacity) &#123;</span><br><span class="line">      this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>下面的方法保证了M总是使用2的幂次方作为哈希表的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> *&#x2F;</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n &#x3D; cap - 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 1;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 2;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 4;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 8;</span><br><span class="line">    n |&#x3D; n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;&#x3D; MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="HashMap和HashSet的区别"><a href="#HashMap和HashSet的区别" class="headerlink" title="HashMap和HashSet的区别"></a>HashMap和HashSet的区别</h1><p>S底层就是基于M实现的。</p>
-<table>
-<thead>
-<tr>
-<th align="center">M</th>
-<th align="center">S</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">实现了Map接口</td>
-<td align="center">实现了Set接口</td>
-</tr>
-<tr>
-<td align="center">存储键值对</td>
-<td align="center">仅存储对象</td>
-</tr>
-<tr>
-<td align="center">调用put添加元素</td>
-<td align="center">调用Add添加元素</td>
-</tr>
-<tr>
-<td align="center">使用键计算hashcode</td>
-<td align="center">成员对象计算hashcode。对象hash可能相等，用equals()判断对象的相等性</td>
-</tr>
-</tbody></table>
-<h1 id="HashSet如何检查重复"><a href="#HashSet如何检查重复" class="headerlink" title="HashSet如何检查重复"></a>HashSet如何检查重复</h1><p>先计算hashcode值判断对象加入位置，同时与其他加入的对象的hc值比较，没有相符，假设对象没有重复出现。有相同，调用equals()方法检查hc相等的对象是否真的相等。相等，就不会加入。</p>
-<p><strong>hashcode和equals()的规定</strong></p>
-<ul>
-<li>对象相等，则hashcode相同</li>
-<li>对象相等，对两个equals()返回true</li>
-<li>两个对象有相同的hashcode值，也不一定相等。</li>
-</ul>
-<p>综上，如果一个类的equals()方法被覆盖过，则hashcode()也必须被覆盖。</p>
-<p><strong>==与equals的区别</strong></p>
-<ul>
-<li>基本类型来说，==比较的是值相等</li>
-<li>对于引用类型，==比较的是两个引用是否指向同一个对象地址。</li>
-<li>对于引用类型，equals 如果没有被重写，对比它们的地址是否相等；如果 equals()方法被重写（例如 String），则比较的是地址里的内容。</li>
-</ul>
-<h1 id="hashMap的底层实现原理"><a href="#hashMap的底层实现原理" class="headerlink" title="hashMap的底层实现原理"></a>hashMap的底层实现原理</h1><p>Node对象，有key,value,hash,next.</p>
-<p>hash字段的值是key.hashcode()二次加工得到的，高16位于低16位异或(实际的table长度不会很大，一般在16位以内，这么一来，高16位就浪费了)。寻址算法是hash&amp;(table.length-1)，长度一定是2的次方树，length转化为二进制一定是1高位。其余是0，减1之后，就全是1了。</p>
-<p>Put写数据的流程。先获得slot，这里有四种情况：</p>
-<ul>
-<li>slot是null，直接放。</li>
-<li>slot不是null，但是没有链化。先判断node对象的key和当前对象的key是不是完全相等，相等就replace操作，否则就是hash冲突。</li>
-<li>slot链化，但是没有树化。不一致则加链。判断有没有达到树化阈值，有的话则转化为红黑树</li>
-<li>slot已经树化，则红黑树的平衡操作。</li>
-</ul>
-<h2 id="在JDK1-8之前"><a href="#在JDK1-8之前" class="headerlink" title="在JDK1.8之前"></a>在JDK1.8之前</h2><p>在1.8之前，HashMap的底层是散列表。通过Key的hashcode经过扰动函数处理得到hash值，通过(n-1)&amp;hash判断当前元素的存放位置，位置存在元素，判断该元素与要存入的元素的hash值以及Key是否相同，相同直接覆盖，不相同通过拉链法解决冲突。</p>
-<p>扰动函数就是hash方法，是为了防止一些实现比较长的hashcode()方法，减少碰撞。</p>
-<h2 id="在JDK1-8之后"><a href="#在JDK1-8之后" class="headerlink" title="在JDK1.8之后"></a>在JDK1.8之后</h2><p>解决冲突有大变化，当链表长度大于阈值（默认是8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，减少搜索时间。</p>
-<h2 id="HashMap的长度为什么是2的幂次方"><a href="#HashMap的长度为什么是2的幂次方" class="headerlink" title="HashMap的长度为什么是2的幂次方"></a>HashMap的长度为什么是2的幂次方</h2><p>为了存取高效，减少碰撞，尽量把数据分配均匀。hash的值范围是-2147483648到2147483647，加起来大概40亿的映射空间，只要哈希函数映射的比较均匀，一般不太容易碰撞。但是40亿长度的数组，内存放不下。所以这个散列值不能直接拿来用。用之前还要对数组的长度取模运算，得到的余数才是要存放的数组下标。数组下标的计算方法是<code>(n-1)&amp;hash</code>。n是数组长度，这也就解释了为什么长度是2的幂次方。</p>
-<p><strong>算法如何设计？</strong></p>
-<p>我们首先可能会想到采用%取余的操作来实现。但是，重点来了：<strong>“取余(%)操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作（也就是说 hash%length==hash&amp;(length-1)的前提是 length 是2的 n 次方；）。”</strong> 并且 <strong>采用二进制位操作 &amp;，相对于%能够提高运算效率，这就解释了 HashMap 的长度为什么是2的幂次方。</strong></p>
-<h2 id="M多线程导致死循环问题"><a href="#M多线程导致死循环问题" class="headerlink" title="M多线程导致死循环问题"></a>M多线程导致死循环问题</h2><p>并发情况下的Rehash会造成元素之间形成一个循环链表。不过jdk1.8之后解决了这个问题，但是多线程可能导致其他的问题比如数据丢失，并发情况下推荐使用ConcurrenthashMap。</p>
-<h1 id="ConcurrentHashMap和hashTable的区别"><a href="#ConcurrentHashMap和hashTable的区别" class="headerlink" title="ConcurrentHashMap和hashTable的区别"></a>ConcurrentHashMap和hashTable的区别</h1><p>主要体现在实现线程安全的方式不同。</p>
-<ul>
-<li><p>底层数据结构</p>
-<p>1.7的C底层采用分段的数组+链表实现，1.8的数据结构是数组+链表/红黑树。</p>
-<p>T是数组+链表，数组是主体，链表是为了解决冲突。</p>
-</li>
-<li><p>**实现线程安全的方式(重要)**：</p>
-<ul>
-<li>1.7的时候，C对数组进行分割，锁只锁一部分数据，多线程访问不同数据段的数据，不存在锁竞争。1.8的时候摒弃分段的概念，直接采用Nod数组+链表+红黑树的数据结构，并发使用synchronized和CAS来操作。看起来就像是优化且线程安全的hashMap，虽然在1.8还能看到分割的数据结构，但是简化了属性。</li>
-<li>T使用synchronized保证线程安全，效率低下，当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或者轮训状态，如果使用put添加元素，另一个线程就不能put，也不能get。</li>
-</ul>
-<p>DK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 / 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
-</li>
-</ul>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194343000.png" alt="image-20210326194343000"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194354519.png" alt="image-20210326194354519"></p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210326194403284.png" alt="image-20210326194403284"></p>
-<h1 id="ConcurrentHashMap线程安全的具体实现方式"><a href="#ConcurrentHashMap线程安全的具体实现方式" class="headerlink" title="ConcurrentHashMap线程安全的具体实现方式"></a>ConcurrentHashMap线程安全的具体实现方式</h1><h2 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h2><p>数据分段，每段加锁，当一个线程占用锁访问数据时，其他的数据可以被其他线程访问。</p>
-<p>SegMent实现了<code>ReentranLock</code>，所以是一种可重入锁，扮演锁的角色，HashEntry用于存储键值对数据。</p>
-<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
-<h2 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h2><p>采用CAS和synchronized保证线程安全。数据结构是数组+链表/红黑树，超过8就转化为红黑树。</p>
-<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
-<h1 id="hashSet、LinkedHashSet和treeSet三者异同"><a href="#hashSet、LinkedHashSet和treeSet三者异同" class="headerlink" title="hashSet、LinkedHashSet和treeSet三者异同"></a>hashSet、LinkedHashSet和treeSet三者异同</h1><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
-<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
-<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
-<h1 id="底层数据结构总结"><a href="#底层数据结构总结" class="headerlink" title="底层数据结构总结"></a>底层数据结构总结</h1><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><ul>
-<li>List<ul>
-<li>ArrayList：Object[]数组</li>
-<li>Vector：Object[]数组</li>
-<li>LinkedList：双向链表</li>
-</ul>
-</li>
-<li>Set<ul>
-<li>hashSet：基于hashMap实现，底层采用hashMap来保存元素。</li>
-<li>LinkedHashSet：<code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，并且其内部是通过 <code>LinkedHashMap</code> 来实现的。有点类似于我们之前说的 <code>LinkedHashMap</code> 其内部是基于 <code>HashMap</code> 实现一样，不过还是有一点点区别的</li>
-<li><code>TreeSet</code>（有序，唯一）： 红黑树(自平衡的排序二叉树)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li><code>HashMap</code>： JDK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
-<li><code>LinkedHashMap</code>： <code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
-<li><code>Hashtable</code>： 数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的</li>
-<li><code>TreeMap</code>： 红黑树（自平衡的排序二叉树）</li>
-</ul>
-<h1 id="如何选用"><a href="#如何选用" class="headerlink" title="如何选用"></a>如何选用</h1><p>根据特点，比如我们需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合，需要排序时选择 <code>TreeMap</code>,不需要排序时就选择 <code>HashMap</code>,需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</p>
-<p>当我们只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合，需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code>，不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code>，然后再根据实现这些接口的集合的特点来选用。</p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Netty</title>
     <url>/2021/03/29/Netty/</url>
     <content><![CDATA[<p>一个异步事件驱动的网络应用框架，用于快速开发高性能、可拓展协议的服务器和客户端。</p>
@@ -744,117 +744,6 @@
       </categories>
       <tags>
         <tag>框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OAuth2.0</title>
-    <url>/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
-<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
-<li>Third-party application：第三方应用程序，又称为客户端。</li>
-<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
-<li>Resource Owner：资源所有者，也称为用户。</li>
-<li>User Agent：用户代理，浏览器。</li>
-<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
-<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
-</ul>
-<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
-<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
-<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
-<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
-<li>用户同意给客户端授权。</li>
-<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
-<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
-<li>客户端使用令牌，想资源服务器请求资源。</li>
-<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
-</ol>
-<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
-<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
-<li><p><strong>授权码模式</strong></p>
-<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
-<ol>
-<li>用户访问客户端，客户端将用户导向认证服务器。</li>
-<li>用户选择是否给客户端授权。</li>
-<li>用户同意授权，认证服务器将用户导向事先指定的“重定向URI”，同时附上一个授权码。</li>
-<li>客户端收到授权码，附上早先的重定向URL“，向认证服务器申请令牌。</li>
-<li>认证服务器核对授权码和冲形象URL，确认无误后，向客户端发送令牌和更新令牌。</li>
-</ol>
-<p><strong>1步骤需要以下参数：</strong></p>
-<ul>
-<li>response_type：授权类型，固定值为“code”</li>
-<li>client_id：表示客户端ID，必填。</li>
-<li>redirect_url：重定向URL</li>
-<li>scope：申请的权限范围</li>
-<li>state：当前客户端状态，认证服务器会原封不动的返回这个值</li>
-</ul>
-<p>下面是一个例子</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;authorize?response_type&#x3D;code&amp;client_id&#x3D;s6BhdRkqt3&amp;state&#x3D;xyz</span><br><span class="line">        &amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
-
-<p><strong>3步骤中，服务器回应客户端的URL，包含以下参数：</strong></p>
-<ul>
-<li>code：授权码，一般是十分钟。该授权码和客户端ID与重定向URL是一一对应关系。</li>
-<li>state：如果请求包含这个参数，认证服务器会原封不动的返回这个参数。</li>
-</ul>
-<p>下面是一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Location: https:&#x2F;&#x2F;client.example.com&#x2F;cb?code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state&#x3D;xyz</span><br></pre></td></tr></table></figure>
-
-<p><strong>4步骤中，包含以下参数：</strong></p>
-<ul>
-<li>grant_type：授权模式，固定值为“authorization_code”。</li>
-<li>code：上一步获取的授权码</li>
-<li>redirect_uri：重定向URI</li>
-<li>client_id：客户端ID，必选。</li>
-</ul>
-<p>下面是一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;token HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type&#x3D;authorization_code&amp;code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br></pre></td></tr></table></figure>
-
-<p><strong>5步骤中，认证服务器返回HTTP回复，包含以下参数：</strong></p>
-<ul>
-<li>access_token：访问令牌</li>
-<li>token_type：表示令牌类型，大小写不敏感。可以是Bearer或者mac</li>
-<li>expires_in：过期时间，S单位。</li>
-<li>refresh_token：更新令牌，用来获取下一次的访问令牌。</li>
-<li>scope：权限范围。</li>
-</ul>
-<p>下面是一个列子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  HTTP&#x2F;1.1 200 OK</span><br><span class="line">     Content-Type: application&#x2F;json;charset&#x3D;UTF-8</span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">       &quot;token_type&quot;:&quot;example&quot;,</span><br><span class="line">       &quot;expires_in&quot;:3600,</span><br><span class="line">       &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">       &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">     &#125;</span><br><span class="line">从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application&#x2F;json）。此外，HTTP头信息中明确指定不得缓存。</span><br></pre></td></tr></table></figure></li>
-<li><p><strong>简化模式</strong></p>
-<p>不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了授权码步骤。所有步骤在浏览器完成， 令牌对访问者可见，且客户端不需要认证。</p>
-</li>
-<li><p><strong>密码模式</strong></p>
-<p>在密码模式中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向服务提供商获取token。</p>
-</li>
-<li><p><strong>客户端模式</strong></p>
-<p>客户端以自己的名义而不是以用户的名义想服务提供商进行认证。严格的说，客户端模式不属于pauth框架要解决的问题。在这种模式下，用户直接向客户端注册，客户端以自己的名义要求服务提供商提供服务，不存在授权问题。步骤如下：</p>
-<ul>
-<li>客户端向认证服务器进行身份认证，并要求一个token</li>
-<li>认证服务器确认无误，向客户端提供token</li>
-</ul>
-</li>
-</ul>
-<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>用户访问的时候，如果客户端的令牌已经失效，需要使用更新令牌申请一个新的访问令牌。</p>
-<p>客户端发送更新令牌的请求，包含以下参数：</p>
-<ul>
-<li>granttype：授权模式，固定为“refreshtoken”</li>
-<li>refresh_token：早前收到的更新令牌。</li>
-<li>scope：权限范围</li>
-</ul>
-<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1><p>腾讯会议提供的oauth2.0对接的步骤如下：</p>
-<ul>
-<li>用户同意授权，获取auth_code</li>
-<li>通过auth_code换取token</li>
-<li>刷新token</li>
-<li>拉取用户信息(检查token是否有效)</li>
-</ul>
-<p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
-<h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
-<p>关于上下文，在oauth2.0的连接中，会传两个参数，一个是state，另一个是auth_code，auth_code用于换取token，state用于参数校验，我们这里可以利用state做上下文，在state中放学生学号，然后在回调的时候，通过state作为主键查询，从而做到数据绑定。</p>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1520,19 +1409,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora+PicGo实现图片自动上传</title>
     <url>/2020/03/25/Typora-PicGo%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>我实在太喜欢Typora了。不仅仅因为它腿白貌。。，啊呸，页面清爽美观。而且还支持各种代码格式，写起笔记来视觉很好。但是令人痛心的是，当你想在Typora中插入图片时，OK，你可以插入，但是它本质上是一种弱引用，引用的只是图片的本地路径。所以如果你想分享你的md文件，还需要连带分享一个图片资源文件夹，十分臃肿。在使用PicGo之前，想用hexo渲染md文件，都是先打开图床工具—&gt;上传图片—&gt;复制图片URL—&gt;粘贴进Typora，属实麻烦。自从Typora支持通过PicGo自动上传之后，Typora真的完美了，用起来不要太爽。</p>
@@ -1576,6 +1452,19 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker容器的备份与迁移</title>
     <url>/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/</url>
     <content><![CDATA[<h2 id="备份容器"><a href="#备份容器" class="headerlink" title="备份容器"></a>备份容器</h2><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
@@ -1598,21 +1487,114 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+    <title>OAuth2.0</title>
+    <url>/2021/04/08/OAuth2-0%E6%8E%88%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="一、oauth2-0"><a href="#一、oauth2-0" class="headerlink" title="一、oauth2.0"></a>一、oauth2.0</h1><p>OAuth是一个关于授权的开放网路协议，目前版本是2.0。</p>
+<h2 id="名词定义"><a href="#名词定义" class="headerlink" title="名词定义"></a>名词定义</h2><ul>
+<li>Third-party application：第三方应用程序，又称为客户端。</li>
+<li>Http service：HTTP服务提供商，简称“服务提供商”。</li>
+<li>Resource Owner：资源所有者，也称为用户。</li>
+<li>User Agent：用户代理，浏览器。</li>
+<li>Authorization server：认证服务器，服务提供商专门用来处理认证的服务器。</li>
+<li>Resource server：资源服务器，服务提供商存放用户生成的资源的服务器。</li>
+</ul>
+<p>所以，OAuth2.0的作用就是让客户端安全可控的获取用户的授权，与服务提供商进行互动。</p>
+<h2 id="OAuth2-0思路"><a href="#OAuth2-0思路" class="headerlink" title="OAuth2.0思路"></a>OAuth2.0思路</h2><p>在客户端与服务提供商之间，设置了一个授权层。客户端不能直接登录服务提供商，只能登陆授权层，将用户和客户端分开。客户端登陆授权曾锁用的令牌(token)，和用户使用的密码不同。用户可以在登陆的时候，指定授权层的权限范围和有效期。</p>
+<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><ol>
+<li>A用户打开客户端之后，客户端要求用户给予授权。</li>
+<li>用户同意给客户端授权。</li>
+<li>客户端使用上一步获得的授权，想认证服务器申请令牌。</li>
+<li>认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</li>
+<li>客户端使用令牌，想资源服务器请求资源。</li>
+<li>资源服务器确认令牌无误，同意向客户端开放资源。</li>
+</ol>
+<p>第二步骤是关键，即用户怎么才能给客户端授权。有了这个授权，客户端就可以获取令牌，从而获得资源。</p>
+<h2 id="客户端的授权模式"><a href="#客户端的授权模式" class="headerlink" title="客户端的授权模式"></a>客户端的授权模式</h2><ul>
+<li><p><strong>授权码模式</strong></p>
+<p>功能最完整，通过客户端的后台服务器，与服务提供商的认证服务器进行互动。</p>
+<ol>
+<li>用户访问客户端，客户端将用户导向认证服务器。</li>
+<li>用户选择是否给客户端授权。</li>
+<li>用户同意授权，认证服务器将用户导向事先指定的“重定向URI”，同时附上一个授权码。</li>
+<li>客户端收到授权码，附上早先的重定向URL“，向认证服务器申请令牌。</li>
+<li>认证服务器核对授权码和冲形象URL，确认无误后，向客户端发送令牌和更新令牌。</li>
+</ol>
+<p><strong>1步骤需要以下参数：</strong></p>
+<ul>
+<li>response_type：授权类型，固定值为“code”</li>
+<li>client_id：表示客户端ID，必填。</li>
+<li>redirect_url：重定向URL</li>
+<li>scope：申请的权限范围</li>
+<li>state：当前客户端状态，认证服务器会原封不动的返回这个值</li>
+</ul>
+<p>下面是一个例子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;authorize?response_type&#x3D;code&amp;client_id&#x3D;s6BhdRkqt3&amp;state&#x3D;xyz</span><br><span class="line">        &amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br></pre></td></tr></table></figure>
 
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+<p><strong>3步骤中，服务器回应客户端的URL，包含以下参数：</strong></p>
+<ul>
+<li>code：授权码，一般是十分钟。该授权码和客户端ID与重定向URL是一一对应关系。</li>
+<li>state：如果请求包含这个参数，认证服务器会原封不动的返回这个参数。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Location: https:&#x2F;&#x2F;client.example.com&#x2F;cb?code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">          &amp;state&#x3D;xyz</span><br></pre></td></tr></table></figure>
+
+<p><strong>4步骤中，包含以下参数：</strong></p>
+<ul>
+<li>grant_type：授权模式，固定值为“authorization_code”。</li>
+<li>code：上一步获取的授权码</li>
+<li>redirect_uri：重定向URI</li>
+<li>client_id：客户端ID，必选。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;token HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">grant_type&#x3D;authorization_code&amp;code&#x3D;SplxlOBeZQQYbYS6WxSbIA</span><br><span class="line">&amp;redirect_uri&#x3D;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb</span><br></pre></td></tr></table></figure>
+
+<p><strong>5步骤中，认证服务器返回HTTP回复，包含以下参数：</strong></p>
+<ul>
+<li>access_token：访问令牌</li>
+<li>token_type：表示令牌类型，大小写不敏感。可以是Bearer或者mac</li>
+<li>expires_in：过期时间，S单位。</li>
+<li>refresh_token：更新令牌，用来获取下一次的访问令牌。</li>
+<li>scope：权限范围。</li>
+</ul>
+<p>下面是一个列子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  HTTP&#x2F;1.1 200 OK</span><br><span class="line">     Content-Type: application&#x2F;json;charset&#x3D;UTF-8</span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       &quot;access_token&quot;:&quot;2YotnFZFEjr1zCsicMWpAA&quot;,</span><br><span class="line">       &quot;token_type&quot;:&quot;example&quot;,</span><br><span class="line">       &quot;expires_in&quot;:3600,</span><br><span class="line">       &quot;refresh_token&quot;:&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;,</span><br><span class="line">       &quot;example_parameter&quot;:&quot;example_value&quot;</span><br><span class="line">     &#125;</span><br><span class="line">从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application&#x2F;json）。此外，HTTP头信息中明确指定不得缓存。</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>简化模式</strong></p>
+<p>不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了授权码步骤。所有步骤在浏览器完成， 令牌对访问者可见，且客户端不需要认证。</p>
+</li>
+<li><p><strong>密码模式</strong></p>
+<p>在密码模式中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向服务提供商获取token。</p>
+</li>
+<li><p><strong>客户端模式</strong></p>
+<p>客户端以自己的名义而不是以用户的名义想服务提供商进行认证。严格的说，客户端模式不属于pauth框架要解决的问题。在这种模式下，用户直接向客户端注册，客户端以自己的名义要求服务提供商提供服务，不存在授权问题。步骤如下：</p>
+<ul>
+<li>客户端向认证服务器进行身份认证，并要求一个token</li>
+<li>认证服务器确认无误，向客户端提供token</li>
+</ul>
+</li>
+</ul>
+<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>用户访问的时候，如果客户端的令牌已经失效，需要使用更新令牌申请一个新的访问令牌。</p>
+<p>客户端发送更新令牌的请求，包含以下参数：</p>
+<ul>
+<li>granttype：授权模式，固定为“refreshtoken”</li>
+<li>refresh_token：早前收到的更新令牌。</li>
+<li>scope：权限范围</li>
+</ul>
+<h1 id="二、水杉平台对接腾讯会议"><a href="#二、水杉平台对接腾讯会议" class="headerlink" title="二、水杉平台对接腾讯会议"></a>二、水杉平台对接腾讯会议</h1><p>腾讯会议提供的oauth2.0对接的步骤如下：</p>
+<ul>
+<li>用户同意授权，获取auth_code</li>
+<li>通过auth_code换取token</li>
+<li>刷新token</li>
+<li>拉取用户信息(检查token是否有效)</li>
+</ul>
+<p>很明显，对接腾讯会议使用的授权模式是授权码模式。</p>
+<h2 id="业务需求"><a href="#业务需求" class="headerlink" title="业务需求"></a>业务需求</h2><p>对于水杉的用户来说，是没有企业身份的，所以不能通过企业授权的方式直接读取学生的信息。现在的需求是，老师使用水杉平台新建一个会议，然后在会后导出学生参会的具体信息。所以在老师新建一个会议后，不能直接把参加会议的URL给到老师或者学生，我们给出的链接，只能是oauth2.0授权的连接，学生拿到链接同意授权，然后从腾讯会议获取到学生的用户名，和我们数据库的真实姓名做绑定，这样在做导出的时候，就可以根据学生的腾讯会议的用户名导出真实的姓名。</p>
+<p>关于上下文，在oauth2.0的连接中，会传两个参数，一个是state，另一个是auth_code，auth_code用于换取token，state用于参数校验，我们这里可以利用state做上下文，在state中放学生学号，然后在回调的时候，通过state作为主键查询，从而做到数据绑定。</p>
 ]]></content>
       <categories>
-        <category>Bug合集</category>
+        <category>复习入口</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1656,6 +1638,24 @@
 ]]></content>
       <categories>
         <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -1747,119 +1747,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>中医基础理论-绪论</title>
-    <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA-%E7%BB%AA%E8%AE%BA/</url>
-    <content><![CDATA[<p>什么是中医学？中医学的学科属性？</p>
-<ul>
-<li><strong>中医基础理论的组成部分</strong></li>
-<li><strong>中医理论体系的发展简史</strong></li>
-<li><strong>中医理论体系的主要特点</strong></li>
-</ul>
-<h2 id="1、中医基础理论的组成部分"><a href="#1、中医基础理论的组成部分" class="headerlink" title="1、中医基础理论的组成部分"></a>1、中医基础理论的组成部分</h2><p><strong>中医学：</strong>是发祥于中国古代，<em>建立在中国传统文化基础上</em>，以<em>整体观念</em>为知道思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命、健康、疾病的学科。(易学难精，因为文化二字)。</p>
-<p>西医看微观，中医看整体。西医治病，中医也治病，中西更强调因人而异，量体裁衣。</p>
-<p><strong>中医基础理论：</strong></p>
-<ul>
-<li>中医学的哲学基础</li>
-<li><strong>中医对正常人体的认识</strong></li>
-<li><strong>中医对疾病的认识</strong></li>
-<li>中医养生和诊疗疾病的原则</li>
-</ul>
-<p>《中医学大辞典》</p>
-<p><strong>中医学的学科属性：</strong></p>
-<ul>
-<li>自然科学与社会科学的交叉性</li>
-<li>基础学科与应用学科的双重性</li>
-<li>东方传统文化的综合性</li>
-<li>科学、仁(天地良心)术和技艺的融合性</li>
-</ul>
-<p>道理：</p>
-<ul>
-<li>道：道可道非常道，两层含义。一是本质，二是规律。</li>
-<li>理：具体的东西。</li>
-</ul>
-<p>医道：医学，医技(术)。西医就是医技，因为他们并不追求道。</p>
-<h2 id="2、中医理论体系的形成与发展"><a href="#2、中医理论体系的形成与发展" class="headerlink" title="2、中医理论体系的形成与发展"></a>2、中医理论体系的形成与发展</h2><h3 id="中医理论体系的形成："><a href="#中医理论体系的形成：" class="headerlink" title="中医理论体系的形成："></a>中医理论体系的形成：</h3><ul>
-<li>医药知识的积累</li>
-<li>对人体生命现象和自然现象的观察<ul>
-<li>直接观察法(解剖)</li>
-<li>整体观察法(没等到显微镜的发明)</li>
-</ul>
-</li>
-<li>有利的社会文化背景</li>
-<li>古代哲学思想对医学的渗透</li>
-</ul>
-<h3 id="中医理论体系的确立"><a href="#中医理论体系的确立" class="headerlink" title="中医理论体系的确立"></a>中医理论体系的确立</h3><p>**黄帝内经:**分《灵枢》《素问》两部分，为古代医学家托轩辕黄帝名之作，为医学家、医学理论家联合创作，一般认为形成于战国、秦汉时期。现存最早中医学专著，标志着中医理论体系的建立。</p>
-<p><strong>扁鹊：</strong>战国时期著名医学家，相传中医典籍《难经》(《难经》不难，《易经》不易)为其所著。补内径不足。中医像大哥二哥，西医像扁鹊。</p>
-<p><strong>张仲景：</strong>东汉末著名医学家，“医圣”，撰《伤寒杂病论》。后世整理成《伤寒论》《金匮要略》。这是中国第一部从理论到时间、确立辩证论治法则的医学专著。(别说是最高水平)</p>
-<p><strong>华佗：</strong>吃亏，没书啊</p>
-<p><strong>神农本草经：</strong>又名《神农本草》，撰人不详，“神农”为托名，为中医药理理论依稀的形成奠定了基础</p>
-<blockquote>
-<p><strong>病、证、症</strong></p>
-</blockquote>
-<h3 id="中医学理论体系的发展"><a href="#中医学理论体系的发展" class="headerlink" title="中医学理论体系的发展"></a>中医学理论体系的发展</h3><p><strong>脉经：</strong>魏晋之际的著名医学家、医术编纂家王叔和。撰写了第一部脉学专著<strong>《脉经》</strong></p>
-<p><strong>针灸甲乙经：</strong>晋代皇普谧编撰，是中国现存最早的一步针灸学专著。10卷，南北朝时期改为12卷。</p>
-<p><strong>诸病源候论：</strong>隋朝巢元方所撰，第一部病因病机症候学专著</p>
-<p><strong>魏晋隋唐：</strong>丰富实践时期。</p>
-<p><strong>宋金元：</strong>争鸣突破时期。三因极–病症方论：宋代陈无择撰，中医综合性专著。金元四大家：</p>
-<ul>
-<li><p>刘完素：金代医学家，属于“寒凉派”(王老吉)</p>
-</li>
-<li><p>李东垣：“易水派”，牵扯五行学说</p>
-</li>
-<li><p>张从正：“攻邪派”。中医的邪一般指病因</p>
-</li>
-<li><p>朱震亨：“养阴派”。阴阳学说(六味地黄丸，只适合肾阴虚，肾阳虚的话越吃越糟糕奥)</p>
-<p><strong>门户这件事，还是不好的</strong>。</p>
-</li>
-</ul>
-<p><strong>明清时期：</strong>综合汇通，深化发展时期。</p>
-<ul>
-<li>明：王肯堂《证治准绳》</li>
-<li>清：吴谦《医宗金鉴》、陈梦雷《古今图书集成-医部全录》</li>
-<li><strong>温病论的创立：</strong><ul>
-<li>明：吴又可《瘟疫论》—“戾气说”</li>
-<li>清：叶天士《温热论》–“卫气营血辩证”。吴鞠通《温病条辨》—“三焦辨证”。薛生白《温热条辨》</li>
-</ul>
-</li>
-<li>《医林改错》：清代王清任撰，中医脏象著作(解剖)。活血化瘀</li>
-</ul>
-<p><strong>现代和近代：</strong>一言难尽</p>
-<blockquote>
-<p><strong>望</strong>而知之谓之神</p>
-<p><strong>闻</strong>而止之为之圣</p>
-<p><strong>问</strong>而知之谓之工</p>
-<p><strong>切</strong>而知之谓之巧</p>
-</blockquote>
-<h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>中医学哲学基础-五行学说</title>
     <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
     <content><![CDATA[<blockquote>
@@ -1897,6 +1784,27 @@
       <tags>
         <tag>中医</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
   </entry>
   <entry>
     <title>中医学哲学基础-阴阳学说</title>
@@ -2049,21 +1957,95 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
+    <title>中医基础理论-绪论</title>
+    <url>/2020/04/12/%E4%B8%AD%E5%8C%BB%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA-%E7%BB%AA%E8%AE%BA/</url>
+    <content><![CDATA[<p>什么是中医学？中医学的学科属性？</p>
+<ul>
+<li><strong>中医基础理论的组成部分</strong></li>
+<li><strong>中医理论体系的发展简史</strong></li>
+<li><strong>中医理论体系的主要特点</strong></li>
+</ul>
+<h2 id="1、中医基础理论的组成部分"><a href="#1、中医基础理论的组成部分" class="headerlink" title="1、中医基础理论的组成部分"></a>1、中医基础理论的组成部分</h2><p><strong>中医学：</strong>是发祥于中国古代，<em>建立在中国传统文化基础上</em>，以<em>整体观念</em>为知道思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命、健康、疾病的学科。(易学难精，因为文化二字)。</p>
+<p>西医看微观，中医看整体。西医治病，中医也治病，中西更强调因人而异，量体裁衣。</p>
+<p><strong>中医基础理论：</strong></p>
+<ul>
+<li>中医学的哲学基础</li>
+<li><strong>中医对正常人体的认识</strong></li>
+<li><strong>中医对疾病的认识</strong></li>
+<li>中医养生和诊疗疾病的原则</li>
+</ul>
+<p>《中医学大辞典》</p>
+<p><strong>中医学的学科属性：</strong></p>
+<ul>
+<li>自然科学与社会科学的交叉性</li>
+<li>基础学科与应用学科的双重性</li>
+<li>东方传统文化的综合性</li>
+<li>科学、仁(天地良心)术和技艺的融合性</li>
+</ul>
+<p>道理：</p>
+<ul>
+<li>道：道可道非常道，两层含义。一是本质，二是规律。</li>
+<li>理：具体的东西。</li>
+</ul>
+<p>医道：医学，医技(术)。西医就是医技，因为他们并不追求道。</p>
+<h2 id="2、中医理论体系的形成与发展"><a href="#2、中医理论体系的形成与发展" class="headerlink" title="2、中医理论体系的形成与发展"></a>2、中医理论体系的形成与发展</h2><h3 id="中医理论体系的形成："><a href="#中医理论体系的形成：" class="headerlink" title="中医理论体系的形成："></a>中医理论体系的形成：</h3><ul>
+<li>医药知识的积累</li>
+<li>对人体生命现象和自然现象的观察<ul>
+<li>直接观察法(解剖)</li>
+<li>整体观察法(没等到显微镜的发明)</li>
+</ul>
+</li>
+<li>有利的社会文化背景</li>
+<li>古代哲学思想对医学的渗透</li>
+</ul>
+<h3 id="中医理论体系的确立"><a href="#中医理论体系的确立" class="headerlink" title="中医理论体系的确立"></a>中医理论体系的确立</h3><p>**黄帝内经:**分《灵枢》《素问》两部分，为古代医学家托轩辕黄帝名之作，为医学家、医学理论家联合创作，一般认为形成于战国、秦汉时期。现存最早中医学专著，标志着中医理论体系的建立。</p>
+<p><strong>扁鹊：</strong>战国时期著名医学家，相传中医典籍《难经》(《难经》不难，《易经》不易)为其所著。补内径不足。中医像大哥二哥，西医像扁鹊。</p>
+<p><strong>张仲景：</strong>东汉末著名医学家，“医圣”，撰《伤寒杂病论》。后世整理成《伤寒论》《金匮要略》。这是中国第一部从理论到时间、确立辩证论治法则的医学专著。(别说是最高水平)</p>
+<p><strong>华佗：</strong>吃亏，没书啊</p>
+<p><strong>神农本草经：</strong>又名《神农本草》，撰人不详，“神农”为托名，为中医药理理论依稀的形成奠定了基础</p>
+<blockquote>
+<p><strong>病、证、症</strong></p>
+</blockquote>
+<h3 id="中医学理论体系的发展"><a href="#中医学理论体系的发展" class="headerlink" title="中医学理论体系的发展"></a>中医学理论体系的发展</h3><p><strong>脉经：</strong>魏晋之际的著名医学家、医术编纂家王叔和。撰写了第一部脉学专著<strong>《脉经》</strong></p>
+<p><strong>针灸甲乙经：</strong>晋代皇普谧编撰，是中国现存最早的一步针灸学专著。10卷，南北朝时期改为12卷。</p>
+<p><strong>诸病源候论：</strong>隋朝巢元方所撰，第一部病因病机症候学专著</p>
+<p><strong>魏晋隋唐：</strong>丰富实践时期。</p>
+<p><strong>宋金元：</strong>争鸣突破时期。三因极–病症方论：宋代陈无择撰，中医综合性专著。金元四大家：</p>
+<ul>
+<li><p>刘完素：金代医学家，属于“寒凉派”(王老吉)</p>
+</li>
+<li><p>李东垣：“易水派”，牵扯五行学说</p>
+</li>
+<li><p>张从正：“攻邪派”。中医的邪一般指病因</p>
+</li>
+<li><p>朱震亨：“养阴派”。阴阳学说(六味地黄丸，只适合肾阴虚，肾阳虚的话越吃越糟糕奥)</p>
+<p><strong>门户这件事，还是不好的</strong>。</p>
+</li>
+</ul>
+<p><strong>明清时期：</strong>综合汇通，深化发展时期。</p>
+<ul>
+<li>明：王肯堂《证治准绳》</li>
+<li>清：吴谦《医宗金鉴》、陈梦雷《古今图书集成-医部全录》</li>
+<li><strong>温病论的创立：</strong><ul>
+<li>明：吴又可《瘟疫论》—“戾气说”</li>
+<li>清：叶天士《温热论》–“卫气营血辩证”。吴鞠通《温病条辨》—“三焦辨证”。薛生白《温热条辨》</li>
+</ul>
+</li>
+<li>《医林改错》：清代王清任撰，中医脏象著作(解剖)。活血化瘀</li>
+</ul>
+<p><strong>现代和近代：</strong>一言难尽</p>
+<blockquote>
+<p><strong>望</strong>而知之谓之神</p>
+<p><strong>闻</strong>而止之为之圣</p>
+<p><strong>问</strong>而知之谓之工</p>
+<p><strong>切</strong>而知之谓之巧</p>
+</blockquote>
+<h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
       <categories>
-        <category>Bug合集</category>
+        <category>中医理论基础</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
@@ -2168,6 +2150,24 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CNN手写文字识别</title>
     <url>/2020/04/08/%E5%88%A9%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E8%B7%91%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%89%8B%E5%86%99%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB/</url>
     <content><![CDATA[<h1 id="深度学习平台"><a href="#深度学习平台" class="headerlink" title="深度学习平台"></a>深度学习平台</h1><p><a href="ftp://hhzhu.top/">数据集下载</a>(账号：hhzhu  密码：123456)</p>
@@ -2201,6 +2201,36 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用图纸识别调研</title>
+    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
+    <content><![CDATA[<blockquote>
+<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
+</blockquote>
+<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
+<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
+<p><strong>pom.xml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>controller</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>static</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
+<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
+<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
+<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -2245,36 +2275,6 @@
       <categories>
         <category>后端技术</category>
       </categories>
-  </entry>
-  <entry>
-    <title>通用图纸识别调研</title>
-    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
-    <content><![CDATA[<blockquote>
-<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
-</blockquote>
-<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
-<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
-<p><strong>pom.xml</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>controller</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>static</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
-<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
-<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
-<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-      </tags>
   </entry>
   <entry>
     <title>基础记录</title>
@@ -2489,7 +2489,7 @@
 </li>
 </ul>
 <h2 id="2-java1-8默认的垃圾收集器"><a href="#2-java1-8默认的垃圾收集器" class="headerlink" title="2.java1.8默认的垃圾收集器"></a>2.java1.8默认的垃圾收集器</h2><p>新生代的parallel scavenge（复制）+parallel old（标记整理）</p>
-<h2 id="3-底层网络模型"><a href="#3-底层网络模型" class="headerlink" title="3.底层网络模型"></a>3.底层网络模型</h2><p><a href="https://developer.51cto.com/art/202010/628344.htm?pc">参考链接</a></p>
+<h2 id="3-底层网络模型"><a href="#3-底层网络模型" class="headerlink" title="3.底层网络模型"></a>3.底层网络模型</h2><p><a href="https://victor-huihui.gitee.io/2020/04/19/%E5%BA%95%E5%B1%82%E7%BD%91%E7%BB%9CIO%E6%A8%A1%E5%9E%8B/">参考链接</a></p>
 <h2 id="4-java内存泄漏"><a href="#4-java内存泄漏" class="headerlink" title="4.java内存泄漏"></a>4.java内存泄漏</h2><p><strong>内存溢出：</strong>申请了10个字节的空间，但是在这个空间写入11或者以上的字节，出现溢出。</p>
 <p><strong>内存泄漏：</strong>new申请内存，但是很久不用，但是因为一直被某些实例持有导致GC不能回收，就是应该释放的对象没有被释放。</p>
 <h2 id="5-见过哪些弱引用和虚引用"><a href="#5-见过哪些弱引用和虚引用" class="headerlink" title="5.见过哪些弱引用和虚引用"></a>5.见过哪些弱引用和虚引用</h2><h2 id="6-设计一个文件格式，要考虑哪些问题"><a href="#6-设计一个文件格式，要考虑哪些问题" class="headerlink" title="6.设计一个文件格式，要考虑哪些问题"></a>6.设计一个文件格式，要考虑哪些问题</h2><p>操作系统中的文件系统。</p>
@@ -2506,49 +2506,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>审视</title>
-    <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
-    <content><![CDATA[<blockquote>
-<p>人活着的时候审视自己是一种不痛不痒的审视。</p>
-</blockquote>
-<h1 id="大奶奶"><a href="#大奶奶" class="headerlink" title="大奶奶"></a>大奶奶</h1><p>大奶奶是奶奶的妯娌，得了小脑萎缩，疯言疯语成了常态。但是她认得我们。她最信任的人是我老叔，他倾诉最多的人，是我奶奶。她也认得我和小妹。可能在她那还清醒的脑区域，为这些她觉得无害的人，保留了少许位置。</p>
-<p>大奶奶不是谁都信任。她整天疯言疯语的对象，是我的邻居，<strong>瞎奶奶</strong>。</p>
-<p>我打记事起瞎奶奶眼睛就瞧不见。瞎奶奶家里卖醋，买来醋精兑上水，两毛钱装满一瓶。我小时候觉得醋是甜的，打醋回家的路上拧开盖子呷一口，甚是快活。瞎奶奶人也慈祥，身体有点不舒服去找瞎奶奶，她摸摸地再摸摸头，嘴里念着咒语，心里就觉得踏实。我向来胆子大，不肯信什么迷信，但是瞎奶奶的那一套，更像是一种心灵的安抚。</p>
-<p>大奶奶骂瞎奶奶，小脑萎缩后这成了她业余生活的全部。</p>
-<p>她一个人自言自语的时候没人知道，所以我理解她找奶奶倾诉是缓解自己的害怕。</p>
-<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我把吃的给他，给她一箱，我为啥要给她啊，我这么大年纪了，我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
-<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“你听我跟你说，啥事也没有，年轻的时候，也不知谁管谁借了一瓢面，说是忘了还还是怎么的，就这样结下了梁子，谁知道她能记一辈子，你瞎奶奶可是个好人”。瞎奶奶生前，也是奶奶最好的朋友。</p>
-<p>大奶奶逢人便说瞎奶奶，大家也都道她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前，别人怎么劝都没用，那是她心头的结。</p>
-<p>奶奶这辈人，经历过太多事情，听见过炮弹声，挣过工分换饭吃，甚至三年自然灾害也捡了条命。他们从不和平走向和平，从挨饿到衣食无忧。所以他们走的一遭真正该记住的东西是什么？大奶奶的答案却是这样的。</p>
-<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在一个梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
-<p>我希望大奶奶的梦能醒来，她饶过自己。</p>
-<p>而我回家路上又呷了一口甜美的醋。</p>
-<p><strong>谁又能饶过自己。</strong></p>
-<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200331023927.jpg" width="300" alt="审视" style="border-radius:50%">
-
-<hr>
-<h1 id="喜棺"><a href="#喜棺" class="headerlink" title="喜棺"></a>喜棺</h1><blockquote>
-<p>那些自认为活的通透的人，你能不能告诉我，我们到底该如何正视死亡？</p>
-</blockquote>
-<p>五百口人的小村庄被一条恶臭的小河隔开。</p>
-<p>小河原本是不臭的，冬天结了很厚的冰，老实的农村爷们搬了张桌子在上面打麻将。村子也热闹，我跟着父亲去地里看庄稼，村里一位比我大结了婚的哥哥开玩笑把我的裤子脱了下来，我抹不开面，提上裤子骂他娘。从那以后，他每次看到我一个人的时候，都扬言要打我，我至今仍讨厌他，他也没敢真的打我。</p>
-<p>小河的一侧是我家挨着瞎奶奶家，小河的另一侧，住着我儿时的玩伴–蹦蹦。</p>
-<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦，可能是因为他太会蹦了，他走路东倒西歪的走不好，他也不太聪明。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
-<p>主人公是蹦蹦的奶奶。</p>
-<p>这期间工作多停了几天，直到今天早上得知主人公已经去世。</p>
-<p>我出门听见河对过满院子的哭声，心里百感交集。我没想过要以文学的手法表现这世间的疾苦，这每一句话，都是我努力找到一个最准确的回忆，最真实的记录。如您所见，抛开别的不谈，这世间如此残忍。一遭一遭的总会变了样子，活着的人感叹、思考、也开心也难过，死的人呢，再疾苦也好，快乐也好，也都消失不见了。</p>
-<p>河这边的我们准备吃烤鱼，我下午忙着开会，精神欠佳。</p>
-<p>河那边的他们，用哭声送死者最后一程。</p>
-<p>逝者安息。</p>
-]]></content>
-      <categories>
-        <category>听个故事吧</category>
-      </categories>
-      <tags>
-        <tag>故事</tag>
       </tags>
   </entry>
   <entry>
@@ -2859,6 +2816,49 @@
       </categories>
       <tags>
         <tag>小知识集锦-1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>审视</title>
+    <url>/2020/03/30/%E5%AE%A1%E8%A7%86/</url>
+    <content><![CDATA[<blockquote>
+<p>人活着的时候审视自己是一种不痛不痒的审视。</p>
+</blockquote>
+<h1 id="大奶奶"><a href="#大奶奶" class="headerlink" title="大奶奶"></a>大奶奶</h1><p>大奶奶是奶奶的妯娌，得了小脑萎缩，疯言疯语成了常态。但是她认得我们。她最信任的人是我老叔，他倾诉最多的人，是我奶奶。她也认得我和小妹。可能在她那还清醒的脑区域，为这些她觉得无害的人，保留了少许位置。</p>
+<p>大奶奶不是谁都信任。她整天疯言疯语的对象，是我的邻居，<strong>瞎奶奶</strong>。</p>
+<p>我打记事起瞎奶奶眼睛就瞧不见。瞎奶奶家里卖醋，买来醋精兑上水，两毛钱装满一瓶。我小时候觉得醋是甜的，打醋回家的路上拧开盖子呷一口，甚是快活。瞎奶奶人也慈祥，身体有点不舒服去找瞎奶奶，她摸摸地再摸摸头，嘴里念着咒语，心里就觉得踏实。我向来胆子大，不肯信什么迷信，但是瞎奶奶的那一套，更像是一种心灵的安抚。</p>
+<p>大奶奶骂瞎奶奶，小脑萎缩后这成了她业余生活的全部。</p>
+<p>她一个人自言自语的时候没人知道，所以我理解她找奶奶倾诉是缓解自己的害怕。</p>
+<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我把吃的给他，给她一箱，我为啥要给她啊，我这么大年纪了，我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
+<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“你听我跟你说，啥事也没有，年轻的时候，也不知谁管谁借了一瓢面，说是忘了还还是怎么的，就这样结下了梁子，谁知道她能记一辈子，你瞎奶奶可是个好人”。瞎奶奶生前，也是奶奶最好的朋友。</p>
+<p>大奶奶逢人便说瞎奶奶，大家也都道她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前，别人怎么劝都没用，那是她心头的结。</p>
+<p>奶奶这辈人，经历过太多事情，听见过炮弹声，挣过工分换饭吃，甚至三年自然灾害也捡了条命。他们从不和平走向和平，从挨饿到衣食无忧。所以他们走的一遭真正该记住的东西是什么？大奶奶的答案却是这样的。</p>
+<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在一个梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
+<p>我希望大奶奶的梦能醒来，她饶过自己。</p>
+<p>而我回家路上又呷了一口甜美的醋。</p>
+<p><strong>谁又能饶过自己。</strong></p>
+<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200331023927.jpg" width="300" alt="审视" style="border-radius:50%">
+
+<hr>
+<h1 id="喜棺"><a href="#喜棺" class="headerlink" title="喜棺"></a>喜棺</h1><blockquote>
+<p>那些自认为活的通透的人，你能不能告诉我，我们到底该如何正视死亡？</p>
+</blockquote>
+<p>五百口人的小村庄被一条恶臭的小河隔开。</p>
+<p>小河原本是不臭的，冬天结了很厚的冰，老实的农村爷们搬了张桌子在上面打麻将。村子也热闹，我跟着父亲去地里看庄稼，村里一位比我大结了婚的哥哥开玩笑把我的裤子脱了下来，我抹不开面，提上裤子骂他娘。从那以后，他每次看到我一个人的时候，都扬言要打我，我至今仍讨厌他，他也没敢真的打我。</p>
+<p>小河的一侧是我家挨着瞎奶奶家，小河的另一侧，住着我儿时的玩伴–蹦蹦。</p>
+<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦，可能是因为他太会蹦了，他走路东倒西歪的走不好，他也不太聪明。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
+<p>主人公是蹦蹦的奶奶。</p>
+<p>这期间工作多停了几天，直到今天早上得知主人公已经去世。</p>
+<p>我出门听见河对过满院子的哭声，心里百感交集。我没想过要以文学的手法表现这世间的疾苦，这每一句话，都是我努力找到一个最准确的回忆，最真实的记录。如您所见，抛开别的不谈，这世间如此残忍。一遭一遭的总会变了样子，活着的人感叹、思考、也开心也难过，死的人呢，再疾苦也好，快乐也好，也都消失不见了。</p>
+<p>河这边的我们准备吃烤鱼，我下午忙着开会，精神欠佳。</p>
+<p>河那边的他们，用哭声送死者最后一程。</p>
+<p>逝者安息。</p>
+]]></content>
+      <categories>
+        <category>听个故事吧</category>
+      </categories>
+      <tags>
+        <tag>故事</tag>
       </tags>
   </entry>
   <entry>
@@ -3251,6 +3251,29 @@
       </tags>
   </entry>
   <entry>
+    <title>雪花算法生成ID</title>
+    <url>/2020/03/29/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E7%94%9F%E6%88%90ID/</url>
+    <content><![CDATA[<h3 id="抽取工具类"><a href="#抽取工具类" class="headerlink" title="抽取工具类"></a>抽取工具类</h3><p>之前的数据库设计采取的是主键自增的方式。后来改为了雪花算法。关于雪花算法的具体实现问题，可以抽取一个工具类IDworker，IDworker中的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.management.ManagementFactory;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.NetworkInterface;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;名称：IdWorker.java&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;描述：分布式自增长ID&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><br><span class="line"><span class="comment"> *     Twitter的 Snowflake　JAVA实现方案</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> * 核心代码为其IdWorker这个类实现，其原理结构如下，我分别用一个0表示一位，用—分割开部分的作用：</span></span><br><span class="line"><span class="comment"> * 1||0---0000000000 0000000000 0000000000 0000000000 0 --- 00000 ---00000 ---000000000000</span></span><br><span class="line"><span class="comment"> * 在上面的字符串中，第一位为未使用（实际上也可作为long的符号位），接下来的41位为毫秒级时间，</span></span><br><span class="line"><span class="comment"> * 然后5位datacenter标识位，5位机器ID（并不算标识符，实际是为线程标识），</span></span><br><span class="line"><span class="comment"> * 然后12位该毫秒内的当前毫秒内的计数，加起来刚好64位，为一个Long型。</span></span><br><span class="line"><span class="comment"> * 这样的好处是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞（由datacenter和机器ID作区分），</span></span><br><span class="line"><span class="comment"> * 并且效率较高，经测试，snowflake每秒能够产生26万ID左右，完全满足需要。</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 6)4位ID (42(毫秒)+5(机器ID)+5(业务编码)+12(重复累加)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Polim</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdWorker</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> twepoch = <span class="number">1288834974657L</span>;</span><br><span class="line">    <span class="comment">// 机器标识位数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> workerIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">// 数据中心标识位数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> datacenterIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">// 机器ID最大值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> maxWorkerId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; workerIdBits);</span><br><span class="line">    <span class="comment">// 数据中心ID最大值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> maxDatacenterId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; datacenterIdBits);</span><br><span class="line">    <span class="comment">// 毫秒内自增位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> sequenceBits = <span class="number">12L</span>;</span><br><span class="line">    <span class="comment">// 机器ID偏左移12位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> workerIdShift = sequenceBits;</span><br><span class="line">    <span class="comment">// 数据中心ID左移17位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> datacenterIdShift = sequenceBits + workerIdBits;</span><br><span class="line">    <span class="comment">// 时间毫秒左移22位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> sequenceMask = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; sequenceBits);</span><br><span class="line">    <span class="comment">/* 上次生产id时间戳 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> lastTimestamp = -<span class="number">1L</span>;</span><br><span class="line">    <span class="comment">// 0，并发控制</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sequence = <span class="number">0L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerId;</span><br><span class="line">    <span class="comment">// 数据标识id部分</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> datacenterId;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IdWorker</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.datacenterId = getDatacenterId(maxDatacenterId);</span><br><span class="line">        <span class="keyword">this</span>.workerId = getMaxWorkerId(datacenterId, maxWorkerId);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> workerId</span></span><br><span class="line"><span class="comment">     *            工作机器ID</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> datacenterId</span></span><br><span class="line"><span class="comment">     *            序列号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IdWorker</span><span class="params">(<span class="keyword">long</span> workerId, <span class="keyword">long</span> datacenterId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (workerId &gt; maxWorkerId || workerId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">&quot;worker Id can&#x27;t be greater than %d or less than 0&quot;</span>, maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (datacenterId &gt; maxDatacenterId || datacenterId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">&quot;datacenter Id can&#x27;t be greater than %d or less than 0&quot;</span>, maxDatacenterId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.workerId = workerId;</span><br><span class="line">        <span class="keyword">this</span>.datacenterId = datacenterId;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取下一个ID</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">long</span> <span class="title">nextId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = timeGen();</span><br><span class="line">        <span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;</span>, lastTimestamp - timestamp));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (lastTimestamp == timestamp) &#123;</span><br><span class="line">            <span class="comment">// 当前毫秒内，则+1</span></span><br><span class="line">            sequence = (sequence + <span class="number">1</span>) &amp; sequenceMask;</span><br><span class="line">            <span class="keyword">if</span> (sequence == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 当前毫秒内计数满了，则等待下一秒</span></span><br><span class="line">                timestamp = tilNextMillis(lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            sequence = <span class="number">0L</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        lastTimestamp = timestamp;</span><br><span class="line">        <span class="comment">// ID偏移组合生成最终的ID，并返回ID</span></span><br><span class="line">        <span class="keyword">long</span> nextId = ((timestamp - twepoch) &lt;&lt; timestampLeftShift)</span><br><span class="line">                | (datacenterId &lt;&lt; datacenterIdShift)</span><br><span class="line">                | (workerId &lt;&lt; workerIdShift) | sequence;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> nextId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">tilNextMillis</span><span class="params">(<span class="keyword">final</span> <span class="keyword">long</span> lastTimestamp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = <span class="keyword">this</span>.timeGen();</span><br><span class="line">        <span class="keyword">while</span> (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = <span class="keyword">this</span>.timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> timestamp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">timeGen</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 获取 maxWorkerId</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getMaxWorkerId</span><span class="params">(<span class="keyword">long</span> datacenterId, <span class="keyword">long</span> maxWorkerId)</span> </span>&#123;</span><br><span class="line">        StringBuffer mpid = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        mpid.append(datacenterId);</span><br><span class="line">        String name = ManagementFactory.getRuntimeMXBean().getName();</span><br><span class="line">        <span class="keyword">if</span> (!name.isEmpty()) &#123;</span><br><span class="line">         <span class="comment">/*</span></span><br><span class="line"><span class="comment">          * GET jvmPid</span></span><br><span class="line"><span class="comment">          */</span></span><br><span class="line">            mpid.append(name.split(<span class="string">&quot;@&quot;</span>)[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">       * MAC + PID 的 hashcode 获取16个低位</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">        <span class="keyword">return</span> (mpid.toString().hashCode() &amp; <span class="number">0xffff</span>) % (maxWorkerId + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 数据标识id部分</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getDatacenterId</span><span class="params">(<span class="keyword">long</span> maxDatacenterId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> id = <span class="number">0L</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            InetAddress ip = InetAddress.getLocalHost();</span><br><span class="line">            NetworkInterface network = NetworkInterface.getByInetAddress(ip);</span><br><span class="line">            <span class="keyword">if</span> (network == <span class="keyword">null</span>) &#123;</span><br><span class="line">                id = <span class="number">1L</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">byte</span>[] mac = network.getHardwareAddress();</span><br><span class="line">                id = ((<span class="number">0x000000FF</span> &amp; (<span class="keyword">long</span>) mac[mac.length - <span class="number">1</span>])</span><br><span class="line">                        | (<span class="number">0x0000FF00</span> &amp; (((<span class="keyword">long</span>) mac[mac.length - <span class="number">2</span>]) &lt;&lt; <span class="number">8</span>))) &gt;&gt; <span class="number">6</span>;</span><br><span class="line">                id = id % (maxDatacenterId + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot; getDatacenterId: &quot;</span> + e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Bean注入"><a href="#Bean注入" class="headerlink" title="Bean注入"></a>Bean注入</h3><p>项目中把一些工具类放在一个commom模块，然后通过依赖引进其他模块。在启动类中注入idWorker</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.user;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.interest.common.utils.IdWorker;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.EnableFeignClients;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="comment">//@MapperScan(&quot;com.interest.user.mapper&quot;)</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;&quot;com.interest.user&quot;,&quot;com.interest.common&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InterestUserApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(InterestUserApplication.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IdWorker <span class="title">idWorkker</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> IdWorker(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="雪花算法生成ID"><a href="#雪花算法生成ID" class="headerlink" title="雪花算法生成ID"></a>雪花算法生成ID</h3><p>在需要使用的代码块(一般是在serviceImpl会用到)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IdWorker idWorker;</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以用雪花算法生成ID了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String num = idWorker.nextId()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">        userEntity.setUserID(num);</span><br><span class="line">        userDao.insertUser(userEntity);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>身份证信息识别</title>
     <url>/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/</url>
     <content><![CDATA[<blockquote>
@@ -3283,29 +3306,6 @@
       <tags>
         <tag>Java</tag>
         <tag>阿里云SDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>雪花算法生成ID</title>
-    <url>/2020/03/29/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E7%94%9F%E6%88%90ID/</url>
-    <content><![CDATA[<h3 id="抽取工具类"><a href="#抽取工具类" class="headerlink" title="抽取工具类"></a>抽取工具类</h3><p>之前的数据库设计采取的是主键自增的方式。后来改为了雪花算法。关于雪花算法的具体实现问题，可以抽取一个工具类IDworker，IDworker中的代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.management.ManagementFactory;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.NetworkInterface;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;名称：IdWorker.java&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;描述：分布式自增长ID&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><br><span class="line"><span class="comment"> *     Twitter的 Snowflake　JAVA实现方案</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> * 核心代码为其IdWorker这个类实现，其原理结构如下，我分别用一个0表示一位，用—分割开部分的作用：</span></span><br><span class="line"><span class="comment"> * 1||0---0000000000 0000000000 0000000000 0000000000 0 --- 00000 ---00000 ---000000000000</span></span><br><span class="line"><span class="comment"> * 在上面的字符串中，第一位为未使用（实际上也可作为long的符号位），接下来的41位为毫秒级时间，</span></span><br><span class="line"><span class="comment"> * 然后5位datacenter标识位，5位机器ID（并不算标识符，实际是为线程标识），</span></span><br><span class="line"><span class="comment"> * 然后12位该毫秒内的当前毫秒内的计数，加起来刚好64位，为一个Long型。</span></span><br><span class="line"><span class="comment"> * 这样的好处是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞（由datacenter和机器ID作区分），</span></span><br><span class="line"><span class="comment"> * 并且效率较高，经测试，snowflake每秒能够产生26万ID左右，完全满足需要。</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 6)4位ID (42(毫秒)+5(机器ID)+5(业务编码)+12(重复累加)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Polim</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdWorker</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> twepoch = <span class="number">1288834974657L</span>;</span><br><span class="line">    <span class="comment">// 机器标识位数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> workerIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">// 数据中心标识位数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> datacenterIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">// 机器ID最大值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> maxWorkerId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; workerIdBits);</span><br><span class="line">    <span class="comment">// 数据中心ID最大值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> maxDatacenterId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; datacenterIdBits);</span><br><span class="line">    <span class="comment">// 毫秒内自增位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> sequenceBits = <span class="number">12L</span>;</span><br><span class="line">    <span class="comment">// 机器ID偏左移12位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> workerIdShift = sequenceBits;</span><br><span class="line">    <span class="comment">// 数据中心ID左移17位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> datacenterIdShift = sequenceBits + workerIdBits;</span><br><span class="line">    <span class="comment">// 时间毫秒左移22位</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> sequenceMask = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; sequenceBits);</span><br><span class="line">    <span class="comment">/* 上次生产id时间戳 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> lastTimestamp = -<span class="number">1L</span>;</span><br><span class="line">    <span class="comment">// 0，并发控制</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sequence = <span class="number">0L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerId;</span><br><span class="line">    <span class="comment">// 数据标识id部分</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> datacenterId;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IdWorker</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.datacenterId = getDatacenterId(maxDatacenterId);</span><br><span class="line">        <span class="keyword">this</span>.workerId = getMaxWorkerId(datacenterId, maxWorkerId);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> workerId</span></span><br><span class="line"><span class="comment">     *            工作机器ID</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> datacenterId</span></span><br><span class="line"><span class="comment">     *            序列号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IdWorker</span><span class="params">(<span class="keyword">long</span> workerId, <span class="keyword">long</span> datacenterId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (workerId &gt; maxWorkerId || workerId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">&quot;worker Id can&#x27;t be greater than %d or less than 0&quot;</span>, maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (datacenterId &gt; maxDatacenterId || datacenterId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">&quot;datacenter Id can&#x27;t be greater than %d or less than 0&quot;</span>, maxDatacenterId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.workerId = workerId;</span><br><span class="line">        <span class="keyword">this</span>.datacenterId = datacenterId;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取下一个ID</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">long</span> <span class="title">nextId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = timeGen();</span><br><span class="line">        <span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Clock moved backwards.  Refusing to generate id for %d milliseconds&quot;</span>, lastTimestamp - timestamp));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (lastTimestamp == timestamp) &#123;</span><br><span class="line">            <span class="comment">// 当前毫秒内，则+1</span></span><br><span class="line">            sequence = (sequence + <span class="number">1</span>) &amp; sequenceMask;</span><br><span class="line">            <span class="keyword">if</span> (sequence == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 当前毫秒内计数满了，则等待下一秒</span></span><br><span class="line">                timestamp = tilNextMillis(lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            sequence = <span class="number">0L</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        lastTimestamp = timestamp;</span><br><span class="line">        <span class="comment">// ID偏移组合生成最终的ID，并返回ID</span></span><br><span class="line">        <span class="keyword">long</span> nextId = ((timestamp - twepoch) &lt;&lt; timestampLeftShift)</span><br><span class="line">                | (datacenterId &lt;&lt; datacenterIdShift)</span><br><span class="line">                | (workerId &lt;&lt; workerIdShift) | sequence;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> nextId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">tilNextMillis</span><span class="params">(<span class="keyword">final</span> <span class="keyword">long</span> lastTimestamp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = <span class="keyword">this</span>.timeGen();</span><br><span class="line">        <span class="keyword">while</span> (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = <span class="keyword">this</span>.timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> timestamp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">timeGen</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 获取 maxWorkerId</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getMaxWorkerId</span><span class="params">(<span class="keyword">long</span> datacenterId, <span class="keyword">long</span> maxWorkerId)</span> </span>&#123;</span><br><span class="line">        StringBuffer mpid = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        mpid.append(datacenterId);</span><br><span class="line">        String name = ManagementFactory.getRuntimeMXBean().getName();</span><br><span class="line">        <span class="keyword">if</span> (!name.isEmpty()) &#123;</span><br><span class="line">         <span class="comment">/*</span></span><br><span class="line"><span class="comment">          * GET jvmPid</span></span><br><span class="line"><span class="comment">          */</span></span><br><span class="line">            mpid.append(name.split(<span class="string">&quot;@&quot;</span>)[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">       * MAC + PID 的 hashcode 获取16个低位</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">        <span class="keyword">return</span> (mpid.toString().hashCode() &amp; <span class="number">0xffff</span>) % (maxWorkerId + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 数据标识id部分</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getDatacenterId</span><span class="params">(<span class="keyword">long</span> maxDatacenterId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> id = <span class="number">0L</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            InetAddress ip = InetAddress.getLocalHost();</span><br><span class="line">            NetworkInterface network = NetworkInterface.getByInetAddress(ip);</span><br><span class="line">            <span class="keyword">if</span> (network == <span class="keyword">null</span>) &#123;</span><br><span class="line">                id = <span class="number">1L</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">byte</span>[] mac = network.getHardwareAddress();</span><br><span class="line">                id = ((<span class="number">0x000000FF</span> &amp; (<span class="keyword">long</span>) mac[mac.length - <span class="number">1</span>])</span><br><span class="line">                        | (<span class="number">0x0000FF00</span> &amp; (((<span class="keyword">long</span>) mac[mac.length - <span class="number">2</span>]) &lt;&lt; <span class="number">8</span>))) &gt;&gt; <span class="number">6</span>;</span><br><span class="line">                id = id % (maxDatacenterId + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot; getDatacenterId: &quot;</span> + e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="Bean注入"><a href="#Bean注入" class="headerlink" title="Bean注入"></a>Bean注入</h3><p>项目中把一些工具类放在一个commom模块，然后通过依赖引进其他模块。在启动类中注入idWorker</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.user;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.interest.common.utils.IdWorker;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.EnableDiscoveryClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.EnableFeignClients;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="comment">//@MapperScan(&quot;com.interest.user.mapper&quot;)</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &#123;&quot;com.interest.user&quot;,&quot;com.interest.common&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InterestUserApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(InterestUserApplication.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IdWorker <span class="title">idWorkker</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> IdWorker(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="雪花算法生成ID"><a href="#雪花算法生成ID" class="headerlink" title="雪花算法生成ID"></a>雪花算法生成ID</h3><p>在需要使用的代码块(一般是在serviceImpl会用到)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IdWorker idWorker;</span><br></pre></td></tr></table></figure>
-
-<p>然后就可以用雪花算法生成ID了</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String num = idWorker.nextId()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">        userEntity.setUserID(num);</span><br><span class="line">        userDao.insertUser(userEntity);</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
