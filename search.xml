@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CORS如何解决</title>
+    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
+<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
+<p>先写一个服务：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>index.html</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里接口不一致出现首图所示跨域问题</p>
+<ul>
+<li><p>修改相应头</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
+<li><p>jsonp</p>
+<p>服务：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
+
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>、、、、、、</p>
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Frp内网穿透</title>
     <url>/2020/04/07/Frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>疫情在家太久了，经常需要用服务器资源做一些事情，部署项目啊，跑作业啊。今天就用有公网Ip的服务器实现frp内网穿透。</p>
@@ -59,37 +90,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CORS如何解决</title>
-    <url>/2020/03/19/CORS%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>前端开发经常会遇到跨域问题。比如当前请求1baidu.com，如果想要从1请求2taobao.com的资源就会出现跨域的资源共享问题。不跨域就是我们就是请求1下的资源，不请求2的资源，就不是跨域问题：<img src="https://i.loli.net/2020/03/19/bj14tEa78Nmi6eT.png" alt="微信截图_20200319112724.png"></p>
-<p>在开发环境中经常会遇到这样的问题，接口在一台服务器或者一个端口上，而页面服务在另一个服务器或者端口，这样从前端获得接口的数据就会出现跨域的问题，那么如何解决跨域的问题？以下两种方案:</p>
-<p>先写一个服务：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = required(<span class="string">&#x27;expresss&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//90端口服务，将当前目录当成http服务，默认加载index.html</span></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//91端口服务，返回数据</span></span><br><span class="line"><span class="keyword">var</span> app2 = express();</span><br><span class="line">app2.get(<span class="string">&quot;/&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">         res.send(<span class="string">&quot;你好&quot;</span>)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(<span class="number">91</span>)</span><br></pre></td></tr></table></figure>
-
-<p><strong>index.html</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        	fetch(<span class="string">&quot;http://localhost:91/&quot;</span>)</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">res</span>=&gt;</span>res.txt())</span></span><br><span class="line"><span class="javascript">                .then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;alert(data)&#125;)</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里接口不一致出现首图所示跨域问题</p>
-<ul>
-<li><p>修改相应头</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 res.header(&quot;Access-Contorl-Allow-Origin&quot;,&quot;*&quot;)</span><br><span class="line">         res.send(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure></li>
-<li><p>jsonp</p>
-<p>服务：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var express = required(&#x27;expresss&#x27;);</span><br><span class="line"></span><br><span class="line">//90端口服务，将当前目录当成http服务，默认加载index.html</span><br><span class="line">var app = express();</span><br><span class="line">app.use(express.static(_dirname))</span><br><span class="line">app.listen(90)</span><br><span class="line"></span><br><span class="line">//91端口服务，返回数据</span><br><span class="line">var app2 = express();</span><br><span class="line">app2.get(&quot;/&quot;,function(req,res)&#123;</span><br><span class="line">		 var funcname = req.query.callback;</span><br><span class="line">		 res.send(funcname+)</span><br><span class="line">         res.send(funcname+&quot;(&#x27;你好&#x27;)&quot;)</span><br><span class="line">		 //f(&quot;你好&quot;)</span><br><span class="line">         &#125;)</span><br><span class="line">qpp2.listen(91)</span><br></pre></td></tr></table></figure>
-
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">        hello!!</span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">data</span>)</span>&#123;</span></span><br><span class="line">                alert(data)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:91?callback=f&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>、、、、、、</p>
-]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Gitee-Pages 自定义域名</title>
     <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
     <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
@@ -101,6 +101,22 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git版本回退</title>
+    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
+    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
+<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -175,19 +191,26 @@
       </tags>
   </entry>
   <entry>
-    <title>Git版本回退</title>
-    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
-    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+    <title>Java实现Word转html预览</title>
+    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
+    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
-<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
+<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
+<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
+<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>后端技术</category>
       </categories>
       <tags>
-        <tag>Git</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -312,29 +335,6 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.app;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		A3 a2 = <span class="keyword">new</span> A3();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//电脑d盘中的cat.png 图片的路径</span></span><br><span class="line">		String filePath1 = <span class="string">&quot;D:/cat.png&quot;</span> ;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//电脑e盘中的cat.png 图片的路径</span></span><br><span class="line">		String filePath2 = <span class="string">&quot;E:/cat.png&quot;</span> ;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//复制文件</span></span><br><span class="line">		a2.copyFile( filePath1 , filePath2 );</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件复制 </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> filePath_old : 需要复制文件的路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> filePath_new : 复制文件存放的路径</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">copyFile</span><span class="params">( String filePath_old  , String filePath_new)</span></span>&#123;</span><br><span class="line">		FileInputStream fis=<span class="keyword">null</span> ;</span><br><span class="line">		FileOutputStream fout = <span class="keyword">null</span> ;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 根据path路径实例化一个输入流的对象</span></span><br><span class="line">			fis  = <span class="keyword">new</span> FileInputStream( filePath_old );</span><br><span class="line"></span><br><span class="line">			<span class="comment">//2. 返回这个输入流中可以被读的剩下的bytes字节的估计值；</span></span><br><span class="line">			<span class="keyword">int</span> size =  fis.available() ;</span><br><span class="line">			<span class="comment">//3. 根据输入流中的字节数创建byte数组；</span></span><br><span class="line">			<span class="keyword">byte</span>[] array = <span class="keyword">new</span> <span class="keyword">byte</span>[size];</span><br><span class="line">			<span class="comment">//4.把数据读取到数组中；</span></span><br><span class="line">			fis.read( array ) ; </span><br><span class="line"></span><br><span class="line">			<span class="comment">//5、根据文件路径创建输出流</span></span><br><span class="line">			fout = <span class="keyword">new</span> FileOutputStream( filePath_new ) ;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//5、把byte数组输出；</span></span><br><span class="line">			fout.write( array );</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">			<span class="keyword">if</span> ( fis != <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					fis.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> ( fout != <span class="keyword">null</span> ) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					fout.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line">+ java读取远程文件实例</span><br><span class="line"></span><br><span class="line">  ```java</span><br><span class="line">  <span class="comment">//读取远程文件</span></span><br><span class="line">  	<span class="meta">@ApiOperation(&quot;通过URL读取远程文件&quot;)</span></span><br><span class="line">  	<span class="meta">@GetMapping(&quot;getFileByURL&quot;)</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFileByUrl</span><span class="params">(<span class="meta">@RequestParam(&quot;location&quot;)</span> String location)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  		<span class="keyword">int</span> b;</span><br><span class="line">  			String str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  			URL url = <span class="keyword">new</span> URL(location);</span><br><span class="line">  			InputStream is = url.openStream();</span><br><span class="line">  			BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(is);</span><br><span class="line">  </span><br><span class="line">  			<span class="keyword">while</span> ((b = is.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">  				str = str + (<span class="keyword">char</span>) b;</span><br><span class="line">  			&#125;</span><br><span class="line">  			is.close();</span><br><span class="line">  			bis.close();</span><br><span class="line">  			str = <span class="keyword">new</span> String(str.getBytes(<span class="string">&quot;ISO-8859-1&quot;</span>), <span class="string">&quot;GB2312&quot;</span>);</span><br><span class="line">  			<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper&lt;&gt;(str);</span><br><span class="line">  		&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java实现Word转html预览</title>
-    <url>/2020/04/04/Java%E5%AE%9E%E7%8E%B0Word%E8%BD%AChtml%E9%A2%84%E8%A7%88/</url>
-    <content><![CDATA[<p>项目需求，把doc和docx类型转换成html放在富文本预览，从前端传过来multipartfile类型，后端转换成html字符串返回给前端。</p>
-<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-scratchpad<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>fr.opensagres.xdocreport<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xdocreport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ooxml-schemas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jsoup<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsoup<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.interest.common.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.HWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.hwpf.converter.WordToHtmlConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xwpf.usermodel.XWPFDocument;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.ParserConfigurationException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.OutputKeys;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Transformer;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerException;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.TransformerFactory;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.dom.DOMSource;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.stream.StreamResult;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * docx文件带格式转换成html</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hhzhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/1 20:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word2HtmlUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2007ToHtml</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//File file01 = new File();</span></span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1) 加载word文档生成 XWPFDocument对象</span></span><br><span class="line">                InputStream in = file.getInputStream();</span><br><span class="line">                XWPFDocument document = <span class="keyword">new</span> XWPFDocument(in);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                XHTMLConverter.getInstance().convert(document, baos, <span class="keyword">null</span>);</span><br><span class="line">                String content = baos.toString();</span><br><span class="line">                baos.close();</span><br><span class="line">                content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">                <span class="comment">//return baos;</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2007+ files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">Word2003ToHtml</span><span class="params">(MultipartFile file)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isEmpty() || file.getSize() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//log.info(&quot;Sorry File does not Exists!&quot;);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>) || file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>)) &#123;</span><br><span class="line">                InputStream input = file.getInputStream();</span><br><span class="line">                HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(input);</span><br><span class="line">                WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</span><br><span class="line">                        DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());</span><br><span class="line">                <span class="comment">// 解析word文档</span></span><br><span class="line">                wordToHtmlConverter.processDocument(wordDocument);</span><br><span class="line">                Document htmlDocument = wordToHtmlConverter.getDocument();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">                StreamResult streamResult = <span class="keyword">new</span> StreamResult(baos);</span><br><span class="line"></span><br><span class="line">                TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">                Transformer serializer = factory.newTransformer();</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">                serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">                serializer.transform(domSource, streamResult);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 也可以使用字符数组流获取解析的内容</span></span><br><span class="line">                String content = <span class="keyword">new</span> String(baos.toByteArray());</span><br><span class="line">                baos.close();</span><br><span class="line">                <span class="comment">//去除\r\n</span></span><br><span class="line">                content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> content;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//log.info(&quot;Enter only MS Office 2003 files&quot;);</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * xls2html接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> String ok</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ParserConfigurationException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> TransformerException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">chart2html</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException, ParserConfigurationException, TransformerException </span>&#123;</span><br><span class="line">        InputStream input = file.getInputStream();</span><br><span class="line">        HSSFWorkbook excelBook = <span class="keyword">new</span> HSSFWorkbook(input);</span><br><span class="line">        ExcelToHtmlConverter excelToHtmlConverter = <span class="keyword">new</span> ExcelToHtmlConverter(</span><br><span class="line">                DocumentBuilderFactory</span><br><span class="line">                .newInstance()</span><br><span class="line">                .newDocumentBuilder()</span><br><span class="line">                .newDocument());</span><br><span class="line">        excelToHtmlConverter.processWorkbook(excelBook);</span><br><span class="line"></span><br><span class="line">        Document htmlDocument = excelToHtmlConverter.getDocument();</span><br><span class="line">        ByteArrayOutputStream outStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</span><br><span class="line">        StreamResult streamResult = <span class="keyword">new</span> StreamResult(outStream);</span><br><span class="line">        TransformerFactory tf = TransformerFactory.newInstance();</span><br><span class="line">        Transformer serializer = tf.newTransformer();</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">&quot;html&quot;</span>);</span><br><span class="line">        serializer.transform(domSource, streamResult);</span><br><span class="line">        outStream.close();</span><br><span class="line"></span><br><span class="line">        String content = <span class="keyword">new</span> String(outStream.toByteArray());</span><br><span class="line">        <span class="keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="接口调用"><a href="#接口调用" class="headerlink" title="接口调用"></a>接口调用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(&quot;doc文件转换成html返回&quot;)</span></span><br><span class="line">	<span class="meta">@PostMapping</span> (<span class="string">&quot;/public/getFile&quot;</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ResponseWrapper&lt;String&gt; <span class="title">getFile</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.doc&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOC&quot;</span>))&#123;</span><br><span class="line">			result = Word2HtmlUtil.Word2003ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.docx&quot;</span>)||file.getOriginalFilename().endsWith(<span class="string">&quot;.DOCX&quot;</span>))&#123;</span><br><span class="line">			result =Word2HtmlUtil.Word2007ToHtml(file);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getOriginalFilename().endsWith(<span class="string">&quot;.xls&quot;</span>))&#123;</span><br><span class="line">            result = word2HtmlUtil.chartToHtml(file);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(<span class="string">&quot;不支持的文档类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ResponseWrapper(result);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200404082544.png" alt="image-20200404082536271"></p>
-<p>在项目开发的过程中，提取工具类的思维一是可以实现代码的复用，二是可以让代码的逻辑更加清晰。所以要有提取工具类的常规思维。</p>
-<p>这里在转换的时候，\r\n会识别成原生的字符，暴力去掉就行：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">content = content.replaceAll(<span class="string">&quot;\r\n&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>后端技术</category>
@@ -1662,34 +1662,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OSS文件管理</title>
-    <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
-    <content><![CDATA[<blockquote>
-<p>上一回说到贫穷的程序员同学话60多块买了一年的阿里云低配云主机，然后偶然发现是赠送了一年的OSS的，看了一下有40G，对于日常的开发来说，还是很够用的，你会不会觉得，存储的地方多了，百度网盘上千个G，为啥选择OSS？就网盘那速度先不吐槽，阿里云提供的开发接口相信你会爱上的。</p>
-</blockquote>
-<p>OSS是阿里云提供的对象存储，说白了对象存储就是你啥都可以往里面放，安全指数达到99.99999%(别数了，7个9)，可以说相当安全了。具体的<a href="https://help.aliyun.com/product/31815.html?spm=a2c4g.750001.list.22.64277b13kElgYU">帮助文档</a>看这里。OSS提供了java开发的SDK，使用起来不用不要太爽啊。</p>
-<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="1-添加pom依赖"><a href="#1-添加pom依赖" class="headerlink" title="1.添加pom依赖"></a>1.添加pom依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。允许多个可以并发使用</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建存储空间。</span></span><br><span class="line">ossClient.createBucket(bucketName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-文件上传"><a href="#3-文件上传" class="headerlink" title="3.文件上传"></a>3.文件上传</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。</span></span><br><span class="line">String content = <span class="string">&quot;Hello OSS&quot;</span>;</span><br><span class="line">ossClient.putObject(bucketName, objectName, <span class="keyword">new</span> ByteArrayInputStream(content.getBytes()));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-文件下载"><a href="#4-文件下载" class="headerlink" title="4.文件下载"></a>4.文件下载</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;从OSS下载文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用ossClient.getObject返回一个OSSObject实例，该实例包含文件内容及文件元信息。</span></span><br><span class="line">OSSObject ossObject = ossClient.getObject(bucketName, objectName);</span><br><span class="line"><span class="comment">// 调用ossObject.getObjectContent获取文件输入流，可读取此输入流获取其内容。</span></span><br><span class="line">InputStream content = ossObject.getObjectContent();</span><br><span class="line"><span class="keyword">if</span> (content != <span class="keyword">null</span>) &#123;</span><br><span class="line">    BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(content));</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        String line = reader.readLine();</span><br><span class="line">        <span class="keyword">if</span> (line == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;\n&quot;</span> + line);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。</span></span><br><span class="line">    content.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-列举文件"><a href="#5-列举文件" class="headerlink" title="5.列举文件"></a>5.列举文件</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ossClient.listObjects返回ObjectListing实例，包含此次listObject请求的返回结果。</span></span><br><span class="line">ObjectListing objectListing = ossClient.listObjects(bucketName);</span><br><span class="line"><span class="comment">// objectListing.getObjectSummaries获取所有文件的描述信息。</span></span><br><span class="line"><span class="keyword">for</span> (OSSObjectSummary objectSummary : objectListing.getObjectSummaries()) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot; - &quot;</span> + objectSummary.getKey() + <span class="string">&quot;  &quot;</span> +</span><br><span class="line">            <span class="string">&quot;(size = &quot;</span> + objectSummary.getSize() + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-文件删除"><a href="#6-文件删除" class="headerlink" title="6.文件删除"></a>6.文件删除</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;表示删除OSS文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除文件。</span></span><br><span class="line">ossClient.deleteObject(bucketName, objectName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-更多API参见文档"><a href="#7-更多API参见文档" class="headerlink" title="7.更多API参见文档"></a>7.更多API参见文档</h3><p>反正基本媒体相关的操作，阿里云的OSS是很够用的。快点跑去试试叭！！！！</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>tidb contributor</title>
     <url>/2021/04/09/tidb-contributor%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<p>近年来国产数据库进行的如火如荼，目前做的比较好的一个是PingCAP的TIDB，一个是阿里的OceanBase。</p>
@@ -1766,6 +1738,34 @@
       <categories>
         <category>后端技术</category>
       </categories>
+  </entry>
+  <entry>
+    <title>OSS文件管理</title>
+    <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
+    <content><![CDATA[<blockquote>
+<p>上一回说到贫穷的程序员同学话60多块买了一年的阿里云低配云主机，然后偶然发现是赠送了一年的OSS的，看了一下有40G，对于日常的开发来说，还是很够用的，你会不会觉得，存储的地方多了，百度网盘上千个G，为啥选择OSS？就网盘那速度先不吐槽，阿里云提供的开发接口相信你会爱上的。</p>
+</blockquote>
+<p>OSS是阿里云提供的对象存储，说白了对象存储就是你啥都可以往里面放，安全指数达到99.99999%(别数了，7个9)，可以说相当安全了。具体的<a href="https://help.aliyun.com/product/31815.html?spm=a2c4g.750001.list.22.64277b13kElgYU">帮助文档</a>看这里。OSS提供了java开发的SDK，使用起来不用不要太爽啊。</p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="1-添加pom依赖"><a href="#1-添加pom依赖" class="headerlink" title="1.添加pom依赖"></a>1.添加pom依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aliyun-sdk-oss<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建存储空间"><a href="#2-创建存储空间" class="headerlink" title="2.创建存储空间"></a>2.创建存储空间</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。允许多个可以并发使用</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建存储空间。</span></span><br><span class="line">ossClient.createBucket(bucketName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-文件上传"><a href="#3-文件上传" class="headerlink" title="3.文件上传"></a>3.文件上传</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。</span></span><br><span class="line">String content = <span class="string">&quot;Hello OSS&quot;</span>;</span><br><span class="line">ossClient.putObject(bucketName, objectName, <span class="keyword">new</span> ByteArrayInputStream(content.getBytes()));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-文件下载"><a href="#4-文件下载" class="headerlink" title="4.文件下载"></a>4.文件下载</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;从OSS下载文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用ossClient.getObject返回一个OSSObject实例，该实例包含文件内容及文件元信息。</span></span><br><span class="line">OSSObject ossObject = ossClient.getObject(bucketName, objectName);</span><br><span class="line"><span class="comment">// 调用ossObject.getObjectContent获取文件输入流，可读取此输入流获取其内容。</span></span><br><span class="line">InputStream content = ossObject.getObjectContent();</span><br><span class="line"><span class="keyword">if</span> (content != <span class="keyword">null</span>) &#123;</span><br><span class="line">    BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(content));</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        String line = reader.readLine();</span><br><span class="line">        <span class="keyword">if</span> (line == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;\n&quot;</span> + line);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。</span></span><br><span class="line">    content.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-列举文件"><a href="#5-列举文件" class="headerlink" title="5.列举文件"></a>5.列举文件</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ossClient.listObjects返回ObjectListing实例，包含此次listObject请求的返回结果。</span></span><br><span class="line">ObjectListing objectListing = ossClient.listObjects(bucketName);</span><br><span class="line"><span class="comment">// objectListing.getObjectSummaries获取所有文件的描述信息。</span></span><br><span class="line"><span class="keyword">for</span> (OSSObjectSummary objectSummary : objectListing.getObjectSummaries()) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot; - &quot;</span> + objectSummary.getKey() + <span class="string">&quot;  &quot;</span> +</span><br><span class="line">            <span class="string">&quot;(size = &quot;</span> + objectSummary.getSize() + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-文件删除"><a href="#6-文件删除" class="headerlink" title="6.文件删除"></a>6.文件删除</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Endpoint以杭州为例，其它Region请按实际情况填写。</span></span><br><span class="line">String endpoint = <span class="string">&quot;http://oss-cn-hangzhou.aliyuncs.com&quot;</span>;</span><br><span class="line"><span class="comment">// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。</span></span><br><span class="line">String accessKeyId = <span class="string">&quot;&lt;yourAccessKeyId&gt;&quot;</span>;</span><br><span class="line">String accessKeySecret = <span class="string">&quot;&lt;yourAccessKeySecret&gt;&quot;</span>;</span><br><span class="line">String bucketName = <span class="string">&quot;&lt;yourBucketName&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// &lt;yourObjectName&gt;表示删除OSS文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。</span></span><br><span class="line">String objectName = <span class="string">&quot;&lt;yourObjectName&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建OSSClient实例。</span></span><br><span class="line">OSS ossClient = <span class="keyword">new</span> OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除文件。</span></span><br><span class="line">ossClient.deleteObject(bucketName, objectName);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭OSSClient。</span></span><br><span class="line">ossClient.shutdown();</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-更多API参见文档"><a href="#7-更多API参见文档" class="headerlink" title="7.更多API参见文档"></a>7.更多API参见文档</h3><p>反正基本媒体相关的操作，阿里云的OSS是很够用的。快点跑去试试叭！！！！</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -1852,6 +1852,45 @@
 <p><strong>切</strong>而知之谓之巧</p>
 </blockquote>
 <h3 id="下节是阴阳学说。"><a href="#下节是阴阳学说。" class="headerlink" title="下节是阴阳学说。"></a>下节是阴阳学说。</h3>]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>中医理论基础</category>
       </categories>
@@ -2001,45 +2040,6 @@
 </blockquote>
 <p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200415014820.png" alt="image-20200415014818265"></p>
 <p><strong>下节是五行学说、、、、</strong></p>
-]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
 ]]></content>
       <categories>
         <category>中医理论基础</category>
@@ -2876,6 +2876,158 @@
       </tags>
   </entry>
   <entry>
+    <title>分布式</title>
+    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
+<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
+<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
+<ul>
+<li>C：所有节点访问一份最新的数据副本</li>
+<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
+<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
+<ul>
+<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
+<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
+<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
+</ul>
+<p><strong>一致性解决方案：</strong></p>
+<ul>
+<li>分布式事务：两段提交</li>
+<li>分布式锁</li>
+<li>MQ消息持久化 重试 幂等</li>
+<li>Paxos算法</li>
+</ul>
+<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
+<p><strong>高可用的解决方案：</strong></p>
+<ul>
+<li>负载均衡</li>
+<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
+<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
+<li>流量控制</li>
+<li>异地多活</li>
+</ul>
+<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
+<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
+<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
+<li><p>系统拆分</p>
+<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
+</li>
+<li><p>缓存</p>
+<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
+</li>
+<li><p>MQ</p>
+<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
+</li>
+<li><p>分库分表</p>
+<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
+</li>
+<li><p>读写分离</p>
+<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
+</li>
+<li><p>ES</p>
+<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
+</li>
+</ul>
+<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
+<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
+<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
+<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
+<li><p>计数器</p>
+<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
+<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
+</li>
+<li><p>漏桶</p>
+<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
+<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
+<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
+<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
+</li>
+<li><p>令牌桶</p>
+<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
+<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
+<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
+<p><strong>算法实现：</strong></p>
+<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
+</li>
+</ul>
+<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
+<li><p>Redis请求窗口</p>
+<blockquote>
+<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
+</blockquote>
+<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
+</li>
+<li><p>Nginx限流</p>
+<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
+<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
+<ul>
+<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
+<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
+<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
+<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
+<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
+<blockquote>
+<ol>
+<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
+<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
+<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
+</ol>
+</blockquote>
+<p>服务端使用cookie可以使用以下方法：</p>
+<ul>
+<li><p>设置cookie返回给客户顿</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>读取所有cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
+<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
+<p><strong>session如何进行身份验证</strong></p>
+<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
+<p>需要注意：</p>
+<ul>
+<li>依赖session的业务需要确保客户端开启了cookie</li>
+<li>session的过期时间。</li>
+</ul>
+<p><strong>没有cookie的话，session还能用吗</strong></p>
+<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
+<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
+<p>JWT三部分构成：</p>
+<ul>
+<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
+<li>Payload(负载)：存放实际需要传递的数据。</li>
+<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
+</ul>
+<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
+<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
+<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
+<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
+<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
+<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
+<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
+<blockquote>
+<p> <strong>sso和oauth2.0的区别。</strong></p>
+<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>复习入口</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法框架</title>
     <url>/2020/04/10/%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/</url>
     <content><![CDATA[]]></content>
@@ -3056,158 +3208,6 @@
       </categories>
       <tags>
         <tag>复杂系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>分布式</title>
-    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
-<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
-<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
-<ul>
-<li>C：所有节点访问一份最新的数据副本</li>
-<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
-<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
-</ul>
-<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
-<ul>
-<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
-<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
-<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
-</ul>
-<p><strong>一致性解决方案：</strong></p>
-<ul>
-<li>分布式事务：两段提交</li>
-<li>分布式锁</li>
-<li>MQ消息持久化 重试 幂等</li>
-<li>Paxos算法</li>
-</ul>
-<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
-<p><strong>高可用的解决方案：</strong></p>
-<ul>
-<li>负载均衡</li>
-<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
-<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
-<li>流量控制</li>
-<li>异地多活</li>
-</ul>
-<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
-<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
-<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
-<li><p>系统拆分</p>
-<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
-</li>
-<li><p>缓存</p>
-<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
-</li>
-<li><p>MQ</p>
-<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
-</li>
-<li><p>分库分表</p>
-<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
-</li>
-<li><p>读写分离</p>
-<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
-</li>
-<li><p>ES</p>
-<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
-</li>
-</ul>
-<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
-<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
-<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
-<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
-<li><p>计数器</p>
-<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
-<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
-</li>
-<li><p>漏桶</p>
-<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
-<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
-<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
-<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
-</li>
-<li><p>令牌桶</p>
-<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
-<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
-<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
-<p><strong>算法实现：</strong></p>
-<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
-</li>
-</ul>
-<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
-<li><p>Redis请求窗口</p>
-<blockquote>
-<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
-</blockquote>
-<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
-</li>
-<li><p>Nginx限流</p>
-<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
-<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
-<ul>
-<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
-<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
-</ul>
-</li>
-</ul>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
-<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
-<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
-<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
-<blockquote>
-<ol>
-<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
-<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
-<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
-</ol>
-</blockquote>
-<p>服务端使用cookie可以使用以下方法：</p>
-<ul>
-<li><p>设置cookie返回给客户顿</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>读取所有cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
-<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
-<p><strong>session如何进行身份验证</strong></p>
-<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
-<p>需要注意：</p>
-<ul>
-<li>依赖session的业务需要确保客户端开启了cookie</li>
-<li>session的过期时间。</li>
-</ul>
-<p><strong>没有cookie的话，session还能用吗</strong></p>
-<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
-<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
-<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
-<p>JWT三部分构成：</p>
-<ul>
-<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
-<li>Payload(负载)：存放实际需要传递的数据。</li>
-<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
-</ul>
-<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
-<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
-<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
-<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
-<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
-<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
-<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
-<blockquote>
-<p> <strong>sso和oauth2.0的区别。</strong></p>
-<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
