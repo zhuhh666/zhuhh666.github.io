@@ -344,6 +344,180 @@
       </tags>
   </entry>
   <entry>
+    <title>MongoDB</title>
+    <url>/2020/04/10/MongoDB/</url>
+    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
+
+<p>show dbs：显示所有数据库</p>
+<p>use test：创建test数据库(内存中)</p>
+<p>db：当前数据库</p>
+<p>db.dropDatabase()：删除数据库</p>
+<p><strong>三个保留库：</strong></p>
+<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
+<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
+<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
+<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
+<p>show collections：显示当前的collection</p>
+<p>db.my.drop( )：删除集合</p>
+<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
+<li><p>单个文档插入：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p>db.comment.find()：查询所有数据库数据</p>
+<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
+<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
+<p><strong>投影查询</strong>：</p>
+<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
+<p>加try catch:</p>
+<p>try{</p>
+<p>insert:one or many</p>
+<p>}catch(e){</p>
+<p>print(e);</p>
+<p>}</p>
+<p><strong>文档更新：</strong></p>
+<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
+<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
+<p>批量修改：</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MPI分布式计算</title>
+    <url>/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
+<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
+<li>人类基因解码、更精准的医疗成像等等</li>
+<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
+</ul>
+</li>
+<li>需要更加强大的计算能力</li>
+<li>并行计算是云计算的重要支撑技术之一</li>
+</ul>
+<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
+<li>单处理器的性能提升已经接近极限。</li>
+<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
+<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
+</ul>
+<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
+<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
+<li>自动将串行改为并行鲜有突破，需要手动编写</li>
+<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
+</ul>
+<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
+<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
+<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
+</ul>
+<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
+<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
+<li>协调包括：通信，负载平衡，同步</li>
+<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
+<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
+<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
+</ul>
+<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
+<ul>
+<li><p>单指令单数据流(SISD)系统</p>
+<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
+</li>
+<li><p>单指令多数据流(SIMD)系统</p>
+<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
+</li>
+<li><p>多指令多数据流(MIMD)系统</p>
+<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
+</li>
+</ul>
+<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
+<li><p>加速比</p>
+<ul>
+<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
+<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
+</ul>
+</li>
+<li><p>效率</p>
+<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
+</li>
+</ul>
+<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
+<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
+<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
+<li>MPI本身不是一个具体实现，是一种标准描述</li>
+</ul>
+<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
+<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
+</li>
+<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
+</li>
+<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
+</li>
+<li><p>MPI的主要特点有：</p>
+<ul>
+<li><p>程序编写灵活，功能强大</p>
+<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
+</li>
+<li><p>支持多种语言</p>
+</li>
+<li><p>对计算的支持强大，对文件的支持较弱。</p>
+</li>
+<li><p>MPI需要自己实现求解问题的并行化</p>
+</li>
+<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
+</li>
+<li><p>网络是MPI的瓶颈</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
+<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
+<li>OUT 输出：MPI返回给调用部分的结果参数</li>
+<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
+</ul>
+<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
+<ul>
+<li>独立于具体语言的说明</li>
+<li>C形式的原型声明</li>
+<li>FORTRAN形式的原型声明</li>
+</ul>
+<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
+<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
+
+<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
+<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
+<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
+
+<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
+<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
+
+<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
+<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MPI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java集合</title>
     <url>/2021/03/24/Java%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[<h1 id="ArrayList和linkedList的区别"><a href="#ArrayList和linkedList的区别" class="headerlink" title="ArrayList和linkedList的区别"></a><strong>ArrayList和linkedList的区别</strong></h1><ul>
@@ -492,180 +666,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MPI分布式计算</title>
-    <url>/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
-<li>不断提升的计算能力成为许多飞速发展领域的核心力量<ul>
-<li>人类基因解码、更精准的医疗成像等等</li>
-<li>气候模拟、蛋白质折叠、药物发现、数据分析等等</li>
-</ul>
-</li>
-<li>需要更加强大的计算能力</li>
-<li>并行计算是云计算的重要支撑技术之一</li>
-</ul>
-<h2 id="为什么要构建并行系统"><a href="#为什么要构建并行系统" class="headerlink" title="为什么要构建并行系统"></a>为什么要构建并行系统</h2><ul>
-<li>单处理器的性能提升已经接近极限。</li>
-<li>通过继续增快集成电路的速度来提高处理器性能的方法不再可行。但集成电路晶体管的密度还在增加，如何利用不断增加的晶体管密度来提高计算能力？<strong>答案是并行</strong></li>
-<li>与其构建更快更复杂的但处理器，不如在单个芯片放置多个相对简单的处理器。这样的集成电路为多核处理器。传统的成为单核处理器。</li>
-</ul>
-<h2 id="为什么要编写并行程序"><a href="#为什么要编写并行程序" class="headerlink" title="为什么要编写并行程序"></a>为什么要编写并行程序</h2><ul>
-<li>单核系统编写的程序无法利用多核处理器，所以需要将串行程序改为并行程序。</li>
-<li>自动将串行改为并行鲜有突破，需要手动编写</li>
-<li>最好的并行化实现是通过一步步的回溯，然后发现一个全新的算法来获得</li>
-</ul>
-<h2 id="怎么编写并行程序"><a href="#怎么编写并行程序" class="headerlink" title="怎么编写并行程序"></a>怎么编写并行程序</h2><ul>
-<li>任务并行：将待解决问题所需要执行的各个任务分配到各个核上执行</li>
-<li>数据并行：将待解决问题的数据分配给各个核，每个核在分配到的数据集上执行大致相似操作。</li>
-</ul>
-<h2 id="并行计算的难点"><a href="#并行计算的难点" class="headerlink" title="并行计算的难点"></a>并行计算的难点</h2><ul>
-<li>核之前独立，和串行相似。核之间需要协调工作，复杂</li>
-<li>协调包括：通信，负载平衡，同步</li>
-<li>核的执行顺序不确定，存在共享内存临界区的竞争访问和线程安全性问题</li>
-<li>并行程序的设计与程序所依赖的并行硬件平台有着紧密关系，特别是需要设计高性能并行程序时，一定要针对硬件平台进行优化。</li>
-<li>尚且没有统一标准，常用的拓展库有MPI、Pthread、OpenMP、OpenACC</li>
-</ul>
-<h2 id="并行硬件"><a href="#并行硬件" class="headerlink" title="并行硬件"></a>并行硬件</h2><p>通过系统可处理的指令数量和数据流数量区分各类并行硬件。</p>
-<ul>
-<li><p>单指令单数据流(SISD)系统</p>
-<p>如传统的冯.诺依曼系统，拥有单个的指令流和单个的数据流</p>
-</li>
-<li><p>单指令多数据流(SIMD)系统</p>
-<p>系统在任何时间执行一条指令，但是该指令可以对多个数据项进行操作。这种并行系统通常使用数据并行程序，即将数据划分给各个处理器，各个数据由相同的指令序列来处理。向量处理器和GPU一般划分为SIMD系统。</p>
-</li>
-<li><p>多指令多数据流(MIMD)系统</p>
-<p>系统同时执行多个指令流，每个指令流有自己的数据流。大多数大型MIMD系统其实是混合系统，是由多个相对小的共享内存系统通过网络连接来实现的。系统内的共享内存系统一般称为节点。有些MIMD系统是异构系统，处理器拥有不同的性能。如果一个系统中所有的处理器都是相同结构的，则是同构的。</p>
-</li>
-</ul>
-<h2 id="并行程序的性能"><a href="#并行程序的性能" class="headerlink" title="并行程序的性能"></a>并行程序的性能</h2><ul>
-<li><p>加速比</p>
-<ul>
-<li>用**T<del>串</del><strong>表示串行程序执行时间，</strong>T<del>并</del><strong>表示并行程序的执行时间，并行程序的加速比</strong>S=T<del>串</del> / T<del>并</del>**，即使用并行程序后执行速度提升了多少倍</li>
-<li><strong>阿姆达尔定律：</strong>如果原有串行程序中无法并行化部分在整个程序中所占的比例是r，那么无论使用线程/进程，得到的加速比无法超越1/r。</li>
-</ul>
-</li>
-<li><p>效率</p>
-<p>*<em>E=T<del>串</del>/(p</em>T<del>并</del>)**，P是核数，或者进程/线程数，理想值是1</p>
-</li>
-</ul>
-<h1 id="2、MPI概述"><a href="#2、MPI概述" class="headerlink" title="2、MPI概述"></a>2、MPI概述</h1><ul>
-<li>MPI提供了了解集群之间通信机制的一种重要模型</li>
-<li>MPI是消息传递接口的英文简称。描述的是一种消息传递编程模型</li>
-<li>MPI本身不是一个具体实现，是一种标准描述</li>
-</ul>
-<h1 id="3、MPI的架构和特点"><a href="#3、MPI的架构和特点" class="headerlink" title="3、MPI的架构和特点"></a>3、MPI的架构和特点</h1><ul>
-<li><p>MPI的核心工作就是实现大量服务器资源的整合输出</p>
-</li>
-<li><p>主要思想是通过消息传递来对位于多个计算机上通过网络分布式内存系统进行编程</p>
-</li>
-<li><p>提供最大的灵活性和自由度，但是编程复杂</p>
-</li>
-<li><p>MPI的主要特点有：</p>
-<ul>
-<li><p>程序编写灵活，功能强大</p>
-<p>MPI提供了功能强大的消息通信函数，如阻塞通信、非阻塞通信、组通信、规约、自定义函数类型等。为程序设计人员灵活地实现算法的并行化工作提供了手段。</p>
-</li>
-<li><p>支持多种语言</p>
-</li>
-<li><p>对计算的支持强大，对文件的支持较弱。</p>
-</li>
-<li><p>MPI需要自己实现求解问题的并行化</p>
-</li>
-<li><p>没有提供计算失效的处理机制，节点失效，需要重启计算</p>
-</li>
-<li><p>网络是MPI的瓶颈</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="4、MPI分布式程序设计"><a href="#4、MPI分布式程序设计" class="headerlink" title="4、MPI分布式程序设计"></a>4、MPI分布式程序设计</h1><h2 id="C-MPI程序示例"><a href="#C-MPI程序示例" class="headerlink" title="C+MPI程序示例"></a>C+MPI程序示例</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(argc,argv)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> argc</span>;</span><br><span class="line"><span class="keyword">char</span> *argv[];</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//myid某一个并行执行的标识</span></span><br><span class="line">    <span class="comment">//numprocs参与计算的进程个数</span></span><br><span class="line">    <span class="comment">//processor_name实际得到的机器名字</span></span><br><span class="line">    <span class="keyword">int</span> myid,numprocs;</span><br><span class="line">    <span class="keyword">int</span> namelen;</span><br><span class="line">    <span class="keyword">char</span> processor_name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    </span><br><span class="line">    MPI_Init(&amp;argc,&amp;argv);</span><br><span class="line">    <span class="comment">//MPI_Comm_rank得到当前正在运行的进程的标识号，放在myid中。</span></span><br><span class="line">    MPI_Comn_rank(MPI_COMN_WORLD,&amp;myid);</span><br><span class="line">    <span class="comment">//MPI_Comm_size得到所有参加运算的进程的个数，放在numprocs中。</span></span><br><span class="line">    MPI_Comn_size(MPI_COMN_WORLD,&amp;numprocs);</span><br><span class="line">    <span class="comment">//MPI_Get_processor_name得到本进程运行的机器的名称 ，结果放在processor_name中，它是一个字符串而该字符串的长度放在namelen中。</span></span><br><span class="line">    MPI_Get_processor_name(processor_name,&amp;namelen);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;Hello World!Process %d of %d on %s\n&quot;</span>,myid,numprocs,processor_name);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="MPI参数"><a href="#MPI参数" class="headerlink" title="MPI参数"></a>MPI参数</h2><ul>
-<li>IN 输入：调用部分传递给MPI的参数，不允许修改</li>
-<li>OUT 输出：MPI返回给调用部分的结果参数</li>
-<li>INOUT 输入输出：调用部分首先将该参数传递给MPI，引用修改后将结果返回给外部调用。该参数的初始值和返回值都有意义。</li>
-</ul>
-<h2 id="MPI接口调用"><a href="#MPI接口调用" class="headerlink" title="MPI接口调用"></a>MPI接口调用</h2><p>说明格式：</p>
-<ul>
-<li>独立于具体语言的说明</li>
-<li>C形式的原型声明</li>
-<li>FORTRAN形式的原型声明</li>
-</ul>
-<h2 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_INIT()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Init</span><span class="params">(*argc,**argv)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_INIT</span><span class="params">(IERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_INIT是MPI程序的第一个调用，他完成程序的初始化工作，所有MPI程序的第一条可执行语句</p>
-<h2 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">MPI_FINALIZE()</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Finalize</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_FINALIZE</span><span class="params">(ERROR)</span></span></span><br><span class="line"><span class="function">INTEGER IERROR</span></span><br></pre></td></tr></table></figure>
-
-<p>MPI_FINALIZE是MPI程序的最后一个调用，结束MPI的运行，是MPI的最后一条可执行语句。</p>
-<h2 id="当前进程标识"><a href="#当前进程标识" class="headerlink" title="当前进程标识"></a>当前进程标识</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMM_RANK(comm,rank)</span><br><span class="line">IN comm 该进程所在的通信域(句柄)、</span><br><span class="line">OUT rank  该进程在comm的标识号</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_rank</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *rank)</span></span></span><br><span class="line"><span class="function"><span class="title">MPI_COMM_RANK</span><span class="params">(COMM,RANK,IERROR)</span></span></span><br><span class="line">INTEGER COMM,RANK,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回调用进程在给定域中的进程标识号，不同的进程就可以将自身和其他进程区分开来，实现各自进程的并行和协作</p>
-<h2 id="通信域包含额进程数"><a href="#通信域包含额进程数" class="headerlink" title="通信域包含额进程数"></a>通信域包含额进程数</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">MPI_COMN_SIZE(comm,size)</span><br><span class="line">IN comn</span><br><span class="line">OUT size 通信域包含的进程数</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Comm_size</span><span class="params">(MPI_Comm comm,<span class="keyword">int</span> *size)</span></span></span><br><span class="line"><span class="function"> <span class="title">MPI_COMM_SIZE</span><span class="params">(COMM,SIZE,IERROR)</span></span></span><br><span class="line">    INTEGER COMM,SIZE,IERROR</span><br></pre></td></tr></table></figure>
-
-<p>这一调用返回给定的通信域中所包含的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在并行执行。</p>
-<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_SEND(buf,count,datatype,dest,comm)</span><br><span class="line">In buf &#x2F;&#x2F;发送缓冲区的起始地址</span><br><span class="line">IN count&#x2F;&#x2F;将发送的数据的个数</span><br><span class="line">IN datatype &#x2F;&#x2F;数据类型(句柄)</span><br><span class="line">IN dest &#x2F;&#x2F;目标的进程标识号</span><br><span class="line">IN tag &#x2F;&#x2F;消息标志</span><br><span class="line">IN comm &#x2F;&#x2F;通信域(句柄)</span><br><span class="line"></span><br><span class="line">int MPI_Send(void *buf,int count,MPI_Datatype,int dest,int tag,MPI_Comm comm)</span><br><span class="line"></span><br><span class="line">MPI_SEND(BUF,COUNT,DATATYPE,DEST,TAG,COMM,IERROR)</span><br><span class="line">	&lt;type&gt; BUF(*)</span><br><span class="line">	INTEGER COUNT,DATATYPE,DEST,TAG,COMM,IERROR</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MPI_RECV(buf,count,datatype,sourvr,tag,comm,status)</span><br></pre></td></tr></table></figure>
-
-<h2 id="返回状态status"><a href="#返回状态status" class="headerlink" title="返回状态status"></a>返回状态status</h2><p>status是MPI定义的一个数据类型，使用之前需要分配空间</p>
-<p>在C实现中，状态变量至少由至少三个域组成，分别是：MPI_SOURCE,MPI_TAG,MPI_ERROR。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MPI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MongoDB</title>
-    <url>/2020/04/10/MongoDB/</url>
-    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
-
-<p>show dbs：显示所有数据库</p>
-<p>use test：创建test数据库(内存中)</p>
-<p>db：当前数据库</p>
-<p>db.dropDatabase()：删除数据库</p>
-<p><strong>三个保留库：</strong></p>
-<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
-<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
-<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
-<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
-<p>show collections：显示当前的collection</p>
-<p>db.my.drop( )：删除集合</p>
-<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
-<li><p>单个文档插入：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
-
-<p>db.comment.find()：查询所有数据库数据</p>
-<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
-<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
-<p><strong>投影查询</strong>：</p>
-<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
-<p>加try catch:</p>
-<p>try{</p>
-<p>insert:one or many</p>
-<p>}catch(e){</p>
-<p>print(e);</p>
-<p>}</p>
-<p><strong>文档更新：</strong></p>
-<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
-<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
-<p>批量修改：</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -855,70 +855,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
-<ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
-</ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
-
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
-<ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>OSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1517,6 +1453,70 @@
       <tags>
         <tag>深度学习</tag>
         <tag>PyTorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
       </tags>
   </entry>
   <entry>
@@ -2126,24 +2126,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Gitee部署Hexo遇到的神坑</title>
-    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
-<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
-<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
-<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
-<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
-<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
-<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于焦虑</title>
     <url>/2020/03/20/%E5%85%B3%E4%BA%8E%E7%84%A6%E8%99%91/</url>
     <content><![CDATA[<blockquote>
@@ -2165,6 +2147,24 @@
       </categories>
       <tags>
         <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gitee部署Hexo遇到的神坑</title>
+    <url>/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="1、问题来源"><a href="#1、问题来源" class="headerlink" title="1、问题来源"></a>1、问题来源</h2><p>​    最开始用Hexo+github搭建了一个个人主页，当我满心欢喜的发给朋友们炫耀的时候，大家都在抱怨访问的速度实在太慢。就想着把代码从github迁移到码云上。看网上的教程很简单，于是跟着做起来。最开始直接从github拷贝到码云，打开网址呈现的画面是这样的。</p>
+<p><img src="https://i.loli.net/2020/03/05/5eLH7sSvrc4hJgz.jpg" alt="TIM图片20200305185945.jpg"></p>
+<p>​    所有的样式都无法加载，所有的链接无法访问，我就纳闷了，明明是原封不动的克隆过来的，这怎么回事？于是继续找万能的度娘，度娘上和官方都是这么说的，由于种种原因，你要修改hexo中的配置文件，巴拉巴拉，，，OK，我改，然后当我改了url之后，页面直接报了404，真是*了**。再然后我就接着百度和谷歌，很遗憾，没看到我的答案，逐渐陷入了沉思，，，，</p>
+<h2 id="2、问题解决"><a href="#2、问题解决" class="headerlink" title="2、问题解决"></a>2、问题解决</h2><p>​    <strong>机缘巧合</strong>（这个答案真的不是在网上看到的，，，），上帝又来暗示我了，话不多说</p>
+<p><img src="https://i.loli.net/2020/03/05/1fmo4asuDz53KHk.png" alt="微信截图_20200305191050.png"></p>
+<p>在github上，每次当你每次改动想要提交，在本地执行hexo clean-&gt;hexo g-&gt;hexo d之后，去页面刷新就好了，但是在码云，git操作完成之后，还要去pages页面执行更新，代码才会被合并，OK，完美解决！</p>
+<p><img src="https://i.loli.net/2020/03/05/RV5mJspyGPhYoUA.png" alt="微信截图_20200305191646.png"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2519,11 +2519,11 @@
 <p>我打记事起瞎奶奶眼睛就瞧不见。瞎奶奶家里卖醋，买来醋精兑上水，两毛钱装满一瓶。我小时候觉得醋是甜的，打醋回家的路上拧开盖子呷一口，甚是快活。瞎奶奶人也慈祥，身体有点不舒服去找瞎奶奶，她摸摸地再摸摸头，嘴里念着咒语，心里就觉得踏实。我向来胆子大，不肯信什么迷信，但是瞎奶奶的那一套，更像是一种心灵的安抚。</p>
 <p>大奶奶骂瞎奶奶，小脑萎缩后这成了她业余生活的全部。</p>
 <p>她一个人自言自语的时候没人知道，所以我理解她找奶奶倾诉是缓解自己的害怕。</p>
-<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我把吃的给他，给她一箱，我为啥要给她啊，我这么大年纪了，我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
-<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“你听我跟你说，啥事也没有，年轻的时候，也不知谁管谁借了一瓢面，说是忘了还还是怎么的，就这样结下了梁子，谁知道她能记一辈子，你瞎奶奶可是个好人”。瞎奶奶生前，也是奶奶最好的朋友。</p>
-<p>大奶奶逢人便说瞎奶奶，大家也都道她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前，别人怎么劝都没用，那是她心头的结。</p>
+<p>我们每天吃晚饭大奶奶都要来看看，“你们还没吃吗？”这通常是大奶奶的第一套说辞。家里人招呼她坐下，她拿起凳子坐在我奶奶身边就开始了：“妹儿，你不知道，今天说要我给他吃的，我为啥要给她啊，我这么大年纪了！我上哪给她弄去啊”。奶奶习惯了陪她演戏：“你别胡说了，人家都死了多少年了，，，，”。大奶奶只停了一下然后接着说，一边说着一边情绪激动，她把嘴里的那个人当成了这辈子最大的仇人。</p>
+<p>我问奶奶：“他俩是有什么过节？”，奶奶说：“其实是很小的事情，我们年轻的时候，大奶奶管瞎奶奶借了一瓢面，但是瞎奶奶忘记还了，就这样结下了梁子，谁知道她会记一辈子。你瞎奶奶可是个好人啊”。瞎奶奶生前，也是奶奶最好的朋友。</p>
+<p>大奶奶逢人便说瞎奶奶，大家也都体谅她年纪大，认真的在敷衍她。她也跟我说，我问她：“你能看到她吗？”，大奶奶回到：“那哪能看到啊，看不见”。“那你怎么听见她说话？”。“那能听见，走到哪都能听见，去哪里她都跟着”。她说的及其认真，仿佛那个人就站在眼前。别人怎么劝都没用，那是她心头的结。</p>
 <p>奶奶这辈人，经历过太多事情，听见过炮弹声，挣过工分换饭吃，甚至三年自然灾害也捡了条命。他们从不和平走向和平，从挨饿到衣食无忧。所以他们走的一遭真正该记住的东西是什么？大奶奶的答案却是这样的。</p>
-<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在一个梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
+<p>没人会真正的理解大奶奶的处境，人家都只说这个老妈子老了病了，可怜但是没办法。她自己就像活在梦魇里，在她看来噩梦似乎一直没醒。噩梦里没什么世界末日的灾难，只是两个年轻的姑娘在你一言我一语的斗嘴，一转眼都老了，一个人没挺过去先走了，另一个人埋在心里成了疙瘩，这结就再也解不开了。她什么也没记住，关于这一生的记忆就剩这么点了，但是她把好人坏人分的真明白。<strong>人心里的秤杆最错不了。</strong></p>
 <p>我希望大奶奶的梦能醒来，她饶过自己。</p>
 <p>而我回家路上又呷了一口甜美的醋。</p>
 <p><strong>谁又能饶过自己。</strong></p>
@@ -2536,7 +2536,7 @@
 <p>五百口人的小村庄被一条恶臭的小河隔开。</p>
 <p>小河原本是不臭的，冬天结了很厚的冰，老实的农村爷们搬了张桌子在上面打麻将。村子也热闹，我跟着父亲去地里看庄稼，村里一位比我大结了婚的哥哥开玩笑把我的裤子脱了下来，我抹不开面，提上裤子骂他娘。从那以后，他每次看到我一个人的时候，都扬言要打我，我至今仍讨厌他，他也没敢真的打我。</p>
 <p>小河的一侧是我家挨着瞎奶奶家，小河的另一侧，住着我儿时的玩伴–蹦蹦。</p>
-<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦，可能是因为他太会蹦了，他走路东倒西歪的走不好，他也不太聪明。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
+<p>大一点的孩子没人愿意同蹦蹦玩的，我妈也不让我和蹦蹦玩，但是他总来找我。他吃了饭就来我家的院子里等我。家里的名字千奇百怪，阿猫阿狗都有叫的。蹦蹦的名字大概是因为他很会蹦。我记得蹦蹦是读过两天书的，但是他的书不是丢了就是被撕没了。他现在在家吃着残疾人低保，见了我也并不打招呼。</p>
 <p>主人公是蹦蹦的奶奶。</p>
 <p>这期间工作多停了几天，直到今天早上得知主人公已经去世。</p>
 <p>我出门听见河对过满院子的哭声，心里百感交集。我没想过要以文学的手法表现这世间的疾苦，这每一句话，都是我努力找到一个最准确的回忆，最真实的记录。如您所见，抛开别的不谈，这世间如此残忍。一遭一遭的总会变了样子，活着的人感叹、思考、也开心也难过，死的人呢，再疾苦也好，快乐也好，也都消失不见了。</p>
