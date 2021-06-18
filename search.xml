@@ -104,22 +104,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Git版本回退</title>
-    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
-    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
-
-<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
-<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Read a Paper</title>
     <url>/2020/04/20/How-to-Read-a-Paper/</url>
     <content><![CDATA[<blockquote>
@@ -211,6 +195,22 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git版本回退</title>
+    <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
+    <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//查看历史库</span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">//本地回滚</span><br><span class="line">git reset --hard 版本号</span><br><span class="line">//仓库回滚</span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+<p>但是切记，这种情况下要进行代码的本地备份，因为回滚之后会冲掉你之前的代码。</p>
+<p>我有认真的思考过git的协作方式，在没查谷歌的情况下我是这么认为的，如果两个协作者使用git上传代码，个人写个人的模块，代码没有交集，这样就不会造成冲突。而当两个人的代码有交集时，可能出现两个人同时修改一个代码的情况，这时git就报了冲突，解决的方式就是，如果对方已经向仓库提交了改动代码，我们的代码还在本地，在确认对方代码无误的情况下，可以手动把我们本地的代码修改成对方的代码，然后再进行push操作。所以当我们在pull代码的时候，如果代码不冲突，直接修改成对方的代码，这时候的pull操作是不会影响你的本地代码的，毕竟，没冲突，也就没交集。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -495,55 +495,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MongoDB</title>
-    <url>/2020/04/10/MongoDB/</url>
-    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
-
-<p>show dbs：显示所有数据库</p>
-<p>use test：创建test数据库(内存中)</p>
-<p>db：当前数据库</p>
-<p>db.dropDatabase()：删除数据库</p>
-<p><strong>三个保留库：</strong></p>
-<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
-<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
-<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
-<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
-<p>show collections：显示当前的collection</p>
-<p>db.my.drop( )：删除集合</p>
-<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
-<li><p>单个文档插入：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
-
-<p>db.comment.find()：查询所有数据库数据</p>
-<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
-<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
-<p><strong>投影查询</strong>：</p>
-<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
-<p>加try catch:</p>
-<p>try{</p>
-<p>insert:one or many</p>
-<p>}catch(e){</p>
-<p>print(e);</p>
-<p>}</p>
-<p><strong>文档更新：</strong></p>
-<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
-<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
-<p>批量修改：</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MPI分布式计算</title>
     <url>/2021/04/07/MPI%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<h1 id="1、并行计算简介"><a href="#1、并行计算简介" class="headerlink" title="1、并行计算简介"></a>1、并行计算简介</h1><h2 id="都得从性能提升说起"><a href="#都得从性能提升说起" class="headerlink" title="都得从性能提升说起"></a>都得从性能提升说起</h2><ul>
@@ -666,6 +617,55 @@
       </categories>
       <tags>
         <tag>MPI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MongoDB</title>
+    <url>/2020/04/10/MongoDB/</url>
+    <content><![CDATA[<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin目录下mongod --dbpath=..\data\db</span><br><span class="line">配置文件启动mongod -f ..\conf\mongod.conf</span><br><span class="line">连接：启动服务，输入mongo</span><br></pre></td></tr></table></figure>
+
+<p>show dbs：显示所有数据库</p>
+<p>use test：创建test数据库(内存中)</p>
+<p>db：当前数据库</p>
+<p>db.dropDatabase()：删除数据库</p>
+<p><strong>三个保留库：</strong></p>
+<p><strong>admin</strong>：root数据库，讲用户添加到这个数据库，自动继承所有数据库的权限。一些特定的服务器命令只能从这个数据库运行，比如列出所有数据库或者关闭服务器</p>
+<p><strong>local</strong>：不会被复制，用来存储限于本地服务器的任意集合</p>
+<p><strong>config</strong>：当Mongo用于分片设置时，config数据库在内部使用，保存分片的相关信息。</p>
+<h2 id="集合的创建和删除"><a href="#集合的创建和删除" class="headerlink" title="集合的创建和删除"></a>集合的创建和删除</h2><p>显示创建：db.createCollection(“my”)</p>
+<p>show collections：显示当前的collection</p>
+<p>db.my.drop( )：删除集合</p>
+<h2 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h2><ul>
+<li><p>单个文档插入：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.collection.insert(</span><br><span class="line">&lt;document or array of documents&gt;,</span><br><span class="line">    &#123;</span><br><span class="line">        writeConcern:&lt;document&gt;,</span><br><span class="line">        ordered:&lt;<span class="keyword">boolean</span>&gt;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">    <span class="comment">//集合没有则会隐式创建</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert(&#123;<span class="string">&quot;articleID&quot;</span>:<span class="string">&quot;sff&quot;</span>,<span class="string">&quot;sdf&quot;</span>:<span class="string">&quot;sdf&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">db.comment.insert([&#123;&#125;,&#123;&#125;,&#123;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p>db.comment.find()：查询所有数据库数据</p>
+<p>db.comment.find({articleID:”1001”})：查询特定集合</p>
+<p>db.comment.findOne({article:”1001”})：查询一条数据</p>
+<p><strong>投影查询</strong>：</p>
+<p>db.comment.find({articleID:”1001”},{articleID:1})：显示那个写哪个</p>
+<p>加try catch:</p>
+<p>try{</p>
+<p>insert:one or many</p>
+<p>}catch(e){</p>
+<p>print(e);</p>
+<p>}</p>
+<p><strong>文档更新：</strong></p>
+<p>覆盖修改：db.comment.update({_id:”1”},{likenum:NumberInt(1001)})</p>
+<p>局部修改：db.comment.update({_id:”1”},{${likenum:NumberInt(1001)}})</p>
+<p>批量修改：</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -1598,6 +1598,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo如何跳过渲染</title>
+    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
+    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
+<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github actions托管gitee pages</title>
     <url>/2021/04/09/github-actions%E6%89%98%E7%AE%A1gitee-pages%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>自从全球最大的同性交友网站–github被墙了之后，加之国内访问速度慢，把hexo静态网站托管到gitee就成了不二之选。问题是，gitee pages不支持自动更新，需要开通pro版本才行，花这钱就跟花钱开百度网盘会员一样不情愿，怎么办呢？—-<strong>github actions。</strong></p>
@@ -1644,24 +1662,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何跳过渲染</title>
-    <url>/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/</url>
-    <content><![CDATA[<h1 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h1><p>hexo是把markdown文件渲染成静态页面，然后展示出来。但是有些页面我们不需要hexo的渲染，比如在个人介绍中，我们想把自己的照片调整宽度，做成圆角的形式。这种改怎么做呢？</p>
-<p>我的第一个想法是，先md写好文档，执行hexo g-&gt;hexo d去生成远程仓库的html页面。然后去远程仓库修改html代码。事实上这样确实是可行的，但是问题又来了。我们在远程仓库修改渲染过的html文件，但是当下一次我们要提交新的修改时，页面又会被重新渲染，造成麻烦。</p>
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>正确的做法是，在不需要渲染的页面的头部，加上layout: false属性，这时候hexo不会为我们渲染该页面。问题还有，，，hexo不帮我们渲染页面，我们就需要自己写html页面，这样还是比较浪费时间。我的做法是，可以先让hexo帮我们渲染页面，然后去远程仓库把渲染好的html代码复制粘贴过来。ok，完美解决。不知道还有没有更好的方法了。<strong>注意要把html代码写在和之间让markdown可以正确识别。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2020-03-04 22:12:44</span><br><span class="line">layout: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">html代码</span><br><span class="line">****</span><br><span class="line">****</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果如下：</p>
-<p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/image-20210325214020150.png" alt="image-20210325214020150"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OSS文件管理</title>
     <url>/2020/03/18/java%E9%9B%86%E6%88%90%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96/</url>
     <content><![CDATA[<blockquote>
@@ -1688,6 +1688,27 @@
       <tags>
         <tag>Java</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>一年69.86的ECS来了！！</title>
+    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
+    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
+<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
+<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
+<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
+<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
+<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
+<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
+<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
+<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
   </entry>
   <entry>
     <title>tidb contributor</title>
@@ -1745,27 +1766,6 @@
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>一年69.86的ECS来了！！</title>
-    <url>/2020/03/17/%E4%B8%80%E5%B9%B469-86%E7%9A%84ECS%E6%9D%A5%E4%BA%86%EF%BC%81%EF%BC%81/</url>
-    <content><![CDATA[<h2 id="贫穷一定是故事的开端"><a href="#贫穷一定是故事的开端" class="headerlink" title="贫穷一定是故事的开端"></a>贫穷一定是故事的开端</h2><p><a href="https://www.aliyun.com/activity/daily/cloud">购买连接</a></p>
-<p>一直想鼓捣个自己的ECS耍耍，但是学生专享除去优惠券一年还要90块。阿里云也退出推出暑期在家计划，每天八点学生用户可以抢半年的免费ECS，很遗憾，资深夜猫子每天的闹钟都听不到，又舍不得那点钱，于是一拖再拖(希望有富婆可以看到程序员同学的贫穷QAQ!!)，今天登陆阿里云的主页，看到如下信息：<img src="https://s1.ax1x.com/2020/03/17/8diSu4.png" alt="8diSu4.png"></p>
-<p>一年69.86，这虽然比一年90块的学生机便宜不了几块钱，但是冲着不用优惠券和贫穷的态度，果断入手(虽然配置不咋地，要啥自行车啊，买来瞎鼓捣呗)。这里选择的是centos系统，也可以选择windows server。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>打开阿里云官网进入控制台，点击云服务器ECS，就可以看到我们刚刚购买的主机了：<img src="https://s1.ax1x.com/2020/03/17/8dF7Yq.png" alt="8dF7Yq.png"></p>
-<p>点击下方的实例ID，就进入实例实例详情页：<img src="https://i.loli.net/2020/03/21/yaMXPNxf7ipuVGO.png" alt="image-20200317225614113.png"></p>
-<p>这里可以看到关于本实例的一些配置信息，也可以在本页面远程连接到这台ECS。因为一开始是没有密码的，点击更多重置实例密码，然后就可以点击远程连接了，连接之后便进入到这台服务器。当然也可以使用xshell，PuTTY这些工具进行连接，方法都是一样的，这里的公网IP地址，就是我们会经常使用到的地址，也可以购买一个域名进行映射，普通的域名很便宜，我买了一个hhzhu.top一年9块钱，但是国内的需要备案等等操作，很麻烦。购买域名也很简单：</p>
-<p><a href="https://imgchr.com/i/8dAyxf"><img src="https://s1.ax1x.com/2020/03/17/8dAyxf.png" alt="8dAyxf.png"></a></p>
-<h2 id="安装宝塔linux面板"><a href="#安装宝塔linux面板" class="headerlink" title="安装宝塔linux面板"></a>安装宝塔linux面板</h2><p>接下来安装宝塔LINUX面板简化运维操作，连接服务器后，输入如下命令：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
-
-<p>根据提示操作即可安装宝塔linux面板，安装完成后，会给你一个访问地址、账户和密码(后续可以修改)，打开网址输入账号密码就进入linux面板，这里需要放行一些端口，具体的<a href="https://www.bt.cn/bbs/thread-2897-1-1.html">放行方法</a>：<a href="https://imgchr.com/i/8dE7tA"><img src="https://s1.ax1x.com/2020/03/17/8dE7tA.png" alt="8dE7tA.png"></a></p>
-<p>你可以在这里傻瓜式的安装和部署你的网站。我做的第一件事就是赶紧安装一个mysql，替换掉原来部署到学校服务器每次用都需要连接vpn的数据库，我和我的小伙伴们都爽呆了。<a href="https://imgchr.com/i/8deykQ"><img src="https://s1.ax1x.com/2020/03/17/8deykQ.png" alt="8deykQ.png"></a></p>
-<p>接下来就可以直接在宝塔面板上运行一些运维操作，发布自己的网站什么的，需要什么工具再自行下载就OK。</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
