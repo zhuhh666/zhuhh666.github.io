@@ -6,7 +6,7 @@
   <link href="http://victor-huihui.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://victor-huihui.gitee.io/"/>
-  <updated>2021-06-09T09:27:03.044Z</updated>
+  <updated>2021-07-24T06:18:40.928Z</updated>
   <id>http://victor-huihui.gitee.io/</id>
   
   <author>
@@ -17,11 +17,61 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>剑指offer</title>
+    <title>剑指offer3</title>
+    <link href="http://victor-huihui.gitee.io/2021/07/24/%E5%89%91%E6%8C%87offer3/"/>
+    <id>http://victor-huihui.gitee.io/2021/07/24/%E5%89%91%E6%8C%87offer3/</id>
+    <published>2021-07-24T06:17:36.000Z</published>
+    <updated>2021-07-24T06:18:40.928Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;41-表示数值的字符串&quot;&gt;&lt;a href=&quot;#41-表示数值的字符串&quot; class=&quot;headerlink&quot; title=&quot;41.表示数值的字符串&quot;&gt;&lt;/a&gt;41.表示数值的字符串&lt;/h1&gt;&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://victor-huihui.gitee.io/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="剑指offer" scheme="http://victor-huihui.gitee.io/tags/%E5%89%91%E6%8C%87offer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer2</title>
+    <link href="http://victor-huihui.gitee.io/2021/07/24/%E5%89%91%E6%8C%87offer2/"/>
+    <id>http://victor-huihui.gitee.io/2021/07/24/%E5%89%91%E6%8C%87offer2/</id>
+    <published>2021-07-24T06:16:00.000Z</published>
+    <updated>2021-07-24T06:19:06.846Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;21-反转链表&quot;&gt;&lt;a href=&quot;#21-反转链表&quot; class=&quot;headerlink&quot; title=&quot;21.反转链表&quot;&gt;&lt;/a&gt;21.反转链表&lt;/h1&gt;&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://victor-huihui.gitee.io/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="剑指offer" scheme="http://victor-huihui.gitee.io/tags/%E5%89%91%E6%8C%87offer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer1</title>
     <link href="http://victor-huihui.gitee.io/2021/06/09/%E5%89%91%E6%8C%87offer/"/>
     <id>http://victor-huihui.gitee.io/2021/06/09/%E5%89%91%E6%8C%87offer/</id>
     <published>2021-06-09T01:51:48.000Z</published>
-    <updated>2021-06-09T09:27:03.044Z</updated>
+    <updated>2021-07-24T06:19:53.045Z</updated>
     
     
       
@@ -43,7 +93,7 @@
     
     
     
-    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    <category term="剑指offer" scheme="http://victor-huihui.gitee.io/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
     <category term="剑指offer" scheme="http://victor-huihui.gitee.io/tags/%E5%89%91%E6%8C%87offer/"/>
@@ -478,58 +528,6 @@
     
     
     <category term="算法" scheme="http://victor-huihui.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>文件漏洞渗透</title>
-    <link href="http://victor-huihui.gitee.io/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/"/>
-    <id>http://victor-huihui.gitee.io/2020/09/17/%E6%96%87%E4%BB%B6%E6%BC%8F%E6%B4%9E%E6%B8%97%E9%80%8F/</id>
-    <published>2020-09-17T09:08:05.000Z</published>
-    <updated>2021-03-11T05:37:14.223Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;靶机安装&quot;&gt;&lt;a href=&quot;#靶机安装&quot; class=&quot;headerlink&quot; title=&quot;靶机安装&quot;&gt;&lt;/a&gt;靶机安装&lt;/h2&gt;&lt;p&gt;使用docker快速启动&lt;/p&gt;
- &lt;figure class=&quot;highlight</summary>
-        
-      
-    
-    
-    
-    <category term="网络攻防" scheme="http://victor-huihui.gitee.io/categories/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/"/>
-    
-    
-    <category term="文件上传渗透" scheme="http://victor-huihui.gitee.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%B8%97%E9%80%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对象存储及使用痛点</title>
-    <link href="http://victor-huihui.gitee.io/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/"/>
-    <id>http://victor-huihui.gitee.io/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</id>
-    <published>2020-08-03T06:46:10.000Z</published>
-    <updated>2020-08-03T07:54:43.715Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。&lt;/p&gt;
-&lt;h2 id=&quot;1、从对象存储说起&quot;&gt;&lt;a href=&quot;#1、从对象存储说起&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="后端技术" scheme="http://victor-huihui.gitee.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="OSS" scheme="http://victor-huihui.gitee.io/tags/OSS/"/>
     
   </entry>
   
