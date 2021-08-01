@@ -90,20 +90,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Gitee-Pages 自定义域名</title>
-    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
-    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
-<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
-<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
-]]></content>
-      <categories>
-        <category>Bug合集</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git版本回退</title>
     <url>/2020/03/20/Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/</url>
     <content><![CDATA[<p>git冲突是再正常不过的了，在某些情况下，我们不得不进行版本回退，以解决代码冲突。</p>
@@ -117,6 +103,20 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gitee-Pages 自定义域名</title>
+    <url>/2020/04/21/Gitee-Pages-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="Bug来源"><a href="#Bug来源" class="headerlink" title="Bug来源"></a>Bug来源</h2><p>利用hexo写博客，把代码托管到gitee上。但是gitee的Gitee-Pages服务是不支持自定义域名的，需要买会员才可以，一年99块。这99块去阿里云买个学生机不香吗？之前领取了一个月的会员，今天过期了，所以自定义的域名也就没办法访问了。</p>
+<h2 id="Bug解决"><a href="#Bug解决" class="headerlink" title="Bug解决"></a>Bug解决</h2><p>又不想买会员，又想自定义域名怎么办呢？</p>
+<p>简单，如果你手里有服务器的话，把原来解析的指向gitee的域名重新指向公网IP，然后建个站做反向代理就行了。好吧，今天有点水。。。。。<img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200421233538.png" alt="微信截图_20200421233344"></p>
+]]></content>
+      <categories>
+        <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -858,70 +858,6 @@
       </tags>
   </entry>
   <entry>
-    <title>对象存储及使用痛点</title>
-    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
-    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
-<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
-<li><p><strong>什么是对象存储？</strong></p>
-<blockquote>
-<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
-</blockquote>
-<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
-<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
-<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
-</li>
-<li><p><strong>主流的对象存储</strong></p>
-<ul>
-<li>阿里云OSS</li>
-<li>腾讯云COS</li>
-<li>华为云OBS</li>
-</ul>
-</li>
-</ul>
-<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
-<ul>
-<li><p><strong>同步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
-<li><p><strong>异步上传</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
-<li><p><strong>异步执行过程</strong></p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
-</ul>
-<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
-<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
-
-<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
-<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
-<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
-<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
-<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
-<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
-<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
-
-<hr>
-<hr>
-<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
-<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
-<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
-<ul>
-<li>rabbitmq要看好几天</li>
-<li>kafka要看好几天</li>
-<li>mapreduce要看好几天</li>
-<li>连个小小的redis都要看好几天</li>
-<li>我去它瞄的。​ T-T</li>
-</ul>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>OSS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Player</title>
     <url>/2020/03/23/Player/</url>
     <content><![CDATA[
@@ -1475,6 +1411,70 @@
       </tags>
   </entry>
   <entry>
+    <title>对象存储及使用痛点</title>
+    <url>/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/</url>
+    <content><![CDATA[<p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，我丢，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、万一合作谈崩了"><a href="#3、万一合作谈崩了" class="headerlink" title="3、万一合作谈崩了"></a>3、万一合作谈崩了</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>我去它瞄的。​ T-T</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>OSS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pycharm搭建PyTorch环境</title>
     <url>/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>Pytorch是一个开源的python机器学习库，底层由C++实现，Pytorch有两大特征：</p>
@@ -1520,19 +1520,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot整合redis</title>
-    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
-<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora+PicGo实现图片自动上传</title>
     <url>/2020/03/25/Typora-PicGo%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>我实在太喜欢Typora了。不仅仅因为它腿白貌。。，啊呸，页面清爽美观。而且还支持各种代码格式，写起笔记来视觉很好。但是令人痛心的是，当你想在Typora中插入图片时，OK，你可以插入，但是它本质上是一种弱引用，引用的只是图片的本地路径。所以如果你想分享你的md文件，还需要连带分享一个图片资源文件夹，十分臃肿。在使用PicGo之前，想用hexo渲染md文件，都是先打开图床工具—&gt;上传图片—&gt;复制图片URL—&gt;粘贴进Typora，属实麻烦。自从Typora支持通过PicGo自动上传之后，Typora真的完美了，用起来不要太爽。</p>
@@ -1573,6 +1560,19 @@
       <tags>
         <tag>Typora</tag>
         <tag>PicGo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot整合redis</title>
+    <url>/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<p>关于redis的笔记全部归纳到这篇来了。</p>
+<p><a href="https://victor-huihui.gitee.io/2021/03/24/Redis/">Redis汇总</a></p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1766,45 +1766,6 @@
       <categories>
         <category>后端技术</category>
       </categories>
-  </entry>
-  <entry>
-    <title>中医学哲学基础-五行学说</title>
-    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
-</blockquote>
-<p><strong>五行各自的特征：</strong></p>
-<ul>
-<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
-<li><u>火曰炎上</u>：温热、上升、光明</li>
-<li><u>土曰稼穑</u>：生化、承载、收纳</li>
-<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
-<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
-</ul>
-<p><strong>事物五行属性的归类：</strong></p>
-<ul>
-<li>取象比类法</li>
-</ul>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
-<ul>
-<li><p>推演络绎法</p>
-<p><strong>五行和五脏</strong></p>
-<ul>
-<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
-<li>火—&gt;心</li>
-<li>土—&gt;脾</li>
-<li>金—&gt;肺</li>
-<li>水—&gt;肾(没有什么争议)</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>中医理论基础</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
   </entry>
   <entry>
     <title>中医基础理论-绪论</title>
@@ -2049,6 +2010,45 @@
       </tags>
   </entry>
   <entry>
+    <title>中医学哲学基础-五行学说</title>
+    <url>/2020/04/15/%E4%B8%AD%E5%8C%BB%E5%AD%A6%E5%93%B2%E5%AD%A6%E5%9F%BA%E7%A1%80-%E4%BA%94%E8%A1%8C%E5%AD%A6%E8%AF%B4/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>五行学说：</strong>以木、火、土、金、水为分类标志的五大体系及其相互之间的关系的一门学说。</p>
+</blockquote>
+<p><strong>五行各自的特征：</strong></p>
+<ul>
+<li><u>木曰曲直</u>：生长、生发、条达、舒畅(木形人—高瘦、面色青、劳心者、头发少)</li>
+<li><u>火曰炎上</u>：温热、上升、光明</li>
+<li><u>土曰稼穑</u>：生化、承载、收纳</li>
+<li><u>金曰从革</u>：沉降、肃杀、收敛</li>
+<li><u>水曰润下</u>：滋润、寒凉、下行、(闭藏)</li>
+</ul>
+<p><strong>事物五行属性的归类：</strong></p>
+<ul>
+<li>取象比类法</li>
+</ul>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200416230843.png" alt="image-20200416230834027"></p>
+<ul>
+<li><p>推演络绎法</p>
+<p><strong>五行和五脏</strong></p>
+<ul>
+<li>木—&gt;肝(无形解释无形，炙热解释炙热)</li>
+<li>火—&gt;心</li>
+<li>土—&gt;脾</li>
+<li>金—&gt;肺</li>
+<li>水—&gt;肾(没有什么争议)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>中医理论基础</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>代理模式</title>
     <url>/2021/04/22/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<p>使用代理对象代替对真实对象的访问，这样就可以在不修改原目标对象的前提下，提供额外的操作，拓展目标对象的功能。代理模式的主要作用是拓展目标对象的功能，比如在目标对象的某个方法执行前后可以增加一些自定义的操作。</p>
@@ -2201,6 +2201,36 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用图纸识别调研</title>
+    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
+    <content><![CDATA[<blockquote>
+<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
+</blockquote>
+<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
+<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
+<p><strong>pom.xml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>controller</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>static</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
+<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
+<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
+<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
+]]></content>
+      <categories>
+        <category>后端技术</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -2583,36 +2613,6 @@
       </tags>
   </entry>
   <entry>
-    <title>通用图纸识别调研</title>
-    <url>/2020/04/26/%E5%9B%BE%E7%BA%B8%E8%AF%86%E5%88%AB%E8%B0%83%E7%A0%94/</url>
-    <content><![CDATA[<blockquote>
-<p>最近在做图纸识别的项目调研，对于文字识别来说，各种云服务商已经提供了很详尽的API和各种开发语言的SDK，开箱即用非常方便。但是对于开发者来说具体的识别过程还是个黑匣子，而且，是收费的。这里调研了几个开源的文字识别项目，目前还在调研过程</p>
-</blockquote>
-<h2 id="云服务商API"><a href="#云服务商API" class="headerlink" title="云服务商API"></a>云服务商API</h2><p>百度云，腾讯云，阿里云，华为云都提供了印刷文字的识别。阿里云的在项目中有用到过，文档写的非常详尽。参照之前写的<a href="https://victor-huihui.gitee.io/2020/04/09/%E8%BA%AB%E4%BB%BD%E8%AF%81%E4%BF%A1%E6%81%AF%E8%AF%86%E5%88%AB/">身份证信息识别</a></p>
-<h2 id="Tesseract-OCR"><a href="#Tesseract-OCR" class="headerlink" title="Tesseract-OCR"></a>Tesseract-OCR</h2><p>谷歌公司产品。经过测试读取计算机的照片生成的文字，准确率不错。使用起来简单，实例化一个Tesseract实例，然后为已经训练好的LSTM模型设置数据路径，调用doOCR方法，接收一个文件参数返回字符串。开源。这里用sprigboot写了一个demo测试了一下识别效果。</p>
-<p><strong>pom.xml</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&lt;?xml</span> <span class="string">version=&quot;1.0&quot;</span> <span class="string">encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="string">&lt;project</span> <span class="string">xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="string">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         <span class="string">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0</span> <span class="string">https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span><br><span class="line">    <span class="string">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span></span><br><span class="line">    <span class="string">&lt;parent&gt;</span></span><br><span class="line">        <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">        <span class="string">&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;relativePath/&gt;</span> <span class="string">&lt;!--</span> <span class="string">lookup</span> <span class="string">parent</span> <span class="string">from</span> <span class="string">repository</span> <span class="string">--&gt;</span></span><br><span class="line">    <span class="string">&lt;/parent&gt;</span></span><br><span class="line">    <span class="string">&lt;groupId&gt;com.hhzhu&lt;/groupId&gt;</span></span><br><span class="line">    <span class="string">&lt;artifactId&gt;demo&lt;/artifactId&gt;</span></span><br><span class="line">    <span class="string">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span></span><br><span class="line">    <span class="string">&lt;name&gt;demo&lt;/name&gt;</span></span><br><span class="line">    <span class="string">&lt;description&gt;Demo</span> <span class="string">project</span> <span class="string">for</span> <span class="string">Spring</span> <span class="string">Boot&lt;/description&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;properties&gt;</span></span><br><span class="line">        <span class="string">&lt;java.version&gt;1.8&lt;/java.version&gt;</span></span><br><span class="line">    <span class="string">&lt;/properties&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;dependencies&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;!--</span> <span class="string">https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j</span> <span class="string">--&gt;</span></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;net.sourceforge.tess4j&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;tess4j&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;version&gt;4.4.1&lt;/version&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="string">&lt;dependency&gt;</span></span><br><span class="line">            <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="string">&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;scope&gt;test&lt;/scope&gt;</span></span><br><span class="line">            <span class="string">&lt;exclusions&gt;</span></span><br><span class="line">                <span class="string">&lt;exclusion&gt;</span></span><br><span class="line">                    <span class="string">&lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span></span><br><span class="line">                    <span class="string">&lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="string">&lt;/exclusion&gt;</span></span><br><span class="line">            <span class="string">&lt;/exclusions&gt;</span></span><br><span class="line">        <span class="string">&lt;/dependency&gt;</span></span><br><span class="line">    <span class="string">&lt;/dependencies&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&lt;build&gt;</span></span><br><span class="line">        <span class="string">&lt;plugins&gt;</span></span><br><span class="line">            <span class="string">&lt;plugin&gt;</span></span><br><span class="line">                <span class="string">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">                <span class="string">&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="string">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="string">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="string">&lt;/build&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;/project&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>controller</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hhzhu.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.Tesseract;</span><br><span class="line"><span class="keyword">import</span> net.sourceforge.tess4j.TesseractException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartFile;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.support.RedirectAttributes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.RedirectView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * 谷歌OCR识别测试控制层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> HhZhu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> Created on 2020/4/25 15:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Controller</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;upload&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/upload&quot;, method = RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> RedirectView <span class="title">singleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,</span></span></span><br><span class="line"><span class="function"><span class="params">                                             RedirectAttributes redirectAttributes, Model model)</span> <span class="keyword">throws</span> IOException, TesseractException </span>&#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = file.getBytes();</span><br><span class="line">            Path path = Paths.get(<span class="string">&quot;C://Users//Victor//Desktop//demo//src//main//resources//static//&quot;</span> + file.getOriginalFilename());</span><br><span class="line">            Files.write(path, bytes);</span><br><span class="line">            File convFile = convert(file);</span><br><span class="line">            Tesseract tesseract = <span class="keyword">new</span> Tesseract();</span><br><span class="line">            tesseract.setDatapath(<span class="string">&quot;C://Users//Victor//Desktop//demo//DataScience//testdata//&quot;</span>);</span><br><span class="line">            String text = tesseract.doOCR(convFile);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">            redirectAttributes.addFlashAttribute(<span class="string">&quot;text&quot;</span>, text);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RedirectView(<span class="string">&quot;result&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@RequestMapping(&quot;/result&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;result&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">convert</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            File convFile = <span class="keyword">new</span> File(file.getOriginalFilename());</span><br><span class="line">            convFile.createNewFile();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(convFile);</span><br><span class="line">            fos.write(file.getBytes());</span><br><span class="line">            fos.close();</span><br><span class="line">            <span class="keyword">return</span> convFile;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>static</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># upload页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Upload a file for OCR<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># result页面</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>result<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Extracted Content:<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;text&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Form the image:<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">th:src</span>=<span class="string">&quot;&#x27;/&#x27; + $&#123;file.getOriginalFilename()&#125;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里的testdata可以到github下载，大概有1.6个G的样子(monkey找个脚本加速一下吧，不然要疯的)，然后用两张图片作为测试，下面是识别结果的对比：</p>
-<p><img src="https://gitee.com/victor-huihui/picgo/raw/master/img/20200426135925.png" alt="微信截图_20200426135853"></p>
-<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200426140114.png" alt="微信截图_20200426140021"></p>
-<p><strong>可以看出适应性比较差。对于排版标准的图片，识别很精准，但是对于畸形图片的识别准确率较差</strong></p>
-<h2 id="Chineseocr-lite"><a href="#Chineseocr-lite" class="headerlink" title="Chineseocr-lite"></a>Chineseocr-lite</h2><p>还有很多正在调研和测试，，，，，，，</p>
-]]></content>
-      <categories>
-        <category>后端技术</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>操作系统学习笔记</title>
     <url>/2021/04/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h2 id="概念功能和目标"><a href="#概念功能和目标" class="headerlink" title="概念功能和目标"></a>概念功能和目标</h2><p><img src="https://nextlab.oss-cn-shanghai.aliyuncs.com/img/%E6%A6%82%E8%A7%88.png" alt="概览"></p>
@@ -2887,158 +2887,6 @@
       </tags>
   </entry>
   <entry>
-    <title>分布式</title>
-    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
-<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
-<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
-<ul>
-<li>C：所有节点访问一份最新的数据副本</li>
-<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
-<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
-</ul>
-<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
-<ul>
-<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
-<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
-<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
-</ul>
-<p><strong>一致性解决方案：</strong></p>
-<ul>
-<li>分布式事务：两段提交</li>
-<li>分布式锁</li>
-<li>MQ消息持久化 重试 幂等</li>
-<li>Paxos算法</li>
-</ul>
-<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
-<p><strong>高可用的解决方案：</strong></p>
-<ul>
-<li>负载均衡</li>
-<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
-<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
-<li>流量控制</li>
-<li>异地多活</li>
-</ul>
-<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
-<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
-<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
-<li><p>系统拆分</p>
-<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
-</li>
-<li><p>缓存</p>
-<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
-</li>
-<li><p>MQ</p>
-<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
-</li>
-<li><p>分库分表</p>
-<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
-</li>
-<li><p>读写分离</p>
-<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
-</li>
-<li><p>ES</p>
-<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
-</li>
-</ul>
-<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
-<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
-<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
-<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
-<li><p>计数器</p>
-<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
-<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
-</li>
-<li><p>漏桶</p>
-<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
-<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
-<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
-<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
-</li>
-<li><p>令牌桶</p>
-<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
-<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
-<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
-<p><strong>算法实现：</strong></p>
-<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
-</li>
-</ul>
-<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
-<li><p>Redis请求窗口</p>
-<blockquote>
-<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
-</blockquote>
-<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
-</li>
-<li><p>Nginx限流</p>
-<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
-<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
-<ul>
-<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
-<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
-</ul>
-</li>
-</ul>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
-<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
-<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
-<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
-<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
-<blockquote>
-<ol>
-<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
-<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
-<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
-</ol>
-</blockquote>
-<p>服务端使用cookie可以使用以下方法：</p>
-<ul>
-<li><p>设置cookie返回给客户顿</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>读取所有cookie值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
-<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
-<p><strong>session如何进行身份验证</strong></p>
-<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
-<p>需要注意：</p>
-<ul>
-<li>依赖session的业务需要确保客户端开启了cookie</li>
-<li>session的过期时间。</li>
-</ul>
-<p><strong>没有cookie的话，session还能用吗</strong></p>
-<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
-<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
-<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
-<p>JWT三部分构成：</p>
-<ul>
-<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
-<li>Payload(负载)：存放实际需要传递的数据。</li>
-<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
-</ul>
-<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
-<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
-<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
-<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
-<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
-<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
-<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
-<blockquote>
-<p> <strong>sso和oauth2.0的区别。</strong></p>
-<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>复习入口</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统科学概述</title>
     <url>/2021/04/06/%E7%B3%BB%E7%BB%9F%E7%A7%91%E5%AD%A6%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<p><strong>系统科学：</strong></p>
@@ -3245,6 +3093,158 @@
 ]]></content>
       <categories>
         <category>Bug合集</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式</title>
+    <url>/2020/04/09/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>水杉在线是一个分布式系统，事实上我们实验室的技术栈一直在努力的向当前主流的技术看齐，所以我们会考虑分布式，考虑云原生等等。说到分布式系统，有些概念不得不说。</p>
+<p>对于分布式系统来说，最大的难点就是各个节点如何同步。CAP是这方面的基本定理。</p>
+<p>CAP指的是：一致性（consistency）、可用性（Availability）和分区容错性（Partitiontolerance）。对于一个系统来说，不可能同时满足以下三点：</p>
+<ul>
+<li>C：所有节点访问一份最新的数据副本</li>
+<li>A：每次请求都能获取到非错的响应-但是不保证获取的数据是最新数据。</li>
+<li>P：实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，Juin意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<h2 id="数据一致性模型"><a href="#数据一致性模型" class="headerlink" title="数据一致性模型"></a>数据一致性模型</h2><p>一些分布式系统通过复制数据来提高系统的可靠性和容错性，将数据的不同副本存放在不同的机器，但是维护数据副本的代价高，因此很多系统采用弱一致性：</p>
+<ul>
+<li>强一致性：无论更新操作在哪一个副本执行，之后所有的读操作都要获取到最新的数据。</li>
+<li>弱一致性：用户读到某一数据的更新需要一定时间，这段时间称为不一致性窗口。</li>
+<li>最终一致性：弱一致性的一种特例，保证用户最终能够读到数据的更新。</li>
+</ul>
+<p><strong>一致性解决方案：</strong></p>
+<ul>
+<li>分布式事务：两段提交</li>
+<li>分布式锁</li>
+<li>MQ消息持久化 重试 幂等</li>
+<li>Paxos算法</li>
+</ul>
+<h2 id="服务可用性"><a href="#服务可用性" class="headerlink" title="服务可用性"></a>服务可用性</h2><p>可用性是指只要收到用户请求，服务器就必须给出回应。</p>
+<p><strong>高可用的解决方案：</strong></p>
+<ul>
+<li>负载均衡</li>
+<li>降级：服务器压力剧增的时候，根据业务情况和流量对一些服务有策略的降级，释放资源保证核心任务的平稳运行。</li>
+<li>熔断：对于目标服务的请求和调用大量失败，熔断该服务的所有调用，并且对于后续调用直接返回，从而快速释放资源，确保目标服务在不可用的这段时间内，所有对他的调用都是立即返回的，不会阻塞。</li>
+<li>流量控制</li>
+<li>异地多活</li>
+</ul>
+<h2 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h2><p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
+<p>分区容错无法避免，因此，P总是成立，那么C和A无法同时做到啊。</p>
+<h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><ul>
+<li><p>系统拆分</p>
+<p>将一个系统拆分成多个子系统，然后每个系统连一个数据库。</p>
+</li>
+<li><p>缓存</p>
+<p>大部分的高并发场景都是读多写少，数据库和缓存都存一份，然后大量走缓存。redis单机可以几万的并发。</p>
+</li>
+<li><p>MQ</p>
+<p>对于高频率写的情况，redis就无能为力了，这时候可以把大量的写请求存入MQ，后边系统消费之后再慢慢的写，控制在MySQL承载范围之内。所以可以考虑用MQ来异步写，提高并发性。</p>
+</li>
+<li><p>分库分表</p>
+<p>分库分表，可能到了最后数据库层面还是免不了抗高并发的要求，好吧，那么就将一个数据库拆分为多个库，多个库来扛更高的并发；然后将一个表拆分为多个表，每个表的数据量保持少一点，提高 SQL 跑的性能。</p>
+</li>
+<li><p>读写分离</p>
+<p>读写分离，这个就是说大部分时候数据库可能也是读多写少，没必要所有请求都集中在一个库上吧，可以搞个主从架构，主库写入，从库读取，搞一个读写分离。读流量太多的时候，还可以加更多的从库。</p>
+</li>
+<li><p>ES</p>
+<p>ES 是分布式的，可以随便扩容，分布式天然就可以支撑高并发，因为动不动就可以扩容加机器来扛更高的并发。那么一些比较简单的查询、统计类的操作，可以考虑用 ES 来承载，还有一些全文搜索类的操作，也可以考虑用 ES 来承载。</p>
+</li>
+</ul>
+<h2 id="高并发下的流量控制"><a href="#高并发下的流量控制" class="headerlink" title="高并发下的流量控制"></a>高并发下的流量控制</h2><p>如果不进行流量控制，服务器会承受很大的压处理压力。请求量很高，服务器负载也很高，超过极限时系统崩溃，导致所有人不能访问。</p>
+<p>为了实现服务高可用，可以对大流量请求进行限流，拦截掉大部分请求，只允许一部分请求可以真正进入服务器。</p>
+<p><code>令牌桶</code>，<code>漏桶</code>，<code>计数器</code>是常用的三种限流算法。</p>
+<h3 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h3><ul>
+<li><p>计数器</p>
+<p>qps是100，从第一个请求开始算，在接下来的1s，每次一个请求，计数器+1，到100之后就会拒绝所有的请求，然后在下一秒计数器恢复为0.</p>
+<p>算法有一个弊端，就是在1s的前10ms，已经通过了100个请求，后面的都会拒绝，这种现象称为<strong>突刺现象</strong>。</p>
+</li>
+<li><p>漏桶</p>
+<p>算法内部有个容器，请求进来时，不管流量有多大，都以匀速的方式请求，比如1ms10个。</p>
+<p>不管服务调用方多么不稳定，通过漏桶算法进行限流，每 <code>10</code> 毫秒处理一次请求。因为处理的速度是固定的，请求进来的速度是未知的，可能突然进来很多请求，没来得及处理的请求就先放在桶里，既然是个桶，肯定是有容量上限，如果桶满了，那么新进来的请求就丢弃。</p>
+<p><strong>算法实现</strong>：队列保存请求，另外通过一个线程池定期从队列中获取请求并执行，可以一次获取多个并发执行。</p>
+<p>这种算法，在使用过后也存在弊端：<strong>无法应对短时间的突发流量</strong>，同时它的优点也是可以平滑网络上的突发流量，请求可以被整形成稳定的流量。</p>
+</li>
+<li><p>令牌桶</p>
+<p>桶算法可以限制请求调用的速率，令牌算法能够在限制调用的平均速率的同时还允许一定程度的突发调用。</p>
+<p>桶用来存放固定数量的令牌。以一定的速率往桶中放令牌。每次请求先获取令牌，拿到令牌才可以执行，否则等待可用的令牌，或者直接拒绝。</p>
+<p>桶中令牌上限则丢弃。所以存在这种情况，桶中一直有大量可用的令牌，请求可以拿令牌直接执行。比如设置 <code>qps</code> 为 <code>100</code> ，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，这时服务还没完全启动好，等启动完成对外提供服务时，该限流器可以抵挡瞬时的 <code>100</code> 个请求。所以，只有桶中没有令牌时，请求才会进行等待，最后相当于以一定的速率执行。</p>
+<p><strong>算法实现：</strong></p>
+<p>队列存放令牌，通过线程池定期生成令牌到队列中，每次来一个请求，就从队列中获取一个令牌，然后继续执行。</p>
+</li>
+</ul>
+<h3 id="集群限流"><a href="#集群限流" class="headerlink" title="集群限流"></a>集群限流</h3><ul>
+<li><p>Redis请求窗口</p>
+<blockquote>
+<p>采用redis的计时和计数方式，在规定的时间窗口，允许通过的最大请求量。</p>
+</blockquote>
+<p>每次有相关操作的时候，就向 <code>redis</code> 服务器发送一个 <code>incr</code> 命令，比如需要限制某个用户访问 <code>/index</code> 接口的次数，只需要拼接用户 id 和接口名生成 <code>redis</code> 的 <code>key</code> ，每次该用户访问此接口时，只需要对这个 <code>key</code> 执行 <code>incr</code> 命令，在这个 <code>key</code> 带上过期时间，就可以实现指定时间的访问频率。</p>
+</li>
+<li><p>Nginx限流</p>
+<p>Nginx按请求速率限速模块使用的是漏桶算法，即能够强行保证请求的实时处理速度不会超过设置的阈值。</p>
+<p>Nginx官方版本限制IP的连接和并发分别有两个模块：</p>
+<ul>
+<li><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”。</li>
+<li><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/tinyURL/">短链系统</a></p>
+<p><a href="https://hadyang.github.io/interview/docs/architecture/design/seckill/">秒杀系统</a></p>
+<h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><h2 id="分布式一致性与共识算法"><a href="#分布式一致性与共识算法" class="headerlink" title="分布式一致性与共识算法"></a>分布式一致性与共识算法</h2><h2 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h2><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><h1 id="关于认证授权"><a href="#关于认证授权" class="headerlink" title="关于认证授权"></a>关于认证授权</h1><p>认证：认证身份凭证，通过凭证知道是你。</p>
+<p>授权：认证之后，授权主要掌管着我们访问系统的权限。</p>
+<h2 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a>cookie和session</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>简单来说，cookie存放在客户端，用来保存用户信息。</p>
+<blockquote>
+<ol>
+<li>我们在 Cookie 中保存已经登录过的用户信息，下次访问网站的时候页面可以自动帮你登录的一些基本信息给填了。除此之外，Cookie 还能保存用户首选项，主题和其他设置信息。</li>
+<li>使用Cookie 保存 session 或者 token ，向后端发送请求的时候带上 Cookie，这样后端就能取到session或者token了。这样就能记录用户当前的状态了，因为 HTTP 协议是无状态的。</li>
+<li>Cookie 还可以用来记录和分析用户行为。举个简单的例子你在网上购物的时候，因为HTTP协议是没有状态的，如果服务器想要获取你在某个页面的停留状态或者看了哪些商品，一种常用的实现方式就是将这些信息存放在Cookie</li>
+</ol>
+</blockquote>
+<p>服务端使用cookie可以使用以下方法：</p>
+<ul>
+<li><p>设置cookie返回给客户顿</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;change-username&quot;)</span><br><span class="line">public String setCookie(HttpServletResponse response) &#123;</span><br><span class="line">    &#x2F;&#x2F; 创建一个 cookie</span><br><span class="line">    Cookie cookie &#x3D; new Cookie(&quot;username&quot;, &quot;Jovan&quot;);</span><br><span class="line">    &#x2F;&#x2F;设置 cookie过期时间</span><br><span class="line">    cookie.setMaxAge(7 * 24 * 60 * 60); &#x2F;&#x2F; expires in 7 days</span><br><span class="line">    &#x2F;&#x2F;添加到 response 中</span><br><span class="line">    response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">    return &quot;Username is changed!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用spring框架的@CookieValue获取特定cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;&quot;)</span><br><span class="line">public String readCookie(@CookieValue(value &#x3D; &quot;username&quot;, defaultValue &#x3D; &quot;Atta&quot;) String username) &#123;</span><br><span class="line">    return &quot;Hey! My username is &quot; + username;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>读取所有cookie值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;all-cookies&quot;)</span><br><span class="line">public String readAllCookies(HttpServletRequest request) &#123;</span><br><span class="line"></span><br><span class="line">    Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">    if (cookies !&#x3D; null) &#123;</span><br><span class="line">        return Arrays.stream(cookies)</span><br><span class="line">                .map(c -&gt; c.getName() + &quot;&#x3D;&quot; + c.getValue()).collect(Collectors.joining(&quot;, &quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;No cookies&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>主要作用是通过服务端记录用户状态。</p>
+<p>Cookie存放在客户端，session存放在服务端，所以安全性更高，敏感信息一般不直接写在cookie，最好将cookie信息加密然后使用的时候去服务端解密。</p>
+<p><strong>session如何进行身份验证</strong></p>
+<p>通过sessionId来实现特定用户，ID一般存放在redis中，用户登陆系统，然后返回给客户端具有sessionId的cookie，请求时带上，这样就知道用户了。</p>
+<p>需要注意：</p>
+<ul>
+<li>依赖session的业务需要确保客户端开启了cookie</li>
+<li>session的过期时间。</li>
+</ul>
+<p><strong>没有cookie的话，session还能用吗</strong></p>
+<p>可以呀，可以重写请求串啊，在url里面带着sessionId。可行但是安全性和用户体验感降低。当然了，也可以加密后传到服务端进行解密。</p>
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><h3 id="什么是token"><a href="#什么是token" class="headerlink" title="什么是token"></a>什么是token</h3><p>session有问题，比如他没法做分布式，需要保证session信息服务器的可用性、不适合移动端。</p>
+<p>Token不需要再客户端存放，只需要校验。JWT就是这种实现方式。JWT本质上就是一种签名串，由于是有签名的，所以接收者可以验证他的真实性。</p>
+<p>JWT三部分构成：</p>
+<ul>
+<li>Header：描述JWT的元数据，定义了生成签名的算法和token类型。</li>
+<li>Payload(负载)：存放实际需要传递的数据。</li>
+<li>Signature：服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)使用 Header 里面指定的签名算法（默认是 HMAC SHA256）生成。</li>
+</ul>
+<p>在基于 Token 进行身份验证的的应用程序中，服务器通过<code>Payload</code>、<code>Header</code>和一个密钥(<code>secret</code>)创建令牌（<code>Token</code>）并将 <code>Token</code> 发送给客户端，客户端将 <code>Token</code> 保存在 Cookie 或者 localStorage 里面，以后客户端发出的所有请求都会携带这个令牌。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP Header 的 Authorization字段中：<code> Authorization: Bearer Token</code>。</p>
+<h3 id="为什么token可以防止CSRF攻击"><a href="#为什么token可以防止CSRF攻击" class="headerlink" title="为什么token可以防止CSRF攻击"></a>为什么token可以防止CSRF攻击</h3><p>CSRF：跨域请求伪造。</p>
+<p>Session 认证中 Cookie 中的 SessionId是由浏览器发送到服务端的，借助这个特性，攻击者就可以通过让用户误点攻击链接，达到攻击效果。</p>
+<p>但是，我们使用 token 的话就不会存在这个问题，在我们登录成功获得 token 之后，一般会选择存放在 local storage 中。然后我们在前端通过某些方式会给每个发到后端的请求加上这个 token,这样就不会出现 CSRF 漏洞的问题。因为，即使有个你点击了非法链接发送了请求到服务端，这个非法请求是不会携带 token 的，所以这个请求将是非法的。</p>
+<p>需要注意的是不论是 Cookie 还是 token 都无法避免跨站脚本攻击（Cross Site Scripting）XSS。</p>
+<h2 id="Oauth2-0"><a href="#Oauth2-0" class="headerlink" title="Oauth2.0"></a>Oauth2.0</h2><p>这个之前总结过</p>
+<h2 id="sso"><a href="#sso" class="headerlink" title="sso"></a>sso</h2><p>SSO(Single Sign On)即单点登录说的是用户登陆多个子系统的其中一个就有权访问与其相关的其他系统。举个例子我们在登陆了京东金融之后，我们同时也成功登陆京东的京东超市、京东家电等子系统。</p>
+<blockquote>
+<p> <strong>sso和oauth2.0的区别。</strong></p>
+<p>OAuth 是一个行业的标准授权协议，主要用来授权第三方应用获取有限的权限。SSO解决的是一个公司的多个相关的自系统的之间的登陆问题比如京东旗下相关子系统京东金融、京东超市、京东家电等等。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>复习入口</category>
       </categories>
       <tags>
         <tag>Java</tag>
