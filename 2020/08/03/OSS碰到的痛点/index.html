@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-     Victor&#39;s Blog
+    对象存储及使用痛点 |  Victor&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -42,517 +42,263 @@
         style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
       
     <main class="content on">
+      <section class="outer">
+  <article
+  id="post-OSS碰到的痛点"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  对象存储及使用痛点
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/" class="article-date">
+  <time datetime="2020-08-03T06:46:10.000Z" itemprop="datePublished">2020-08-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">3 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
       
-<section class="cover">
-    
-  <div class="cover-frame">
-    <div class="bg-box">
-      <img src="/images/cover4.jpg" alt="image frame" />
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>这是在开发过程中的关于对象存储的一些思考和技术分享，其实关于OSS，阿里的文档提供了一些很好的解决方案，但是由于看文档时候的不细心，走了不少弯路。故事慢慢听。</p>
+<h2 id="1、从对象存储说起"><a href="#1、从对象存储说起" class="headerlink" title="1、从对象存储说起"></a>1、从对象存储说起</h2><ul>
+<li><p><strong>什么是对象存储？</strong></p>
+<blockquote>
+<p> 对象存储服务是一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。</p>
+</blockquote>
+<p>这段解释来自阿里云官方文档，说的自然比较官方。</p>
+<p>直白一点，对象存储都有个<code>bucket</code>的概念，这就很好理解了，桶里可以放什么？对撩，可以放海鲜，放慕斯，龙井熏鹅肝。</p>
+<p>那对象存储就是什么都可以往里面放啊，万物皆可对象嘛。</p>
+</li>
+<li><p><strong>主流的对象存储</strong></p>
+<ul>
+<li>阿里云OSS</li>
+<li>腾讯云COS</li>
+<li>华为云OBS</li>
+</ul>
+</li>
+</ul>
+<h2 id="2、大文件是不是应该做成异步？"><a href="#2、大文件是不是应该做成异步？" class="headerlink" title="2、大文件是不是应该做成异步？"></a>2、大文件是不是应该做成异步？</h2><p>我的第一个思考是，如果一个文件超级大，同步的情况下，客户端是阻塞状态的。能不能做成异步提升用户体验，于是乎，详细的分析了一下同步和异步的执行流程，画了两张PPT，且看：</p>
+<ul>
+<li><p><strong>同步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150316.png" alt="image-20200803150309594" style="zoom: 67%;" /></li>
+<li><p><strong>异步上传</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150352.png" alt="image-20200803150352736" style="zoom: 67%;" /></li>
+<li><p><strong>异步执行过程</strong></p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803150433.png" alt="image-20200803150433038" style="zoom: 67%;" /></li>
+</ul>
+<p>在这种解决方案下，开始写代码实现，然后开始测试，先选择了一个1G的文件，上传，success。然后直接来个10G，内存爆掉了。这时候的问题不是来自于OSS，而是<code>multipartfile</code>这个spring封装的类型，这玩意是读进内存的。问题出现了，这时候是没法实现真正的大文件的，因为这一切都是相对于内存来说的。显然，后端上传的方式，受限于内存，想实现真正的大文件也可以，自己写一个文件传输，或者分片读取什么的，难顶。</p>
+<p>然后放弃这种方式，去文档寻求解决方案，还真有，就是通过web直接传输到OSS，服务器就是一个校验的作用，原理图如下：</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803151330.png" alt="image-20200803151330153" style="zoom:50%;" />
+
+<p>用这种方式文件就不需要走服务器了，减轻了服务器负载，至于实现的话，阿里云提供了demo，改写一下然后移植到自己的系统就好。这种方式也是支持分片上传的，阿里把权限校验做的很好，甚至可以给每一片文件分配一个权限和到期时间，安全性和大文件问题迎刃而解。</p>
+<p>大概就是这个样子，改写是肯定的，后端绕过了文件这一步，绕不过mysql这一步。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153334.png" alt="image-20200803153333919"></p>
+<h2 id="3、文件迁移"><a href="#3、文件迁移" class="headerlink" title="3、文件迁移"></a>3、文件迁移</h2><p>现在阿里提供了赞助，包括云主机和OSS的服务，我想到的第二个问题是，万一哪天，OSS用不起了，需要把数据迁移出来，如何保证我的系统不受影响？因为现在上传之后是通过OSS返回的URL来访问文件，那迁出OSS后，这个文件自然也就失去了意义。</p>
+<p>拿课程资源为例，在上传文件的时候，我没有把文件直接放到一个乱七八糟的bucket中，同时也维护了一个目录。</p>
+<p><img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803152735.png" alt="image-20200803152735912"></p>
+<p>课程名称和周进度，这时候想访问资源，就变成了对一个文件系统的操作，因为课程名称和周进度是可以从数据库查到的，然后拿去访问丝毫不会有问题。</p>
+<h2 id="4、加速访问"><a href="#4、加速访问" class="headerlink" title="4、加速访问"></a>4、加速访问</h2><p>至于如何使用CDN加速访问这些，额，看张图就好了</p>
+<img src="https://picgo06.oss-cn-zhangjiakou.aliyuncs.com/img/20200803153139.png" alt="image-20200803153139725" style="zoom:67%;" />
+
+<hr>
+<hr>
+<p>最后，所有这些思考其实都挺无力的，因为最后还是用了阿里的解决方案。</p>
+<p>但是事不能这么想啊，你在思考异步的时候知道如何写一个异步程序。你在思考大文件的时候，开始去考虑文件的分片和权限校验。那些错误的东西不是我要的，但是这个东西是我需要的。</p>
+<p>所以啊，当你在学什么go语言，想用redis的时候，先看看文档，那些B站上动辄几百小时的课，只会劝退你，然后你会发现：</p>
+<ul>
+<li>rabbitmq要看好几天</li>
+<li>kafka要看好几天</li>
+<li>mapreduce要看好几天</li>
+<li>连个小小的redis都要看好几天</li>
+<li>T-T</li>
+</ul>
+ 
+      <!-- reward -->
+      
     </div>
-    <div class="cover-inner text-center text-white">
-      <h1><a href="/">Victor&#39;s Blog</a></h1>
-      <div id="subtitle-box">
-        
-        <span id="subtitle"></span>
-        
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
       </div>
-      <div>
-        
-      </div>
-    </div>
-  </div>
-  <div class="cover-learn-more">
-    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
-  </div>
-</section>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
-
-
-<!-- Subtitle -->
-
-  <script>
-    try {
-      var typed = new Typed("#subtitle", {
-        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
-        startDelay: 0,
-        typeSpeed: 200,
-        loop: true,
-        backSpeed: 100,
-        showCursor: true
-      });
-    } catch (err) {
-      console.log(err)
-    }
-  </script>
-  
-<div id="main">
-  <section class="outer">
-  
-  
-  <article class="articles">
-    
-    
-    
-    
-    <article
-  id="post-SpringBoot整合redis"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/"
-    >SpringBoot整合redis</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/15/SpringBoot%E6%95%B4%E5%90%88redis/" class="article-date">
-  <time datetime="2020-03-15T04:27:51.000Z" itemprop="datePublished">2020-03-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-PyTorch入门"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/"
-    >Pycharm搭建PyTorch环境</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/11/PyTorch%E5%85%A5%E9%97%A8/" class="article-date">
-  <time datetime="2020-03-10T17:46:29.000Z" itemprop="datePublished">2020-03-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyTorch/" rel="tag">PyTorch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Java的IO流"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/09/Java%E7%9A%84IO%E6%B5%81/"
-    >Java的IO流</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/09/Java%E7%9A%84IO%E6%B5%81/" class="article-date">
-  <time datetime="2020-03-09T07:16:45.000Z" itemprop="datePublished">2020-03-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">后端技术</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-别直接修改hexo生成的文件名"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/"
-    >别直接修改hexo生成的文件名</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/06/%E5%88%AB%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9hexo%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/" class="article-date">
-  <time datetime="2020-03-06T07:04:41.000Z" itemprop="datePublished">2020-03-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Bug%E5%90%88%E9%9B%86/">Bug合集</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-hexo如何跳过渲染"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/"
-    >Hexo如何跳过渲染</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/05/hexo%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87%E6%B8%B2%E6%9F%93/" class="article-date">
-  <time datetime="2020-03-05T11:34:02.000Z" itemprop="datePublished">2020-03-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Bug%E5%90%88%E9%9B%86/">Bug合集</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-使用gitee部署hexo遇到的神坑"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/"
-    >使用Gitee部署Hexo遇到的神坑</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/05/%E4%BD%BF%E7%94%A8gitee%E9%83%A8%E7%BD%B2hexo%E9%81%87%E5%88%B0%E7%9A%84%E7%A5%9E%E5%9D%91/" class="article-date">
-  <time datetime="2020-03-05T09:44:45.000Z" itemprop="datePublished">2020-03-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Bug%E5%90%88%E9%9B%86/">Bug合集</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Spring"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/05/Spring/"
-    >Spring系列</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/05/Spring/" class="article-date">
-  <time datetime="2020-03-05T03:02:03.000Z" itemprop="datePublished">2020-03-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-docker容器的备份与迁移"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/"
-    >Docker容器的备份与迁移</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/05/docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB/" class="article-date">
-  <time datetime="2020-03-04T17:49:51.000Z" itemprop="datePublished">2020-03-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-基础记录"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/01/%E5%9F%BA%E7%A1%80%E8%AE%B0%E5%BD%95/"
-    >基础记录</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/03/01/%E5%9F%BA%E7%A1%80%E8%AE%B0%E5%BD%95/" class="article-date">
-  <time datetime="2020-03-01T13:41:22.000Z" itemprop="datePublished">2020-03-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%A4%8D%E4%B9%A0%E5%85%A5%E5%8F%A3/">复习入口</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-面试汇总"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/08/23/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/"
-    >面试汇总</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/08/23/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/" class="article-date">
-  <time datetime="2019-08-23T06:31:28.000Z" itemprop="datePublished">2019-08-23</time>
-</a>    
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-  </article>
-  
-
-  
-  <nav class="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/5/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
-  </nav>
-  
-</section>
 </div>
 
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://victor-huihui.gitee.io/2020/08/03/OSS%E7%A2%B0%E5%88%B0%E7%9A%84%E7%97%9B%E7%82%B9/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSS/" rel="tag">OSS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2021/03/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            算法与数据结构
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/06/24/%E5%9F%BA%E4%BA%8Ematlab%E5%AE%9E%E7%8E%B0PCA%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">基于matlab实现PCA图像压缩</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "zUWoNtJddoKIUUWCugVrSkqY-gzGzoHsz",
+    app_key: "yegbJ1Yoz3JfCVfJUSQloPqX",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
       <footer class="footer">
   <div class="outer">
     <ul>
@@ -702,6 +448,23 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
